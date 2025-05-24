@@ -80,7 +80,7 @@
       { "rule_set": "tiktok", "outbound": "🚀 节点选择" },
       { "rule_set": "whatsapp", "outbound": "🚀 节点选择" },
       { "rule_set": "youtube", "outbound": "🚀 节点选择" },
-      { "rule_set": "messenger", "outbound": "🚀 节点选择" },
+      { "rule_set": "messenger", "outbound": "🚀 节点选择" }
       
     ],
     
@@ -95,7 +95,7 @@
       { "tag": "tiktok", "type": "remote", "format": "binary", "url": "https://github.com/MetaCubeX/meta-rules-dat/tree/sing/geo/geosite/tiktok.srs", "download_detour": "🚀 节点选择" },
       { "tag": "whatsapp", "type": "remote", "format": "binary", "url": "https://github.com/MetaCubeX/meta-rules-dat/tree/sing/geo/geosite/whatsapp.srs", "download_detour": "🚀 节点选择" },
       { "tag": "youtube", "type": "remote", "format": "binary", "url": "https://github.com/MetaCubeX/meta-rules-dat/tree/sing/geo/geosite/youtube.srs", "download_detour": "🚀 节点选择" },
-      { "tag": "messenger", "type": "remote", "format": "binary", "url": "https://github.com/MetaCubeX/meta-rules-dat/tree/sing/geo/geosite/messenger.srs", "download_detour": "🚀 节点选择" },
+      { "tag": "messenger", "type": "remote", "format": "binary", "url": "https://github.com/MetaCubeX/meta-rules-dat/tree/sing/geo/geosite/messenger.srs", "download_detour": "🚀 节点选择" }
 
       
     ]

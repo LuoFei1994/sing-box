@@ -31,7 +31,7 @@
       { "clash_mode": "global", "server": "proxyDns" },
       { "rule_set": "geosite-geolocation-!cn", "server": "proxyDns" }
     ],
-    "final": "localDns",
+    "final": "proxyDns",
     "strategy": "ipv4_only"
   },
 
@@ -64,7 +64,7 @@
   
   "route": {
         "auto_detect_interface": true,
-        "final": "🚀 节点选择",
+        "final": "proxyDns",
     "rules": [
       {"action": "sniff"},
       {"protocol": "dns", "action": "hijack-dns"},
@@ -74,7 +74,9 @@
       { "rule_set": "geosite-private", "outbound": "🎯 全球直连" },
       { "rule_set": "geosite-chat", "outbound": "🤖 OpenAI" },  
       { "rule_set": "geosite-geolocation-!cn", "outbound": "🚀 节点选择" },
-      { "rule_set": ["geoip-cn", "geosite-cn"], "outbound": "🎯 全球直连" }
+      { "rule_set": ["geoip-cn", "geosite-cn"], "outbound": "🎯 全球直连" },
+      { "rule_set": "facebook", "outbound": "🚀 节点选择" },
+      
     ],
     
     "rule_set": [
@@ -82,7 +84,9 @@
       { "tag": "geosite-geolocation-!cn", "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/geolocation-!cn.srs", "download_detour": "🚀 节点选择" },
       { "tag": "geoip-cn", "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs", "download_detour": "🚀 节点选择" },
       { "tag": "geosite-cn", "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs", "download_detour": "🚀 节点选择" },
-      { "tag": "geosite-private", "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/private.srs", "download_detour": "🚀 节点选择" }
+      { "tag": "geosite-private", "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/private.srs", "download_detour": "🚀 节点选择" },
+      { "tag": "facebook", "type": "remote", "format": "binary", "url": "https://github.com/MetaCubeX/meta-rules-dat/tree/sing/geo/geoip/facebook.srs", "download_detour": "🚀 节点选择" },
+      
     ]
   }
 }

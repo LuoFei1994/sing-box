@@ -4,6 +4,11 @@
     "level": "info",
     "timestamp": true
   },
+  "experimental": {
+  "cache_file": {
+    "enabled": true
+    }
+  },
   
   "dns": {
     "servers": [
@@ -32,7 +37,7 @@
 ],
 
 "outbounds": [
-  { "tag": "🚀 住宅ISP", "type": "selector", "outbounds": ["袜子节点 | 🇦🇷 阿根廷 01", "袜子节点 | socks-out_2"] },
+  { "tag": "🚀 住宅ISP", "type": "selector", "outbounds": ["socks-out"] },
   { "tag": "🚀 节点选择", "type": "selector", "outbounds": ["🚀 住宅ISP", "🔯 香港自动", "🇭🇰 香港节点", "🇯🇵 日本节点", "🇺🇲 美国节点", "🐸 手动切换", "♻️ 自动选择", "🎯 全球直连"] },
   { "tag": "📹 YouTube", "type": "selector", "outbounds": ["🚀 住宅ISP","🚀 节点选择", "♻️ 自动选择", "🔯 香港自动", "🇭🇰 香港节点", "🇯🇵 日本节点", "🇺🇲 美国节点", "🐸 手动切换"] },
   { "tag": "🤖 OpenAI", "type": "selector", "outbounds": ["🚀 住宅ISP","🚀 节点选择", "♻️ 自动选择", "🔯 香港自动", "🇭🇰 香港节点", "🇯🇵 日本节点", "🇺🇲 美国节点", "🐸 手动切换"] },
@@ -53,20 +58,10 @@
   { "tag": "♻️ 自动选择", "type": "urltest", "outbounds": ["{all}"], "filter": [{ "action": "exclude", "keywords": ["网站|地址|剩余|过期|时间|有效"] }], "url": "http://www.gstatic.com/generate_204", "interval": "10m", "tolerance": 50 },
   { "tag": "GLOBAL", "type": "selector", "outbounds": ["{all}"]},
   { "tag": "🎯 全球直连", "type": "direct" },
-  { "tag": "dns-out", "type": "dns" }
+  { "tag": "dns-out", "type": "dns" },
   {
-    "__id_in_gui": "ID_6yedxex1",
-    "tag": "袜子节点 | 🇦🇷 阿根廷 01",
-    "type": "shadowsocks",
-    "server": "c62s2.portablesubmarines.com",
-    "server_port": 9501,
-    "method": "aes-256-gcm",
-    "password": "fFfe3fuhJrhhXSSY"
-  },
-  {
-    "__id_in_gui": "ID_2i0rks2k",
     "type": "socks",
-    "tag": "袜子节点 | socks-out_2",
+    "tag": "socks-out",
     "server": "100.bgp.666888.biz",
     "server_port": 46867,
     "version": "5",

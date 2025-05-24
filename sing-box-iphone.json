@@ -64,7 +64,7 @@
   
   "route": {
         "auto_detect_interface": true,
-        "final": "proxyDns",
+        "final": "🚀 节点选择",
     "rules": [
       {"action": "sniff"},
       {"protocol": "dns", "action": "hijack-dns"},

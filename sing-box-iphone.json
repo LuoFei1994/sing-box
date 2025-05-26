@@ -1361,7 +1361,7 @@
       {
         "tag": "Facebook",
         "type": "remote",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/facebook.json",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/facebook.srs",
         "format": "binary",
         "download_detour": "🚀 节点选择"
       },

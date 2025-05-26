@@ -1287,15 +1287,43 @@
   "route": {
     "rules": [
       {
+        "action": "sniff",
+        "inbound": "tun-in"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "Youtube"
+        ],
+        "outbound": "🚀 节点选择"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "Tiktok"
+        ],
+        "outbound": "🚀 节点选择"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "Whatsapp"
+        ],
+        "outbound": "🚀 节点选择"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "Instagram"
+        ],
+        "outbound": "🚀 节点选择"
+      },
+      {
         "action": "route",
         "rule_set": [
           "Facebook"
         ],
         "outbound": "🚀 节点选择"
-      },
-      {
-        "action": "sniff",
-        "inbound": "tun-in"
       },
       {
         "action": "hijack-dns",
@@ -1358,6 +1386,34 @@
       }
     ],
     "rule_set": [
+      {
+        "tag": "Youtube",
+        "type": "remote",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/youtube.srs",
+        "format": "binary",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "Tiktok",
+        "type": "remote",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tiktok.srs",
+        "format": "binary",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "Whatsapp",
+        "type": "remote",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/whatsapp.srs",
+        "format": "binary",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "Instagram",
+        "type": "remote",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/instagram.srs",
+        "format": "binary",
+        "download_detour": "🚀 节点选择"
+      },
       {
         "tag": "Facebook",
         "type": "remote",

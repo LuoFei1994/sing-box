@@ -115,7 +115,8 @@
       "tag": "GLOBAL",
       "interrupt_exist_connections": true,
       "outbounds": [
-        "direct-out"
+        "direct-out",
+        "手动选择"
       ],
       "default": "手动选择"
     },

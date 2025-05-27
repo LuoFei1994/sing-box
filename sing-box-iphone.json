@@ -59,7 +59,8 @@
       "interrupt_exist_connections": true,
       "outbounds": [
         "🎈 自动选择",
-        "proxy"
+        "proxy",
+        "proxy3"
       ]
     },
     {
@@ -70,7 +71,8 @@
       "tolerance": 150,
       "interrupt_exist_connections": true,
       "outbounds": [
-        "proxy"
+        "proxy",
+        "proxy3"
       ]
     },
     {
@@ -115,6 +117,15 @@
       "uuid": "30a5efe1-3235-4b93-a8ee-71b1d1834c5b",
       "security": "auto",
       "alter_id": 0
+    },
+    {
+      "type": "socks",
+      "tag": "proxy3",
+      "server": "100.bgp.666888.biz",
+      "server_port": 46867,
+      "username": "5258f8e2",
+      "password": "56864eaa",
+      "version": "5"
     }
   ],
   "route": {

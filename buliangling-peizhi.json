@@ -96,9 +96,7 @@
       "type": "urltest",
       "tag": "自动选择",
       "outbounds": [
-        "香港",
-        "日本",
-        "美国"
+        "proxy3"
       ]
     },
     {
@@ -108,9 +106,7 @@
         "direct-out",
         "block-out",
         "自动选择",
-        "香港",
-        "日本",
-        "美国"
+        "proxy3"
       ],
       "default": "自动选择"
     },
@@ -119,43 +115,22 @@
       "tag": "GLOBAL",
       "outbounds": [
         "direct-out",
-        "香港",
-        "日本",
-        "美国"
+        "proxy3"
       ],
       "default": "手动选择"
     },
     {
-      "type": "shadowsocks",
-      "tag": "香港",
-      "server": "abc.com",
-      "server_port": 10001,
-      "password": "fdc43e321a",
-      "method": "aes-128-gcm"
-    },
-    {
-      "type": "shadowsocks",
-      "tag": "日本",
-      "server": "abc.com",
-      "server_port": 10002,
-      "password": "fdc43e321a",
-      "method": "aes-128-gcm"
-    },
-    {
-      "type": "shadowsocks",
-      "tag": "美国",
-      "server": "abc.com",
-      "server_port": 10003,
-      "password": "fdc43e321a",
-      "method": "aes-128-gcm"
+      "type": "socks",
+      "tag": "proxy3",
+      "server": "100.bgp.666888.biz",
+      "server_port": 46867,
+      "username": "5258f8e2",
+      "password": "56864eaa",
+      "version": "5"
     }
   ],
   "route": {
     "rules": [
-      {
-        "inbound": "dns-in",
-        "outbound": "dns-out"
-      },
       {
         "protocol": "dns",
         "outbound": "dns-out"
@@ -204,7 +179,7 @@
       "enabled": true
     },
     "clash_api": {
-      "external_controller": "192.168.2.1:9090",
+      "external_controller": "127.0.0.1:9090",
       "external_ui_download_detour": "自动选择",
       "default_mode": "rule"
     }

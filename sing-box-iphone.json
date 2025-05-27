@@ -329,14 +329,14 @@
         "tag": "Remote-DNS",
         "address": "tls://8.8.8.8:853",
         "address_resolver": "Remote-DNS-Resolver",
-        "client_subnet": "1.0.1.0",
-        "detour": "🚀 节点选择"
+        "detour": "🚀 节点选择",
+        "client_subnet": "1.0.1.0"
       },
       {
         "tag": "Remote-DNS-Resolver",
         "address": "udp://8.8.8.8:53",
-        "client_subnet": "1.0.1.0",
-        "detour": "🚀 节点选择"
+        "detour": "🚀 节点选择",
+        "client_subnet": "1.0.1.0"
       }
     ],
     "rules": [

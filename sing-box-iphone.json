@@ -59,7 +59,7 @@
       "interrupt_exist_connections": true,
       "outbounds": [
         "🎈 自动选择",
-        "proxy"
+        "proxy",
         "proxy3"
       ]
     },

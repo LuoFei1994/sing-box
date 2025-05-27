@@ -60,6 +60,7 @@
       "outbounds": [
         "🎈 自动选择",
         "proxy"
+        "proxy3"
       ]
     },
     {
@@ -70,7 +71,9 @@
       "tolerance": 150,
       "interrupt_exist_connections": true,
       "outbounds": [
+        "🚀 节点选择",
         "proxy"
+        "proxy3"
       ]
     },
     {

@@ -59,6 +59,7 @@
       "interrupt_exist_connections": true,
       "outbounds": [
         "🎈 自动选择",
+        "proxy1"
         "ID_3gu5xnyl | [多哥]_84",
         "ID_3gu5xnyl | [多哥]🫧住宅IP_85",
         "ID_3gu5xnyl | [游戏专线]🌀无法上网🌀只能游戏_102",
@@ -310,6 +311,25 @@
         "🎯 全球直连",
         "🐟 漏网之鱼"
       ]
+    },
+    {
+      "type": "socks",
+      "tag": "proxy1",
+      "server": "204.242.254.64",
+      "server_port": 31012,
+      "detour": "proxy2",
+      "username": "5258f8e2",
+      "password": "56864eaa",
+      "version": "5"
+    },
+    {
+      "type": "vmess",
+      "tag": "proxy2",
+      "server": "c59s3.portablesubmarines.com",
+      "server_port": 19868,
+      "uuid": "30a5efe1-3235-4b93-a8ee-71b1d1834c5b",
+      "security": "auto",
+      "alter_id": 0
     },
     {
       "tag": "ID_3gu5xnyl | [多哥]_84",

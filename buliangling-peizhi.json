@@ -113,9 +113,9 @@
     {
       "type": "selector",
       "tag": "GLOBAL",
+      "interrupt_exist_connections": true,
       "outbounds": [
-        "direct-out",
-        "proxy3"
+        "direct-out"
       ],
       "default": "手动选择"
     },

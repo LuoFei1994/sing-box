@@ -59,8 +59,7 @@
       "interrupt_exist_connections": true,
       "outbounds": [
         "🎈 自动选择",
-        "proxy",
-        "proxy3"
+        "proxy"
       ]
     },
     {
@@ -71,8 +70,7 @@
       "tolerance": 150,
       "interrupt_exist_connections": true,
       "outbounds": [
-        "proxy",
-        "proxy3"
+        "proxy"
       ]
     },
     {

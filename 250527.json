@@ -65,16 +65,7 @@
           "server_port": 20122
          }
        }
-     },
-    {
-      "type": "mixed",
-      "tag": "mixed-in",
-      "listen": "127.0.0.1",
-      "listen_port": 20122,
-      "tcp_fast_open": false,
-      "tcp_multi_path": false,
-      "udp_fragment": false
-    }
+     }
   ],
 
   //出站设置
@@ -414,7 +405,7 @@
     ],
     "auto_detect_interface": true,
 
-    //没在规则集里的走指定规则
+    //没在规则里的走指定规则
     "final": "🐟 漏网之鱼"
   },
 
@@ -436,14 +427,18 @@
         "tag": "Remote-DNS",
         "address": "tls://8.8.8.8:853",
         "address_resolver": "Remote-DNS-Resolver",
+        "client_subnet": "1.0.1.0",
         "detour": "🚀 节点选择"
       },
       {
         "tag": "Remote-DNS-Resolver",
         "address": "udp://8.8.8.8:53",
+        "client_subnet": "1.0.1.0",
         "detour": "🚀 节点选择"
       }
     ],
+
+    //dns的规则
     "rules": [
       {
         "action": "route",

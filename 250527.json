@@ -167,6 +167,34 @@
         "outbound": "🎯 全球直连"
       },
 
+
+      //{
+        //"action": "route",
+        //"rule_set": [
+          //"geoip-cn"
+        //],
+        //"outbound": "🎯 全球直连"
+      //},
+
+      //{
+        //"action": "route",
+        //"rule_set": [
+          //"geosite-geolocation-cn"
+        //],
+        //"outbound": "🎯 全球直连"
+      //},
+
+      //取代了上面两个中国地址的分流规则
+      {
+        "action": "route",
+        "rule_set": [
+          "geoip-cn",
+          "geosite-geolocation-cn",
+          "ChinaMax"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+
       {
         "type": "logical",
         "mode": "or",
@@ -184,7 +212,6 @@
         ],
         "outbound": "拒绝连接"
       },
-
       
       {
         "action": "route",
@@ -221,33 +248,6 @@
         "outbound": "🎯 全球直连"
       },
 
-      
-      //{
-        //"action": "route",
-        //"rule_set": [
-          //"geoip-cn"
-        //],
-        //"outbound": "🎯 全球直连"
-      //},
-
-      //{
-        //"action": "route",
-        //"rule_set": [
-          //"geosite-geolocation-cn"
-        //],
-        //"outbound": "🎯 全球直连"
-      //},
-
-      //取代了上面两个中国地址的分流规则
-      {
-        "action": "route",
-        "rule_set": [
-          "geoip-cn",
-          "geosite-geolocation-cn",
-          "ChinaMax"
-        ],
-        "outbound": "🎯 全球直连"
-      },
 
 
       {

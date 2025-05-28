@@ -191,15 +191,6 @@
         "clash_mode": "direct",
         "outbound": "🎯 全球直连"
       },
-
-      //共享货源的规则
-      { 
-        "domain_suffix": [
-          "aliyizhan.com", 
-          "qlogo.cn"
-        ], 
-        "outbound": "🎯 全球直连" 
-      },
       {
         "action": "route",
         "clash_mode": "global",

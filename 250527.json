@@ -28,8 +28,8 @@
       "store_rdrc": true,
       "rdrc_timeout": "7d"
     },
-    "clash_api": {
-      "default_mode": "Enhanced"
+//  "clash_api": {
+     // "default_mode": "Enhanced"
     }
   },
 
@@ -70,6 +70,33 @@
 
   //出站设置
   "outbounds": [
+
+    //直连
+    {
+      "type": "direct",
+      "tag": "🎯 全球直连"
+    },
+
+    //拒绝所有网络连接
+    {
+      "type": "block",
+      "tag": "拒绝连接"          
+    },
+  
+    //全局
+    {
+      "type": "selector",
+      "tag": "GLOBAL",
+      "interrupt_exist_connections": true,
+      "outbounds": [
+        "🚀 节点选择",
+        "🎈 自动选择",
+        "🎯 全球直连",
+        "🐟 漏网之鱼",
+        "拒绝连接" 
+      ]
+    },
+    
     {
       "type": "selector",
       "tag": "🚀 节点选择",
@@ -79,6 +106,7 @@
         "住宅IP | 🇵🇷 波多黎各 01"
       ]
     },
+    
     {
       "type": "urltest",
       "tag": "🎈 自动选择",
@@ -90,16 +118,6 @@
         "住宅IP | 🇵🇷 波多黎各 01"
       ]
     },
-    {
-      "type": "direct",
-      "tag": "🎯 全球直连"
-    },
-
-    //拒绝所有网络连接
-    {
-      "type": "block",
-      "tag": "拒绝连接"          
-    },
     
     {
       "type": "selector",
@@ -107,20 +125,11 @@
       "interrupt_exist_connections": true,
       "outbounds": [
         "🚀 节点选择",
-        "🎯 全球直连"
-      ]
-    },
-    {
-      "type": "selector",
-      "tag": "GLOBAL",
-      "interrupt_exist_connections": true,
-      "outbounds": [
-        "🚀 节点选择",
-        "🎈 自动选择",
         "🎯 全球直连",
-        "🐟 漏网之鱼"
+        "拒绝连接" 
       ]
     },
+    
 
     //个人的节点
     {
@@ -147,6 +156,11 @@
         "action": "hijack-dns",
         "protocol": "dns"
       },
+      
+      {
+        "action": "reject",
+        "protocol": "quic"
+      },
 
       {
         "action": "route",
@@ -158,10 +172,7 @@
         "clash_mode": "global",
         "outbound": "GLOBAL"
       },
-      {
-        "action": "reject",
-        "protocol": "quic"
-      },
+
 
       {
         "action": "reject",
@@ -169,21 +180,6 @@
           "Category-Ads"
         ]
       },
-      {
-        "action": "route",
-        "rule_set": [
-          "GeoSite-Private"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "GeoIP-Private"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-
       
       {
         "type": "logical",
@@ -197,22 +193,6 @@
           }
         ],
         "outbound": "dns"
-      },
-      {
-        "ip_is_private": true,
-        "outbound": "🎯 全球直连"
-      },
-
-
-      //取代了上面两个中国地址的分流规则
-      {
-        "action": "route",
-        "rule_set": [
-          "geoip-cn",
-          "geosite-geolocation-cn",
-          "ChinaMax"
-        ],
-        "outbound": "🎯 全球直连"
       },
 
       {
@@ -233,6 +213,22 @@
         "outbound": "拒绝连接"
       },
 
+      {
+        "ip_is_private": true,
+        "outbound": "🎯 全球直连"
+      },
+      
+      {
+        "action": "route",
+        "rule_set": [
+          "GeoSite-Private",
+          "GeoIP-Private",
+          "geoip-cn",
+          "geosite-geolocation-cn",
+          "ChinaMax"
+        ],
+        "outbound": "🎯 全球直连"
+      },
 
 
       {
@@ -256,6 +252,7 @@
         ],
         "outbound": "🚀 节点选择"
       }
+      
     ],
 
     //出站的分流规则集
@@ -382,6 +379,7 @@
   },
 
   //以下是dns服务和规则设置
+  
   "dns": {
     "servers": [
       {
@@ -398,7 +396,7 @@
       {
         "tag": "Remote-DNS",
         "address": "tls://8.8.8.8:853",
-        "address_resolver": "Remote-DNS-Resolver",
+        "address_resolver": "Local-DNS",
         "client_subnet": "218.85.152.99",
         "detour": "🚀 节点选择"
       },
@@ -412,11 +410,11 @@
 
     //dns的规则
     "rules": [
-      {
-        "action": "route",
-        "server": "Local-DNS",
-        "outbound": "any"
-      },
+      //{
+        //"action": "route",
+        //"server": "Local-DNS",
+        //"outbound": "any"
+      //},
       {
         "action": "route",
         "clash_mode": "direct",

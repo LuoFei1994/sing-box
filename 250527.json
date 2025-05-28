@@ -244,8 +244,6 @@
         "rule_set": [
           "geoip-cn",
           "geosite-geolocation-cn",
-          "MetaCubeXgeoip-cn",
-          "geosite-cn",
           "ChinaMax"
         ],
         "outbound": "🎯 全球直连"
@@ -376,21 +374,7 @@
       },
 
 
-      //MetaCubeX的规则地址
-      {
-        "tag": "geosite-cn",
-        "type": "remote",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
-      {
-        "tag": "MetaCubeXgeoip-cn",
-        "type": "remote",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
+      //网上别人做的转sing-box的中国 规则地址
       {
         "tag": "ChinaMax",
         "type": "remote",

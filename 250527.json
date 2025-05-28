@@ -187,7 +187,10 @@
         "outbound": "dns"
       },
 
-      {
+
+      //不知道有没有用
+      {  
+        "action": "reject"
         "type": "logical",
         "mode": "or",
         "rules": [
@@ -202,7 +205,6 @@
             "protocol": "stun"
           }
         ],
-        "action": "reject"
       },
 
       {

@@ -435,6 +435,13 @@
         "server": "Local-DNS"
       },
       {
+        "action": "route",
+        "rule_set": [
+          "ChinaMax"
+        ],
+        "server": "Local-DNS"
+      },
+      {
         "type": "logical",
         "mode": "and",
         "rules": [

@@ -243,7 +243,9 @@
         "action": "route",
         "rule_set": [
           "geoip-cn",
-          "geosite-geolocation-cn"
+          "geosite-geolocation-cn",
+          "MetaCubeXgeoip-cn",
+          "geosite-cn"
         ],
         "outbound": "🎯 全球直连"
       },
@@ -379,7 +381,38 @@
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-!cn.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
+      },
+
+
+      //MetaCubeX的规则地址
+      {
+        "tag": "geosite-cn",
+        "type": "remote",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "MetaCubeXgeoip-cn",
+        "type": "remote",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "ChinaMax",
+        "type": "remote",
+        "url": "https://rule.kelee.one/Loon/ChinaMax.list",
+        "format": "source",
+        "download_detour": "🎯 全球直连"
       }
+
+
+
+
+
+
+      
     ],
     "auto_detect_interface": true,
 

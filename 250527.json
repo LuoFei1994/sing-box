@@ -156,15 +156,6 @@
       
       {
         "action": "route",
-        "rule_set": [
-          "ChinaMax"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      
-      
-      {
-        "action": "route",
         "clash_mode": "direct",
         "outbound": "🎯 全球直连"
       },
@@ -225,7 +216,8 @@
           "GeoSite-Private",
           "GeoIP-Private",
           "geoip-cn",
-          "geosite-geolocation-cn"
+          "geosite-geolocation-cn",
+          "ChinaMax"
         ],
         "outbound": "🎯 全球直连"
       },

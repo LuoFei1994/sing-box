@@ -148,44 +148,6 @@
         "protocol": "dns"
       },
 
-      
-      {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "protocol": "dns"
-          },
-          {
-            "port": 53
-          }
-        ],
-        "outbound": "dns"
-      },
-      {
-        "ip_is_private": true,
-        "outbound": "🎯 全球直连"
-      },
-
-      {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "port": 853
-          },
-          {
-            "network": "udp",
-            "port": 443
-          },
-          {
-            "protocol": "stun"
-          }
-        ],
-        "outbound": "拒绝连接"
-      },
-
-      
       {
         "action": "route",
         "clash_mode": "direct",
@@ -200,6 +162,7 @@
         "action": "reject",
         "protocol": "quic"
       },
+
       {
         "action": "reject",
         "rule_set": [
@@ -222,33 +185,56 @@
       },
 
       
-      //{
-        //"action": "route",
-        //"rule_set": [
-          //"geoip-cn"
-        //],
-        //"outbound": "🎯 全球直连"
-      //},
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "protocol": "dns"
+          },
+          {
+            "port": 53
+          }
+        ],
+        "outbound": "dns"
+      },
+      {
+        "ip_is_private": true,
+        "outbound": "🎯 全球直连"
+      },
 
-      //{
-        //"action": "route",
-        //"rule_set": [
-          //"geosite-geolocation-cn"
-        //],
-        //"outbound": "🎯 全球直连"
-      //},
 
       //取代了上面两个中国地址的分流规则
       {
         "action": "route",
         "rule_set": [
           "geoip-cn",
-          "geosite-geolocation-cn"
+          "geosite-geolocation-cn",
+          "ChinaMax"
         ],
         "outbound": "🎯 全球直连"
       },
 
-      
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "port": 853
+          },
+          {
+            "network": "udp",
+            "port": 443
+          },
+          {
+            "protocol": "stun"
+          }
+        ],
+        "outbound": "拒绝连接"
+      },
+
+
+
       {
         "action": "route",
         "rule_set": [
@@ -257,46 +243,15 @@
         "outbound": "🚀 节点选择"
       },
 
-      //油管规则分流
-      {
-        "action": "route",
-        "rule_set": [
-          "Youtube"
-        ],
-        "outbound": "🚀 节点选择"
-      },
 
-      //TK规则分流
+      //以下规则分流走节点
       {
         "action": "route",
         "rule_set": [
-          "Tiktok"
-        ],
-        "outbound": "🚀 节点选择"
-      },
-
-      //WS规则分流
-      {
-        "action": "route",
-        "rule_set": [
-          "Whatsapp"
-        ],
-        "outbound": "🚀 节点选择"
-      },
-
-      //ins规则分流
-      {
-        "action": "route",
-        "rule_set": [
-          "Instagram"
-        ],
-        "outbound": "🚀 节点选择"
-      },
-
-      //FB规则分流
-      {
-        "action": "route",
-        "rule_set": [
+          "Youtube",
+          "Tiktok",
+          "Whatsapp",
+          "Instagram",
           "Facebook"
         ],
         "outbound": "🚀 节点选择"
@@ -401,7 +356,24 @@
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-!cn.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
+      },
+
+
+      //网上别人做的转sing-box的中国 规则地址
+      {
+        "tag": "ChinaMax",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/ChinaMax/ChinaMax.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
       }
+
+
+
+
+
+
+      
     ],
     "auto_detect_interface": true,
 
@@ -427,13 +399,13 @@
         "tag": "Remote-DNS",
         "address": "tls://8.8.8.8:853",
         "address_resolver": "Remote-DNS-Resolver",
-        "client_subnet": "1.0.1.0",
+        "client_subnet": "218.85.152.99",
         "detour": "🚀 节点选择"
       },
       {
         "tag": "Remote-DNS-Resolver",
         "address": "udp://8.8.8.8:53",
-        "client_subnet": "1.0.1.0",
+        "client_subnet": "218.85.152.99",
         "detour": "🚀 节点选择"
       }
     ],
@@ -463,6 +435,13 @@
         "server": "Local-DNS"
       },
       {
+        "action": "route",
+        "rule_set": [
+          "ChinaMax"
+        ],
+        "server": "Local-DNS"
+      },
+      {
         "type": "logical",
         "mode": "and",
         "rules": [
@@ -475,7 +454,7 @@
           }
         ],
         "server": "Remote-DNS",
-        "client_subnet": "1.0.1.0" // 任何中国地址
+        "client_subnet": "218.85.152.99" // 任何中国地址
       }
     ],
     "disable_cache": false,

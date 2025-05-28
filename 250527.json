@@ -202,7 +202,7 @@
       {
         "action": "route",
         "rule_set": [
-          "GeoSite-CN"
+          "geosite-geolocation-cn"
         ],
         "outbound": "🎯 全球直连"
       },
@@ -216,14 +216,14 @@
       {
         "action": "route",
         "rule_set": [
-          "GeoIP-CN"
+          "geoip-cn"
         ],
         "outbound": "🎯 全球直连"
       },
       {
         "action": "route",
         "rule_set": [
-          "GeoLocation-!CN"
+          "geosite-geolocation-!cn"
         ],
         "outbound": "🚀 节点选择"
       }

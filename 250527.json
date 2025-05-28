@@ -251,16 +251,7 @@
         "outbound": "🎯 全球直连"
       },
 
-      //共享货源的规则
-      {
-         "domain_suffix": [
-          "qlogo.cn",
-          "aliyizhan.com"
-         ],
-        "outbound": "🎯 全球直连"
-      },
 
-      
       {
         "action": "route",
         "rule_set": [
@@ -403,8 +394,8 @@
       {
         "tag": "ChinaMax",
         "type": "remote",
-        "url": "https://rule.kelee.one/Loon/ChinaMax.list",
-        "format": "source",
+        "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/ChinaMax/ChinaMax.srs",
+        "format": "binary",
         "download_detour": "🚀 节点选择"
       }
 

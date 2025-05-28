@@ -14,7 +14,7 @@
       "external_ui_download_url": "",
       "external_ui_download_detour": "🎯 全球直连",
       "secret": "ID_ndudolt2",
-      "default_mode": "Enhanced",    //rule
+      "default_mode": "rule", 
       "access_control_allow_origin": [
         "*"
       ],
@@ -28,8 +28,8 @@
       "store_rdrc": true,
       "rdrc_timeout": "7d"
     },
-//  "clash_api": {
-     // "default_mode": "Enhanced"
+    "clash_api": {
+        "default_mode": "Enhanced"
     }
   },
 

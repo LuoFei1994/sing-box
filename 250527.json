@@ -1,4 +1,3 @@
-// log日志记录
 {
   "log": {
     "disabled": false,
@@ -31,8 +30,6 @@
       "default_mode": "Enhanced"
     }
   },
-
-  //入站的协议
   "inbounds": [
     {
       "type": "mixed",
@@ -75,8 +72,6 @@
       "udp_fragment": false
     }
   ],
-
-  //出站的协议
   "outbounds": [
     {
       "type": "selector",
@@ -132,18 +127,47 @@
       "version": "5"
     }
   ],
-
-  //出站的规格
   "route": {
     "rules": [
-
-      //嗅探进站网络
       {
         "action": "sniff",
         "inbound": "tun-in"
       },
-
-      //劫持dns
+      {
+        "action": "route",
+        "rule_set": [
+          "Youtube"
+        ],
+        "outbound": "🚀 节点选择"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "Tiktok"
+        ],
+        "outbound": "🚀 节点选择"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "Whatsapp"
+        ],
+        "outbound": "🚀 节点选择"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "Instagram"
+        ],
+        "outbound": "🚀 节点选择"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "Facebook"
+        ],
+        "outbound": "🚀 节点选择"
+      },
       {
         "action": "hijack-dns",
         "protocol": "dns"
@@ -153,21 +177,15 @@
         "clash_mode": "direct",
         "outbound": "🎯 全球直连"
       },
-
-      
       {
         "action": "route",
         "clash_mode": "global",
         "outbound": "GLOBAL"
       },
-
-      
       {
         "action": "reject",
         "protocol": "quic"
       },
-
-      //拒绝广告连接
       {
         "action": "reject",
         "rule_set": [
@@ -202,63 +220,14 @@
         ],
         "outbound": "🎯 全球直连"
       },
-
-      //非中国地址
       {
         "action": "route",
         "rule_set": [
           "geosite-geolocation-!cn"
         ],
         "outbound": "🚀 节点选择"
-      },
-
-      // 油管分流规则
-      {
-        "action": "route",
-        "rule_set": [
-          "Youtube"                
-        ],
-        "outbound": "🚀 节点选择"
-      },
-
-      // TK分流规则
-      {
-        "action": "route",
-        "rule_set": [
-          "Tiktok"
-        ],
-        "outbound": "🚀 节点选择"
-      },
-
-      // Whatsapp分流规则
-      {
-        "action": "route",
-        "rule_set": [
-          "Whatsapp"
-        ],
-        "outbound": "🚀 节点选择"
-      },
-
-      // INS分流规则
-      {
-        "action": "route",
-        "rule_set": [
-          "Instagram"
-        ],
-        "outbound": "🚀 节点选择"
-      },
-
-      // FB分流规则
-      {
-        "action": "route",
-        "rule_set": [
-          "Facebook"
-        ],
-        "outbound": "🚀 节点选择"
       }
     ],
-
-    //规则集
     "rule_set": [
       {
         "tag": "Youtube",
@@ -404,8 +373,7 @@
           }
         ],
         "server": "Remote-DNS",
-        // 任何中国地址
-        "client_subnet": "1.0.1.0" 
+        "client_subnet": "1.0.1.0" // 任何中国地址
       }
     ],
     "disable_cache": false,

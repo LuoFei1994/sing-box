@@ -394,9 +394,9 @@
       {
         "tag": "ChinaMax",
         "type": "remote",
-        "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/ChinaMax/ChinaMax.srs",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/ChinaMax/ChinaMax.srs",
         "format": "binary",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🎯 全球直连"
       }
 
 

@@ -57,8 +57,7 @@
       "listen_port": 20122,
       "tcp_fast_open": false,
       "tcp_multi_path": false,
-      "udp_fragment": false
-      "sniff": true,
+      "udp_fragment": false,
       "users": []
     }
   ],

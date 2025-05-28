@@ -195,8 +195,8 @@
       //共享货源的规则
       { 
         "domain_suffix": [
-        "aliyizhan.com", 
-        "qlogo.cn"
+          "aliyizhan.com", 
+          "qlogo.cn"
         ], 
         "outbound": "🎯 全球直连" 
       },

@@ -140,7 +140,10 @@
     "rules": [
       {
         "action": "sniff",       //嗅探进站网络
-        "inbound": "tun-in"
+        "inbound":[
+           "tun-in",
+           "mixed-in"
+          ]
       },
       
       //拦截dns
@@ -406,6 +409,13 @@
         "action": "route",
         "server": "Local-DNS",
         "outbound": "any"
+      },
+      {
+        "inbound":[
+          "tun-in",
+          "mixed-in"
+        ],
+        "server": "Local-DNS"
       },
       {
         "action": "route",

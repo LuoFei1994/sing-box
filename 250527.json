@@ -1,7 +1,7 @@
 {
   "log": {
     "disabled": false,
-    "level": "warn",
+    "level": "info",
     "output": "",
     "timestamp": true
   },
@@ -25,6 +25,9 @@
       "store_fakeip": true,
       "store_rdrc": true,
       "rdrc_timeout": "7d"
+    },
+    "clash_api": {
+      "default_mode": "Enhanced"
     }
   },
   "inbounds": [
@@ -283,23 +286,23 @@
         "download_detour": "🎯 全球直连"
       },
       {
-        "tag": "GeoIP-CN",
+        "tag": "geoip-cn",
         "type": "remote",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
       {
-        "tag": "GeoSite-CN",
+        "tag": "geosite-geolocation-cn",
         "type": "remote",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-cn.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
       {
-        "tag": "GeoLocation-!CN",
+        "tag": "geosite-geolocation-!cn",
         "type": "remote",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-!cn.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
       }
@@ -307,6 +310,8 @@
     "auto_detect_interface": true,
     "final": "🐟 漏网之鱼"
   },
+
+  //以下是dns服务和规则设置
   "dns": {
     "servers": [
       {
@@ -351,16 +356,24 @@
       {
         "action": "route",
         "rule_set": [
-          "GeoSite-CN"
+          "geosite-geolocation-cn"
         ],
         "server": "Local-DNS"
       },
       {
-        "action": "route",
-        "rule_set": [
-          "GeoLocation-!CN"
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "geosite-geolocation-!cn",
+            "invert": true
+          },
+          {
+            "rule_set": "geoip-cn"
+          }
         ],
-        "server": "Remote-DNS"
+        "server": "Remote-DNS",
+        "client_subnet": "1.0.1.0" // 任何中国地址
       }
     ],
     "disable_cache": false,

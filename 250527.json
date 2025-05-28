@@ -245,7 +245,8 @@
           "geoip-cn",
           "geosite-geolocation-cn",
           "MetaCubeXgeoip-cn",
-          "geosite-cn"
+          "geosite-cn",
+          "ChinaMax"
         ],
         "outbound": "🎯 全球直连"
       },

@@ -142,7 +142,7 @@
         "action": "sniff",       //嗅探进站网络
         "inbound": "tun-in"
       },
-
+      
       //拦截dns
       {
         "action": "hijack-dns",
@@ -153,7 +153,16 @@
         "action": "reject",
         "protocol": "quic"
       },
-
+      
+      {
+        "action": "route",
+        "rule_set": [
+          "ChinaMax"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      
+      
       {
         "action": "route",
         "clash_mode": "direct",
@@ -216,8 +225,7 @@
           "GeoSite-Private",
           "GeoIP-Private",
           "geoip-cn",
-          "geosite-geolocation-cn",
-          "ChinaMax"
+          "geosite-geolocation-cn"
         ],
         "outbound": "🎯 全球直连"
       },

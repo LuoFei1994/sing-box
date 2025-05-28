@@ -405,7 +405,7 @@
         "type": "remote",
         "url": "https://rule.kelee.one/Loon/ChinaMax.list",
         "format": "source",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🚀 节点选择"
       }
 
 

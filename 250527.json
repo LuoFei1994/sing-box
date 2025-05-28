@@ -14,7 +14,7 @@
       "external_ui_download_url": "",
       "external_ui_download_detour": "🎯 全球直连",
       "secret": "ID_ndudolt2",
-      "default_mode": "rule",
+      "default_mode": "Enhanced",    //rule
       "access_control_allow_origin": [
         "*"
       ],

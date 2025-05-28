@@ -103,6 +103,13 @@
       "type": "direct",
       "tag": "🎯 全球直连"
     },
+
+    //拒绝所有网络连接
+    {
+      "type": "block",
+      "tag": "拒绝连接"          
+    },
+    
     {
       "type": "selector",
       "tag": "🐟 漏网之鱼",
@@ -149,6 +156,45 @@
         "action": "hijack-dns",
         "protocol": "dns"
       },
+
+      
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "protocol": "dns"
+          },
+          {
+            "port": 53
+          }
+        ],
+        "outbound": "dns"
+      },
+      {
+        "ip_is_private": true,
+        "outbound": "🎯 全球直连"
+      },
+
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "port": 853
+          },
+          {
+            "network": "udp",
+            "port": 443
+          },
+          {
+            "protocol": "stun"
+          }
+        ],
+        "outbound": "拒绝连接"
+      },
+
+      
       {
         "action": "route",
         "clash_mode": "direct",
@@ -179,24 +225,39 @@
       {
         "action": "route",
         "rule_set": [
-          "geosite-geolocation-cn"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "rule_set": [
           "GeoIP-Private"
         ],
         "outbound": "🎯 全球直连"
       },
+
+      
+      //{
+        //"action": "route",
+        //"rule_set": [
+          //"geoip-cn"
+        //],
+        //"outbound": "🎯 全球直连"
+      //},
+
+      //{
+        //"action": "route",
+        //"rule_set": [
+          //"geosite-geolocation-cn"
+        //],
+        //"outbound": "🎯 全球直连"
+      //},
+
+      //取代了上面两个中国地址的分流规则
       {
         "action": "route",
         "rule_set": [
-          "geoip-cn"
+          "geoip-cn",
+          "geosite-geolocation-cn"
         ],
         "outbound": "🎯 全球直连"
       },
+
+      
       {
         "action": "route",
         "rule_set": [

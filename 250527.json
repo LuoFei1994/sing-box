@@ -410,11 +410,11 @@
 
     //dns的规则
     "rules": [
-      //{
-        //"action": "route",
-        //"server": "Local-DNS",
-        //"outbound": "any"
-      //},
+      {
+        "action": "route",
+        "server": "Local-DNS",
+        "outbound": "any"
+      },
       {
         "action": "route",
         "clash_mode": "direct",

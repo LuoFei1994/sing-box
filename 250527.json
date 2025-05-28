@@ -173,19 +173,19 @@
         ]
       },
       
-      {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "protocol": "dns"
-          },
-          {
-            "port": 53
-          }
-        ],
-        "outbound": "dns"
-      },
+      //{
+        //"type": "logical",
+        //"mode": "or",
+        //"rules": [
+          //{
+            //"protocol": "dns"
+          //},
+         // {
+         //   "port": 53
+         // }
+       // ],
+       // "outbound": "dns"
+     // },
 
 
       //不知道有没有用

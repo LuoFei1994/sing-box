@@ -189,23 +189,23 @@
 
 
       //不知道有没有用
-      {  
-        "action": "reject"
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "port": 853
-          },
-          {
-            "network": "udp",
-            "port": 443
-          },
-          {
-            "protocol": "stun"
-          }
-        ],
-      },
+      //{  
+        //"action": "reject"
+        //"type": "logical",
+        //"mode": "or",
+        //"rules": [
+          //{
+            //"port": 853
+          //},
+          //{
+            //"network": "udp",
+            //"port": 443
+          //},
+          //{
+            //"protocol": "stun"
+          //}
+        //],
+      //},
 
       {
         "ip_is_private": true,

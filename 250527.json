@@ -399,13 +399,11 @@
         "tag": "Remote-DNS",
         "address": "tls://8.8.8.8:853",
         "address_resolver": "Remote-DNS-Resolver",
-        "client_subnet": "1.0.1.0",
         "detour": "🚀 节点选择"
       },
       {
         "tag": "Remote-DNS-Resolver",
         "address": "udp://8.8.8.8:53",
-        "client_subnet": "1.0.1.0",
         "detour": "🚀 节点选择"
       }
     ],
@@ -439,7 +437,7 @@
         "rule_set": [
           "ChinaMax"
         ],
-        "server": "Local-DNS-Resolver"
+        "server": "Local-DNS"
       },
       {
         "type": "logical",

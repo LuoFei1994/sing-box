@@ -148,6 +148,42 @@
         "protocol": "dns"
       },
 
+      {
+        "action": "route",
+        "clash_mode": "direct",
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "clash_mode": "global",
+        "outbound": "GLOBAL"
+      },
+      {
+        "action": "reject",
+        "protocol": "quic"
+      },
+
+      {
+        "action": "reject",
+        "rule_set": [
+          "Category-Ads"
+        ]
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "GeoSite-Private"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "GeoIP-Private"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+
       
       {
         "type": "logical",
@@ -167,22 +203,6 @@
         "outbound": "🎯 全球直连"
       },
 
-
-      //{
-        //"action": "route",
-        //"rule_set": [
-          //"geoip-cn"
-        //],
-        //"outbound": "🎯 全球直连"
-      //},
-
-      //{
-        //"action": "route",
-        //"rule_set": [
-          //"geosite-geolocation-cn"
-        //],
-        //"outbound": "🎯 全球直连"
-      //},
 
       //取代了上面两个中国地址的分流规则
       {
@@ -211,41 +231,6 @@
           }
         ],
         "outbound": "拒绝连接"
-      },
-      
-      {
-        "action": "route",
-        "clash_mode": "direct",
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "clash_mode": "global",
-        "outbound": "GLOBAL"
-      },
-      {
-        "action": "reject",
-        "protocol": "quic"
-      },
-      {
-        "action": "reject",
-        "rule_set": [
-          "Category-Ads"
-        ]
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "GeoSite-Private"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "GeoIP-Private"
-        ],
-        "outbound": "🎯 全球直连"
       },
 
 

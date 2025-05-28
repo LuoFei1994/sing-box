@@ -131,7 +131,13 @@
       "username": "5258f8e2",
       "password": "56864eaa",
       "version": "5"
-    }
+    },
+    { 
+      "domain_suffix": [
+        "aliyizhan.com", 
+        "qlogo.cn"
+      ], 
+      "outbound": "🎯 全球直连" },
   ],
 
   //出站的规则分流

@@ -248,6 +248,15 @@
         "outbound": "🎯 全球直连"
       },
 
+      //共享货源的规则
+      {
+         "domain_suffix": [
+          "qlogo.cn",
+          "aliyizhan.com"
+         ],
+        "outbound": "🎯 全球直连"
+      },
+
       
       {
         "action": "route",

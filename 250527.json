@@ -33,7 +33,7 @@
       //持久化Fakeip
       "store_fakeip": true,
       //持久化已拒绝的dns响应
-      "store_rdrc": false,
+      "store_rdrc": true,
       
       "rdrc_timeout": "7d"
     }
@@ -633,21 +633,21 @@
         "server": "Remote-DNS"
       }
      
-      //{
-        //"type": "logical",
-        //"mode": "and",
-        //"rules": [
-          //{
-            //"rule_set": "geosite-geolocation-!cn",
-            //"invert": true
-          //},
-          //{
-            //"rule_set": "geoip-cn"
-          //}
-        //],
-        //"server": "Remote-DNS",
-        //"client_subnet": "1.0.1.0" // 任何中国地址
-      //}
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "geosite-geolocation-!cn",
+            "invert": true
+          },
+          {
+            "rule_set": "geoip-cn"
+          }
+        ],
+        "server": "Remote-DNS",
+        "client_subnet": "1.0.1.0" // 任何中国地址
+      }
     ],
     "disable_cache": false,
     "disable_expire": false,

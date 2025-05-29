@@ -210,7 +210,7 @@
           "geosite-geolocation-!cn"
         ],
         "outbound": "🚀 节点选择"
-      }
+      },
 
       //上面的顺序不在变动，有新增添加到这个以下
       {
@@ -394,7 +394,7 @@
     "find_process": true,    
     
     //没在规则里的走指定规则
-    "final": "🐟 漏网之鱼",
+    "final": "🐟 漏网之鱼"
     
   },
 

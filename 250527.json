@@ -41,15 +41,15 @@
 
   //进站监控
   "inbounds": [
-    {
-      "type": "mixed",
-      "tag": "mixed-in",
-      "listen": "127.0.0.1",
-      "listen_port": 20122,
-      "tcp_fast_open": false,
-      "tcp_multi_path": false,
-      "udp_fragment": false
-    },
+    //{
+      //"type": "mixed",
+      //"tag": "mixed-in",
+      //"listen": "127.0.0.1",
+      //"listen_port": 20122,
+      //"tcp_fast_open": false,
+      //"tcp_multi_path": false,
+      //"udp_fragment": false
+    //},
     {
       "type": "tun",
       "tag": "tun-in",
@@ -151,7 +151,7 @@
         "action": "sniff",       //嗅探进站网络
         "inbound":[
            "tun-in",
-           "mixed-in"
+           //"mixed-in"
           ]
       },
       
@@ -172,11 +172,11 @@
         "outbound": "GLOBAL"
       },
 
-      {
-        "action": "reject",
-        "protocol": "quic",
+      //{
+        //"action": "reject",
+        //"protocol": "quic",
         //"method": "drop"
-      },
+      //},
 
 
       //{

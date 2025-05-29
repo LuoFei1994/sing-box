@@ -631,7 +631,7 @@
           "geosite-geolocation-!cn"
         ],
         "server": "Remote-DNS"
-      }
+      },
      
       {
         "type": "logical",

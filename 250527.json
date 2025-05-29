@@ -106,7 +106,8 @@
       "outbounds": [
         "🎈 自动选择",
         "住宅IP | 🇵🇷 波多黎各 01",
-        "proxy"
+        "proxy",
+        "proxy2"
       ]
     },
     
@@ -119,7 +120,8 @@
       "interrupt_exist_connections": true,
       "outbounds": [
         "住宅IP | 🇵🇷 波多黎各 01",
-        "proxy"
+        "proxy",
+        "proxy2"
       ]
     },
     

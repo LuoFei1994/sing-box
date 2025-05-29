@@ -209,7 +209,7 @@
         "outbound": "🎯 全球直连"
       },
       
-      //合并例子"mode": "or" "and" {"type": "logical","mode": "or","rules": [{"protocol": "dns"},{"port": 53}],"outbound": "dns"},
+      //合并例子"mode": "or" "and" {"type": "logical","mode": "or","rules":[{"protocol": "dns"},{"port": 53}],"outbound": "dns"}//
 
 
       

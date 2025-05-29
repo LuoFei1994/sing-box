@@ -392,16 +392,14 @@
         "detour": "🚀 节点选择",
         "domain_resolver": "Remote-DNS-Resolver",
         "server_port": 853,
-        "server": "8.8.8.8",
-        "client_subnet": "1.0.1.0"
+        "server": "8.8.8.8"
       },
       {
         "tag": "Remote-DNS-Resolver",
         "type": "udp",
         "detour": "🚀 节点选择",
         "server_port": 53,
-        "server": "8.8.8.8",
-        "client_subnet": "1.0.1.0"
+        "server": "8.8.8.8"
       }
     ],
 

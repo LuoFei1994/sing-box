@@ -3,7 +3,7 @@
 {
   "log": {
     "disabled": false,
-    "level": "error",      //日志详细记录
+    "level": "warn",      //日志详细记录
     "output": "",
     "timestamp": true     //打开标注日志时间
   },
@@ -391,7 +391,7 @@
       {
         "tag": "Remote-DNS",
         "address": "tls://8.8.8.8:853",
-        "address_resolver": "Local-DNS",
+        "address_resolver": "Remote-DNS-Resolver",
         "client_subnet": "218.85.152.99",
         "detour": "🚀 节点选择"
       },

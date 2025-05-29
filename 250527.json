@@ -160,21 +160,22 @@
         "action": "hijack-dns",
         "protocol": "dns"
       },
-      
-      {
-        "action": "reject",
-        "protocol": "quic"
-      },
-      
+
       {
         "action": "route",
         "clash_mode": "direct",
         "outbound": "🎯 全球直连"
       },
+      
       {
         "action": "route",
         "clash_mode": "global",
         "outbound": "GLOBAL"
+      },
+
+       {
+        "action": "reject",
+        "protocol": "quic"
       },
 
 
@@ -184,7 +185,34 @@
           "Category-Ads"
         ]
       },
+
+      {
+        "ip_is_private": true,
+        "outbound": "🎯 全球直连"
+      },
       
+      {
+        "action": "route",
+        "rule_set": [
+          "GeoSite-Private",
+          "geosite-geolocation-cn",
+          "GeoIP-Private",
+          "geoip-cn",
+          "GeoSite-CN",
+          "ChinaMax"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+
+      {
+        "action": "route",
+        "rule_set": [
+          "geosite-geolocation-!cn"
+        ],
+        "outbound": "🚀 节点选择"
+      }
+
+      //上面的顺序不在变动，有新增添加到这个以下
       {
         "type": "logical",
         "mode": "or",
@@ -216,24 +244,6 @@
           }
         ],
         "outbound": "reject"
-      },
-      
-      
-      {
-        "ip_is_private": true,
-        "outbound": "🎯 全球直连"
-      },
-      
-      {
-        "action": "route",
-        "rule_set": [
-          "GeoSite-Private",
-          "GeoIP-Private",
-          "geoip-cn",
-          "geosite-geolocation-cn",
-          "ChinaMax"
-        ],
-        "outbound": "🎯 全球直连"
       },
 
       //以下规则分流走节点
@@ -334,6 +344,14 @@
         "download_detour": "🎯 全球直连"
       },
 
+      {
+        "tag": "GeoSite-CN",
+        "type": "remote",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+      
       
       {
         "tag": "geosite-geolocation-cn",
@@ -378,9 +396,6 @@
     //没在规则里的走指定规则
     "final": "🐟 漏网之鱼",
     
-    "default_domain_resolver": {
-      "server": "Local-DNS"
-    }
   },
 
   //以下是dns服务和规则设置
@@ -437,6 +452,23 @@
         "clash_mode": "global",
         "server": "Remote-DNS"
       },
+
+      {
+        "action": "route",
+        "rule_set": [
+          "GeoSite-CN"
+        ],
+        "server": "Local-DNS"
+      },
+
+      {
+        "action": "route",
+        "rule_set": [
+          "geosite-geolocation-!cn"
+        ],
+        "server": "Remote-DNS"
+      },
+      
       {
         "action": "route",
         "rule_set": [
@@ -444,6 +476,7 @@
         ],
         "server": "Local-DNS"
       },
+      
       {
         "action": "route",
         "rule_set": [

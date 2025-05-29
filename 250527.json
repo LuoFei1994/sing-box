@@ -490,7 +490,7 @@
         //],
         //"server": "Remote-DNS",
         //"client_subnet": "1.0.1.0" // 任何中国地址
-      }
+      //}
     ],
     "disable_cache": false,
     "disable_expire": false,

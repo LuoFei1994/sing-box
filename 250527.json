@@ -191,21 +191,23 @@
       },
 
 
-      //不知道有没有用
-      {  
-        "action": "reject",
-        "port": 853
-      },
       {
-        "action": "reject",
-        "network": "udp",
-        "port": 443
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "port": 853
+          },
+          {
+            "network": "udp",
+            "port": 443
+          },
+          {
+            "protocol": "stun"
+          }
+        ],
+        "outbound": "reject"
       },
-      {
-        "action": "reject",
-        "protocol": "stun"
-      },
-      //上面不知道有没有用
       
       
       {

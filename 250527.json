@@ -14,21 +14,32 @@
       "external_ui_download_url": "",
       "external_ui_download_detour": "🎯 全球直连",
       "secret": "ID_ndudolt2",
+
+      //工作模式
       "default_mode": "rule", 
+      
       "access_control_allow_origin": [
         "*"
       ],
       "access_control_allow_private_network": false
     },
     "cache_file": {
+
+      //启用缓存 规则集
       "enabled": true,
+      //缓存路径
       "path": "cache.db",
       "cache_id": "",
-      "store_fakeip": true,
-      "store_rdrc": true,
+
+      //持久化Fakeip
+      "store_fakeip": false,
+      //持久化已拒绝的dns响应
+      "store_rdrc": false,
+      
       "rdrc_timeout": "7d"
     },
     "clash_api": {
+        //首页增强模式
         "default_mode": "Enhanced"
     }
   },
@@ -59,6 +70,8 @@
       "endpoint_independent_nat": false,
       "stack": "mixed",
       "platform": {
+
+        //http代理
         "http_proxy": {
           "enabled": true,
           "server": "127.0.0.1",
@@ -360,8 +373,12 @@
 
       
     ],
+    //自动检测出站接口
     "auto_detect_interface": true,
 
+    //查找进程信息
+    "find_process": true,    
+    
     //没在规则里的走指定规则
     "final": "🐟 漏网之鱼"
   },

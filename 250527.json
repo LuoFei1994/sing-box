@@ -96,6 +96,7 @@
         "🎯 全球直连",
         "🐟 漏网之鱼"
       ]
+      //"default": "手动选择"  这条可以让规则选一个默认的
     },
     
     {
@@ -453,23 +454,23 @@
           "geosite-geolocation-!cn"
         ],
         "server": "Remote-DNS"
-      },
-     
-      {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
-            "rule_set": "geosite-geolocation-!cn",
-            "invert": true
-          },
-          {
-            "rule_set": "geoip-cn"
-          }
-        ],
-        "server": "Remote-DNS",
-        "client_subnet": "1.0.1.0" // 任何中国地址
       }
+     
+      //{
+        //"type": "logical",
+        //"mode": "and",
+        //"rules": [
+          //{
+            //"rule_set": "geosite-geolocation-!cn",
+            //"invert": true
+          //},
+          //{
+            //"rule_set": "geoip-cn"
+          //}
+        //],
+        //"server": "Remote-DNS",
+        //"client_subnet": "1.0.1.0" // 任何中国地址
+      //}
     ],
     "disable_cache": false,
     "disable_expire": false,

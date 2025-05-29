@@ -161,11 +161,6 @@
       },
       
       {
-        "action": "reject",
-        "protocol": "quic"
-      },
-      
-      {
         "action": "route",
         "clash_mode": "direct",
         "outbound": "🎯 全球直连"
@@ -176,12 +171,37 @@
         "outbound": "GLOBAL"
       },
 
+       {
+        "action": "reject",
+        "protocol": "quic"
+      },
 
+      {
+        "ip_is_private": true,
+        "outbound": "🎯 全球直连"
+      },
+
+      //去广告
       {
         "action": "reject",
         "rule_set": [
           "Category-Ads"
         ]
+      },
+
+
+      //走直连的规则
+      {
+        "action": "route",
+        "rule_set": [
+          "GeoSite-Private",
+          "GeoSite-CN",
+          "GeoIP-Private",
+          "geoip-cn",
+          "geosite-geolocation-cn",
+          "ChinaMax"
+        ],
+        "outbound": "🎯 全球直连"
       },
       
       {
@@ -218,22 +238,9 @@
       },
       
       
-      {
-        "ip_is_private": true,
-        "outbound": "🎯 全球直连"
-      },
+     
       
-      {
-        "action": "route",
-        "rule_set": [
-          "GeoSite-Private",
-          "GeoIP-Private",
-          "geoip-cn",
-          "geosite-geolocation-cn",
-          "ChinaMax"
-        ],
-        "outbound": "🎯 全球直连"
-      },
+      
 
       //以下规则分流走节点
       {
@@ -320,6 +327,14 @@
         "tag": "GeoSite-Private",
         "type": "remote",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/private.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+      
+      {
+        "tag": "GeoSite-CN",
+        "type": "remote",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
@@ -432,13 +447,15 @@
         "clash_mode": "global",
         "server": "Remote-DNS"
       },
+
       {
         "action": "route",
         "rule_set": [
-          "geosite-geolocation-cn"
+          "GeoSite-CN"
         ],
         "server": "Local-DNS"
       },
+
       {
         "action": "route",
         "rule_set": [
@@ -446,6 +463,23 @@
         ],
         "server": "Local-DNS"
       },
+
+      {
+        "action": "route",
+        "rule_set": [
+          "geosite-geolocation-cn"
+        ],
+        "server": "Local-DNS"
+      },
+
+      {
+        "action": "route",
+        "rule_set": [
+          "geosite-geolocation-!cn"
+        ],
+        "server": "Remote-DNS"
+      },
+     
       {
         "type": "logical",
         "mode": "and",

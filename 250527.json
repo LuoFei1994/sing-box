@@ -227,16 +227,6 @@
         "outbound": "🎯 全球直连"
       },
 
-
-      {
-        "action": "route",
-        "rule_set": [
-          "geosite-geolocation-!cn"
-        ],
-        "outbound": "🚀 节点选择"
-      },
-
-
       //以下规则分流走节点
       {
         "action": "route",
@@ -245,7 +235,8 @@
           "Tiktok",
           "Whatsapp",
           "Instagram",
-          "Facebook"
+          "Facebook",
+          "geosite-geolocation-!cn"
         ],
         "outbound": "🚀 节点选择"
       }
@@ -329,7 +320,7 @@
       {
         "tag": "geoip-cn",
         "type": "remote",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
@@ -338,7 +329,7 @@
       {
         "tag": "geosite-geolocation-cn",
         "type": "remote",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-cn.srs",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-cn.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
@@ -347,7 +338,7 @@
       {
         "tag": "geosite-geolocation-!cn",
         "type": "remote",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-!cn.srs",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },

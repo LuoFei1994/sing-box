@@ -96,6 +96,7 @@
         "🎯 全球直连",
         "🐟 漏网之鱼"
       ]
+      //"default": "手动选择"  这条可以让规则选一个默认的
     },
     
     {
@@ -173,14 +174,33 @@
 
       {
         "action": "reject",
-        "protocol": "quic"
+        "protocol": "quic",
+        "method": "drop"
       },
+
 
       {
         "action": "reject",
-        "protocol": "stun"
+        "network": "quic",
+        "port": 853,
+        "method": "drop"
+      },
+      
+
+      {
+        "action": "reject",
+        "protocol": "stun",
+        "method": "drop"
       },
 
+      {
+        "network": "udp",
+        "port": 443,
+        "action": "reject",
+        "method": "drop"
+      },
+
+      
       {
         "ip_is_private": true,
         "outbound": "🎯 全球直连"
@@ -191,7 +211,8 @@
         "action": "reject",
         "rule_set": [
           "Category-Ads"
-        ]
+        ],
+        "method": "drop"
       },
 
 
@@ -209,7 +230,7 @@
         "outbound": "🎯 全球直连"
       },
       
-      //合并例子"mode": "or" "and" {"type": "logical","mode": "or","rules": [{"protocol": "dns"},{"port": 53}],"outbound": "dns"},
+      //合并例子"mode": "or" "and" {"type": "logical","mode": "or","rules":[{"protocol": "dns"},{"port": 53}//],//"outbound": "dns"//},
 
 
       
@@ -387,14 +408,14 @@
         "tag": "Remote-DNS",
         "address": "tls://8.8.8.8:853",
         "address_resolver": "Remote-DNS-Resolver",
-        "client_subnet": "1.0.1.0",
-        "detour": "🚀 节点选择"
+        "detour": "🚀 节点选择",
+        "client_subnet": "1.0.1.0"
       },
       {
         "tag": "Remote-DNS-Resolver",
         "address": "udp://8.8.8.8:53",
-        "client_subnet": "1.0.1.0",
-        "detour": "🚀 节点选择"
+        "detour": "🚀 节点选择",
+        "client_subnet": "1.0.1.0"
       }
     ],
 
@@ -405,13 +426,13 @@
         "server": "Local-DNS",
         "outbound": "any"
       },
-      {
-        "inbound":[
-          "tun-in",
-          "mixed-in"
-        ],
-        "server": "Local-DNS"
-      },
+      //{
+        //"inbound":[
+          //"tun-in",
+          //"mixed-in"
+        //],
+        //"server": "Local-DNS"
+      //},
       {
         "action": "route",
         "clash_mode": "direct",
@@ -453,23 +474,23 @@
           "geosite-geolocation-!cn"
         ],
         "server": "Remote-DNS"
-      },
-     
-      {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
-            "rule_set": "geosite-geolocation-!cn",
-            "invert": true
-          },
-          {
-            "rule_set": "geoip-cn"
-          }
-        ],
-        "server": "Remote-DNS",
-        "client_subnet": "1.0.1.0" // 任何中国地址
       }
+     
+      //{
+        //"type": "logical",
+        //"mode": "and",
+        //"rules": [
+          //{
+            //"rule_set": "geosite-geolocation-!cn",
+            //"invert": true
+          //},
+          //{
+            //"rule_set": "geoip-cn"
+          //}
+        //],
+        //"server": "Remote-DNS",
+        //"client_subnet": "1.0.1.0" // 任何中国地址
+      //}
     ],
     "disable_cache": false,
     "disable_expire": false,

@@ -234,7 +234,7 @@
             "protocol": "stun"
           }
         ],
-        "outbound": "reject"
+        "action": "reject"
       },
       
       

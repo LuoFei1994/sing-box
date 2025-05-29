@@ -37,7 +37,7 @@
       "store_rdrc": false,
       
       "rdrc_timeout": "7d"
-    //},
+    },
     //"clash_api": {
         //首页增强模式
         //"default_mode": "Enhanced"

@@ -14,10 +14,7 @@
       "external_ui_download_url": "",
       "external_ui_download_detour": "🎯 全球直连",
       "secret": "ID_ndudolt2",
-
-      //工作模式rule/Enhanced(增强模式)/global
-      "default_mode": "Enhanced",   
-      
+      "default_mode": "rule",   
       "access_control_allow_origin": [
         "*"
       ],
@@ -37,11 +34,11 @@
       "store_rdrc": false,
       
       "rdrc_timeout": "7d"
+    },
+    "clash_api": {
+        //首页增强模式-工作模式rule/Enhanced(增强模式)/global
+        "default_mode": "Enhanced"
     }
-    //"clash_api": {
-        //首页增强模式
-        //"default_mode": "Enhanced"
-    //}
   },
 
   //进站监控

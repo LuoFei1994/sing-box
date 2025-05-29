@@ -175,22 +175,22 @@
       {
         "action": "reject",
         "protocol": "quic",
-        "method": "drop"
+        //"method": "drop"
       },
 
 
-      {
-        "action": "reject",
-        "network": "quic",
-        "port": 853,
-        "method": "drop"
-      },
+      //{
+        //"action": "reject",
+        //"network": "quic",
+        //"port": 853,
+        //"method": "drop"
+      //},
       
 
       {
         "action": "reject",
         "protocol": "stun",
-        "method": "drop"
+        //"method": "drop"
       },
 
       {

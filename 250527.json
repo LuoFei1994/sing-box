@@ -15,7 +15,7 @@
       "external_ui_download_detour": "🎯 全球直连",
       "secret": "ID_ndudolt2",
 
-      //工作模式
+      //工作模式rule/global/Enhanced
       "default_mode": "Enhanced", 
       
       "access_control_allow_origin": [

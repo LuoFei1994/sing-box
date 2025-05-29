@@ -31,7 +31,7 @@
       "cache_id": "",
 
       //持久化Fakeip
-      "store_fakeip": false,
+      "store_fakeip": true,
       //持久化已拒绝的dns响应
       "store_rdrc": false,
       
@@ -63,7 +63,7 @@
       "strict_route": true,
       "sniff": true, 
       "endpoint_independent_nat": false,
-      "stack": "mixed",
+      "stack": "system",   //mixed
       "platform": {
 
         //http代理

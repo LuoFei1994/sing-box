@@ -178,7 +178,7 @@
 
       {
         "action": "reject",
-        ""protocol": "stun"
+        "protocol": "stun"
       },
 
       {

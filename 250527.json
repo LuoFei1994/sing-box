@@ -510,6 +510,16 @@
       },
 
       {
+        "tag": "Telegram",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Telegram/Telegram.srs",
+        "format": "binary",
+        "download_detour": "🚀 节点选择"
+      },
+
+
+      //拒绝的dns
+      {
         "tag": "BlockHttpDNS",
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/BlockHttpDNS/BlockHttpDNS.srs",

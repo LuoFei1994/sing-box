@@ -187,11 +187,11 @@
       //},
       
 
-      {
-        "action": "reject",
-        "protocol": "stun",
+      //{
+        //"action": "reject",
+        //"protocol": "stun",
         //"method": "drop"
-      },
+      //},
 
       {
         "network": "udp",

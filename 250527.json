@@ -176,7 +176,10 @@
         "protocol": "quic"
       },
 
-      
+      {
+        "action": "reject",
+        "protocol": "stun"
+      },
 
       {
         "ip_is_private": true,

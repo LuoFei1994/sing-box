@@ -171,9 +171,14 @@
         "outbound": "GLOBAL"
       },
 
-       {
+      {
         "action": "reject",
         "protocol": "quic"
+      },
+
+      {
+        "action": "reject",
+        ""protocol": "stun"
       },
 
       {
@@ -204,39 +209,9 @@
         "outbound": "🎯 全球直连"
       },
       
-      {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "protocol": "dns"
-          },
-          {
-            "port": 53
-          }
-        ],
-        "outbound": "dns"
-      },
+      //合并例子"mode": "or" "and" {"type": "logical","mode": "or","rules": [{"protocol": "dns"},{"port": 53}],"outbound": "dns"},
 
 
-      {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "port": 853
-          },
-          {
-            "network": "udp",
-            "port": 443
-          },
-          {
-            "protocol": "stun"
-          }
-        ],
-        "action": "reject"
-      },
-      
       
      
       
@@ -412,13 +387,13 @@
         "tag": "Remote-DNS",
         "address": "tls://8.8.8.8:853",
         "address_resolver": "Remote-DNS-Resolver",
-        "client_subnet": "218.85.152.99",
+        "client_subnet": "1.0.1.0",
         "detour": "🚀 节点选择"
       },
       {
         "tag": "Remote-DNS-Resolver",
         "address": "udp://8.8.8.8:53",
-        "client_subnet": "218.85.152.99",
+        "client_subnet": "1.0.1.0",
         "detour": "🚀 节点选择"
       }
     ],
@@ -493,7 +468,7 @@
           }
         ],
         "server": "Remote-DNS",
-        "client_subnet": "218.85.152.99" // 任何中国地址
+        "client_subnet": "1.0.1.0" // 任何中国地址
       }
     ],
     "disable_cache": false,

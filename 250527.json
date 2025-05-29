@@ -215,6 +215,15 @@
         "method": "drop"
       },
 
+      {
+        "action": "reject",
+        "rule_set": [
+          "BlockHttpDNS"
+        ],
+        "method": "drop"
+      },
+
+
 
       //走直连的规则
       {
@@ -225,7 +234,19 @@
           "GeoIP-Private",
           "geoip-cn",
           "geosite-geolocation-cn",
-          "ChinaMax"
+          "ChinaMax",
+          "China",
+          "ChinaDNS",
+          "ChinaIPs",
+          "ChinaIPsBGP",
+          "ChinaMaxNoIP",
+          "ChinaMaxNoMedia",
+          "ChinaMedia",
+          "DingTalk",
+          "DouYin",
+          "PayPal",
+          "Tencent",
+          "WeChat"
         ],
         "outbound": "🎯 全球直连"
       },
@@ -247,7 +268,10 @@
           "Whatsapp",
           "Instagram",
           "Facebook",
-          "geosite-geolocation-!cn"
+          "geosite-geolocation-!cn",
+          "GitHub",
+          "Line",
+          "Telegram"
         ],
         "outbound": "🚀 节点选择"
       }
@@ -270,7 +294,7 @@
       {
         "tag": "Tiktok",
         "type": "remote",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tiktok.srs",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/TikTok/TikTok.srs",
         "format": "binary",
         "download_detour": "🚀 节点选择"
       },
@@ -370,7 +394,130 @@
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/ChinaMax/ChinaMax.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
+      },
+
+      {
+        "tag": "China",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/China/China.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      {
+        "tag": "ChinaDNS",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/ChinaDNS/ChinaDNS.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      {
+        "tag": "ChinaIPs",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/ChinaIPs/ChinaIPs.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      {
+        "tag": "ChinaIPsBGP",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/ChinaIPsBGP/ChinaIPsBGP.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      
+      {
+        "tag": "ChinaMaxNoIP",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/ChinaMaxNoIP/ChinaMaxNoIP.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      {
+        "tag": "ChinaMaxNoMedia",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/ChinaMaxNoMedia/ChinaMaxNoMedia.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      {
+        "tag": "ChinaMedia",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/ChinaMedia/ChinaMedia.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      {
+        "tag": "DingTalk",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/DingTalk/DingTalk.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      {
+        "tag": "DouYin",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/DouYin/DouYin.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      {
+        "tag": "PayPal",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/PayPal/PayPal.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      {
+        "tag": "Tencent",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Tencent/Tencent.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      {
+        "tag": "WeChat",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/WeChat/WeChat.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      {
+        "tag": "GitHub",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/GitHub/GitHub.srs",
+        "format": "binary",
+        "download_detour": "🚀 节点选择"
+      },
+
+      {
+        "tag": "Line",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Line/Line.srs",
+        "format": "binary",
+        "download_detour": "🚀 节点选择"
+      },
+
+      {
+        "tag": "BlockHttpDNS",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/BlockHttpDNS/BlockHttpDNS.srs",
+        "format": "binary",
+        "download_detour": "🚀 节点选择"
       }
+
+
 
 
 

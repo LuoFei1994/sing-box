@@ -174,14 +174,33 @@
 
       {
         "action": "reject",
-        "protocol": "quic"
+        "protocol": "quic",
+        "method": "drop"
       },
+
 
       {
         "action": "reject",
-        "protocol": "stun"
+        "network": "quic",
+        "port": 853,
+        "method": "drop"
+      },
+      
+
+      {
+        "action": "reject",
+        "protocol": "stun",
+        "method": "drop"
       },
 
+      {
+        "network": "udp",
+        "port": 443,
+        "action": "reject",
+        "method": "drop"
+      },
+
+      
       {
         "ip_is_private": true,
         "outbound": "🎯 全球直连"
@@ -192,7 +211,8 @@
         "action": "reject",
         "rule_set": [
           "Category-Ads"
-        ]
+        ],
+        "method": "drop"
       },
 
 
@@ -470,7 +490,7 @@
         //],
         //"server": "Remote-DNS",
         //"client_subnet": "1.0.1.0" // 任何中国地址
-      //}
+      }
     ],
     "disable_cache": false,
     "disable_expire": false,

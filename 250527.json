@@ -15,7 +15,7 @@
       "secret": "ID_ndudolt2",
 
       //工作模式rule/global/Enhanced
-      "default_mode": "Enhanced", 
+      "default_mode": "Enhanced",
       
       "access_control_allow_origin": [
         "*"

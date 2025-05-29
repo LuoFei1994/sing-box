@@ -405,13 +405,13 @@
         "server": "Local-DNS",
         "outbound": "any"
       },
-      {
-        "inbound":[
-          "tun-in",
-          "mixed-in"
-        ],
-        "server": "Local-DNS"
-      },
+      //{
+        //"inbound":[
+          //"tun-in",
+          //"mixed-in"
+        //],
+        //"server": "Local-DNS"
+      //},
       {
         "action": "route",
         "clash_mode": "direct",

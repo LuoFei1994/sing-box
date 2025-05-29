@@ -193,12 +193,12 @@
         //"method": "drop"
       //},
 
-      {
-        "network": "udp",
-        "port": 443,
-        "action": "reject",
-        "method": "drop"
-      },
+      //{
+        //"network": "udp",
+        //"port": 443,
+        //"action": "reject",
+        //"method": "drop"
+      //},
 
       
       {

@@ -124,7 +124,6 @@
       "tolerance": 150,
       "interrupt_exist_connections": true,
       "outbounds": [
-        "🚀 节点选择",
         "已中转kookeey",
         "kookeey链式",
         "proxy2"

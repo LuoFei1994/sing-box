@@ -172,8 +172,8 @@
       //"alter_id": 0
     //}
     {
-      "tag": "proxy2",
-      "protocol":  "shadowsocks",
+      "tag": "proxy",
+      "protocol": "shadowsocks",
       "settings": {
         "servers": [
           {
@@ -185,6 +185,7 @@
             "level": 1
           }
         ]
+      }
     }
   ],
 

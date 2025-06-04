@@ -41,15 +41,15 @@
 
   //进站监控
   "inbounds": [
-    //{
-      //"type": "mixed",
-      //"tag": "mixed-in",
-      //"listen": "127.0.0.1",
-      //"listen_port": 20122,
-      //"tcp_fast_open": false,
-      //"tcp_multi_path": false,
-      //"udp_fragment": false
-    //},
+    {
+      "type": "mixed",
+      "tag": "mixed-in",
+      "listen": "127.0.0.1",
+      "listen_port": 20122,
+      "tcp_fast_open": false,
+      "tcp_multi_path": false,
+      "udp_fragment": false
+    },
     {
       "type": "tun",
       "tag": "tun-in",
@@ -63,7 +63,7 @@
       "strict_route": true,
       "sniff": true, 
       "endpoint_independent_nat": false,
-      "stack": "system",   //mixed
+      "stack": "mixed",   //mixed
       "platform": {
 
         //http代理

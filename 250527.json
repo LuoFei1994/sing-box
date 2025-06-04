@@ -252,7 +252,7 @@
         //"method": "drop"
       //},
 
-      /{
+      //{
         //"action": "reject",
         //"rule_set": [
           //"BlockHttpDNS"

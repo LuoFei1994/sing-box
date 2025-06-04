@@ -2,7 +2,7 @@
 {
   "log": {
     "disabled": false,
-    "level": "warn",      //日志详细记录
+    "level": "info",      //日志详细记录
     "output": "",
     "timestamp": true     //打开标注日志时间
   },

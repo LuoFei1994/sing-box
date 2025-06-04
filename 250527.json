@@ -50,7 +50,7 @@
       //"tcp_multi_path": false,
       //"udp_fragment": false
     //},
-    {
+     {
       "type": "tun",
       "tag": "tun-in",
       "interface_name": "",
@@ -207,19 +207,19 @@
       },
 
 
-      //{
-        //"action": "reject",
-        //"network": "quic",
-        //"port": 853,
-        //"method": "drop"
-      //},
+      {
+        "action": "reject",
+        "network": "quic",
+        "port": 853,
+        "method": "drop"
+      },
       
 
-      //{
-        //"action": "reject",
-        //"protocol": "stun",
-        //"method": "drop"
-      //},
+      {
+        "action": "reject",
+        "protocol": "stun",
+        "method": "drop"
+      },
 
       //{
         //"network": "udp",
@@ -266,23 +266,118 @@
       {
         "action": "route",
         "rule_set": [
-          "GeoSite-Private",
-          "GeoSite-CN",
-          "GeoIP-Private",
-          "geoip-cn",
-          "geosite-geolocation-cn",
-          "ChinaMax",
-          "China",
-          "ChinaDNS",
-          "ChinaIPs",
-          "ChinaIPsBGP",
-          "ChinaMaxNoIP",
-          "ChinaMaxNoMedia",
-          "ChinaMedia",
-          "DingTalk",
-          "DouYin",
-          "PayPal",
-          "Tencent",
+          "GeoSite-Private"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "GeoSite-CN"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "GeoIP-Private"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "geoip-cn"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "geosite-geolocation-cn"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "ChinaMax"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "China"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "ChinaDNS"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "ChinaIPs"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "ChinaIPsBGP"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "ChinaMaxNoIP"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "ChinaMaxNoMedia"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "ChinaMedia"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "DingTalk"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "DouYin"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "PayPal"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
           "WeChat"
         ],
         "outbound": "🎯 全球直连"
@@ -559,14 +654,6 @@
         "tag": "PayPal",
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/PayPal/PayPal.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
-
-      {
-        "tag": "Tencent",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Tencent/Tencent.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },

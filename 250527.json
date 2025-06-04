@@ -68,7 +68,7 @@
       //这三个的区别system 性能:高、安全性:低、兼容性:高(依赖系统)、复杂性:简单、 适用场景：性能优先
       //           gvisor 性能:低、安全性:高、兼容性:中         、复杂性:较复杂、适用场景：安全隔离
       //           mixed  上面两个的集合体，都中等
-      "stack": "mixed",   
+      "stack": "system",
       "platform": {
 
         //http代理
@@ -227,6 +227,15 @@
         //"action": "reject",
         //"method": "drop"
       //},
+      {
+        "action": "reject",
+        "network": [
+          "udp"
+        ],
+        "port": [
+          443
+        ]
+      },
 
       
       {
@@ -235,21 +244,21 @@
       },
 
       //去广告
-      {
-        "action": "reject",
-        "rule_set": [
-          "Category-Ads"
-        ],
-        "method": "drop"
-      },
+      //{
+        //"action": "reject",
+        //"rule_set": [
+          //"Category-Ads"
+        //],
+        //"method": "drop"
+      //},
 
-      {
-        "action": "reject",
-        "rule_set": [
-          "BlockHttpDNS"
-        ],
-        "method": "drop"
-      },
+      /{
+        //"action": "reject",
+        //"rule_set": [
+          //"BlockHttpDNS"
+        //],
+        //"method": "drop"
+      //},
 
 
 
@@ -291,18 +300,67 @@
       {
         "action": "route",
         "rule_set": [
-          "Youtube",
-          "Tiktok",
-          "Whatsapp",
-          "Instagram",
-          "Facebook",
-          "geosite-geolocation-!cn",
-          "GitHub",
-          "Line",
+          "Youtube"
+        ],
+        "outbound": "🚀 节点选择"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "Tiktok"
+        ],
+        "outbound": "🚀 节点选择"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "Whatsapp"
+        ],
+        "outbound": "🚀 节点选择"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "Instagram"
+        ],
+        "outbound": "🚀 节点选择"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "Facebook"
+        ],
+        "outbound": "🚀 节点选择"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "geosite-geolocation-!cn"
+        ],
+        "outbound": "🚀 节点选择"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "GitHub"
+        ],
+        "outbound": "🚀 节点选择"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "Line"
+        ],
+        "outbound": "🚀 节点选择"
+      },
+      {
+        "action": "route",
+        "rule_set": [
           "Telegram"
         ],
         "outbound": "🚀 节点选择"
       }
+      
       
     ],
 

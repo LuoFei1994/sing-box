@@ -776,7 +776,7 @@
       
       {
         "address": "fakeip",
-        "tag": "remote_fakeip"
+        "tag": "fakeip"
       }
     ],
 
@@ -860,8 +860,8 @@
           "A",
           "AAAA"
         ],
-        "server": "remote_fakeip",
-        "action": "route",
+        "server": "fakeip",
+        //"action": "route",
         "rewrite_ttl": 1
       }
     ],

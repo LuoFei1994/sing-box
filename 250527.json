@@ -139,10 +139,7 @@
                 "🎯 全球直连"
             ]
         },
-        {
-            "tag": "block",
-            "type": "block"
-        },
+        
         //个人的节点
         {
             "type": "socks",
@@ -721,11 +718,8 @@
             {
                 "address": "fakeip",
                 "tag": "fakeip"
-            },
-            {
-                "address": "rcode://success",
-                "tag": "block"
             }
+            
         ],
         //dns的规则
         "rules": [

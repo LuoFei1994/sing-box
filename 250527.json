@@ -772,11 +772,6 @@
         "address": "udp://8.8.8.8:53",
         "detour": "🚀 节点选择",
         "client_subnet": "1.0.1.0"
-      },
-      
-      {
-        "address": "fakeip",
-        "tag": "fakeip"
       }
     ],
 
@@ -852,26 +847,8 @@
         ],
         "server": "Remote-DNS",
         "client_subnet": "1.0.1.0" // 任何中国地址
-      },
-
-
-      //"rule_set": "geosite-geolocation-!cn", 暂时不设置
-      {
-        "query_type": [
-          "A",
-          "AAAA"
-        ],
-        "server": "fakeip"
-        //"action": "route",
-        //"rewrite_ttl": 1
       }
     ],
-
-    "fakeip": {
-      "enabled": true,
-      "inet4_range": "198.18.0.0/15",
-      "inet6_range": "fc00::/18"
-      },
     "disable_cache": false,
     "disable_expire": false,
     "independent_cache": false,

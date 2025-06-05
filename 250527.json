@@ -775,10 +775,8 @@
       },
       
       {
-        "type": "fakeip",
-        "tag": "remote_fakeip",
-        "inet4_range": "198.18.0.0/15",
-        "inet6_range": "fc00::/18"
+        "address": "fakeip",
+        "tag": "remote_fakeip"
       }
     ],
 
@@ -857,6 +855,7 @@
       },
 
       {
+        //"rule_set": "geosite-geolocation-!cn", 暂时不设置
         "query_type": [
           "A",
           "AAAA"
@@ -872,5 +871,9 @@
 
     //没找到的dns走指定
     "final": "Remote-DNS"
+    "fakeip": {
+      "enabled": true,
+      "inet4_range": "198.18.0.0/15",
+      "inet6_range": "fc00::/18"
   }
 }

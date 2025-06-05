@@ -207,6 +207,7 @@
                 "action": "sniff", //嗅探进站网络
                 "inbound": [
                     "tun-in",
+                    "socks-in",
                     "mixed-in"
                 ]
             },
@@ -214,6 +215,7 @@
             {
                 "inbound": [
                     "tun-in",
+                    "socks-in",
                     "mixed-in"
                 ],
                 "action": "resolve",

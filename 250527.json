@@ -28,7 +28,7 @@
       "enabled": true,
       //缓存路径
       "path": "cache.db",
-      "cache_id": "",
+      "cache_id": "cache.db",
 
       //持久化Fakeip
       "store_fakeip": true,
@@ -773,9 +773,15 @@
         "detour": "🚀 节点选择",
         "client_subnet": "1.0.1.0"
       },
+
+      //fakeip的设置
       {
         "address": "fakeip",
         "tag": "fakeip"
+      },
+      {
+        "address": "rcode://success",
+        "tag": "block"
       }
     ],
 
@@ -862,6 +868,7 @@
         "server": "fakeip"
       }
     ],
+    "strategy": "prefer_ipv4"    //默认ipv4优选
     "disable_cache": false,
     "disable_expire": false,
     "independent_cache": false,

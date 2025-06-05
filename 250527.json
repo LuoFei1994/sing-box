@@ -870,7 +870,7 @@
     "independent_cache": false,
 
     //没找到的dns走指定
-    "final": "Remote-DNS"
+    "final": "Remote-DNS",
     "fakeip": {
       "enabled": true,
       "inet4_range": "198.18.0.0/15",

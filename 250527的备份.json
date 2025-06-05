@@ -2,7 +2,7 @@
 {
   "log": {
     "disabled": false,
-    "level": "warn",      //日志详细记录
+    "level": "info",      //日志详细记录
     "output": "",
     "timestamp": true     //打开标注日志时间
   },
@@ -41,15 +41,15 @@
 
   //进站监控
   "inbounds": [
-    //{
-      //"type": "mixed",
-      //"tag": "mixed-in",
-      //"listen": "127.0.0.1",
-      //"listen_port": 20122,
-      //"tcp_fast_open": false,
-      //"tcp_multi_path": false,
-      //"udp_fragment": false
-    //},
+    {
+      "type": "mixed",
+      "tag": "mixed-in",
+      "listen": "127.0.0.1",
+      "listen_port": 20122,
+      "tcp_fast_open": false,
+      "tcp_multi_path": false,
+      "udp_fragment": false
+    },
     {
       "type": "tun",
       "tag": "tun-in",
@@ -77,8 +77,8 @@
           "server": "127.0.0.1",
           "server_port": 20122
          }
-       }
-     }
+      }
+    }
   ],
 
   //出站设置
@@ -110,8 +110,8 @@
       "interrupt_exist_connections": true,
       "outbounds": [
         "🎈 自动选择",
-        "住宅IP | 🇵🇷 波多黎各 01",
-        "proxy",
+        "已中转kookeey",
+        "kookeey链式",
         "proxy2"
       ]
     },
@@ -124,8 +124,8 @@
       "tolerance": 150,
       "interrupt_exist_connections": true,
       "outbounds": [
-        "住宅IP | 🇵🇷 波多黎各 01",
-        "proxy",
+        "已中转kookeey",
+        "kookeey链式",
         "proxy2"
       ]
     },
@@ -144,7 +144,7 @@
     //个人的节点
     {
       "type": "socks",
-      "tag": "住宅IP | 🇵🇷 波多黎各 01",
+      "tag": "已中转kookeey",
       "server": "100.bgp.666888.biz",
       "server_port": 46867,
       "username": "5258f8e2",
@@ -153,7 +153,7 @@
     },
     {
       "type": "socks",
-      "tag": "proxy",
+      "tag": "kookeey链式",
       "server": "204.242.254.64",
       "server_port": 31012,
       "detour": "proxy2",
@@ -161,14 +161,28 @@
       "password": "56864eaa",
       "version": "5"
     },
+    //{
+      //"type": "vmess",
+      //"tag": "proxy2",
+      //"server": "c50s2.portablesubmarines.com",
+      //"server_port": 19868,
+      //"uuid": "30a5efe1-3235-4b93-a8ee-71b1d1834c5b",
+      //"security": "auto",
+      //"alter_id": 0
+    //}
     {
-      "type": "vmess",
+      "type": "shadowsocks",
       "tag": "proxy2",
-      "server": "c59s3.portablesubmarines.com",
-      "server_port": 19868,
-      "uuid": "30a5efe1-3235-4b93-a8ee-71b1d1834c5b",
-      "security": "auto",
-      "alter_id": 0
+
+      "server": "c50s2.portablesubmarines.com",
+      "server_port": 7395,
+      "method": "aes-256-gcm",
+      "password": "kQBeCDXbwoSW2wVC",
+      "plugin": "",
+      "plugin_opts": "",
+      "network": "udp",
+      "udp_over_tcp": false,
+      "multiplex": {},
     }
   ],
 
@@ -207,19 +221,19 @@
       },
 
 
-      //{
-        //"action": "reject",
-        //"network": "quic",
-        //"port": 853,
-        //"method": "drop"
-      //},
+      {
+        "action": "reject",
+        "network": "quic",
+        "port": 853,
+        "method": "drop"
+      },
       
 
-      //{
-        //"action": "reject",
-        //"protocol": "stun",
-        //"method": "drop"
-      //},
+      {
+        "action": "reject",
+        "protocol": "stun",
+        "method": "drop"
+      },
 
       //{
         //"network": "udp",
@@ -266,23 +280,118 @@
       {
         "action": "route",
         "rule_set": [
-          "GeoSite-Private",
-          "GeoSite-CN",
-          "GeoIP-Private",
-          "geoip-cn",
-          "geosite-geolocation-cn",
-          "ChinaMax",
-          "China",
-          "ChinaDNS",
-          "ChinaIPs",
-          "ChinaIPsBGP",
-          "ChinaMaxNoIP",
-          "ChinaMaxNoMedia",
-          "ChinaMedia",
-          "DingTalk",
-          "DouYin",
-          "PayPal",
-          "Tencent",
+          "GeoSite-Private"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "GeoSite-CN"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "GeoIP-Private"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "geoip-cn"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "geosite-geolocation-cn"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "ChinaMax"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "China"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "ChinaDNS"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "ChinaIPs"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "ChinaIPsBGP"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "ChinaMaxNoIP"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "ChinaMaxNoMedia"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "ChinaMedia"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "DingTalk"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "DouYin"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "PayPal"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
           "WeChat"
         ],
         "outbound": "🎯 全球直连"
@@ -559,14 +668,6 @@
         "tag": "PayPal",
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/PayPal/PayPal.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
-
-      {
-        "tag": "Tencent",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Tencent/Tencent.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },

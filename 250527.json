@@ -182,7 +182,7 @@
       "plugin_opts": "",
       "network": "udp",
       "udp_over_tcp": false,
-      "multiplex": {},
+      "multiplex": {}
     }
   ],
 
@@ -868,7 +868,7 @@
         "server": "fakeip"
       }
     ],
-    "strategy": "prefer_ipv4"    //默认ipv4优选
+    "strategy": "prefer_ipv4",    //默认ipv4优选
     "disable_cache": false,
     "disable_expire": false,
     "independent_cache": false,

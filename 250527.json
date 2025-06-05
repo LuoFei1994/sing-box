@@ -192,7 +192,7 @@
       {
         "action": "sniff",       //嗅探进站网络
         "inbound":[
-           "tun-in"
+           "tun-in",
            "mixed-in"
           ]
       },

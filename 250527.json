@@ -224,10 +224,14 @@
       },
 
       {
-        "protocol": [
-          "stun",
-          "quic"
-        ],
+        "protocol": "stun",
+        "port": 3478,
+        "action": "reject",
+        "method": "drop"
+      },
+        
+      {
+        "protocol": "quic",
         "action": "reject",
         "method": "drop"
       },

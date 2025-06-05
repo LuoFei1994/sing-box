@@ -28,7 +28,7 @@
       "enabled": true,
       //缓存路径
       "path": "cache.db",
-      "cache_id": "",
+      "cache_id": "cache.db",
 
       //持久化Fakeip
       "store_fakeip": true,
@@ -772,6 +772,16 @@
         "address": "udp://8.8.8.8:53",
         "detour": "🚀 节点选择",
         "client_subnet": "1.0.1.0"
+      },
+
+      //fakeip的设置
+      {
+        "address": "fakeip",
+        "tag": "fakeip"
+      },
+      {
+        "address": "rcode://success",
+        "tag": "block"
       }
     ],
 
@@ -846,13 +856,29 @@
         ],
         "server": "Remote-DNS",
         "client_subnet": "1.0.1.0" // 任何中国地址
+      },
+      
+      {
+        //"action": "route",
+        //"rule_set": "geosite-geolocation-!cn",
+        "query_type": [
+          "A",
+          "AAAA"
+        ],
+        "server": "fakeip"
       }
     ],
+    "strategy": "prefer_ipv4"    //默认ipv4优选
     "disable_cache": false,
     "disable_expire": false,
     "independent_cache": false,
 
     //没找到的dns走指定
-    "final": "Remote-DNS"
+    "final": "Remote-DNS",
+    "fakeip": {
+      "enabled": true,
+      "inet4_range": "198.18.0.0/15",
+      "inet6_range": "fc00::/18"
+    }
   }
 }

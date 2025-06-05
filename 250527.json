@@ -863,7 +863,7 @@
         "server": "remote_fakeip",
         "action": "route",
         "rewrite_ttl": 1
-      },
+      }
     ],
     "disable_cache": false,
     "disable_expire": false,

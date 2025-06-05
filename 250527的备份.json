@@ -192,46 +192,45 @@
       {
         "action": "sniff",       //嗅探进站网络
         "inbound":[
-           "tun-in"
-           //"mixed-in"
+           "tun-in",
+           "mixed-in"
           ]
+      },
+      //进站来的都从域解析到ip，ipv4优先
+      {
+        "inbound": [
+          "tun-in",
+          "mixed-in"
+        ],
+        "action": "resolve",
+        "strategy": "prefer_ipv4"
       },
       
       //拦截dns
       {
-        "action": "hijack-dns",
-        "protocol": "dns"
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "port": 53
+          },
+          {
+            "protocol": "dns"
+          }
+        ],
+        "action": "hijack-dns"
       },
       
       {
-        "action": "route",
-        "clash_mode": "direct",
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "clash_mode": "global",
-        "outbound": "GLOBAL"
-      },
-
-      {
-        "action": "reject",
-        "protocol": "quic",
-        "method": "drop"
-      },
-
-
-      {
-        "action": "reject",
-        "network": "quic",
-        "port": 853,
-        "method": "drop"
-      },
-      
-
-      {
-        "action": "reject",
         "protocol": "stun",
+        "port": 3478,
+        "action": "reject",
+        "method": "drop"
+      },
+        
+      {
+        "protocol": "quic",
+        "action": "reject",
         "method": "drop"
       },
 
@@ -254,8 +253,11 @@
       
       {
         "ip_is_private": true,
+        "action": "route",
         "outbound": "🎯 全球直连"
       },
+
+
 
       //去广告
       //{
@@ -273,6 +275,16 @@
         //],
         //"method": "drop"
       //},
+      {
+        "action": "route",
+        "clash_mode": "direct",
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "clash_mode": "global",
+        "outbound": "GLOBAL"
+      },
 
 
 
@@ -739,7 +751,7 @@
     "servers": [
       {
         "tag": "Local-DNS",
-        "address": "https://223.5.5.5:443/dns-query",
+        "address": "h3://223.5.5.5:443/dns-query",
         "address_resolver": "Local-DNS-Resolver",
         "detour": "🎯 全球直连"
       },

@@ -63,7 +63,7 @@
       "strict_route": true,
       "sniff": true, 
       "endpoint_independent_nat": true,
-      "domain_strategy": "prefer_ipv4"
+      "domain_strategy": "prefer_ipv4",
 
       //mixed、system、gvisor  
       //这三个的区别system 性能:高、安全性:低、兼容性:高(依赖系统)、复杂性:简单、 适用场景：性能优先

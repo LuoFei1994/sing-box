@@ -489,6 +489,16 @@
     //出站的分流规则集
     "rule_set": [
 
+      {
+        "tag": "privacy-protection",
+        "type": "remote",
+        "format": "source",
+        "url": "https://raw.githubusercontent.com/hagezi/dns-blocklists/refs/heads/main/wildcard/tif.txt",
+        "download_detour": "🚀 节点选择",
+        "update_interval": "6h"
+      },
+      
+
       //油管规则集
       {
         "tag": "Youtube",

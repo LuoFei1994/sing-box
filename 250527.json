@@ -2,13 +2,13 @@
 {
   "log": {
     "disabled": false,
-    "level": "info",      //日志详细记录
+    "level": "error",      //日志详细记录
     "output": "",
-    "timestamp": true     //打开标注日志时间
+    "timestamp": false     //打开标注日志时间
   },
   "experimental": {
     "clash_api": {
-      "external_controller": "127.0.0.1:20123",
+      "external_controller": "127.0.0.1:9090",
       "external_ui": "",
       "external_ui_download_url": "",
       "external_ui_download_detour": "🎯 全球直连",
@@ -39,46 +39,47 @@
     }
   },
 
+  //时间同步保护：
+  "ntp": {
+    "enabled": true,
+    "server": "time.apple.com",
+    "server_port": 123,
+    "interval": "30m"
+  },
+
   //进站监控
   "inbounds": [
     {
-      "type": "mixed",
-      "tag": "mixed-in",
-      "listen": "127.0.0.1",
-      "listen_port": 20122,
-      "tcp_fast_open": false,
-      "tcp_multi_path": false,
-      "udp_fragment": false
-    },
-    {
       "type": "tun",
       "tag": "tun-in",
-      "interface_name": "",
-      "address": [
-        "172.18.0.1/30",
-        "fdfe:dcba:9876::1/126"
-      ],
-      "mtu": 1400,
+      "interface_name": "singbox-tun",
+      "mtu": 1420,
+      "endpoint_independent_nat": true,
+      "stack": "mixed",
+      "inet4_address": "172.19.0.1/30",
+      "inet6_address": "fdfe:dcba:9876::1/126",
       "auto_route": true,
       "strict_route": true,
-      "sniff": true, 
-      "endpoint_independent_nat": true,
-      "domain_strategy": "prefer_ipv4"
-
-      //mixed、system、gvisor  
-      //这三个的区别system 性能:高、安全性:低、兼容性:高(依赖系统)、复杂性:简单、 适用场景：性能优先
-      //           gvisor 性能:低、安全性:高、兼容性:中         、复杂性:较复杂、适用场景：安全隔离
-      //           mixed  上面两个的集合体，都中等
-      "stack": "mixed",
-      "platform": {
-
-        //http代理
-        "http_proxy": {
-          "enabled": true,
-          "server": "127.0.0.1",
-          "server_port": 20122
-         }
-      }
+      "sniff": true,
+      "sniff_override_destination": true,
+      "domain_resolver": {
+        "server": "Local-DNS",
+        "strategy": "prefer_ipv4"
+      },
+      "tcp_fast_open": true,
+      "tcp_multi_path": true,
+      "dns_hijack": [
+        "tcp://any:53",
+        "udp://any:53",
+        "tcp://any:853"
+      ]
+    },
+    {
+      "type": "socks",
+      "tag": "content-blocker",
+      "listen": "127.0.0.1",
+      "listen_port": 40002,
+      "sniff": true
     }
   ],
 
@@ -88,7 +89,12 @@
     //直连
     {
       "type": "direct",
-      "tag": "🎯 全球直连"
+      "tag": "🎯 全球直连",
+      "domain_resolver": {
+        "server": "Local-DNS",
+        "strategy": "prefer_ipv4"
+      }
+      
     },
   
     //全局
@@ -193,21 +199,19 @@
       {
         "action": "sniff",       //嗅探进站网络
         "inbound":[
-           "tun-in",
-           "mixed-in"
+           "tun-in"
           ]
       },
       //进站来的都从域解析到ip，ipv4优先
       {
         "inbound": [
-          "tun-in",
-          "mixed-in"
+          "tun-in"
         ],
         "action": "resolve",
         "strategy": "prefer_ipv4"
       },
       
-      //拦截dns
+      // ===== DNS规则 (官方推荐动作) =====
       {
         "type": "logical",
         "mode": "or",
@@ -221,34 +225,9 @@
         ],
         "action": "hijack-dns"
       },
-      
       {
-        "protocol": "stun",
-        "port": 3478,
-        "action": "reject",
-        "method": "drop"
-      },
-        
-      {
-        "protocol": "quic",
-        "action": "reject",
-        "method": "drop"
-      },
-
-      //{
-        //"network": "udp",
-        //"port": 443,
-        //"action": "reject",
-        //"method": "drop"
-      //},
-      {
-        "action": "reject",
-        "network": [
-          "udp"
-        ],
-        "port": [
-          443
-        ]
+        "ip_cidr": "198.18.0.0/15",
+        "outbound": "🎯 全球直连"
       },
 
       
@@ -256,6 +235,84 @@
         "ip_is_private": true,
         "action": "route",
         "outbound": "🎯 全球直连"
+      },
+
+      // ===== 拒绝动作 (官方标准写法) =====
+      {
+        "domain_keyword": ["stun:", "turn:", "webrtc"],
+        "action": "reject"
+      },
+      {
+        "port": [3478, 5349, 19302, 19305],
+        "action": "reject"
+      },
+      {
+        "geosite": "category-ads-all",
+        "action": "reject"
+      },
+      {
+        "geosite": "tracker",
+        "action": "reject"
+      },
+      {
+        "geosite": "category-porn",
+        "action": "reject"
+      },
+      {
+        "rule_set": "reject-rules",
+        "action": "reject"
+      },
+      {
+        "rule_set": "webrtc-leak",
+        "action": "reject"
+      },
+      {
+        "rule_set": "privacy-protection",
+        "action": "reject"
+      },
+      
+      // ===== 内置动作 (官方推荐) =====
+      {
+        "ip_cidr": [
+          "10.0.0.0/8",
+          "172.16.0.0/12",
+          "192.168.0.0/16",
+          "fc00::/7"
+        ],
+        "action": "route",
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "geoip": "private",
+        "action": "route",
+        "outbound": "🎯 全球直连"
+      },
+      
+      // ===== 出站动作 =====
+      {
+        "geoip": "cn",
+        "action": "route",
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "geosite": "cn",
+        "action": "route",
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "domain_suffix": [".apple.com", ".icloud.com"],
+        "skip_resolve": true,
+        "action": "route",
+        "outbound": "🎯 全球直连"
+        
+      },
+      {
+        "domain": ["geosite:geolocation-!cn"],
+        "outbound": "🚀 节点选择"
+      },
+      {
+        "domain_keyword": ["banking", "financial", "secret"],
+        "outbound": "🚀 节点选择"
       },
 
 
@@ -488,6 +545,30 @@
 
     //出站的分流规则集
     "rule_set": [
+      {
+        "tag": "privacy-protection",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/tif.txt",
+        "download_detour": "🎯 全球直连",
+        "update_interval": "6h"
+      },
+      {
+        "tag": "webrtc-leak",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/Extra/WebRTC.list",
+        "download_detour": "🚀 节点选择",
+        "update_interval": "12h"
+      },
+      {
+        "tag": "reject-rules",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/Guard/Reject.list",
+        "download_detour": "🎯 全球直连",
+        "update_interval": "24h"
+      },
 
       //油管规则集
       {
@@ -738,6 +819,7 @@
     ],
     //自动检测出站接口
     "auto_detect_interface": true,
+    "default_mark": 233
 
     //查找进程信息
     "find_process": true,    
@@ -753,36 +835,18 @@
       {
         "tag": "Local-DNS",
         "address": "h3://223.5.5.5:443/dns-query",
-        "address_resolver": "Local-DNS-Resolver",
+        "address_strategy": "ipv4_only",
         "detour": "🎯 全球直连"
       },
-      {
-        "tag": "Local-DNS-Resolver",
-        "address": "udp://223.5.5.5:53",
-        "detour": "🎯 全球直连"
-      },
+      
+      
       {
         "tag": "Remote-DNS",
-        "address": "tls://8.8.8.8:853",
-        "address_resolver": "Remote-DNS-Resolver",
+        "address": "https://dns.quad9.net/dns-query",
+        "address_strategy": "ipv4_only",
         "detour": "🚀 节点选择",
+        "strategy": "prefer_ipv4",
         "client_subnet": "1.0.1.0"
-      },
-      {
-        "tag": "Remote-DNS-Resolver",
-        "address": "udp://8.8.8.8:53",
-        "detour": "🚀 节点选择",
-        "client_subnet": "1.0.1.0"
-      },
-
-      //fakeip的设置
-      {
-        "address": "fakeip",
-        "tag": "fakeip"
-      },
-      {
-        "address": "rcode://success",
-        "tag": "block"
       }
     ],
 
@@ -790,16 +854,16 @@
     "rules": [
       {
         "action": "route",
-        "server": "Local-DNS",
+        "server": "Remote-DNS",
         "outbound": "any"
       },
-      //{
-        //"inbound":[
-          //"tun-in",
-          //"mixed-in"
-        //],
-        //"server": "Local-DNS"
-      //},
+
+      {
+        "geosite": "cn",
+        "server": "local-dns",
+        "disable_cache": true
+      },
+     
       {
         "action": "route",
         "clash_mode": "direct",
@@ -869,17 +933,18 @@
         "server": "fakeip"
       }
     ],
-    "strategy": "prefer_ipv4",    //默认ipv4优选
+    "strategy": "ipv4_only",    //默认ipv4优选
     "disable_cache": false,
     "disable_expire": false,
-    "independent_cache": false,
+    "independent_cache": true,
 
     //没找到的dns走指定
     "final": "Remote-DNS",
     "fakeip": {
       "enabled": true,
       "inet4_range": "198.18.0.0/15",
-      "inet6_range": "fc00::/18"
+      "inet6_range": "fc00::/18",
+      "always_real_ip": ["your_domain.com"]
     }
   }
 }

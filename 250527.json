@@ -1,6 +1,6 @@
 //日志记录
 {
-  "log": {
+  "log": { 
     "disabled": false,
     "level": "error", //日志详细记录
     "output": "",

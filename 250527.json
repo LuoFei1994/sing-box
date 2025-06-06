@@ -717,7 +717,7 @@
       },
       {
         "tag": "Remote-DNS-Resolver",
-        "address": "udp://9.9.9.9:53",
+        "address": "udp://9.9.9.9:53", 
         "detour": "🚀 节点选择",
         "client_subnet": "1.0.1.0"
       },

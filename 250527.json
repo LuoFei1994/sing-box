@@ -292,27 +292,27 @@
       },
 
       // ===== 出站动作 =====
-      {
-        "geoip": "cn",
-        "action": "direct"
-      },
-      {
-        "geosite": "cn",
-        "action": "direct"
-      },
-      {
-        "domain_suffix": [".apple.com", ".icloud.com"],
-        "action": "direct",
-        "action": "resolve"
-      },
-      {
-        "domain": ["geosite:geolocation-!cn"],
-        "outbound": "🚀 节点选择"
-      },
-      {
-        "domain_keyword": ["banking", "financial", "secret"],
-        "outbound": "🚀 节点选择"
-      },
+      //{
+        //"geoip": "cn",
+        //"action": "direct"
+      //},
+      //{
+        //"geosite": "cn",
+        //"action": "direct"
+      //},
+      //{
+        //"domain_suffix": [".apple.com", ".icloud.com"],
+        //"action": "direct",
+        //"action": "resolve"
+      //},
+      //{
+        //"domain": ["geosite:geolocation-!cn"],
+        //"outbound": "🚀 节点选择"
+      //},
+      //{
+        //"domain_keyword": ["banking", "financial", "secret"],
+        //"outbound": "🚀 节点选择"
+      //},
 
       
       {

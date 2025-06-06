@@ -2,7 +2,7 @@
 {
   "log": {
     "disabled": false,
-    "level": "info", //日志详细记录
+    "level": "error", //日志详细记录
     "output": "",
     "timestamp": true //打开标注日志时间
   },
@@ -799,13 +799,14 @@
     "strategy": "prefer_ipv4", //默认ipv4优选
     "disable_cache": false,
     "disable_expire": false,
-    "independent_cache": false,
+    "independent_cache": true,
     //没找到的dns走指定
     "final": "Remote-DNS",
     "fakeip": {
       "enabled": true,
       "inet4_range": "198.18.0.0/15",
       "inet6_range": "fc00::/18"
+      //"always_real_ip": ["your_domain.com"]
     }
   }
 }

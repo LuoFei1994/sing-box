@@ -782,6 +782,10 @@
         "detour": "🚀 节点选择",
         "strategy": "prefer_ipv4",
         "client_subnet": "1.0.1.0"
+      },
+      {
+        "address": "fakeip",
+        "tag": "fakeip"
       }
     ],
     //dns的规则
@@ -869,7 +873,7 @@
       "enabled": true,
       "inet4_range": "198.18.0.0/15",
       "inet6_range": "fc00::/18",
-      "always_real_ip": [
+      //"always_real_ip": [
         "your_domain.com"
       ]
     }

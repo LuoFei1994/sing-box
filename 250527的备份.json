@@ -58,11 +58,12 @@
         "172.18.0.1/30",
         "fdfe:dcba:9876::1/126"
       ],
-      "mtu": 9000,
+      "mtu": 1400,
       "auto_route": true,
       "strict_route": true,
       "sniff": true, 
-      "endpoint_independent_nat": false,
+      "endpoint_independent_nat": true,
+      "domain_strategy": "prefer_ipv4"
 
       //mixed、system、gvisor  
       //这三个的区别system 性能:高、安全性:低、兼容性:高(依赖系统)、复杂性:简单、 适用场景：性能优先
@@ -182,7 +183,7 @@
       "plugin_opts": "",
       "network": "udp",
       "udp_over_tcp": false,
-      "multiplex": {},
+      "multiplex": {}
     }
   ],
 
@@ -868,7 +869,7 @@
         "server": "fakeip"
       }
     ],
-    "strategy": "prefer_ipv4"    //默认ipv4优选
+    "strategy": "prefer_ipv4",    //默认ipv4优选
     "disable_cache": false,
     "disable_expire": false,
     "independent_cache": false,

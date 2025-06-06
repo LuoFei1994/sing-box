@@ -278,7 +278,7 @@
       },
       {
         "geoip": "private",
-        "action": "🎯 全球直连"
+        "action": "direct"
       },
 
       {
@@ -294,15 +294,15 @@
       // ===== 出站动作 =====
       {
         "geoip": "cn",
-        "action": "🎯 全球直连"
+        "action": "direct"
       },
       {
         "geosite": "cn",
-        "action": "🎯 全球直连"
+        "action": "direct"
       },
       {
         "domain_suffix": [".apple.com", ".icloud.com"],
-        "action": "🎯 全球直连",
+        "action": "direct",
         "action": "resolve"
       },
       {

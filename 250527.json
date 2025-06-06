@@ -710,7 +710,7 @@
       },
       {
         "tag": "Remote-DNS",
-        "address": "https://dns.quad9.net/dns-query",
+        "address": "tls://8.8.8.8:853",
         "address_strategy": "ipv4_only",
         "strategy": "prefer_ipv4",
         "address_resolver": "Remote-DNS-Resolver",

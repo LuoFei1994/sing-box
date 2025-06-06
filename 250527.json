@@ -300,7 +300,6 @@
           ".apple.com",
           ".icloud.com"
         ],
-        "skip_resolve": true,
         "action": "route",
         "outbound": "🎯 全球直连"
       },

@@ -710,9 +710,7 @@
       },
       {
         "tag": "Remote-DNS",
-        "address": "tls://8.8.8.8:853",
-        "address_strategy": "ipv4_only",
-        "strategy": "prefer_ipv4",
+        "address": "tls://dns11.quad9.net",
         "address_resolver": "Remote-DNS-Resolver",
         "detour": "🚀 节点选择",
         "client_subnet": "1.0.1.0"
@@ -720,8 +718,6 @@
       {
         "tag": "Remote-DNS-Resolver",
         "address": "udp://8.8.8.8:53",
-        "address_strategy": "ipv4_only",
-        "strategy": "prefer_ipv4",
         "detour": "🚀 节点选择",
         "client_subnet": "1.0.1.0"
       },

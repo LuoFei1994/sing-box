@@ -526,25 +526,19 @@
   //以下是dns服务和规则设置
   "dns": {
     "servers": [
-      //{
-        //"tag": "Local-DNS",
-        //"address": "h3://223.5.5.5:443/dns-query",
-        //"address_resolver": "Local-DNS-Resolver",
-        //"detour": "🎯 全球直连"
-      //},
-
-      //{
-        //"tag": "Local-DNS-Resolver",
-        //"address": "udp://223.5.5.5:53",
-        //"detour": "🎯 全球直连"
-      //},
-
-
       {
         "tag": "Local-DNS",
-        "address": "https://1.1.1.1/dns-query",
+        "address": "h3://223.5.5.5:443/dns-query",
+        "address_resolver": "Local-DNS-Resolver",
         "detour": "🎯 全球直连"
       },
+
+      {
+        "tag": "Local-DNS-Resolver",
+        "address": "udp://223.5.5.5:53",
+        "detour": "🎯 全球直连"
+      },
+
       
       {
         "tag": "Remote-DNS",

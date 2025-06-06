@@ -206,8 +206,10 @@
         "action": "resolve",
         "strategy": "prefer_ipv4"
       },
-      
+
+      // ===== DNS规则 (官方推荐动作) =====
       //拦截dns
+      
       {
         "type": "logical",
         "mode": "or",
@@ -222,60 +224,100 @@
         "action": "hijack-dns"
       },
       
-      {
-        "protocol": "stun",
-        "port": 3478,
-        "action": "reject",
-        "method": "drop"
-      },
-        
-      {
-        "protocol": "quic",
-        "action": "reject",
-        "method": "drop"
-      },
-
-      //{
-        //"network": "udp",
-        //"port": 443,
-        //"action": "reject",
-        //"method": "drop"
-      //},
-      {
-        "action": "reject",
-        "network": [
-          "udp"
-        ],
-        "port": [
-          443
-        ]
-      },
-
       
+      
+      // ===== 拒绝动作 (官方标准写法) =====
+      {
+        "domain_keyword": ["stun:", "turn:", "webrtc"],
+        "action": "reject"
+      },
+      {
+        "port": [3478, 5349, 19302, 19305],
+        "action": "reject"
+      },
+      {
+        "geosite": "category-ads-all",
+        "action": "reject"
+      },
+      {
+        "geosite": "tracker",
+        "action": "reject"
+      },
+      {
+        "geosite": "category-porn",
+        "action": "reject"
+      },
+
+      //去广告
+      {
+        "action": "reject",
+        "rule_set": [
+          "Category-Ads"
+        ],
+        "method": "drop"
+      },
+
+      {
+        "action": "reject",
+        "rule_set": [
+          "BlockHttpDNS"
+        ],
+        "method": "drop"
+      },
+      
+
+      // ===== 内置动作 (官方推荐) =====
+      {
+        "ip_cidr": [
+          "10.0.0.0/8",
+          "172.16.0.0/12",
+          "192.168.0.0/16",
+          "fc00::/7"
+        ],
+        "action": "direct"
+      },
+      {
+        "geoip": "private",
+        "action": "🎯 全球直连"
+      },
+
+      {
+        "ip_cidr": "198.18.0.0/15",
+        "outbound": "🎯 全球直连"
+      },
       {
         "ip_is_private": true,
         "action": "route",
         "outbound": "🎯 全球直连"
       },
 
+      // ===== 出站动作 =====
+      {
+        "geoip": "cn",
+        "action": "🎯 全球直连"
+      },
+      {
+        "geosite": "cn",
+        "action": "🎯 全球直连"
+      },
+      {
+        "domain_suffix": [".apple.com", ".icloud.com"],
+        "action": "🎯 全球直连",
+        "action": "resolve"
+      },
+      {
+        "domain": ["geosite:geolocation-!cn"],
+        "outbound": "🚀 节点选择"
+      },
+      {
+        "domain_keyword": ["banking", "financial", "secret"],
+        "outbound": "🚀 节点选择"
+      }
 
+      
+      
 
-      //去广告
-      //{
-        //"action": "reject",
-        //"rule_set": [
-          //"Category-Ads"
-        //],
-        //"method": "drop"
-      //},
-
-      //{
-        //"action": "reject",
-        //"rule_set": [
-          //"BlockHttpDNS"
-        //],
-        //"method": "drop"
-      //},
+      
       {
         "action": "route",
         "clash_mode": "direct",

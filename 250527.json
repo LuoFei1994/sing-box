@@ -533,11 +533,17 @@
         "address": "udp://223.5.5.5:53",
         "detour": "🎯 全球直连"
       },
+      //{
+        //"tag": "Remote-DNS",
+        //"address": "https://1.1.1.1/dns-query", // 使用Cloudflare的DoH
+        //"detour": "🚀 节点选择"
+      //},
       {
         "tag": "Remote-DNS",
-        "address": "https://1.1.1.1/dns-query", // 使用Cloudflare的DoH
+        "address": "tls://9.9.9.9:853",  // Quad9的DoT
         "detour": "🚀 节点选择"
       },
+      
       //fakeip的设置
       {
         "address": "fakeip",

@@ -38,6 +38,12 @@
       "rdrc_timeout": "7d"
     }
   },
+  "ntp": {
+    "enabled": true,
+    "server": "time.apple.com",
+    "server_port": 123,
+    "interval": "30m"
+  },
 
   //进站监控
   "inbounds": [
@@ -249,13 +255,7 @@
           "BlockHttpDNS"
         ],
         "action": "reject"
-      },
-      {
-        "rule_set": [
-          "privacy-protection"
-        ],
-        "action": "reject"
-      },
+      }
       
 
       // ===== 内置动作 (官方推荐) =====
@@ -501,17 +501,7 @@
 
     //出站的分流规则集
     "rule_set": [
-      //dns泄露的拒绝规则
-      {
-        "tag": "privacy-protection",
-        "type": "remote",
-        "format": "source",
-        "url": "https://gh.diveng.xyz/raw.githubusercontent.com/hagezi/dns-blocklists/refs/heads/main/wildcard/tif.txt",
-        "download_detour": "🎯 全球直连",
-        "update_interval": "24h"
-      },
       
-
       //油管规则集
       {
         "tag": "Youtube",
@@ -761,6 +751,7 @@
     ],
     //自动检测出站接口
     "auto_detect_interface": true,
+    "default_mark": 233,
 
     //查找进程信息
     "find_process": true,    

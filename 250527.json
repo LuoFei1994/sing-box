@@ -1,18 +1,18 @@
 //日志记录
 {
-  "log": { 
+  "log": {
     "disabled": false,
     "level": "warn", //日志详细记录
-    "output": "", 
+    "output": "",
     "timestamp": false //打开标注日志时间  
   },
   "experimental": {
     "clash_api": {
       "external_controller": "127.0.0.1:20123",
       "external_ui": "",
-      "external_ui_download_url": "",  
+      "external_ui_download_url": "",
       "external_ui_download_detour": "🎯 全球直连",
-      "secret": "",     //// 留空自动生成随机密钥
+      "secret": "", //// 留空自动生成随机密钥
       //工作模式rule/global/Enhanced
       "default_mode": "Enhanced",
       "access_control_allow_origin": [
@@ -58,11 +58,11 @@
         "172.18.0.1/30",
         "fdfe:dcba:9876::1/126"
       ],
-      "mtu": 1450,   // 优化iOS的MTU值
+      "mtu": 1450, // 优化iOS的MTU值
       "auto_route": true,
       "strict_route": true,
       "sniff": true,
-      "endpoint_independent_nat": false,    // 提升NAT兼容性
+      "endpoint_independent_nat": false, // 提升NAT兼容性
       "domain_strategy": "prefer_ipv4",
       //mixed、system、gvisor  
       //这三个的区别system 性能:高、安全性:低、兼容性:高(依赖系统)、复杂性:简单、 适用场景：性能优先
@@ -168,10 +168,10 @@
       "server_port": 7395,
       "method": "chacha20-ietf-poly1305",
       "password": "kQBeCDXbwoSW2wVC",
-      "plugin": "obfs-local",                                 //启用HTTP流量混淆插件
-      "plugin_opts": "obfs=http;obfs-host=cloudflare.com",    //伪装为常见CDN流量(cloudflare)
+      "plugin": "obfs-local", //启用HTTP流量混淆插件
+      "plugin_opts": "obfs=http;obfs-host=cloudflare.com", //伪装为常见CDN流量(cloudflare)
       "network": "udp",
-      "udp_over_tcp": true,  // 强制UDP over TCP
+      "udp_over_tcp": true, // 强制UDP over TCP
       "multiplex": {}
     }
   ],
@@ -209,7 +209,6 @@
         ],
         "action": "hijack-dns"
       },
-
       //去广告
       {
         "rule_set": [
@@ -223,7 +222,6 @@
         ],
         "action": "reject"
       },
-      
       // ===== 拒绝动作 (官方标准写法) =====
       {
         "domain_keyword": [
@@ -234,32 +232,34 @@
         ],
         "action": "reject"
       },
-
       // 增强WebRTC阻止
       {
-      "action": "reject",
-      "domain_regex": "^(stun|turn|webrtc)\\."
+        "action": "reject",
+        "domain_regex": "^(stun|turn|webrtc)\\."
       },
-
       // 阻止未加密QUIC协议
       {
-      "action": "reject",
-      "protocol": ["quic"]
+        "action": "reject",
+        "protocol": [
+          "quic"
+        ]
       },
-
       // 阻止UDP潜在泄露
       {
-      "port": [443],
-      "network": "udp",
-      "action": "reject"
+        "port": [
+          443
+        ],
+        "network": "udp",
+        "action": "reject"
       },
-      
       // 新增隐私保护规则
       {
-      "action": "reject",
-      "domain_keyword": ["analytics", "tracking"]
+        "action": "reject",
+        "domain_keyword": [
+          "analytics",
+          "tracking"
+        ]
       },
-      
       {
         "port": [
           3478,
@@ -269,14 +269,13 @@
         ],
         "action": "reject"
       },
-     
-      
       // 添加隐私保护规则（置于广告规则后）
       {
-        "rule_set": ["Tracking"],
+        "rule_set": [
+          "Tracking"
+        ],
         "action": "reject"
       },
-      
       // ===== 内置动作 (官方推荐) =====
       {
         "ip_cidr": [
@@ -294,12 +293,14 @@
         "outbound": "🎯 全球直连"
       },
       // ===== 出站动作 =====
-
       {
-        "domain_suffix": [".apple.com", ".icloud.com", ".mzstatic.com"],
+        "domain_suffix": [
+          ".apple.com",
+          ".icloud.com",
+          ".mzstatic.com"
+        ],
         "outbound": "🎯 全球直连"
       },
-  
       {
         "action": "route",
         "clash_mode": "direct",
@@ -310,7 +311,6 @@
         "clash_mode": "global",
         "outbound": "GLOBAL"
       },
-      
       //走直连的规则
       {
         "action": "route",
@@ -324,13 +324,9 @@
         ],
         "outbound": "🎯 全球直连"
       },
-     
-      
       //合并例子"mode": "or" "and" {"type": "logical","mode": "or","rules":[{"protocol": "dns"},{"port": 53}//],//"outbound": "dns"//},
       //以下规则分流走节点
-
-
-       {
+      {
         "domain_keyword": [
           "banking",
           "financial",
@@ -338,7 +334,6 @@
         ],
         "outbound": "🚀 节点选择"
       },
-      
       // 走代理的规则：非中国域名
       {
         "action": "route",
@@ -347,15 +342,13 @@
         ],
         "outbound": "🚀 节点选择"
       },
-
       // 支付服务走代理（安全加固）
       {
-        "domain_suffix": [".stripe.com"],
+        "domain_suffix": [
+          ".stripe.com"
+        ],
         "outbound": "🚀 节点选择"
       },
-
-
-      
       {
         "action": "route",
         "rule_set": [
@@ -370,7 +363,6 @@
         ],
         "outbound": "🚀 节点选择"
       }
-      
     ],
     //出站的分流规则集
     "rule_set": [
@@ -464,7 +456,6 @@
         "download_detour": "🎯 全球直连"
       },
       //网上别人做的转sing-box的中国 规则地址
-      
       {
         "tag": "PayPal",
         "type": "remote",
@@ -472,17 +463,13 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-
       {
-
         "tag": "Tracking",
         "type": "remote",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-tracking-all.srs",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ads-all.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
-
       },
-      
       {
         "tag": "GitHub",
         "type": "remote",
@@ -535,17 +522,11 @@
         "address": "udp://223.5.5.5:53",
         "detour": "🎯 全球直连"
       },
-      
       {
-
         "tag": "Remote-DNS",
-
-        "address": "https://1.1.1.1/dns-query",   // 使用Cloudflare的DoH
-
+        "address": "https://1.1.1.1/dns-query", // 使用Cloudflare的DoH
         "detour": "🚀 节点选择"
-
       },
-      
       //fakeip的设置
       {
         "address": "fakeip",
@@ -587,7 +568,6 @@
         ],
         "server": "Local-DNS"
       },
-      
       {
         "action": "route",
         "rule_set": [

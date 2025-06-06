@@ -5,7 +5,6 @@
     "level": "warn", //日志详细记录
     "output": "/tmp/singbox.log", 
     "timestamp": false, //打开标注日志时间  
-    "max_age": 24   // 日志保留24小时
   },
   "experimental": {
     "clash_api": {

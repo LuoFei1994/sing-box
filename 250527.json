@@ -243,10 +243,16 @@
         ],
         "action": "reject"
       },
-
+      
       {
         "rule_set": [
           "BlockHttpDNS"
+        ],
+        "action": "reject"
+      },
+      {
+        "rule_set": [
+          "privacy-protection"
         ],
         "action": "reject"
       },
@@ -258,15 +264,12 @@
           "10.0.0.0/8",
           "172.16.0.0/12",
           "192.168.0.0/16",
+          "198.18.0.0/15",
           "fc00::/7"
         ],
         "action": "direct"
       },
       
-      {
-        "ip_cidr": "198.18.0.0/15",
-        "outbound": "🎯 全球直连"
-      },
       {
         "ip_is_private": true,
         "action": "route",
@@ -498,15 +501,15 @@
 
     //出站的分流规则集
     "rule_set": [
-
-      //{
-        //"tag": "privacy-protection",
-        //"type": "remote",
-        //"format": "source",
-        //"url": "https://gh.diveng.xyz/raw.githubusercontent.com/hagezi/dns-blocklists/refs/heads/main/wildcard/tif.txt",
-        //"download_detour": "🎯 全球直连",
-        //"update_interval": "6h"
-      //},
+      //dns泄露的拒绝规则
+      {
+        "tag": "privacy-protection",
+        "type": "remote",
+        "format": "source",
+        "url": "https://gh.diveng.xyz/raw.githubusercontent.com/hagezi/dns-blocklists/refs/heads/main/wildcard/tif.txt",
+        "download_detour": "🎯 全球直连",
+        "update_interval": "24h"
+      },
       
 
       //油管规则集

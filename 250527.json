@@ -56,8 +56,6 @@
       "sniff": true,
       "sniff_override_destination": true,
       "domain_strategy": "ipv4_only",
-      "tcp_fast_open": true,
-      "tcp_multi_path": true,
       "dns_hijack": [
         "tcp://any:53",
         "udp://any:53",

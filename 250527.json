@@ -710,14 +710,14 @@
       },
       {
         "tag": "Remote-DNS",
-        "address": "tls://dns11.quad9.net",
+        "address": "tls://8.8.8.8:853",
         "address_resolver": "Remote-DNS-Resolver",
         "detour": "🚀 节点选择",
         "client_subnet": "1.0.1.0"
       },
       {
         "tag": "Remote-DNS-Resolver",
-        "address": "udp://9.9.9.9:53", 
+        "address": "udp://8.8.8.8:53",
         "detour": "🚀 节点选择",
         "client_subnet": "1.0.1.0"
       },

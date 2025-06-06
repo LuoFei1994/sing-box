@@ -532,8 +532,8 @@
         "tag": "privacy-protection",
         "type": "remote",
         "format": "source",
-        "url": "https://raw.githubusercontent.com/hagezi/dns-blocklists/refs/heads/main/wildcard/tif.txt",
-        "download_detour": "🚀 节点选择",
+        "url": "https://gh.diveng.xyz/raw.githubusercontent.com/hagezi/dns-blocklists/refs/heads/main/wildcard/tif.txt",
+        "download_detour": "🎯 全球直连",
         "update_interval": "6h"
       },
       

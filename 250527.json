@@ -214,7 +214,8 @@
         "domain_keyword": [
           "stun:",
           "turn:",
-          "webrtc"
+          "webrtc",
+          "quic"
         ],
         "action": "reject"
       },
@@ -227,6 +228,17 @@
         ],
         "action": "reject"
       },
+     
+      {
+        "action": "reject",
+        "network": [
+          "udp"
+        ],
+        "port": [
+          443
+        ]
+      },
+      
       //去广告
       {
         "rule_set": [
@@ -698,7 +710,9 @@
       },
       {
         "tag": "Remote-DNS",
-        "address": "tls://8.8.8.8:853",
+        "address": "https://dns.quad9.net/dns-query",
+        "address_strategy": "ipv4_only",
+        "strategy": "prefer_ipv4",
         "address_resolver": "Remote-DNS-Resolver",
         "detour": "🚀 节点选择",
         "client_subnet": "1.0.1.0"
@@ -706,6 +720,8 @@
       {
         "tag": "Remote-DNS-Resolver",
         "address": "udp://8.8.8.8:53",
+        "address_strategy": "ipv4_only",
+        "strategy": "prefer_ipv4",
         "detour": "🚀 节点选择",
         "client_subnet": "1.0.1.0"
       },

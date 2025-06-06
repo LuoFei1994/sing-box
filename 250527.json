@@ -1,5 +1,5 @@
 //日志记录
-{
+{ 
   "log": {
     "disabled": false,
     "level": "error",      //日志详细记录

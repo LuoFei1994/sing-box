@@ -711,7 +711,7 @@
       {
         "tag": "Remote-DNS",
         "address": "tls://dns11.quad9.net",
-        "address_resolver": "Remote-DNS-Resolver",
+        "address_resolver": "Local-DNS",
         "detour": "🚀 节点选择",
         "client_subnet": "1.0.1.0"
       },

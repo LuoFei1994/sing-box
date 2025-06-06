@@ -3,7 +3,7 @@
   "log": {
     "disabled": false,
     "level": "error", //日志详细记录
-    "output": "",
+    "output": "", 
     "timestamp": true //打开标注日志时间  
   },
   "experimental": {

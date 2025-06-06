@@ -533,7 +533,7 @@
       {
         "tag": "privacy-protection",
         "type": "remote",
-        "format": "binary",
+        "format": "source",
         "url": "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/tif.txt",
         "download_detour": "🎯 全球直连",
         "update_interval": "6h"
@@ -541,7 +541,7 @@
       {
         "tag": "webrtc-leak",
         "type": "remote",
-        "format": "binary",
+        "format": "source",
         "url": "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/Extra/WebRTC.list",
         "download_detour": "🚀 节点选择",
         "update_interval": "12h"
@@ -549,7 +549,7 @@
       {
         "tag": "reject-rules",
         "type": "remote",
-        "format": "binary",
+        "format": "source",
         "url": "https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/Guard/Reject.list",
         "download_detour": "🎯 全球直连",
         "update_interval": "24h"

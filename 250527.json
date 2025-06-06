@@ -293,15 +293,8 @@
         "action": "route",
         "outbound": "🎯 全球直连"
       },
-      // ===== 出站动作 =====
-      {
-        "domain_suffix": [
-          ".apple.com",
-          ".icloud.com",
-          ".mzstatic.com"
-        ],
-        "outbound": "🎯 全球直连"
-      },
+
+      //页面的模式
       {
         "action": "route",
         "clash_mode": "direct",
@@ -312,6 +305,17 @@
         "clash_mode": "global",
         "outbound": "GLOBAL"
       },
+      
+      // ===== 出站动作 =====
+      {
+        "domain_suffix": [
+          ".apple.com",
+          ".icloud.com",
+          ".mzstatic.com"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      
       //走直连的规则
       {
         "action": "route",
@@ -522,25 +526,35 @@
   //以下是dns服务和规则设置
   "dns": {
     "servers": [
+      //{
+        //"tag": "Local-DNS",
+        //"address": "h3://223.5.5.5:443/dns-query",
+        //"address_resolver": "Local-DNS-Resolver",
+        //"detour": "🎯 全球直连"
+      //},
+
+      //{
+        //"tag": "Local-DNS-Resolver",
+        //"address": "udp://223.5.5.5:53",
+        //"detour": "🎯 全球直连"
+      //},
+
+
       {
         "tag": "Local-DNS",
-        "address": "h3://223.5.5.5:443/dns-query",
-        "address_resolver": "Local-DNS-Resolver",
+        "address": "https://1.1.1.1/dns-query",
         "detour": "🎯 全球直连"
       },
-      {
-        "tag": "Local-DNS-Resolver",
-        "address": "udp://223.5.5.5:53",
-        "detour": "🎯 全球直连"
-      },
-      //{
-        //"tag": "Remote-DNS",
-        //"address": "https://1.1.1.1/dns-query", // 使用Cloudflare的DoH
-        //"detour": "🚀 节点选择"
-      //},
+      
       {
         "tag": "Remote-DNS",
         "address": "tls://9.9.9.9:853",  // Quad9的DoT
+        "detour": "🚀 节点选择"
+      },
+
+      {
+        "tag": "Remote-DNS1",
+        "address": "https://1.1.1.1/dns-query", // 使用Cloudflare的DoH
         "detour": "🚀 节点选择"
       },
       
@@ -607,6 +621,12 @@
           "AAAA"
         ],
         "server": "fakeip"
+      },
+
+      // 故障转移机制
+      {
+      "server": ["Remote-DNS", "Remote-DNS1"],
+      "fallback_delay": "500ms"
       }
     ],
     "strategy": "prefer_ipv4", //默认ipv4优选

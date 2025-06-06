@@ -272,7 +272,8 @@
       // 添加隐私保护规则（置于广告规则后）
       {
         "rule_set": [
-          "Tracking"
+          "Tracking",
+          "Tracker"
         ],
         "action": "reject"
       },
@@ -466,10 +467,20 @@
       {
         "tag": "Tracking",
         "type": "remote",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ads-all.srs",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-public-tracker.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
+
+      {
+        "tag": "Tracker",
+        "type": "remote",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tracker.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      
       {
         "tag": "GitHub",
         "type": "remote",

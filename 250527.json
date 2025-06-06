@@ -873,9 +873,7 @@
       "enabled": true,
       "inet4_range": "198.18.0.0/15",
       "inet6_range": "fc00::/18",
-      //"always_real_ip": [
-        "your_domain.com"
-      ]
+      //"always_real_ip": ["your_domain.com"]
     }
   }
 }

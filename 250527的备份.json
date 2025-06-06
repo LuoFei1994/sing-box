@@ -1,44 +1,44 @@
 //日志记录
 {
-  "log": {
+  "log": { 
     "disabled": false,
-    "level": "info",      //日志详细记录
-    "output": "",
-    "timestamp": true     //打开标注日志时间
+    "level": "warn", //日志详细记录
+    "output": "", 
+    "timestamp": false //打开标注日志时间  
   },
   "experimental": {
     "clash_api": {
       "external_controller": "127.0.0.1:20123",
       "external_ui": "",
-      "external_ui_download_url": "",
+      "external_ui_download_url": "",  
       "external_ui_download_detour": "🎯 全球直连",
-      "secret": "ID_ndudolt2",
-
+      "secret": "",     //// 留空自动生成随机密钥
       //工作模式rule/global/Enhanced
       "default_mode": "Enhanced",
-      
       "access_control_allow_origin": [
         "*"
       ],
-      "access_control_allow_private_network": false
+      "access_control_allow_private_network": true
     },
     "cache_file": {
-      
-      //启用缓存 规则集
+      //启用缓存 规则集  
       "enabled": true,
       //缓存路径
       "path": "cache.db",
       "cache_id": "cache.db",
-
-      //持久化Fakeip
-      "store_fakeip": true,
+      // 禁用FakeIP持久化,更隐秘
+      "store_fakeip": false,
       //持久化已拒绝的dns响应
       "store_rdrc": true,
-      
       "rdrc_timeout": "7d"
     }
   },
-
+  "ntp": {
+    "enabled": true,
+    "server": "time.apple.com",
+    "server_port": 123,
+    "interval": "30m"
+  },
   //进站监控
   "inbounds": [
     {
@@ -61,36 +61,31 @@
       "mtu": 1400,
       "auto_route": true,
       "strict_route": true,
-      "sniff": true, 
+      "sniff": true,
       "endpoint_independent_nat": true,
       "domain_strategy": "prefer_ipv4",
-
       //mixed、system、gvisor  
       //这三个的区别system 性能:高、安全性:低、兼容性:高(依赖系统)、复杂性:简单、 适用场景：性能优先
       //           gvisor 性能:低、安全性:高、兼容性:中         、复杂性:较复杂、适用场景：安全隔离
       //           mixed  上面两个的集合体，都中等
       "stack": "mixed",
       "platform": {
-
         //http代理
         "http_proxy": {
           "enabled": true,
           "server": "127.0.0.1",
           "server_port": 20122
-         }
+        }
       }
     }
   ],
-
   //出站设置
   "outbounds": [
-
     //直连
     {
       "type": "direct",
       "tag": "🎯 全球直连"
     },
-  
     //全局
     {
       "type": "selector",
@@ -104,7 +99,6 @@
       ]
       //"default": "手动选择"  这条可以让规则选一个默认的
     },
-    
     {
       "type": "selector",
       "tag": "🚀 节点选择",
@@ -116,7 +110,6 @@
         "proxy2"
       ]
     },
-    
     {
       "type": "urltest",
       "tag": "🎈 自动选择",
@@ -130,7 +123,6 @@
         "proxy2"
       ]
     },
-    
     {
       "type": "selector",
       "tag": "🐟 漏网之鱼",
@@ -140,8 +132,6 @@
         "🎯 全球直连"
       ]
     },
-    
-
     //个人的节点
     {
       "type": "socks",
@@ -163,39 +153,37 @@
       "version": "5"
     },
     //{
-      //"type": "vmess",
-      //"tag": "proxy2",
-      //"server": "c50s2.portablesubmarines.com",
-      //"server_port": 19868,
-      //"uuid": "30a5efe1-3235-4b93-a8ee-71b1d1834c5b",
-      //"security": "auto",
-      //"alter_id": 0
+    //"type": "vmess",
+    //"tag": "proxy2",
+    //"server": "c50s2.portablesubmarines.com",
+    //"server_port": 19868,
+    //"uuid": "30a5efe1-3235-4b93-a8ee-71b1d1834c5b",
+    //"security": "auto",
+    //"alter_id": 0
     //}
     {
       "type": "shadowsocks",
       "tag": "proxy2",
-
       "server": "c50s2.portablesubmarines.com",
       "server_port": 7395,
-      "method": "aes-256-gcm",
+      "method": "chacha20-ietf-poly1305",
       "password": "kQBeCDXbwoSW2wVC",
-      "plugin": "",
-      "plugin_opts": "",
+      "plugin": "obfs-local",                                 //启用HTTP流量混淆插件
+      "plugin_opts": "obfs=http;obfs-host=cloudflare.com",    //伪装为常见CDN流量(cloudflare)
       "network": "udp",
-      "udp_over_tcp": false,
+      "udp_over_tcp": true,  // 强制UDP over TCP
       "multiplex": {}
     }
   ],
-
   //出站的规则分流
   "route": {
     "rules": [
       {
-        "action": "sniff",       //嗅探进站网络
-        "inbound":[
-           "tun-in",
-           "mixed-in"
-          ]
+        "action": "sniff", //嗅探进站网络
+        "inbound": [
+          "tun-in",
+          "mixed-in"
+        ]
       },
       //进站来的都从域解析到ip，ipv4优先
       {
@@ -206,7 +194,7 @@
         "action": "resolve",
         "strategy": "prefer_ipv4"
       },
-      
+      // ===== DNS规则 (官方推荐动作) =====
       //拦截dns
       {
         "type": "logical",
@@ -221,61 +209,90 @@
         ],
         "action": "hijack-dns"
       },
-      
+      // ===== 拒绝动作 (官方标准写法) =====
       {
-        "protocol": "stun",
-        "port": 3478,
-        "action": "reject",
-        "method": "drop"
-      },
-        
-      {
-        "protocol": "quic",
-        "action": "reject",
-        "method": "drop"
-      },
-
-      //{
-        //"network": "udp",
-        //"port": 443,
-        //"action": "reject",
-        //"method": "drop"
-      //},
-      {
-        "action": "reject",
-        "network": [
-          "udp"
+        "domain_keyword": [
+          "stun:",
+          "turn:",
+          "webrtc",
+          "quic"
         ],
-        "port": [
-          443
-        ]
+        "action": "reject"
       },
 
+      // 增强WebRTC阻止
+      {
+      "action": "reject",
+      "domain_regex": "^(stun|turn|webrtc)\\."
+      },
+
+      // 阻止未加密QUIC协议
+      {
+      "action": "reject",
+      "protocol": ["quic"]
+      },
       
+      // 新增隐私保护规则
+      {
+      "action": "reject",
+      "domain_keyword": ["analytics", "tracking"]
+      },
+      
+      {
+        "port": [
+          3478,
+          5349,
+          19302,
+          19305
+        ],
+        "action": "reject"
+      },
+     
+      
+      //去广告
+      {
+        "rule_set": [
+          "Category-Ads"
+        ],
+        "action": "reject"
+      },
+      {
+        "rule_set": [
+          "BlockHttpDNS"
+        ],
+        "action": "reject"
+      },
+      // ===== 内置动作 (官方推荐) =====
+      {
+        "ip_cidr": [
+          "10.0.0.0/8",
+          "172.16.0.0/12",
+          "192.168.0.0/16",
+          "198.18.0.0/15",
+          "fc00::/7"
+        ],
+        "action": "direct"
+      },
       {
         "ip_is_private": true,
         "action": "route",
         "outbound": "🎯 全球直连"
       },
+      // ===== 出站动作 =====
 
-
-
-      //去广告
-      //{
-        //"action": "reject",
-        //"rule_set": [
-          //"Category-Ads"
-        //],
-        //"method": "drop"
-      //},
-
-      //{
-        //"action": "reject",
-        //"rule_set": [
-          //"BlockHttpDNS"
-        //],
-        //"method": "drop"
-      //},
+      {
+        "domain_suffix": [".apple.com", ".icloud.com", ".mzstatic.com"],
+        "outbound": "🎯 全球直连"
+      },
+  
+      {
+        "domain_keyword": [
+          "banking",
+          "financial",
+          "secret"
+        ],
+        "outbound": "🚀 节点选择"
+      },
       {
         "action": "route",
         "clash_mode": "direct",
@@ -286,9 +303,7 @@
         "clash_mode": "global",
         "outbound": "GLOBAL"
       },
-
-
-
+      
       //走直连的规则
       {
         "action": "route",
@@ -409,15 +424,7 @@
         ],
         "outbound": "🎯 全球直连"
       },
-      
       //合并例子"mode": "or" "and" {"type": "logical","mode": "or","rules":[{"protocol": "dns"},{"port": 53}//],//"outbound": "dns"//},
-
-
-      
-     
-      
-      
-
       //以下规则分流走节点
       {
         "action": "route",
@@ -482,13 +489,9 @@
         ],
         "outbound": "🚀 节点选择"
       }
-      
-      
     ],
-
     //出站的分流规则集
     "rule_set": [
-
       //油管规则集
       {
         "tag": "Youtube",
@@ -497,16 +500,14 @@
         "format": "binary",
         "download_detour": "🚀 节点选择"
       },
-
       //TK规则集
       {
         "tag": "Tiktok",
         "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/TikTok/TikTok.srs",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/tiktok.srs",
         "format": "binary",
         "download_detour": "🚀 节点选择"
       },
-
       //WHATSAPP规则集
       {
         "tag": "Whatsapp",
@@ -515,7 +516,6 @@
         "format": "binary",
         "download_detour": "🚀 节点选择"
       },
-
       //INSD规则集
       {
         "tag": "Instagram",
@@ -524,7 +524,6 @@
         "format": "binary",
         "download_detour": "🚀 节点选择"
       },
-
       //FB规则集
       {
         "tag": "Facebook",
@@ -540,8 +539,6 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-
-      
       {
         "tag": "GeoIP-Private",
         "type": "remote",
@@ -549,8 +546,6 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-
-      
       {
         "tag": "GeoSite-Private",
         "type": "remote",
@@ -558,7 +553,6 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-      
       {
         "tag": "GeoSite-CN",
         "type": "remote",
@@ -566,8 +560,6 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-
-      
       {
         "tag": "geoip-cn",
         "type": "remote",
@@ -575,8 +567,6 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-
-      
       {
         "tag": "geosite-geolocation-cn",
         "type": "remote",
@@ -584,8 +574,6 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-
-      
       {
         "tag": "geosite-geolocation-!cn",
         "type": "remote",
@@ -593,8 +581,6 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-
-
       //网上别人做的转sing-box的中国 规则地址
       {
         "tag": "ChinaMax",
@@ -603,7 +589,6 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-
       {
         "tag": "China",
         "type": "remote",
@@ -611,7 +596,6 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-
       {
         "tag": "ChinaDNS",
         "type": "remote",
@@ -619,7 +603,6 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-
       {
         "tag": "ChinaIPs",
         "type": "remote",
@@ -627,7 +610,6 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-
       {
         "tag": "ChinaIPsBGP",
         "type": "remote",
@@ -635,8 +617,6 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-
-      
       {
         "tag": "ChinaMaxNoIP",
         "type": "remote",
@@ -644,7 +624,6 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-
       {
         "tag": "ChinaMaxNoMedia",
         "type": "remote",
@@ -652,7 +631,6 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-
       {
         "tag": "ChinaMedia",
         "type": "remote",
@@ -660,7 +638,6 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-
       {
         "tag": "DingTalk",
         "type": "remote",
@@ -668,7 +645,6 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-
       {
         "tag": "DouYin",
         "type": "remote",
@@ -676,7 +652,6 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-
       {
         "tag": "PayPal",
         "type": "remote",
@@ -684,7 +659,6 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-
       {
         "tag": "WeChat",
         "type": "remote",
@@ -692,7 +666,6 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-
       {
         "tag": "GitHub",
         "type": "remote",
@@ -700,7 +673,6 @@
         "format": "binary",
         "download_detour": "🚀 节点选择"
       },
-
       {
         "tag": "Line",
         "type": "remote",
@@ -708,7 +680,6 @@
         "format": "binary",
         "download_detour": "🚀 节点选择"
       },
-
       {
         "tag": "Telegram",
         "type": "remote",
@@ -716,8 +687,6 @@
         "format": "binary",
         "download_detour": "🚀 节点选择"
       },
-
-
       //拒绝的dns
       {
         "tag": "BlockHttpDNS",
@@ -726,28 +695,16 @@
         "format": "binary",
         "download_detour": "🚀 节点选择"
       }
-
-
-
-
-
-
-
-
-      
     ],
     //自动检测出站接口
     "auto_detect_interface": true,
-
+    "default_mark": 233,
     //查找进程信息
-    "find_process": true,    
-    
+    "find_process": true,
     //没在规则里的走指定规则
     "final": "🐟 漏网之鱼"
   },
-
   //以下是dns服务和规则设置
-  
   "dns": {
     "servers": [
       {
@@ -765,16 +722,13 @@
         "tag": "Remote-DNS",
         "address": "tls://8.8.8.8:853",
         "address_resolver": "Remote-DNS-Resolver",
-        "detour": "🚀 节点选择",
-        "client_subnet": "1.0.1.0"
+        "detour": "🚀 节点选择"
       },
       {
         "tag": "Remote-DNS-Resolver",
         "address": "udp://8.8.8.8:53",
-        "detour": "🚀 节点选择",
-        "client_subnet": "1.0.1.0"
+        "detour": "🚀 节点选择"
       },
-
       //fakeip的设置
       {
         "address": "fakeip",
@@ -785,7 +739,6 @@
         "tag": "block"
       }
     ],
-
     //dns的规则
     "rules": [
       {
@@ -794,11 +747,11 @@
         "outbound": "any"
       },
       //{
-        //"inbound":[
-          //"tun-in",
-          //"mixed-in"
-        //],
-        //"server": "Local-DNS"
+      //"inbound":[
+      //"tun-in",
+      //"mixed-in"
+      //],
+      //"server": "Local-DNS"
       //},
       {
         "action": "route",
@@ -810,7 +763,6 @@
         "clash_mode": "global",
         "server": "Remote-DNS"
       },
-
       {
         "action": "route",
         "rule_set": [
@@ -818,7 +770,6 @@
         ],
         "server": "Local-DNS"
       },
-
       {
         "action": "route",
         "rule_set": [
@@ -826,7 +777,6 @@
         ],
         "server": "Local-DNS"
       },
-
       {
         "action": "route",
         "rule_set": [
@@ -834,7 +784,6 @@
         ],
         "server": "Local-DNS"
       },
-
       {
         "action": "route",
         "rule_set": [
@@ -842,23 +791,6 @@
         ],
         "server": "Remote-DNS"
       },
-     
-      {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
-            "rule_set": "geosite-geolocation-!cn",
-            "invert": true
-          },
-          {
-            "rule_set": "geoip-cn"
-          }
-        ],
-        "server": "Remote-DNS",
-        "client_subnet": "1.0.1.0" // 任何中国地址
-      },
-      
       {
         //"action": "route",
         //"rule_set": "geosite-geolocation-!cn",
@@ -869,11 +801,10 @@
         "server": "fakeip"
       }
     ],
-    "strategy": "prefer_ipv4",    //默认ipv4优选
+    "strategy": "prefer_ipv4", //默认ipv4优选
     "disable_cache": false,
     "disable_expire": false,
-    "independent_cache": false,
-
+    "independent_cache": true,
     //没找到的dns走指定
     "final": "Remote-DNS",
     "fakeip": {

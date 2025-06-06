@@ -3,7 +3,7 @@
   "log": { 
     "disabled": false,
     "level": "warn", //日志详细记录
-    "output": "/tmp/singbox.log", 
+    "output": "", 
     "timestamp": false, //打开标注日志时间  
   },
   "experimental": {

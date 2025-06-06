@@ -15,10 +15,8 @@
       "secret": "", //// 留空自动生成随机密钥
       //工作模式rule/global/Enhanced
       "default_mode": "Enhanced",
-      "access_control_allow_origin": [
-        "*"
-      ],
-      "access_control_allow_private_network": true
+      "access_control_allow_origin": ["http://localhost:*"], // 限制控制台访问源
+      "access_control_allow_private_network": false
     },
     "cache_file": {
       //启用缓存 规则集  
@@ -141,6 +139,11 @@
       "username": "5258f8e2",
       "password": "56864eaa",
       "version": "5"
+      "tls": {
+        "enabled": true,
+        "server_name": "100.bgp.666888.biz",
+        "insecure": false
+      }
     },
     {
       "type": "socks",
@@ -169,7 +172,7 @@
       "method": "chacha20-ietf-poly1305",
       "password": "kQBeCDXbwoSW2wVC",
       "plugin": "obfs-local", //启用HTTP流量混淆插件
-      "plugin_opts": "obfs=http;obfs-host=cloudflare.com", //伪装为常见CDN流量(cloudflare)
+      "plugin_opts": "host=cloudflare.com;path=/ws;tls", // 升级为WebSocket+TLS混淆
       "network": "udp",
       "udp_over_tcp": true, // 强制UDP over TCP
       "multiplex": {}
@@ -277,6 +280,22 @@
         ],
         "action": "reject"
       },
+
+      // 新增隐私敏感协议拦截
+      {
+        "protocol": ["ftp", "telnet", "smtp"],
+        "action": "reject"
+      },
+      // 强化追踪拦截
+      {
+        "domain_regex": "(analytics|track|metrics|telemetry)\\.",
+        "action": "reject"
+      },
+
+      
+
+
+      
       // ===== 内置动作 (官方推荐) =====
       {
         "ip_cidr": [
@@ -350,7 +369,8 @@
       // 支付服务走代理（安全加固）
       {
         "domain_suffix": [
-          ".stripe.com"
+          ".stripe.com",
+          ".venmo.com"
         ],
         "outbound": "🚀 节点选择"
       },

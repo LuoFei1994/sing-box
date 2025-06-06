@@ -29,7 +29,7 @@
       // 禁用FakeIP持久化,更隐秘
       "store_fakeip": false,
       //持久化已拒绝的dns响应
-      "store_rdrc": true,
+      "store_rdrc": false,
       "rdrc_timeout": "7d"
     }
   },
@@ -58,11 +58,11 @@
         "172.18.0.1/30",
         "fdfe:dcba:9876::1/126"
       ],
-      "mtu": 1400,
+      "mtu": 1450,   // 优化iOS的MTU值
       "auto_route": true,
       "strict_route": true,
       "sniff": true,
-      "endpoint_independent_nat": true,
+      "endpoint_independent_nat": false,    // 提升NAT兼容性
       "domain_strategy": "prefer_ipv4",
       //mixed、system、gvisor  
       //这三个的区别system 性能:高、安全性:低、兼容性:高(依赖系统)、复杂性:简单、 适用场景：性能优先
@@ -209,6 +209,21 @@
         ],
         "action": "hijack-dns"
       },
+
+      //去广告
+      {
+        "rule_set": [
+          "Category-Ads"
+        ],
+        "action": "reject"
+      },
+      {
+        "rule_set": [
+          "BlockHttpDNS"
+        ],
+        "action": "reject"
+      },
+      
       // ===== 拒绝动作 (官方标准写法) =====
       {
         "domain_keyword": [
@@ -231,6 +246,13 @@
       "action": "reject",
       "protocol": ["quic"]
       },
+
+      // 阻止UDP潜在泄露
+      {
+      "port": [443],
+      "network": "udp",
+      "action": "reject"
+      },
       
       // 新增隐私保护规则
       {
@@ -249,19 +271,12 @@
       },
      
       
-      //去广告
+      // 添加隐私保护规则（置于广告规则后）
       {
-        "rule_set": [
-          "Category-Ads"
-        ],
+        "rule_set": ["Tracking"],
         "action": "reject"
       },
-      {
-        "rule_set": [
-          "BlockHttpDNS"
-        ],
-        "action": "reject"
-      },
+      
       // ===== 内置动作 (官方推荐) =====
       {
         "ip_cidr": [
@@ -286,14 +301,6 @@
       },
   
       {
-        "domain_keyword": [
-          "banking",
-          "financial",
-          "secret"
-        ],
-        "outbound": "🚀 节点选择"
-      },
-      {
         "action": "route",
         "clash_mode": "direct",
         "outbound": "🎯 全球直连"
@@ -308,159 +315,31 @@
       {
         "action": "route",
         "rule_set": [
-          "GeoSite-Private"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "GeoSite-CN"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "GeoIP-Private"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "geoip-cn"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "geosite-geolocation-cn"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "ChinaMax"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "China"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "ChinaDNS"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "ChinaIPs"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "ChinaIPsBGP"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "ChinaMaxNoIP"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "ChinaMaxNoMedia"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "ChinaMedia"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "DingTalk"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "DouYin"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "rule_set": [
+          "GeoSite-Private",
+          "GeoSite-CN",
+          "GeoIP-Private",
+          "geoip-cn",
+          "geosite-geolocation-cn",
           "PayPal"
         ],
         "outbound": "🎯 全球直连"
       },
-      {
-        "action": "route",
-        "rule_set": [
-          "WeChat"
-        ],
-        "outbound": "🎯 全球直连"
-      },
+     
+      
       //合并例子"mode": "or" "and" {"type": "logical","mode": "or","rules":[{"protocol": "dns"},{"port": 53}//],//"outbound": "dns"//},
       //以下规则分流走节点
-      {
-        "action": "route",
-        "rule_set": [
-          "Youtube"
+
+
+       {
+        "domain_keyword": [
+          "banking",
+          "financial",
+          "secret"
         ],
         "outbound": "🚀 节点选择"
       },
-      {
-        "action": "route",
-        "rule_set": [
-          "Tiktok"
-        ],
-        "outbound": "🚀 节点选择"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "Whatsapp"
-        ],
-        "outbound": "🚀 节点选择"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "Instagram"
-        ],
-        "outbound": "🚀 节点选择"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "Facebook"
-        ],
-        "outbound": "🚀 节点选择"
-      },
+      
+      // 走代理的规则：非中国域名
       {
         "action": "route",
         "rule_set": [
@@ -468,27 +347,30 @@
         ],
         "outbound": "🚀 节点选择"
       },
+
+      // 支付服务走代理（安全加固）
       {
-        "action": "route",
-        "rule_set": [
-          "GitHub"
-        ],
+        "domain_suffix": [".stripe.com"],
         "outbound": "🚀 节点选择"
       },
+
+
+      
       {
         "action": "route",
         "rule_set": [
-          "Line"
-        ],
-        "outbound": "🚀 节点选择"
-      },
-      {
-        "action": "route",
-        "rule_set": [
+          "Youtube",
+          "Tiktok",
+          "Whatsapp",
+          "Instagram",
+          "Facebook",
+          "GitHub",
+          "Line",
           "Telegram"
         ],
         "outbound": "🚀 节点选择"
       }
+      
     ],
     //出站的分流规则集
     "rule_set": [
@@ -582,76 +464,7 @@
         "download_detour": "🎯 全球直连"
       },
       //网上别人做的转sing-box的中国 规则地址
-      {
-        "tag": "ChinaMax",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/ChinaMax/ChinaMax.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
-      {
-        "tag": "China",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/China/China.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
-      {
-        "tag": "ChinaDNS",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/ChinaDNS/ChinaDNS.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
-      {
-        "tag": "ChinaIPs",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/ChinaIPs/ChinaIPs.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
-      {
-        "tag": "ChinaIPsBGP",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/ChinaIPsBGP/ChinaIPsBGP.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
-      {
-        "tag": "ChinaMaxNoIP",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/ChinaMaxNoIP/ChinaMaxNoIP.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
-      {
-        "tag": "ChinaMaxNoMedia",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/ChinaMaxNoMedia/ChinaMaxNoMedia.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
-      {
-        "tag": "ChinaMedia",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/ChinaMedia/ChinaMedia.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
-      {
-        "tag": "DingTalk",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/DingTalk/DingTalk.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
-      {
-        "tag": "DouYin",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/DouYin/DouYin.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
+      
       {
         "tag": "PayPal",
         "type": "remote",
@@ -659,13 +472,17 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
+
       {
-        "tag": "WeChat",
+
+        "tag": "Tracking",
         "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/WeChat/WeChat.srs",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-tracking-all.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
+
       },
+      
       {
         "tag": "GitHub",
         "type": "remote",
@@ -718,17 +535,17 @@
         "address": "udp://223.5.5.5:53",
         "detour": "🎯 全球直连"
       },
+      
       {
+
         "tag": "Remote-DNS",
-        "address": "tls://8.8.8.8:853",
-        "address_resolver": "Remote-DNS-Resolver",
+
+        "address": "https://1.1.1.1/dns-query",   // 使用Cloudflare的DoH
+
         "detour": "🚀 节点选择"
+
       },
-      {
-        "tag": "Remote-DNS-Resolver",
-        "address": "udp://8.8.8.8:53",
-        "detour": "🚀 节点选择"
-      },
+      
       //fakeip的设置
       {
         "address": "fakeip",
@@ -770,13 +587,7 @@
         ],
         "server": "Local-DNS"
       },
-      {
-        "action": "route",
-        "rule_set": [
-          "ChinaMax"
-        ],
-        "server": "Local-DNS"
-      },
+      
       {
         "action": "route",
         "rule_set": [

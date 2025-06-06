@@ -283,7 +283,7 @@
       {
         "domain_suffix": [".apple.com", ".icloud.com", ".mzstatic.com"],
         "outbound": "🎯 全球直连",
-        "skip_resolve": true  // 跳过DNS解析
+        //"skip_resolve": true  // 跳过DNS解析 识别不了
       },
   
       {

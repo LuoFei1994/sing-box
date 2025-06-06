@@ -235,34 +235,20 @@
         "port": [3478, 5349, 19302, 19305],
         "action": "reject"
       },
-      {
-        "geosite": "category-ads-all",
-        "action": "reject"
-      },
-      {
-        "geosite": "tracker",
-        "action": "reject"
-      },
-      {
-        "geosite": "category-porn",
-        "action": "reject"
-      },
 
       //去广告
       {
-        "action": "reject",
         "rule_set": [
           "Category-Ads"
         ],
-        "method": "drop"
+        "action": "reject"
       },
 
       {
-        "action": "reject",
         "rule_set": [
           "BlockHttpDNS"
         ],
-        "method": "drop"
+        "action": "reject"
       },
       
 
@@ -276,11 +262,7 @@
         ],
         "action": "direct"
       },
-      {
-        "geoip": "private",
-        "action": "direct"
-      },
-
+      
       {
         "ip_cidr": "198.18.0.0/15",
         "outbound": "🎯 全球直连"
@@ -292,27 +274,17 @@
       },
 
       // ===== 出站动作 =====
-      //{
-        //"geoip": "cn",
-        //"action": "direct"
-      //},
-      //{
-        //"geosite": "cn",
-        //"action": "direct"
-      //},
-      //{
-        //"domain_suffix": [".apple.com", ".icloud.com"],
-        //"action": "direct",
-        //"action": "resolve"
-      //},
-      //{
-        //"domain": ["geosite:geolocation-!cn"],
-        //"outbound": "🚀 节点选择"
-      //},
-      //{
-        //"domain_keyword": ["banking", "financial", "secret"],
-        //"outbound": "🚀 节点选择"
-      //},
+      
+      {
+        "domain_suffix": [".apple.com", ".icloud.com"],
+        "outbound": "🎯 全球直连",
+        "action": "resolve"
+      },
+      
+      {
+        "domain_keyword": ["banking", "financial", "secret"],
+        "outbound": "🚀 节点选择"
+      },
 
       
       {
@@ -551,7 +523,7 @@
       {
         "tag": "Tiktok",
         "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/TikTok/TikTok.srs",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/tiktok.srs",
         "format": "binary",
         "download_detour": "🚀 节点选择"
       },

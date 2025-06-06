@@ -2,9 +2,10 @@
 {
   "log": { 
     "disabled": false,
-    "level": "error", //日志详细记录
-    "output": "", 
-    "timestamp": true //打开标注日志时间  
+    "level": "warn", //日志详细记录
+    "output": "/tmp/singbox.log", 
+    "timestamp": false, //打开标注日志时间  
+    "max_age": 24   // 日志保留24小时
   },
   "experimental": {
     "clash_api": {
@@ -12,13 +13,13 @@
       "external_ui": "",
       "external_ui_download_url": "",
       "external_ui_download_detour": "🎯 全球直连",
-      "secret": "ID_ndudolt2",
+      "secret": "",     //// 留空自动生成随机密钥
       //工作模式rule/global/Enhanced
       "default_mode": "Enhanced",
       "access_control_allow_origin": [
         "*"
       ],
-      "access_control_allow_private_network": false
+      "access_control_allow_private_network": true
     },
     "cache_file": {
       //启用缓存 规则集  
@@ -26,8 +27,8 @@
       //缓存路径
       "path": "cache.db",
       "cache_id": "cache.db",
-      //持久化Fakeip
-      "store_fakeip": true,
+      // 禁用FakeIP持久化,更隐秘
+      "store_fakeip": false,
       //持久化已拒绝的dns响应
       "store_rdrc": true,
       "rdrc_timeout": "7d"
@@ -166,12 +167,12 @@
       "tag": "proxy2",
       "server": "c50s2.portablesubmarines.com",
       "server_port": 7395,
-      "method": "aes-256-gcm",
+      "method": "chacha20-ietf-poly1305",
       "password": "kQBeCDXbwoSW2wVC",
-      "plugin": "",
-      "plugin_opts": "",
+      "plugin": "obfs-local",                                 //启用HTTP流量混淆插件
+      "plugin_opts": "obfs=http;obfs-host=cloudflare.com",    //伪装为常见CDN流量(cloudflare)
       "network": "udp",
-      "udp_over_tcp": false,
+      "udp_over_tcp": true,  // 强制UDP over TCP
       "multiplex": {}
     }
   ],
@@ -219,6 +220,25 @@
         ],
         "action": "reject"
       },
+
+      // 增强WebRTC阻止
+      {
+      "action": "reject",
+      "domain_regex": "^(stun|turn|webrtc)\\."
+      },
+
+      // 阻止未加密QUIC协议
+      {
+      "action": "reject",
+      "protocol": ["quic"]
+      },
+      
+      // 新增隐私保护规则
+      {
+      "action": "reject",
+      "domain_keyword": ["analytics", "tracking"]
+      },
+      
       {
         "port": [
           3478,
@@ -229,15 +249,6 @@
         "action": "reject"
       },
      
-      {
-        "action": "reject",
-        "network": [
-          "udp"
-        ],
-        "port": [
-          443
-        ]
-      },
       
       //去广告
       {
@@ -269,13 +280,13 @@
         "outbound": "🎯 全球直连"
       },
       // ===== 出站动作 =====
+
       {
-        "domain_suffix": [
-          ".apple.com",
-          ".icloud.com"
-        ],
-        "outbound": "🎯 全球直连"
+        "domain_suffix": [".apple.com", ".icloud.com", ".mzstatic.com"],
+        "outbound": "🎯 全球直连",
+        "skip_resolve": true  // 跳过DNS解析
       },
+  
       {
         "domain_keyword": [
           "banking",
@@ -294,6 +305,7 @@
         "clash_mode": "global",
         "outbound": "GLOBAL"
       },
+      
       //走直连的规则
       {
         "action": "route",
@@ -712,14 +724,12 @@
         "tag": "Remote-DNS",
         "address": "tls://8.8.8.8:853",
         "address_resolver": "Remote-DNS-Resolver",
-        "detour": "🚀 节点选择",
-        "client_subnet": "1.0.1.0"
+        "detour": "🚀 节点选择"
       },
       {
         "tag": "Remote-DNS-Resolver",
         "address": "udp://8.8.8.8:53",
-        "detour": "🚀 节点选择",
-        "client_subnet": "1.0.1.0"
+        "detour": "🚀 节点选择"
       },
       //fakeip的设置
       {
@@ -784,21 +794,6 @@
         "server": "Remote-DNS"
       },
       {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
-            "rule_set": "geosite-geolocation-!cn",
-            "invert": true
-          },
-          {
-            "rule_set": "geoip-cn"
-          }
-        ],
-        "server": "Remote-DNS",
-        "client_subnet": "1.0.1.0" // 任何中国地址
-      },
-      {
         //"action": "route",
         //"rule_set": "geosite-geolocation-!cn",
         "query_type": [
@@ -817,8 +812,8 @@
     "fakeip": {
       "enabled": true,
       "inet4_range": "198.18.0.0/15",
-      "inet6_range": "fc00::/18"
-      //"always_real_ip": ["your_domain.com"]
+      "inet6_range": "fc00::/18",
+      "always_real_ip": ["*.apple.com", "*.icloud.com"]   // 添加苹果服务直连
     }
   }
 }

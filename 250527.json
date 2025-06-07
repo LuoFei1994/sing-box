@@ -283,7 +283,7 @@
       },
       // 强化追踪拦截
       {
-        "domain_regex": "(analytics|track|metrics|telemetry)\\.",
+        "domain_regex": "^(analytics|track|metrics|telemetry)\\.",
         "action": "reject"
       },
 

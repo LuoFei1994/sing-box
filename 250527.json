@@ -538,7 +538,7 @@
         "tag": "Data-Collection",
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@wildcard/tif-onlydomains.txt",
-        "format": "text",
+        "format": "source",
         "download_detour": "🎯 全球直连"
       },
       //油管规则集

@@ -317,8 +317,8 @@
       "password": "kQBeCDXbwoSW2wVC",
       "plugin": "",                                   //启用HTTP流量混淆插件
       "plugin_opts": "",      // 必要隐私保护
-      "network": "UDP",      // 关闭UDP减少耗电，选tcp
-      "udp_over_tcp": true, // 强制UDP over TCP
+      "network": "udp",       // 关闭UDP减少耗电，选tcp
+      "udp_over_tcp": true,   // 强制UDP over TCP      
       "multiplex": {}
     }
   ],

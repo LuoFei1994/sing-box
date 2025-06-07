@@ -131,7 +131,7 @@
       {
         "domain_suffix": [".apple.com", ".icloud.com", ".mzstatic.com", ".apple-cloudkit.com"],
         "server": "Local-DNS",
-        "disable_cache": true
+        "disable_cache": true  // 替代always_real_ip
       },
 
       
@@ -340,6 +340,15 @@
         ],
         "action": "reject"
       },
+
+      // 新增隐私数据收集拦截
+      {
+        "rule_set": ["Data-Collection"],
+        "action": "reject"
+      },
+
+
+      
       {
         "rule_set": [
           "BlockHttpDNS"
@@ -412,7 +421,7 @@
         "domain_regex": "(analytics|track|metrics|telemetry)\\.",
         "action": "reject"
       },
-
+      
       
 
 
@@ -524,6 +533,14 @@
     
     //出站的分流规则集
     "rule_set": [
+      // 隐私数据收集拦截
+      {
+        "tag": "Data-Collection",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@wildcard/tracking-onlydomains.txt",
+        "format": "text",
+        "download_detour": "🎯 全球直连"
+      },
       //油管规则集
       {
         "tag": "Youtube",

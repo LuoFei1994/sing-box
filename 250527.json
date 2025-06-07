@@ -346,6 +346,26 @@
         ],
         "action": "hijack-dns"
       },
+
+      {
+        "action": "reject",
+        "rules": [
+          {"domain_regex": "^(stun|turn|webrtc)\\."},  // 增强WebRTC阻止
+          {"domain_keyword": ["stun:", "turn:", "webrtc", "quic"]},
+          {"domain_keyword": ["analytics", "tracking"]},    // 新增隐私保护规则
+          {"domain_regex": "(analytics|track|metrics|telemetry)\\."},   // 强化追踪拦截
+          {"domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs)\\.(com|io)"},   // 新增浏览器指纹保护
+          {"protocol": ["ftp", "telnet", "smtp", "bitcoin", "tor", "bittorrent","bitcoin"]}   // 新增隐私敏感协议拦截,拦截加密货币和Tor流量
+        ]
+      },
+      
+     
+
+
+
+
+
+      
       //去广告
       {
         "rule_set": [
@@ -359,21 +379,8 @@
         ],
         "action": "reject"
       },
-      // ===== 拒绝动作 (官方标准写法) =====
-      // 增强WebRTC阻止
-      {
-        "action": "reject",
-        "domain_regex": "^(stun|turn|webrtc)\\."
-      },
-      {
-        "domain_keyword": [
-          "stun:",
-          "turn:",
-          "webrtc",
-          "quic"
-        ],
-        "action": "reject"
-      },
+
+     
       {
         "port": [
           3478,
@@ -431,38 +438,8 @@
 
 
 
-      
-      // 新增隐私保护规则
-      {
-        "action": "reject",
-        "domain_keyword": [
-          "analytics",
-          "tracking"
-        ]
-      },
-      // 新增隐私敏感协议拦截,拦截加密货币和Tor流量
-      {
-        "protocol": [
-          "ftp",
-          "telnet",
-          "smtp",
-          "bitcoin",
-          "tor",
-          "bittorrent",
-          "bitcoin"
-        ],
-        "action": "reject"
-      },
-      // 强化追踪拦截
-      {
-        "domain_regex": "(analytics|track|metrics|telemetry)\\.",
-        "action": "reject"
-      },
-      // 新增浏览器指纹保护
-      {
-        "domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs)\\.(com|io)",
-        "action": "reject"
-      },
+
+
       // 添加隐私保护规则（置于广告规则后）
       {
         "rule_set": [

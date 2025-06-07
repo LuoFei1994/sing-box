@@ -537,7 +537,7 @@
       {
         "tag": "Data-Collection",
         "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@wildcard/tracking-onlydomains.txt",
+        "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@wildcard/tif-onlydomains.txt",
         "format": "text",
         "download_detour": "🎯 全球直连"
       },

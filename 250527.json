@@ -134,6 +134,13 @@
         "disable_cache": true  // 替代always_real_ip
       },
 
+
+      // 新增代理节点域名直连（防DNS污染）
+      {
+        "domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz"],
+        "server": "Local-DNS"
+      },
+
       
       {
         //"action": "route",
@@ -158,6 +165,7 @@
       "enabled": true,
       "inet4_range": "198.18.0.0/15",
       "inet6_range": "fc00::/18"
+      "upstream": ["Remote-DNS1", "Remote-DNS", "Local-DNS"]  // 新增上游
     }
   },
   
@@ -433,7 +441,7 @@
       
       
 
-
+      
       
       // ===== 内置动作 (官方推荐) =====
       {

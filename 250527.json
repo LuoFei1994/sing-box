@@ -125,10 +125,6 @@
           "geosite-geolocation-!cn"
         ],
         "server": "Remote-DNS"
-        "fallback": {
-          "server": "Backup-DNS",
-          "delay": "500ms"
-        }
       },
 
       // 苹果服务特殊处理

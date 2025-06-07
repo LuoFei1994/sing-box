@@ -362,7 +362,7 @@
       {"domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs)\\.(com|io)","action": "reject"},        
 
       // 新增隐私敏感协议拦截,拦截加密货币和Tor流量
-      {"protocol": ["ftp", "telnet", "smtp", "bitcoin", "tor", "bittorrent","bitcoin"],"action": "reject"}               
+      {"protocol": ["ftp", "telnet", "smtp", "bitcoin", "tor", "bittorrent","bitcoin"],"action": "reject"},               
 
 
 

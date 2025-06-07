@@ -122,7 +122,13 @@
                 ],
                 "server": "Local-DNS"
             },
-            
+            {
+                "action": "route",
+                "rule_set": [
+                    "geosite-geolocation-cn"
+                ],
+                "server": "Local-DNS"
+            },
             // 非中国域名使用隐私DNS（优先使用Remote-DNS，如果失败则使用Remote-DNS1）
             {
                 "action": "route",
@@ -567,8 +573,11 @@
             {
                 "action": "route",
                 "rule_set": [
+                    "GeoSite-Private",
                     "GeoSite-CN",
+                    "GeoIP-Private",
                     "geoip-cn",
+                    "geosite-geolocation-cn",
                     "PayPal"
                 ],
                 "outbound": "🎯 全球直连"
@@ -687,8 +696,24 @@
                 "download_detour": "🎯 全球直连",
                 "update_interval": "48h"
             },
-            
-           
+            //中国地址
+            {
+                "tag": "GeoIP-Private",
+                "type": "remote",
+                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/private.srs",
+                "format": "binary",
+                "download_detour": "🎯 全球直连",
+                "update_interval": "48h"
+            },
+            //中国地址
+            {
+                "tag": "GeoSite-Private",
+                "type": "remote",
+                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/private.srs",
+                "format": "binary",
+                "download_detour": "🎯 全球直连",
+                "update_interval": "48h"
+            },
             //中国地址
             {
                 "tag": "GeoSite-CN",
@@ -707,7 +732,15 @@
                 "download_detour": "🎯 全球直连",
                 "update_interval": "48h"
             },
-            
+            //中国地址
+            {
+                "tag": "geosite-geolocation-cn",
+                "type": "remote",
+                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-cn.srs",
+                "format": "binary",
+                "download_detour": "🎯 全球直连",
+                "update_interval": "48h"
+            },
             //非中国地址
             {
                 "tag": "geosite-geolocation-!cn",

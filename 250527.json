@@ -47,21 +47,29 @@
     "servers": [
       {
         "tag": "Local-DNS",
-        "address": "h3://223.5.5.5:443/dns-query",
-        "address_resolver": "Local-DNS-Resolver",
+        "address": "https://223.5.5.5:443/dns-query",
+        //"address_resolver": "Local-DNS-Resolver",  
         "detour": "🎯 全球直连"
       },
 
-      {
-        "tag": "Local-DNS-Resolver",
-        "address": "udp://223.5.5.5:53",
-        "detour": "🎯 全球直连"
-      },
+      //{
+        //"tag": "Local-DNS-Resolver",
+        //"address": "udp://223.5.5.5:53",
+        //"detour": "🎯 全球直连"
+      //},
 
       
       {
         "tag": "Remote-DNS",
-        "address": "tls://9.9.9.11:853",  // Quad9的DoT
+        //"address": "tls://9.9.9.11:853",  // Quad9的DoT（带恶意软件过滤）
+        "address": "https://dns11.quad9.net/dns-query",
+        "address_resolver": "Remote-Resolver-DNS",    //用tls解析这个域名
+        "detour": "🚀 节点选择"
+      },
+
+      {
+        "tag": "Remote-Resolver-DNS",
+        "address": "tls://9.9.9.11:853",  // Quad9的DoT（带恶意软件过滤）
         "detour": "🚀 节点选择"
       },
 

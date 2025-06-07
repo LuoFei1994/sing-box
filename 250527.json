@@ -61,7 +61,7 @@
             //},
             {
                 "tag": "Remote-DNS",
-                // Quad9的DoT（带恶意软件过滤）
+                // Quad9的DoT（带恶意软件过滤） 直接使用IP避免二次解析
                 "address": "tls://9.9.9.11:853",  
                 "detour": "🚀 节点选择"
             },
@@ -315,7 +315,12 @@
             "network": "udp", 
             // 强制UDP over TCP 
             "udp_over_tcp": true,      
-            "multiplex": {}
+            "multiplex": {
+                // 启用多路复用
+                "enabled": true,      
+                "protocol": "smux",
+                "max_connections": 4
+            }
         }
     ],
     //出站的规则分流
@@ -424,6 +429,7 @@
                 "rule_set": [
                     "GeoSite-CN",
                     "geoip-cn",
+                    "iOS-Services",
                     "PayPal"
                 ],
                 "outbound": "🎯 全球直连"
@@ -784,6 +790,13 @@
                 "format": "binary",
                 "download_detour": "🚀 节点选择",
                 "update_interval": "48h"
+            },
+            {
+              "tag": "iOS-Services",
+              "type": "remote",
+              "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/apple.srs",
+              "format": "binary",
+              "download_detour": "🎯 全球直连"
             }
         ],
         //自动检测出站接口

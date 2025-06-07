@@ -185,8 +185,8 @@
       "strict_route": true,
       "sniff": true,
       "endpoint_independent_nat": false, // 提升NAT兼容性
-      "domain_strategy": "prefer_ipv4",
-      //mixed、system、gvisor  
+      "domain_strategy": "ipv4_only",    // 避免IPv6泄露
+      //mixed、system、gvisor   
       //这三个的区别system 性能:高、安全性:低、兼容性:高(依赖系统)、复杂性:简单、 适用场景：性能优先
       //           gvisor 性能:低、安全性:高、兼容性:中         、复杂性:较复杂、适用场景：安全隔离
       //           mixed  上面两个的集合体，都中等
@@ -413,11 +413,23 @@
         "protocol": ["ftp", "telnet", "smtp"],
         "action": "reject"
       },
+      
       // 强化追踪拦截
       {
         "domain_regex": "(analytics|track|metrics|telemetry)\\.",
         "action": "reject"
       },
+      
+      // 新增浏览器指纹保护
+      {
+        "domain_suffix": [
+        "fingerprintjs.com",
+        "fingerprint.com",
+        "deviceident.com",
+        "fpjs.io"
+        ],
+        "action": "reject"
+      }
       
       
 
@@ -644,6 +656,8 @@
         "download_detour": "🚀 节点选择",  // 安全加固
         "update_interval": "24h"
       },
+
+      //MetaCubeX维护的公共追踪器
       {
         "tag": "Tracking",
         "type": "remote",

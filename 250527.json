@@ -62,7 +62,7 @@
       {
         "tag": "Remote-DNS",
         //"address": "tls://9.9.9.11:853",  // Quad9的DoT（带恶意软件过滤）
-        "address": "https://dns11.quad9.net/dns-query",
+        "address": "tls://dns11.quad9.net",
         "address_resolver": "Remote-Resolver-DNS",    //用tls解析这个域名
         "detour": "🚀 节点选择"
       },
@@ -204,7 +204,7 @@
         "172.18.0.1/30",
         "fdfe:dcba:9876::1/126"
       ],
-      "mtu": 1450, // 优化iOS的MTU值
+      "mtu": 1400, // 优化iOS的MTU值
       "auto_route": true,
       "strict_route": true,    //改false的话可以禁用TUN严格路由（解决部分WiFi断流）
       "sniff": true,
@@ -408,14 +408,29 @@
           "quic"
         ]
       },
-      // 阻止UDP潜在泄露
+      // 阻止UDP潜在泄露 拦截UDP/443流量
       {
-        "port": [
-          443
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {"port": 443, "network": "udp"},
+          {"protocol": "quic"}  // 补充拦截QUIC协议
         ],
-        "network": "udp",
         "action": "reject"
       },
+      
+      //可能影响部分使用UDP/443的合法服务（如WebRTC），建议通过domain白名单排除：
+      {
+        "domain": [
+          "zoom.us",
+          "discord.com"
+        ], 
+        "port": 443, 
+        "network": "udp",
+        "outbound": "🎯 全球直连"
+      },
+
+      
       // 新增隐私保护规则
       {
         "action": "reject",
@@ -427,9 +442,9 @@
       
       
 
-      // 新增隐私敏感协议拦截
+      // 新增隐私敏感协议拦截,拦截加密货币和Tor流量
       {
-        "protocol": ["ftp", "telnet", "smtp"],
+        "protocol": ["ftp", "telnet", "smtp","bitcoin", "tor"],
         "action": "reject"
       },
       
@@ -548,10 +563,18 @@
         "outbound": "🚀 节点选择"
       },
 
+       {
+        "domain_suffix": [
+          ".alipay.com",
+          ".wechatpay.com"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+
       // 强化加密货币保护
       {
         "domain_keyword": ["coinbase", "binance", "metamask"],
-        "outbound": "🚀🚀 节点选择"
+        "outbound": "🚀 节点选择"
       },
 
       

@@ -291,8 +291,8 @@
       "server_port": 7395,
       "method": "chacha20-ietf-poly1305",
       "password": "kQBeCDXbwoSW2wVC",
-      "plugin": "",                     //启用HTTP流量混淆插件
-      "plugin_opts": "",                // 升级为WebSocket+TLS混淆
+      "plugin": "obfs-local",                                   //启用HTTP流量混淆插件
+      "plugin_opts": "obfs=http;obfs-host=cloudflare.com",      // 必要隐私保护
       "network": "udp",
       "udp_over_tcp": true, // 强制UDP over TCP
       "multiplex": {}
@@ -446,15 +446,22 @@
         "outbound": "GLOBAL"
       },
       
-      // ===== 出站动作 =====
+      // ===== 苹果服务走直连 =====
       {
         "domain_suffix": [
           ".apple.com",
           ".icloud.com",
-          ".mzstatic.com"
+          ".mzstatic.com",
+          ".apple-cloudkit.com",
+          ".apple-mapkit.com",
+          ".apple-dns.net",
+          ".cdn-apple.com"
         ],
+        "action": "resolve",  // 避免FakeIP干扰
         "outbound": "🎯 全球直连"
       },
+
+      
       
       //中国网点走直连的规则
       {

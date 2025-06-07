@@ -152,10 +152,10 @@
 
 
       // 新增代理节点域名直连（防DNS污染）
-      {
-        "domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz"],
-        "server": "Local-DNS"
-      },
+      //{
+        //"domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz"],
+        //"server": "Local-DNS"
+      //},
 
       
       {
@@ -317,8 +317,8 @@
       "password": "kQBeCDXbwoSW2wVC",
       "plugin": "",                                   //启用HTTP流量混淆插件
       "plugin_opts": "",      // 必要隐私保护
-      "network": "tcp",      // 关闭UDP减少耗电，选tcp
-      "udp_over_tcp": false, // 强制UDP over TCP
+      "network": "UDP",      // 关闭UDP减少耗电，选tcp
+      "udp_over_tcp": true, // 强制UDP over TCP
       "multiplex": {}
     }
   ],
@@ -499,10 +499,10 @@
       },
 
       // 阻止代理节点被二次代理
-      {
-        "domain": ["c50s2.portablesubmarines.com", "100.bgp.666888.biz"],
-        "outbound": "🎯🎯 全球直连"
-      },
+      //{
+        //"domain": ["c50s2.portablesubmarines.com", "100.bgp.666888.biz"],
+        //"outbound": "🎯🎯 全球直连"
+      //},
       
       //中国网点走直连的规则
       {

@@ -6,6 +6,8 @@
     "output": "",
     "timestamp": false //打开标注日志时间  
   },
+
+//实验性  
   "experimental": {
     "clash_api": {
       "external_controller": "127.0.0.1:20123",
@@ -31,6 +33,8 @@
       "rdrc_timeout": "7d"
     }
   },
+
+//和苹果服务器时间同步  
   "ntp": {
     "enabled": true,
     "server": "time.apple.com",
@@ -84,13 +88,8 @@
         "server": "Local-DNS",
         "outbound": "any"
       },
-      //{
-      //"inbound":[
-      //"tun-in",
-      //"mixed-in"
-      //],
-      //"server": "Local-DNS"
-      //},
+  
+      //calsh的模式
       {
         "action": "route",
         "clash_mode": "direct",
@@ -101,6 +100,8 @@
         "clash_mode": "global",
         "server": "Remote-DNS"
       },
+
+      // 中国域名使用国内DNS
       {
         "action": "route",
         "rule_set": [
@@ -108,6 +109,7 @@
         ],
         "server": "Local-DNS"
       },
+      
       {
         "action": "route",
         "rule_set": [
@@ -115,6 +117,8 @@
         ],
         "server": "Local-DNS"
       },
+
+      // 非中国域名使用隐私DNS（优先使用Remote-DNS，如果失败则使用Remote-DNS1）
       {
         "action": "route",
         "rule_set": [
@@ -122,6 +126,15 @@
         ],
         "server": "Remote-DNS"
       },
+
+      // 苹果服务特殊处理
+      {
+        "domain_suffix": [".apple.com", ".icloud.com", ".mzstatic.com", ".apple-cloudkit.com"],
+        "server": "Local-DNS",
+        "disable_cache": true  // 替代always_real_ip
+      },
+
+      
       {
         //"action": "route",
         //"rule_set": "geosite-geolocation-!cn",
@@ -130,8 +143,9 @@
           "AAAA"
         ],
         "server": "fakeip"
-      }
+      },
 
+  
       
     ],
     "strategy": "prefer_ipv4", //默认ipv4优选
@@ -187,8 +201,10 @@
       }
     }
   ],
-  //出站设置
+  
+//出站设置
   "outbounds": [
+    
     //直连
     {
       "type": "direct",
@@ -276,13 +292,14 @@
       "server_port": 7395,
       "method": "chacha20-ietf-poly1305",
       "password": "kQBeCDXbwoSW2wVC",
-      "plugin": "",                     //启用HTTP流量混淆插件
-      "plugin_opts": "",                // 升级为WebSocket+TLS混淆
+      "plugin": "obfs-local",                                   //启用HTTP流量混淆插件
+      "plugin_opts": "obfs=http;obfs-host=cloudflare.com",      // 必要隐私保护
       "network": "udp",
       "udp_over_tcp": true, // 强制UDP over TCP
       "multiplex": {}
     }
   ],
+  
   //出站的规则分流
   "route": {
     "rules": [
@@ -324,6 +341,11 @@
         ],
         "action": "reject"
       },
+
+
+
+
+      
       {
         "rule_set": [
           "BlockHttpDNS"
@@ -396,7 +418,7 @@
         "domain_regex": "(analytics|track|metrics|telemetry)\\.",
         "action": "reject"
       },
-
+      
       
 
 
@@ -430,17 +452,23 @@
         "outbound": "GLOBAL"
       },
       
-      // ===== 出站动作 =====
+      // ===== 苹果服务走直连 =====
       {
         "domain_suffix": [
           ".apple.com",
           ".icloud.com",
-          ".mzstatic.com"
+          ".mzstatic.com",
+          ".apple-cloudkit.com",
+          ".apple-mapkit.com",
+          ".apple-dns.net",
+          ".cdn-apple.com"
         ],
         "outbound": "🎯 全球直连"
       },
+
       
-      //走直连的规则
+      
+      //中国网点走直连的规则
       {
         "action": "route",
         "rule_set": [
@@ -471,14 +499,19 @@
         ],
         "outbound": "🚀 节点选择"
       },
+      
       // 支付服务走代理（安全加固）
       {
         "domain_suffix": [
           ".stripe.com",
-          ".venmo.com"
+          ".venmo.com",
+          ".alipay.com",
+          ".wechatpay.com"
         ],
         "outbound": "🚀 节点选择"
       },
+
+      //国外媒体走代理
       {
         "action": "route",
         "rule_set": [
@@ -494,8 +527,10 @@
         "outbound": "🚀 节点选择"
       }
     ],
+    
     //出站的分流规则集
     "rule_set": [
+
       //油管规则集
       {
         "tag": "Youtube",
@@ -536,6 +571,8 @@
         "format": "binary",
         "download_detour": "🚀 节点选择"
       },
+
+      //去广告的规则集
       {
         "tag": "Category-Ads",
         "type": "remote",
@@ -585,13 +622,14 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-      //网上别人做的转sing-box的中国 规则地址
+      
+      // PayPal规则集改为通过代理下载
       {
         "tag": "PayPal",
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/PayPal/PayPal.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🚀 节点选择"   // 安全加固
       },
       {
         "tag": "Tracking",

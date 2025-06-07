@@ -118,13 +118,14 @@
         "server": "Local-DNS"
       },
 
-      // 其他域名使用隐私DNS
+      // 非中国域名使用隐私DNS（优先使用Remote-DNS，如果失败则使用Remote-DNS1）
       {
         "action": "route",
         "rule_set": [
           "geosite-geolocation-!cn"
         ],
-        "server": "Remote-DNS"
+        "server": ["Remote-DNS", "Remote-DNS1"],
+        "fallback_delay": "500ms"
       },
 
       // 苹果服务特殊处理
@@ -143,7 +144,14 @@
           "AAAA"
         ],
         "server": "fakeip"
+      },
+
+      //DNS故障转移机制
+      {
+      "server": ["Remote-DNS", "Remote-DNS1"],
+      "fallback_delay": "500ms"
       }
+
 
       
     ],
@@ -341,11 +349,7 @@
         "action": "reject"
       },
 
-      // 新增隐私数据收集拦截
-      {
-        "rule_set": ["Data-Collection"],
-        "action": "reject"
-      },
+
 
 
       
@@ -533,14 +537,7 @@
     
     //出站的分流规则集
     "rule_set": [
-      // 隐私数据收集拦截
-      {
-        "tag": "Data-Collection",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@refs/heads/main/wildcard/tif-onlydomains.txt",
-        "format": "source",
-        "download_detour": "🎯 全球直连"
-      },
+
       //油管规则集
       {
         "tag": "Youtube",

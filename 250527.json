@@ -363,23 +363,26 @@
       {
         "action": "reject",
         "rules": [
-          {"rule_set": ["Category-Ads", "BlockHttpDNS"]},  //去广告
+          {"domain_keyword": ["stun:", "turn:", "webrtc", "quic"]},   //域拦截
           {"port": [3478, 5349, 19302, 19305]},    //端口拦截
           {"protocol": "quic"},   // 阻止未加密QUIC协议
-          {"rule_set": ["Tracking", "Tracker"]},    // 添加隐私保护规则（置于广告规则后）
+          {"domain_regex": "^(stun|turn|webrtc)\\."},  // 增强WebRTC阻止
+          {"domain_regex": "(analytics|track|metrics|telemetry)\\."},   // 强化追踪拦截
+          {"domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs)\\.(com|io)"},   // 新增浏览器指纹保护
           {"port": [443,80],"network": "udp"}     // 阻止UDP潜在泄露 拦截UDP/443流量
+          
         ]
       },
 
       {
         "action": "reject",
         "rules": [
-          {"domain_regex": "^(stun|turn|webrtc)\\."},  // 增强WebRTC阻止
-          {"domain_keyword": ["stun:", "turn:", "webrtc", "quic"]},
-          {"domain_keyword": ["analytics", "tracking"]},    // 新增隐私保护规则
-          {"domain_regex": "(analytics|track|metrics|telemetry)\\."},   // 强化追踪拦截
-          {"domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs)\\.(com|io)"},   // 新增浏览器指纹保护
-          {"protocol": ["ftp", "telnet", "smtp", "bitcoin", "tor", "bittorrent","bitcoin"]}   // 新增隐私敏感协议拦截,拦截加密货币和Tor流量
+          {"protocol": ["ftp", "telnet", "smtp", "bitcoin", "tor", "bittorrent","bitcoin"]},   // 新增隐私敏感协议拦截,拦截加密货币和Tor流量
+          {"rule_set": ["Category-Ads", "BlockHttpDNS"]},  //去广告
+          {"rule_set": ["Tracking", "Tracker"]},    // 添加隐私保护规则（置于广告规则后）
+          {"domain_keyword": ["analytics", "tracking"]}    // 新增隐私保护规则
+          
+        
         ]
       },
 
@@ -390,106 +393,41 @@
           {"ip_cidr": ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16","198.18.0.0/15","fc00::/7"]},
           {"ip_is_private": true},
           {"domain_suffix": [".apple.com", ".icloud.com", ".mzstatic.com",".apple-cloudkit.com",".apple-mapkit.com",".apple-dns.net",".cdn-apple.com"]},
-          {"rule_set": ["GeoSite-CN", "geoip-cn"]}
+          {"domain": ["zoom.us","discord.com"],"port": 443},                                                     //可能影响部分使用UDP/443的合法服务（如WebRTC），建议通过domain白名单排除  
+          {"domain": ["*.apple.com","*.icloud.com"],"network": "udp"}                                           //例外放行443和80端口的Apple服务
         ]
       },
 
-      //1,可能影响部分使用UDP/443的合法服务（如WebRTC），建议通过domain白名单排除  2,例外放行443和80端口的Apple服务   3,阻止代理节点被二次代理
+      //1,阻止代理节点被二次代理  2,其它规则
       {
         "action": "direct",
         "rules": [
-          
-          {"domain": ["zoom.us","discord.com"],"port": 443},  
-          
-          {"domain": ["*.apple.com","*.icloud.com"],"network": "udp"},   
-          
-          {"domain": ["c50s2.portablesubmarines.com", "100.bgp.666888.biz"]}    
+          {"domain_suffix": [".alipay.com",".wechatpay.com"]},                  // 支付服务走直连
+          {"domain": ["c50s2.portablesubmarines.com", "100.bgp.666888.biz"]},
+          {"rule_set": ["GeoSite-CN", "geoip-cn","GeoSite-Private","GeoIP-Private","geosite-geolocation-cn","PayPal"]}
         ]
       },
+
+
+      // ===== 代理规则组 =====
+      {
+        "action": "proxy",
+        "rules": [
+          {"domain_keyword": ["banking", "financial", "secret"]},
+          {"domain_suffix": [".stripe.com", ".venmo.com"]},                             // 支付服务走代理（安全加固）
+          {"rule_set": ["geosite-geolocation-!cn"]},                                // 走代理的规则：非中国域名
+          {"domain_keyword": ["coinbase","binance","metamask"]},                    // 强化加密货币保护
+          {"rule_set": ["Youtube", "Tiktok", "Whatsapp", "Instagram", "Facebook","GitHub","Line","Telegram"]}
+        ]
+      }
       
      
 
-      
-
-
-
-      
-      //{
-      //",
-      //"outbound": "🎯 全球直连"
-      //},
-      //中国网点走直连的规则
-      {
-        "action": "route",
-        "rule_set": [
-          "GeoSite-Private",
-          "GeoSite-CN",
-          "GeoIP-Private",
-          "geoip-cn",
-          "geosite-geolocation-cn",
-          "PayPal"
-        ],
-        "outbound": "🎯 全球直连"
-      },
       //合并例子"mode": "or" "and" {"type": "logical","mode": "or","rules":[{"protocol": "dns"},{"port": 53}//],//"outbound": "dns"//},
-      //以下规则分流走节点
-      {
-        "domain_keyword": [
-          "banking",
-          "financial",
-          "secret"
-        ],
-        "outbound": "🚀 节点选择"
-      },
-      // 走代理的规则：非中国域名
-      {
-        "action": "route",
-        "rule_set": [
-          "geosite-geolocation-!cn"
-        ],
-        "outbound": "🚀 节点选择"
-      },
-      // 支付服务走代理（安全加固）
-      {
-        "domain_suffix": [
-          ".stripe.com",
-          ".venmo.com",
-          ".alipay.com",
-          ".wechatpay.com"
-        ],
-        "outbound": "🚀 节点选择"
-      },
-      {
-        "domain_suffix": [
-          ".alipay.com",
-          ".wechatpay.com"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      // 强化加密货币保护
-      {
-        "domain_keyword": [
-          "coinbase",
-          "binance",
-          "metamask"
-        ],
-        "outbound": "🚀 节点选择"
-      },
-      //国外媒体走代理
-      {
-        "action": "route",
-        "rule_set": [
-          "Youtube",
-          "Tiktok",
-          "Whatsapp",
-          "Instagram",
-          "Facebook",
-          "GitHub",
-          "Line",
-          "Telegram"
-        ],
-        "outbound": "🚀 节点选择"
-      }
+  
+      
+
+
     ],
     //出站的分流规则集
     "rule_set": [

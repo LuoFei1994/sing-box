@@ -10,7 +10,7 @@
 //实验性  
   "experimental": {
     "clash_api": {
-      "external_controller": "127.0.0.1:20123",
+      "external_controller": "127.0.0.1:20123", 
       "external_ui": "",
       "external_ui_download_url": "",
       "external_ui_download_detour": "🎯 全球直连",

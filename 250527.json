@@ -143,7 +143,7 @@
           "AAAA"
         ],
         "server": "fakeip"
-      },
+      }
 
   
       
@@ -429,7 +429,7 @@
         "fpjs.io"
         ],
         "action": "reject"
-      }
+      },
       
       
 

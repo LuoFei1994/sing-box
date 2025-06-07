@@ -21,7 +21,7 @@
       "access_control_allow_private_network": false
     },
     "cache_file": {
-      //启用缓存 规则集  
+      //实验性缓存
       "enabled": true,
       //缓存路径
       "path": "cache.db",
@@ -39,7 +39,7 @@
     "enabled": true,
     "server": "time.apple.com",
     "server_port": 123,
-    "interval": "30m"
+    "interval": "1h"
   },
 
 //以下是dns服务和规则设置
@@ -47,37 +47,38 @@
     "servers": [
       {
         "tag": "Local-DNS",
-        "address": "h3://223.5.5.5:443/dns-query",
-        "address_resolver": "Local-DNS-Resolver",  
+        "address": "https://223.5.5.5:443/dns-query",
+        //"address_resolver": "Local-DNS-Resolver",  
         "detour": "🎯 全球直连"
       },
 
-      {
-        "tag": "Local-DNS-Resolver",
-        "address": "udp://223.5.5.5:53",
-        "detour": "🎯 全球直连"
-      },
+      //{
+        //"tag": "Local-DNS-Resolver",
+        //"address": "udp://223.5.5.5:53",
+        //"detour": "🎯 全球直连"
+      //},
 
       
       {
         "tag": "Remote-DNS",
-        "address": "tls://9.9.9.11:853",  // Quad9的DoT（带恶意软件过滤）
+        //"address": "tls://9.9.9.11:853",  // Quad9的DoT（带恶意软件过滤）
+        "address": "https://dns11.quad9.net/dns-query", 
         "detour": "🚀 节点选择"
       },
 
-      {
-        "tag": "Remote-DNS1",
-        "address": "https://1.1.1.1/dns-query", // 使用Cloudflare的DoH
-        "detour": "🚀 节点选择"
-      },
+      //{
+        //"tag": "Remote-DNS1",
+        //"address": "https://1.1.1.1/dns-query", // 使用Cloudflare的DoH
+        //"detour": "🚀 节点选择"
+      //},
 
       // 新增加密DNS兜底
-      {
-        "tag": "Remote-DNS2",
-        "address": "https://doh.opendns.com/dns-query",
-        "address_resolver": "Local-DNS-Resolver",  
-        "detour": "🚀🚀 节点选择"
-      },
+      //{
+        //"tag": "Remote-DNS2",
+        //"address": "https://doh.opendns.com/dns-query",
+        //"address_resolver": "Local-DNS-Resolver",  
+        //"detour": "🚀🚀 节点选择"
+      //},
       
       //fakeip的设置
       {
@@ -164,7 +165,7 @@
       
     ],
     "strategy": "prefer_ipv4", //默认ipv4优选
-    "disable_cache": false,
+    "disable_cache": true,  // 关闭DNS缓存减少CPU负载
     "disable_expire": false,
     "independent_cache": true,
     //没找到的dns走指定
@@ -195,7 +196,7 @@
         "172.18.0.1/30",
         "fdfe:dcba:9876::1/126"
       ],
-      "mtu": 1400, // 优化iOS的MTU值
+      "mtu": 1450, // 优化iOS的MTU值
       "auto_route": true,
       "strict_route": true,    //改false的话可以禁用TUN严格路由（解决部分WiFi断流）
       "sniff": true,
@@ -309,7 +310,7 @@
       "password": "kQBeCDXbwoSW2wVC",
       "plugin": "",                                   //启用HTTP流量混淆插件
       "plugin_opts": "",      // 必要隐私保护
-      "network": "udp",      // 关闭UDP减少耗电，选tcp
+      "network": "tcp",      // 关闭UDP减少耗电，选tcp
       "udp_over_tcp": false, // 强制UDP over TCP
       "multiplex": {}
     }
@@ -739,7 +740,9 @@
       }
     ],
     //自动检测出站接口
-    "auto_detect_interface": true,
+    "auto_detect_interface": false,
+    "default_interface": "en0" 
+  
     "default_mark": 233,
     //查找进程信息
     "find_process": true,

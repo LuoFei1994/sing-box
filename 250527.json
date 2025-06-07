@@ -171,8 +171,7 @@
     "fakeip": {
       "enabled": true,
       "inet4_range": "198.18.0.0/15",
-      "inet6_range": "fc00::/18",
-      "upstream": ["Remote-DNS", "Remote-DNS1", "Remote-DNS2"]  // 新增上游
+      "inet6_range": "fc00::/18"
     }
   },
   

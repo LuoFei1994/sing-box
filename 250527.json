@@ -568,7 +568,7 @@
       {
         "tag": "Youtube",
         "type": "remote",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/youtube.srs",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/youtube.srs",
         "format": "binary",
         "download_detour": "🚀 节点选择",
         "update_interval": "24h"
@@ -577,7 +577,7 @@
       {
         "tag": "Tiktok",
         "type": "remote",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/tiktok.srs",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@refs/heads/sing/geo/geosite/tiktok.srs",
         "format": "binary",
         "download_detour": "🚀 节点选择",
         "update_interval": "24h"
@@ -586,7 +586,7 @@
       {
         "tag": "Whatsapp",
         "type": "remote",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/whatsapp.srs",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/whatsapp.srs",
         "format": "binary",
         "download_detour": "🚀 节点选择",
         "update_interval": "24h"
@@ -595,7 +595,7 @@
       {
         "tag": "Instagram",
         "type": "remote",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/instagram.srs",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/instagram.srs",
         "format": "binary",
         "download_detour": "🚀 节点选择",
         "update_interval": "24h"
@@ -604,7 +604,7 @@
       {
         "tag": "Facebook",
         "type": "remote",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/facebook.srs",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/facebook.srs",
         "format": "binary",
         "download_detour": "🚀 节点选择",
         "update_interval": "24h"
@@ -614,7 +614,7 @@
       {
         "tag": "Category-Ads",
         "type": "remote",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ads-all.srs",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ads-all.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连",
         "update_interval": "24h"
@@ -634,7 +634,7 @@
       {
         "tag": "GeoIP-Private",
         "type": "remote",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/private.srs",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/private.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连",
         "update_interval": "24h"
@@ -642,7 +642,7 @@
       {
         "tag": "GeoSite-Private",
         "type": "remote",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/private.srs",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/private.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连",
         "update_interval": "24h"
@@ -650,7 +650,7 @@
       {
         "tag": "GeoSite-CN",
         "type": "remote",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连",
         "update_interval": "24h"
@@ -658,7 +658,7 @@
       {
         "tag": "geoip-cn",
         "type": "remote",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连",
         "update_interval": "24h"
@@ -666,7 +666,7 @@
       {
         "tag": "geosite-geolocation-cn",
         "type": "remote",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-cn.srs",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-cn.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连",
         "update_interval": "24h"
@@ -674,7 +674,7 @@
       {
         "tag": "geosite-geolocation-!cn",
         "type": "remote",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连",
         "update_interval": "24h"
@@ -694,7 +694,7 @@
       {
         "tag": "Tracking",
         "type": "remote",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-public-tracker.srs",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-public-tracker.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连",
         "update_interval": "24h"
@@ -703,7 +703,7 @@
       {
         "tag": "Tracker",
         "type": "remote",
-        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tracker.srs",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tracker.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连",
         "update_interval": "24h"

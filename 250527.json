@@ -306,9 +306,9 @@
       "server_port": 7395,
       "method": "chacha20-ietf-poly1305",
       "password": "kQBeCDXbwoSW2wVC",
-      "plugin": "obfs-local",                                   //启用HTTP流量混淆插件
-      "plugin_opts": "obfs=http;obfs-host=cloudflare.com",      // 必要隐私保护
-      "network": "udp",
+      "plugin": "",                                   //启用HTTP流量混淆插件
+      "plugin_opts": "",      // 必要隐私保护
+      "network": "tcp",      // 关闭UDP减少耗电
       "udp_over_tcp": true, // 强制UDP over TCP
       "multiplex": {}
     }
@@ -417,7 +417,8 @@
       {
         "rule_set": [
           "Tracking",
-          "Tracker"
+          "Tracker",
+          "Privacy"    // 新增隐私保护规则集
         ],
         "action": "reject"
       },
@@ -436,12 +437,7 @@
       
       // 新增浏览器指纹保护
       {
-        "domain_suffix": [
-        "fingerprintjs.com",
-        "fingerprint.com",
-        "deviceident.com",
-        "fpjs.io"
-        ],
+        "domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs)\\.(com|io)",
         "action": "reject"
       },
       
@@ -492,7 +488,11 @@
         "outbound": "🎯 全球直连"
       },
 
-      
+      // 阻止代理节点被二次代理
+      {
+        "domain": ["c50s2.portablesubmarines.com", "100.bgp.666888.biz"],
+        "outbound": "🎯🎯 全球直连"
+      },
       
       //中国网点走直连的规则
       {
@@ -537,6 +537,13 @@
         "outbound": "🚀 节点选择"
       },
 
+      // 强化加密货币保护
+      {
+        "domain_keyword": ["coinbase", "binance", "metamask"],
+        "outbound": "🚀🚀 节点选择"
+      },
+
+      
       //国外媒体走代理
       {
         "action": "route",
@@ -612,6 +619,18 @@
         "download_detour": "🎯 全球直连",
         "update_interval": "24h"
       },
+
+
+      // 新增隐私保护规则集
+      {
+        "tag": "Privacy",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/StevenBlack/hosts@master/hosts.srs",
+        "download_detour": "🚀 节点选择",
+        "update_interval": "24h"
+      },
+
+      
       {
         "tag": "GeoIP-Private",
         "type": "remote",

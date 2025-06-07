@@ -107,6 +107,12 @@
         "clash_mode": "global",
         "server": "Remote-DNS"
       },
+
+    
+
+
+
+      
       // 中国域名使用国内DNS
       {
         "action": "route",
@@ -157,7 +163,7 @@
       }
     ],
     "strategy": "prefer_ipv4", //默认ipv4优选
-    "disable_cache": true, // 关闭DNS缓存减少CPU负载
+    "disable_cache": true, // 关闭DNS缓存减少CPU负载,避免缓存污染
     "disable_expire": false,
     "independent_cache": true,
     //没找到的dns走指定
@@ -210,15 +216,6 @@
   ],
   //出站设置
   "outbounds": [
-    
-    //加密DNS出站示例
-    {
-      "type": "dns",
-      "tag": "dns-out",
-      "server": "Remote-DNS",  // 使用DoT加密
-      "server_port": 853
-    },
-
     
     //直连
     {
@@ -429,13 +426,6 @@
         ],
         "network": "udp",
         "outbound": "direct"
-      },
-
-      //强制代理UDP/53流量（防止DNS劫持）
-      {
-        "network": "udp",
-        "port": 53,
-        "outbound": "dns-out"  // 指向加密DNS的出站
       },
 
 

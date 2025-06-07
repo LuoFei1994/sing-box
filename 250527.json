@@ -411,7 +411,7 @@
 
       // ===== 代理规则组 =====
       {
-        "action": "proxy",
+        "action": "🚀 节点选择",
         "rules": [
           {"domain_keyword": ["banking", "financial", "secret"]},
           {"domain_suffix": [".stripe.com", ".venmo.com"]},                             // 支付服务走代理（安全加固）

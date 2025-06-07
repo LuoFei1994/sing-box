@@ -62,7 +62,14 @@
       {
         "tag": "Remote-DNS",
         //"address": "tls://9.9.9.11:853",  // Quad9的DoT（带恶意软件过滤）
-        "address": "https://dns11.quad9.net/dns-query", 
+        "address": "https://dns11.quad9.net/dns-query",
+        "address_resolver": "Remote-Resolver-DNS",    //用tls解析这个域名
+        "detour": "🚀 节点选择"
+      },
+
+      {
+        "tag": "Remote-Resolver-DNS",
+        "address": "tls://9.9.9.11:853",  // Quad9的DoT（带恶意软件过滤）
         "detour": "🚀 节点选择"
       },
 

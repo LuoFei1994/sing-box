@@ -124,8 +124,7 @@
         "rule_set": [
           "geosite-geolocation-!cn"
         ],
-        "server": ["Remote-DNS", "Remote-DNS1"],
-        "fallback_delay": "500ms"
+        "server": "Remote-DNS"
       },
 
       // 苹果服务特殊处理

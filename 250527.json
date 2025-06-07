@@ -215,7 +215,7 @@
     {
       "type": "dns",
       "tag": "dns-out",
-      "server": "tls://dns.quad9.net",  // 使用DoT加密
+      "server": "Remote-DNS",  // 使用DoT加密
       "server_port": 853
     },
 

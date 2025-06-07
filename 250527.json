@@ -166,8 +166,8 @@
       "server_port": 7395,
       "method": "chacha20-ietf-poly1305",
       "password": "kQBeCDXbwoSW2wVC",
-      "plugin": "obfs-local",                     //启用HTTP流量混淆插件
-      "plugin_opts": "obfs=http;obfs-host=cloudflare.com",                // 必要隐私保护
+      "plugin": "",                     //启用HTTP流量混淆插件
+      "plugin_opts": "",                // 升级为WebSocket+TLS混淆
       "network": "udp",
       "udp_over_tcp": true, // 强制UDP over TCP
       "multiplex": {}
@@ -277,15 +277,15 @@
       },
 
       // 新增隐私敏感协议拦截
-      //{
-        //"protocol": ["ftp", "telnet", "smtp"],
-        //"action": "reject"
-      //},
+      {
+        "protocol": ["ftp", "telnet", "smtp"],
+        "action": "reject"
+      },
       // 强化追踪拦截
-      //{
-        //"domain_regex": "^(analytics|track|metrics|telemetry)\\.",
-        //"action": "reject"
-      //},
+      {
+        "domain_regex": "(analytics|track|metrics|telemetry)\\.",
+        "action": "reject"
+      },
 
       
 
@@ -320,18 +320,13 @@
         "outbound": "GLOBAL"
       },
       
-      //苹果服务直连增强
+      // ===== 出站动作 =====
       {
         "domain_suffix": [
           ".apple.com",
           ".icloud.com",
-          ".mzstatic.com",
-          ".apple-cloudkit.com",
-          ".apple-mapkit.com",
-          ".apple-dns.net",
-          ".cdn-apple.com"
+          ".mzstatic.com"
         ],
-        "action": "resolve",   // 避免FakeIP干扰
         "outbound": "🎯 全球直连"
       },
       
@@ -348,7 +343,7 @@
         ],
         "outbound": "🎯 全球直连"
       },
-      //合并例子"mode": "or" "and" {"type": "logical","mode": "or","rules":[{"": "dns"},{"port": 53}//],//"outbound": "dns"//},
+      //合并例子"mode": "or" "and" {"type": "logical","mode": "or","rules":[{"protocol": "dns"},{"port": 53}//],//"outbound": "dns"//},
       //以下规则分流走节点
       {
         "domain_keyword": [
@@ -370,9 +365,7 @@
       {
         "domain_suffix": [
           ".stripe.com",
-          ".venmo.com",
-          ".alipay.com",
-          ".wechatpay.com"
+          ".venmo.com"
         ],
         "outbound": "🚀 节点选择"
       },
@@ -433,8 +426,6 @@
         "format": "binary",
         "download_detour": "🚀 节点选择"
       },
-
-      //去广告的规则集
       {
         "tag": "Category-Ads",
         "type": "remote",
@@ -442,7 +433,6 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-      
       {
         "tag": "GeoIP-Private",
         "type": "remote",
@@ -485,15 +475,13 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-
-      
-      // PayPal规则集改为通过代理下载
+      //网上别人做的转sing-box的中国 规则地址
       {
         "tag": "PayPal",
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/PayPal/PayPal.srs",
         "format": "binary",
-        "download_detour": "🚀 节点选择"   // 安全加固
+        "download_detour": "🎯 全球直连"
       },
       {
         "tag": "Tracking",
@@ -553,23 +541,19 @@
   //以下是dns服务和规则设置
   "dns": {
     "servers": [
-      //{
-        //"tag": "Local-DNS",
-        //"address": "h3://223.5.5.5:443/dns-query",
-        //"detour": "🎯 全球直连"
-      //},
-
-      //{
-        //"tag": "Local-DNS-Resolver",
-        //"address": "udp://223.5.5.5:53",
-        //"detour": "🎯 全球直连"
-      //},
-      
       {
         "tag": "Local-DNS",
-        "address": "https://120.53.53.53/dns-query", // 腾讯国内隐私DNS
+        "address": "h3://223.5.5.5:443/dns-query",
+        "address_resolver": "Local-DNS-Resolver",
         "detour": "🎯 全球直连"
       },
+
+      {
+        "tag": "Local-DNS-Resolver",
+        "address": "udp://223.5.5.5:53",
+        "detour": "🎯 全球直连"
+      },
+
       
       {
         "tag": "Remote-DNS",
@@ -624,8 +608,6 @@
         ],
         "server": "Local-DNS"
       },
-
-      // 中国域名使用Local-DNS
       {
         "action": "route",
         "rule_set": [
@@ -633,22 +615,12 @@
         ],
         "server": "Local-DNS"
       },
-
-      // 苹果服务使用Local-DNS解析，并跳过fakeip
-      {
-        "domain_suffix": [".apple.com", ".icloud.com", ".mzstatic.com"],
-        "server": "Local-DNS",
-        "disable_cache": true  // 替代always_real_ip,跳过缓存，避免使用fakeip  
-      },
-
-      // 非中国域名使用隐私DNS（优先使用Remote-DNS，如果失败则使用Remote-DNS1）
       {
         "action": "route",
         "rule_set": [
           "geosite-geolocation-!cn"
         ],
-        "server": ["Remote-DNS", "Remote-DNS1"],
-        "fallback_delay": "500ms"
+        "server": "Remote-DNS"
       },
       {
         //"action": "route",
@@ -658,10 +630,6 @@
           "AAAA"
         ],
         "server": "fakeip"
-      },
-      {
-        "server": ["Remote-DNS", "Remote-DNS1"],
-        "fallback_delay": "500ms"
       }
 
       

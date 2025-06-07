@@ -6,6 +6,8 @@
     "output": "",
     "timestamp": false //打开标注日志时间  
   },
+
+//实验性  
   "experimental": {
     "clash_api": {
       "external_controller": "127.0.0.1:20123",
@@ -31,6 +33,8 @@
       "rdrc_timeout": "7d"
     }
   },
+
+//和苹果服务器时间同步  
   "ntp": {
     "enabled": true,
     "server": "time.apple.com",
@@ -84,14 +88,7 @@
         "server": "Local-DNS",
         "outbound": "any"
       },
-      //{
-      //"inbound":[
-      //"tun-in",
-      //"mixed-in"
-      //],
-      //"server": "Local-DNS"
-      //},
-
+  
       //calsh的模式
       {
         "action": "route",
@@ -203,8 +200,10 @@
       }
     }
   ],
-  //出站设置
+  
+//出站设置
   "outbounds": [
+    
     //直连
     {
       "type": "direct",
@@ -299,6 +298,7 @@
       "multiplex": {}
     }
   ],
+  
   //出站的规则分流
   "route": {
     "rules": [
@@ -456,7 +456,7 @@
         "outbound": "🎯 全球直连"
       },
       
-      //走直连的规则
+      //中国网点走直连的规则
       {
         "action": "route",
         "rule_set": [
@@ -487,14 +487,19 @@
         ],
         "outbound": "🚀 节点选择"
       },
+      
       // 支付服务走代理（安全加固）
       {
         "domain_suffix": [
           ".stripe.com",
-          ".venmo.com"
+          ".venmo.com",
+          ".alipay.com",
+          ".wechatpay.com"
         ],
         "outbound": "🚀 节点选择"
       },
+
+      //国外媒体走代理
       {
         "action": "route",
         "rule_set": [
@@ -510,6 +515,7 @@
         "outbound": "🚀 节点选择"
       }
     ],
+    
     //出站的分流规则集
     "rule_set": [
       //油管规则集
@@ -552,6 +558,8 @@
         "format": "binary",
         "download_detour": "🚀 节点选择"
       },
+
+      //去广告的规则集
       {
         "tag": "Category-Ads",
         "type": "remote",
@@ -601,13 +609,14 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-      //网上别人做的转sing-box的中国 规则地址
+      
+      // PayPal规则集改为通过代理下载
       {
         "tag": "PayPal",
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/PayPal/PayPal.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🚀 节点选择"   // 安全加固
       },
       {
         "tag": "Tracking",

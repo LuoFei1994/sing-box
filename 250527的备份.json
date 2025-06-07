@@ -314,6 +314,8 @@
   //出站的规则分流
   "route": {
     "rules": [
+
+      // ===== 嗅探解析规则组 =====
       {
         "action": "sniff", //嗅探进站网络
         "inbound": [
@@ -321,7 +323,6 @@
           "mixed-in"
         ]
       },
-      
       //进站来的都从域解析到ip，ipv4优先
       {
         "inbound": [
@@ -331,8 +332,7 @@
         "action": "resolve",
         "strategy": "prefer_ipv4"
       },
-      // ===== DNS规则 (官方推荐动作) =====
-      //拦截dns
+      
       {
         "type": "logical",
         "mode": "or",
@@ -346,113 +346,8 @@
         ],
         "action": "hijack-dns"
       },
-      //去广告
-      {
-        "rule_set": [
-          "Category-Ads"
-        ],
-        "action": "reject"
-      },
-      {
-        "rule_set": [
-          "BlockHttpDNS"
-        ],
-        "action": "reject"
-      },
-      // ===== 拒绝动作 (官方标准写法) =====
-      //合并隐私拦截规则：
-      {
-        "action": "reject",
-        "rules": [
-          {"domain_regex": "^(stun|turn|webrtc)\\."},  // 增强WebRTC阻止
-          {"domain_keyword": ["stun:", "turn:", "webrtc", "quic"]},
-          {"domain_keyword": ["analytics", "tracking"]},   // 新增隐私保护规则
-          {"domain_regex": "(analytics|track|metrics|telemetry)\\."},  // 强化追踪拦截
-          {"domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs)\\.(com|io)"},  // 新增浏览器指纹保护
-          {"protocol": ["ftp", "telnet", "smtp", "bitcoin", "tor", "bittorrent"]}   // 新增隐私敏感协议拦截,拦截加密货币和Tor流量
-        ]
-      },
-      
-      {
-        "port": [
-          3478,
-          5349,
-          19302,
-          19305
-        ],
-        "action": "reject"
-      },
-      // 阻止未加密QUIC协议
-      {
-        "action": "reject",
-        "protocol": [
-          "quic"
-        ]
-      },
-      // 阻止UDP潜在泄露 拦截UDP/443流量
-      {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "port": [
-              443,
-              80
-            ],
-            "network": "udp"
-          }, // 拦截QUIC常用端口
-          {
-            "protocol": "quic"
-          } // 补充拦截QUIC协议
-        ],
-        "action": "reject"
-      },
-      //可能影响部分使用UDP/443的合法服务（如WebRTC），建议通过domain白名单排除：
-      {
-        "domain": [
-          "zoom.us",
-          "discord.com"
-        ],
-        "port": 443,
-        "network": "udp",
-        "outbound": "🎯 全球直连"
-      },
-      // 例外放行443和80端口的Apple服务
-      {
-        "domain": [
-          "*.apple.com",
-          "*.icloud.com"
-        ],
-        "network": "udp",
-        "outbound": "direct"
-      },
-      
-      
-      // 添加隐私保护规则（置于广告规则后）
-      {
-        "rule_set": [
-          "Tracking",
-          "Tracker"
-        ],
-        "action": "reject"
-      },
-      // ===== 内置动作 (官方推荐) =====
-      {
-        "ip_cidr": [
-          "10.0.0.0/8",
-          "172.16.0.0/12",
-          "192.168.0.0/16",
-          "198.18.0.0/15",
-          "fc00::/7"
-        ],
-        "action": "direct"
-      },
-      {
-        "ip_is_private": true,
-        "action": "route",
-        "outbound": "🎯 全球直连"
-      },
-      //页面的模式
+
+      // ===== clash mod 规则组 =====
       {
         "action": "route",
         "clash_mode": "direct",
@@ -463,24 +358,51 @@
         "clash_mode": "global",
         "outbound": "GLOBAL"
       },
-      // ===== 苹果服务走直连 =====
+
+      // ===== 拦截规则组 =====
       {
-        "domain_suffix": [
-          ".apple.com",
-          ".icloud.com",
-          ".mzstatic.com",
-          ".apple-cloudkit.com",
-          ".apple-mapkit.com",
-          ".apple-dns.net",
-          ".cdn-apple.com"
-        ],
-        "outbound": "🎯 全球直连"
+        "action": "reject",
+        "rules": [
+          {"rule_set": ["Category-Ads", "BlockHttpDNS"]},   //去广告
+          {"port": [3478, 5349, 19302, 19305]},             //端口拦截
+          {"protocol": "quic"},                             // 阻止未加密QUIC协议
+          {"rule_set": ["Tracking", "Tracker"]},             // 添加隐私保护规则（置于广告规则后）
+          {"port": [443,80],"network": "udp"}                // 阻止UDP潜在泄露 拦截UDP/443流量
+        ]
       },
-      // 阻止代理节点被二次代理
-      //{
-      //"domain": ["c50s2.portablesubmarines.com", "100.bgp.666888.biz"],
-      //"outbound": "🎯 全球直连"
-      //},
+      
+      //合并隐私拦截规则：
+      {
+        "action": "reject",
+        "rules": [
+          {"domain_regex": "^(stun|turn|webrtc)\\."},                                        // 增强WebRTC阻止
+          {"domain_keyword": ["stun:", "turn:", "webrtc", "quic"]},                          //域名拦截
+          {"domain_keyword": ["analytics", "tracking"]},                                     // 新增隐私保护规则
+          {"domain_regex": "(analytics|track|metrics|telemetry)\\."},                        // 强化追踪拦截
+          {"domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs)\\.(com|io)"},       // 新增浏览器指纹保护
+          {"protocol": ["ftp", "telnet", "smtp", "bitcoin", "tor", "bittorrent"]}            // 新增隐私敏感协议拦截,拦截加密货币和Tor流量
+        ]
+      },
+
+
+      // ===== 直连规则组 =====
+      {
+        "action": "direct",
+        "rules": [
+          {"ip_cidr": ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]},
+          {"ip_is_private": true},
+          {"domain_suffix": [".apple.com", ".icloud.com", ".mzstatic.com",".apple-cloudkit.com",".apple-mapkit.com",".apple-dns.net",".cdn-apple.com"]},     //苹果服务走直连
+          {"rule_set": ["GeoSite-CN", "geoip-cn"]},
+          {"domain": ["zoom.us","discord.com"],"port": 443,"network": "udp"},   //可能影响部分使用UDP/443的合法服务（如WebRTC），建议通过domain白名单排除：
+          {"domain": ["*.apple.com","*.icloud.com"],"network": "udp"},          // 例外放行443和80端口的Apple服务
+          {"domain": ["c50s2.portablesubmarines.com", "100.bgp.666888.biz"]},    // 阻止代理节点被二次代理
+          {"domain_suffix": [".alipay.com",".wechatpay.com"]}                    // 支付服务走直连             
+        ]
+      },
+
+       
+      
+     
       //中国网点走直连的规则
       {
         "action": "route",
@@ -494,63 +416,25 @@
         ],
         "outbound": "🎯 全球直连"
       },
+
+      // ===== 代理规则组 =====
+      {
+        "action": "🚀 节点选择",
+        "rules": [
+          {"domain_keyword": ["banking", "financial", "secret"]},
+          {"domain_suffix": [".stripe.com", ".venmo.com",".coinbase.com",".binance.com",".metamask.io"]}, // 支付服务走代理（安全加固） 强化加密货币保护
+          {"rule_set": ["geosite-geolocation-!cn"]},
+          {"rule_set": ["Youtube", "Tiktok", "Whatsapp", "Instagram", "Facebook","GitHub","Line","Telegram"]}  //国外媒体走代理
+        ]
+      },
+
+
       //合并例子"mode": "or" "and" {"type": "logical","mode": "or","rules":[{"protocol": "dns"},{"port": 53}//],//"outbound": "dns"//},
-      //以下规则分流走节点
-      {
-        "domain_keyword": [
-          "banking",
-          "financial",
-          "secret"
-        ],
-        "outbound": "🚀 节点选择"
-      },
-      // 走代理的规则：非中国域名
-      {
-        "action": "route",
-        "rule_set": [
-          "geosite-geolocation-!cn"
-        ],
-        "outbound": "🚀 节点选择"
-      },
       
-      // 支付服务走代理（安全加固）// 强化加密货币保护
-      {
-        "domain_suffix": [
-          ".stripe.com",     // 支付服务
-          ".venmo.com",      // 支付服务
-          ".coinbase.com",   // 强化加密货币保护
-          ".binance.com",    // 强化加密货币保护
-          ".metamask.io"     // 强化加密货币保护
-        ],
-        "outbound": "🚀 节点选择"
-      },
       
-      // 支付服务走直连
-      {
-        "domain_suffix": [
-          ".alipay.com",
-          ".wechatpay.com"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-
-
       
-      //国外媒体走代理
-      {
-        "action": "route",
-        "rule_set": [
-          "Youtube",
-          "Tiktok",
-          "Whatsapp",
-          "Instagram",
-          "Facebook",
-          "GitHub",
-          "Line",
-          "Telegram"
-        ],
-        "outbound": "🚀 节点选择"
-      }
+      
+     
     ],
     //出站的分流规则集
     "rule_set": [

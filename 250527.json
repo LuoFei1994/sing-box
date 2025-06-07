@@ -368,6 +368,11 @@
         "action": "reject"
       },
       // ===== 拒绝动作 (官方标准写法) =====
+      // 增强WebRTC阻止
+      {
+        "action": "reject",
+        "domain_regex": "^(stun|turn|webrtc)\\."
+      },
       {
         "domain_keyword": [
           "stun:",
@@ -377,11 +382,16 @@
         ],
         "action": "reject"
       },
-      // 增强WebRTC阻止
       {
-        "action": "reject",
-        "domain_regex": "^(stun|turn|webrtc)\\."
+        "port": [
+          3478,
+          5349,
+          19302,
+          19305
+        ],
+        "action": "reject"
       },
+      
       // 阻止未加密QUIC协议
       {
         "action": "reject",
@@ -405,23 +415,8 @@
           "tracking"
         ]
       },
-      {
-        "port": [
-          3478,
-          5349,
-          19302,
-          19305
-        ],
-        "action": "reject"
-      },
-      // 添加隐私保护规则（置于广告规则后）
-      {
-        "rule_set": [
-          "Tracking",
-          "Tracker"
-        ],
-        "action": "reject"
-      },
+      
+      
 
       // 新增隐私敏感协议拦截
       {
@@ -441,7 +436,14 @@
         "action": "reject"
       },
       
-      
+      // 添加隐私保护规则（置于广告规则后）
+      {
+        "rule_set": [
+          "Tracking",
+          "Tracker"
+        ],
+        "action": "reject"
+      },
 
       
       

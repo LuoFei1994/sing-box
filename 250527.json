@@ -277,10 +277,10 @@
       },
 
       // 新增隐私敏感协议拦截
-      {
-        "protocol": ["ftp", "telnet", "smtp"],
-        "action": "reject"
-      },
+      //{
+        //"protocol": ["ftp", "telnet", "smtp"],
+        //"action": "reject"
+      //},
       // 强化追踪拦截
       //{
         //"domain_regex": "^(analytics|track|metrics|telemetry)\\.",
@@ -348,7 +348,7 @@
         ],
         "outbound": "🎯 全球直连"
       },
-      //合并例子"mode": "or" "and" {"type": "logical","mode": "or","rules":[{"protocol": "dns"},{"port": 53}//],//"outbound": "dns"//},
+      //合并例子"mode": "or" "and" {"type": "logical","mode": "or","rules":[{"": "dns"},{"port": 53}//],//"outbound": "dns"//},
       //以下规则分流走节点
       {
         "domain_keyword": [

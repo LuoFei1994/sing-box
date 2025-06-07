@@ -314,6 +314,15 @@
           "mixed-in"
         ]
       },
+
+      // 拦截TLS伪装流量
+      {  
+        "sniff": {
+          "enabled": true,
+          "exclude": ["geoip:cn"]
+          }
+      },
+      
       //进站来的都从域解析到ip，ipv4优先
       {
         "inbound": [
@@ -434,7 +443,9 @@
           "telnet",
           "smtp",
           "bitcoin",
-          "tor"
+          "tor",
+          "bittorrent",
+          "bitcoin"
         ],
         "action": "reject"
       },

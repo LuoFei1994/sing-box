@@ -537,7 +537,8 @@
         "type": "remote",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/youtube.srs",
         "format": "binary",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🚀 节点选择",
+        "update_interval": "24h"
       },
       //TK规则集
       {
@@ -545,7 +546,8 @@
         "type": "remote",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/tiktok.srs",
         "format": "binary",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🚀 节点选择",
+        "update_interval": "24h"
       },
       //WHATSAPP规则集
       {
@@ -553,7 +555,8 @@
         "type": "remote",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/whatsapp.srs",
         "format": "binary",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🚀 节点选择",
+        "update_interval": "24h"
       },
       //INSD规则集
       {
@@ -561,7 +564,8 @@
         "type": "remote",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/instagram.srs",
         "format": "binary",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🚀 节点选择",
+        "update_interval": "24h"
       },
       //FB规则集
       {
@@ -569,7 +573,8 @@
         "type": "remote",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/facebook.srs",
         "format": "binary",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🚀 节点选择",
+        "update_interval": "24h"
       },
 
       //去广告的规则集
@@ -578,49 +583,56 @@
         "type": "remote",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ads-all.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎯 全球直连",
+        "update_interval": "24h"
       },
       {
         "tag": "GeoIP-Private",
         "type": "remote",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/private.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎯 全球直连",
+        "update_interval": "24h"
       },
       {
         "tag": "GeoSite-Private",
         "type": "remote",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/private.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎯 全球直连",
+        "update_interval": "24h"
       },
       {
         "tag": "GeoSite-CN",
         "type": "remote",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎯 全球直连",
+        "update_interval": "24h"
       },
       {
         "tag": "geoip-cn",
         "type": "remote",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎯 全球直连",
+        "update_interval": "24h"
       },
       {
         "tag": "geosite-geolocation-cn",
         "type": "remote",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-cn.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎯 全球直连",
+        "update_interval": "24h"
       },
       {
         "tag": "geosite-geolocation-!cn",
         "type": "remote",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎯 全球直连",
+        "update_interval": "24h"
       },
       
       // PayPal规则集改为通过代理下载
@@ -629,14 +641,16 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/PayPal/PayPal.srs",
         "format": "binary",
-        "download_detour": "🚀 节点选择"   // 安全加固
+        "download_detour": "🚀 节点选择",  // 安全加固
+        "update_interval": "24h"
       },
       {
         "tag": "Tracking",
         "type": "remote",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-public-tracker.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎯 全球直连",
+        "update_interval": "24h"
       },
 
       {
@@ -644,7 +658,8 @@
         "type": "remote",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tracker.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎯 全球直连",
+        "update_interval": "24h"
       },
 
       
@@ -653,21 +668,24 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/GitHub/GitHub.srs",
         "format": "binary",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🚀 节点选择",
+        "update_interval": "24h"
       },
       {
         "tag": "Line",
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Line/Line.srs",
         "format": "binary",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🚀 节点选择",
+        "update_interval": "24h"
       },
       {
         "tag": "Telegram",
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Telegram/Telegram.srs",
         "format": "binary",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🚀 节点选择",
+        "update_interval": "24h"
       },
       //拒绝的dns
       {
@@ -675,7 +693,8 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/BlockHttpDNS/BlockHttpDNS.srs",
         "format": "binary",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🚀 节点选择",
+        "update_interval": "24h"
       }
     ],
     //自动检测出站接口

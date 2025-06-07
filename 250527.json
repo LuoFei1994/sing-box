@@ -31,9 +31,7 @@
       //持久化已拒绝的dns响应
       "store_rdrc": false,
       "rdrc_timeout": "7d"
-    },
-    "quic_go": {
-    "enabled": false  // 完全禁用QUIC实现
+    }
   },
 
 //和苹果服务器时间同步  
@@ -51,7 +49,6 @@
         "tag": "Local-DNS",
         "address": "https://223.5.5.5:443/dns-query",
         //"address_resolver": "Local-DNS-Resolver",  
-        "disable_cache": true,
         "detour": "🎯 全球直连"
       },
 
@@ -209,8 +206,8 @@
       ],
       "mtu": 1400, // 优化iOS的MTU值
       "auto_route": true,
-      "strict_route": true,    //改false的话可以禁用TUN严格路由（解决部分WiFi断流） // 必须开启防泄漏
-      "sniff": true, 
+      "strict_route": true,    //改false的话可以禁用TUN严格路由（解决部分WiFi断流）
+      "sniff": true,
       "endpoint_independent_nat": false, // 提升NAT兼容性
       "domain_strategy": "ipv4_only",    // 避免IPv6泄露
       //mixed、system、gvisor   
@@ -416,20 +413,11 @@
         "type": "logical",
         "mode": "or",
         "rules": [
-          {"port": [443, 80], "network": "udp"},   // 拦截QUIC常用端口
+          {"port": 443, "network": "udp"},
           {"protocol": "quic"}  // 补充拦截QUIC协议
         ],
         "action": "reject"
       },
-
-      // 例外放行Apple服务
-      {  
-        "domain": ["*.apple.com", "*.icloud.com"],
-        "network": "udp",
-        "outbound": "direct"
-      },
-
-      
       
       //可能影响部分使用UDP/443的合法服务（如WebRTC），建议通过domain白名单排除：
       {
@@ -456,15 +444,8 @@
 
       // 新增隐私敏感协议拦截,拦截加密货币和Tor流量
       {
-        "protocol": ["ftp", "telnet", "smtp","bitcoin", "tor","bittorrent", "bitcoin"],
+        "protocol": ["ftp", "telnet", "smtp","bitcoin", "tor"],
         "action": "reject"
-      },
-
-      // 拦截TLS伪装流量
-      {  
-        "sniff": {
-          "enabled": true,
-          "exclude": ["geoip:cn"]
       },
       
       // 强化追踪拦截

@@ -107,6 +107,12 @@
         "clash_mode": "global",
         "server": "Remote-DNS"
       },
+
+    
+
+
+
+      
       // 中国域名使用国内DNS
       {
         "action": "route",
@@ -210,6 +216,7 @@
   ],
   //出站设置
   "outbounds": [
+    
     //直连
     {
       "type": "direct",
@@ -315,6 +322,7 @@
           "mixed-in"
         ]
       },
+      
       //进站来的都从域解析到ip，ipv4优先
       {
         "inbound": [
@@ -324,6 +332,7 @@
         "action": "resolve",
         "strategy": "prefer_ipv4"
       },
+
       // ===== DNS规则  =====
       //拦截dns
       {
@@ -339,6 +348,8 @@
         ],
         "action": "hijack-dns"
       },
+
+
       // ===== clash mod规则  =====
       {
         "action": "route",
@@ -350,357 +361,227 @@
         "clash_mode": "global",
         "outbound": "GLOBAL"
       },
+     
+    
       // ===== 拦截规则组 =====
+     
       {
         "action": "reject",
         "rules": [
-          {
-            "domain_regex": "^(stun|turn|webrtc)\\."
-          }, // 增强WebRTC阻止
-          {
-            "domain_keyword": [
-              "stun:",
-              "turn:",
-              "webrtc",
-              "quic"
-            ]
-          }, //域拦截
-          {
-            "port": [
-              3478,
-              5349,
-              19302,
-              19305
-            ]
-          }, //端口拦截
-          {
-            "domain_keyword": [
-              "analytics",
-              "tracking"
-            ]
-          }, // 新增隐私保护规则
-          {
-            "domain_regex": "(analytics|track|metrics|telemetry)\\."
-          }, // 强化追踪拦截
-          {
-            "domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs)\\.(com|io)"
-          }, // 新增浏览器指纹保护
-          {
-            "protocol": [
-              "ftp",
-              "telnet",
-              "smtp",
-              "bitcoin",
-              "tor",
-              "bittorrent",
-              "bitcoin"
-            ]
-          }, // 新增隐私敏感协议拦截,拦截加密货币和Tor流量
-          {
-            "rule_set": [
-              "Category-Ads",
-              "BlockHttpDNS"
-            ]
-          }, //去广告
-          {
-            "protocol": "quic"
-          }, // 阻止未加密QUIC协议
-          {
-            "rule_set": [
-              "Tracking",
-              "Tracker"
-            ]
-          }, // 添加隐私保护规则（置于广告规则后）
-          {
-            "port": [
-              443,
-              80
-            ],
-            "network": "udp"
-          } // 阻止UDP潜在泄露 拦截UDP/443流量
+          {"domain_regex": "^(stun|turn|webrtc)\\."},                                       // 增强WebRTC阻止
+          {"domain_keyword": ["stun:", "turn:", "webrtc", "quic"]},                         //域拦截
+          {"port": [3478, 5349, 19302, 19305]},                                             //端口拦截
+          {"domain_keyword": ["analytics", "tracking"]},                                      // 新增隐私保护规则
+          {"domain_regex": "(analytics|track|metrics|telemetry)\\."},                          // 强化追踪拦截
+          {"domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs)\\.(com|io)"},          // 新增浏览器指纹保护
+          {"protocol": ["ftp", "telnet", "smtp", "bitcoin", "tor", "bittorrent","bitcoin"]},     // 新增隐私敏感协议拦截,拦截加密货币和Tor流量
+          {"rule_set": ["Category-Ads", "BlockHttpDNS"]},                                       //去广告
+          {"protocol": "quic"},                                                                   // 阻止未加密QUIC协议
+          {"rule_set": ["Tracking", "Tracker"]},                                                // 添加隐私保护规则（置于广告规则后）
+          {"port": [443,80],"network": "udp"}                                                     // 阻止UDP潜在泄露 拦截UDP/443流量
         ]
       },
+
       // ===== 直连规则组 =====
       {
         "action": "direct",
         "rules": [
-          {
-            "ip_cidr": [
-              "10.0.0.0/8",
-              "172.16.0.0/12",
-              "192.168.0.0/16",
-              "198.18.0.0/15",
-              "fc00::/7"
-            ]
-          },
-          {
-            "ip_is_private": true
-          },
-          {
-            "domain_suffix": [
-              ".apple.com",
-              ".icloud.com",
-              ".mzstatic.com",
-              ".apple-cloudkit.com",
-              ".apple-mapkit.com",
-              ".apple-dns.net",
-              ".cdn-apple.com"
-            ]
-          }, //苹果服务
-          {
-            "domain": [
-              "zoom.us",
-              "discord.com"
-            ],
-            "port": 443,
-            "network": "udp"
-          }, //可能影响部分使用UDP/443的合法服务（如WebRTC），建议通过domain白名单排除：
-          {
-            "domain": [
-              "*.apple.com",
-              "*.icloud.com"
-            ],
-            "network": "udp"
-          }, // 例外放行443和80端口的Apple服务
-          {
-            "domain_suffix": [
-              ".alipay.com",
-              ".wechatpay.com"
-            ]
-          }, // 支付服务走直连
-          {
-            "domain": [
-              "c50s2.portablesubmarines.com",
-              "100.bgp.666888.biz"
-            ]
-          }, // 阻止代理节点被二次代理
-          {
-            "rule_set": [
-              "GeoSite-CN",
-              "geoip-cn",
-              "GeoSite-Private",
-              "GeoIP-Private",
-              "geosite-geolocation-cn",
-              "PayPal"
-            ]
-          } //中国网点走直连的规则
+          {"ip_cidr": ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16","198.18.0.0/15","fc00::/7"]},
+          {"ip_is_private": true},
+          {"domain_suffix": [".apple.com", ".icloud.com", ".mzstatic.com",".apple-cloudkit.com",".apple-mapkit.com",".apple-dns.net",".cdn-apple.com"]},   //苹果服务
+          {"domain": ["zoom.us","discord.com"],"port": 443,"network": "udp"},                                                                              //可能影响部分使用UDP/443的合法服务（如WebRTC），建议通过domain白名单排除
+          {"domain": ["*.apple.com","*.icloud.com"],"network": "udp"},                                                                                     // 例外放行443和80端口的Apple服务
+          {"domain_suffix": [".alipay.com",".wechatpay.com"]},                                                                                             // 支付服务走直连
+          {"domain": ["c50s2.portablesubmarines.com", "100.bgp.666888.biz"]},                                                                              // 阻止代理节点被二次代理
+          {"rule_set": ["GeoSite-CN", "geoip-cn","GeoSite-Private","GeoIP-Private","geosite-geolocation-cn","PayPal"]}                                     //中国网点走直连的规则
         ]
       },
+
       // ===== 代理规则组 =====
       {
         "action": "🚀 节点选择",
         "rules": [
-          {
-            "domain_keyword": [
-              "banking",
-              "financial",
-              "secret"
-            ]
-          },
-          {
-            "domain_suffix": [
-              ".stripe.com",
-              ".venmo.com"
-            ]
-          }, // 支付服务走代理（安全加固）
-          {
-            "domain_keyword": [
-              "coinbase",
-              "binance",
-              "metamask"
-            ]
-          }, // 强化加密货币保护
-          {
-            "rule_set": [
-              "geosite-geolocation-!cn"
-            ]
-          }, // 走代理的规则：非中国域名
-          {
-            "rule_set": [
-              "Youtube",
-              "Tiktok",
-              "Whatsapp",
-              "Instagram",
-              "Facebook",
-              "GitHub",
-              "Line",
-              "Telegram"
-            ]
-          } //国外媒体走代理
+          {"domain_keyword": ["banking", "financial", "secret"]},
+          {"domain_suffix": [".stripe.com", ".venmo.com"]},     // 支付服务走代理（安全加固）
+          {"domain_keyword": ["coinbase","binance","metamask"]},  // 强化加密货币保护
+          {"rule_set": ["geosite-geolocation-!cn"]},    // 走代理的规则：非中国域名
+          {"rule_set": ["Youtube", "Tiktok", "Whatsapp", "Instagram", "Facebook","GitHub","Line","Telegram"]}    //国外媒体走代理
         ]
       },
+    
       //合并例子"mode": "or" "and" {"type": "logical","mode": "or","rules":[{"protocol": "dns"},{"port": 53}//],//"outbound": "dns"//},
       //以下规则分流走节点
-      //出站的分流规则集
-      "rule_set": [
-        //油管规则集
-        {
-          "tag": "Youtube",
-          "type": "remote",
-          "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/youtube.srs",
-          "format": "binary",
-          "download_detour": "🚀 节点选择",
-          "update_interval": "48h"
-        },
-        //TK规则集
-        {
-          "tag": "Tiktok",
-          "type": "remote",
-          "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@refs/heads/sing/geo/geosite/tiktok.srs",
-          "format": "binary",
-          "download_detour": "🚀 节点选择",
-          "update_interval": "48h"
-        },
-        //WHATSAPP规则集
-        {
-          "tag": "Whatsapp",
-          "type": "remote",
-          "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/whatsapp.srs",
-          "format": "binary",
-          "download_detour": "🚀 节点选择",
-          "update_interval": "48h"
-        },
-        //INSD规则集
-        {
-          "tag": "Instagram",
-          "type": "remote",
-          "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/instagram.srs",
-          "format": "binary",
-          "download_detour": "🚀 节点选择",
-          "update_interval": "48h"
-        },
-        //FB规则集
-        {
-          "tag": "Facebook",
-          "type": "remote",
-          "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/facebook.srs",
-          "format": "binary",
-          "download_detour": "🚀 节点选择",
-          "update_interval": "48h"
-        },
-        //去广告的规则集
-        {
-          "tag": "Category-Ads",
-          "type": "remote",
-          "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ads-all.srs",
-          "format": "binary",
-          "download_detour": "🎯 全球直连",
-          "update_interval": "48h"
-        },
-        {
-          "tag": "GeoIP-Private",
-          "type": "remote",
-          "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/private.srs",
-          "format": "binary",
-          "download_detour": "🎯 全球直连",
-          "update_interval": "48h"
-        },
-        {
-          "tag": "GeoSite-Private",
-          "type": "remote",
-          "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/private.srs",
-          "format": "binary",
-          "download_detour": "🎯 全球直连",
-          "update_interval": "48h"
-        },
-        {
-          "tag": "GeoSite-CN",
-          "type": "remote",
-          "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
-          "format": "binary",
-          "download_detour": "🎯 全球直连",
-          "update_interval": "48h"
-        },
-        {
-          "tag": "geoip-cn",
-          "type": "remote",
-          "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
-          "format": "binary",
-          "download_detour": "🎯 全球直连",
-          "update_interval": "48h"
-        },
-        {
-          "tag": "geosite-geolocation-cn",
-          "type": "remote",
-          "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-cn.srs",
-          "format": "binary",
-          "download_detour": "🎯 全球直连",
-          "update_interval": "48h"
-        },
-        {
-          "tag": "geosite-geolocation-!cn",
-          "type": "remote",
-          "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs",
-          "format": "binary",
-          "download_detour": "🎯 全球直连",
-          "update_interval": "48h"
-        },
-        // PayPal规则集改为通过代理下载
-        {
-          "tag": "PayPal",
-          "type": "remote",
-          "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/PayPal/PayPal.srs",
-          "format": "binary",
-          "download_detour": "🚀 节点选择", // 安全加固
-          "update_interval": "48h"
-        },
-        //MetaCubeX维护的公共追踪器
-        {
-          "tag": "Tracking",
-          "type": "remote",
-          "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-public-tracker.srs",
-          "format": "binary",
-          "download_detour": "🎯 全球直连",
-          "update_interval": "48h"
-        },
-        {
-          "tag": "Tracker",
-          "type": "remote",
-          "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tracker.srs",
-          "format": "binary",
-          "download_detour": "🎯 全球直连",
-          "update_interval": "48h"
-        },
-        {
-          "tag": "GitHub",
-          "type": "remote",
-          "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/GitHub/GitHub.srs",
-          "format": "binary",
-          "download_detour": "🚀 节点选择",
-          "update_interval": "48h"
-        },
-        {
-          "tag": "Line",
-          "type": "remote",
-          "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Line/Line.srs",
-          "format": "binary",
-          "download_detour": "🚀 节点选择",
-          "update_interval": "48h"
-        },
-        {
-          "tag": "Telegram",
-          "type": "remote",
-          "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Telegram/Telegram.srs",
-          "format": "binary",
-          "download_detour": "🚀 节点选择",
-          "update_interval": "48h"
-        },
-        //拒绝的dns
-        {
-          "tag": "BlockHttpDNS",
-          "type": "remote",
-          "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/BlockHttpDNS/BlockHttpDNS.srs",
-          "format": "binary",
-          "download_detour": "🚀 节点选择",
-          "update_interval": "48h"
-        }
-      ],
-      //自动检测出站接口
-      "auto_detect_interface": true,
-      "default_mark": 233,
-      //查找进程信息
-      "find_process": true,
-      //没在规则里的走指定规则
-      "final": "🐟 漏网之鱼"
-    }
+
+    //出站的分流规则集
+    "rule_set": [
+      //油管规则集
+      {
+        "tag": "Youtube",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/youtube.srs",
+        "format": "binary",
+        "download_detour": "🚀 节点选择",
+        "update_interval": "48h"
+      },
+      //TK规则集
+      {
+        "tag": "Tiktok",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@refs/heads/sing/geo/geosite/tiktok.srs",
+        "format": "binary",
+        "download_detour": "🚀 节点选择",
+        "update_interval": "48h"
+      },
+      //WHATSAPP规则集
+      {
+        "tag": "Whatsapp",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/whatsapp.srs",
+        "format": "binary",
+        "download_detour": "🚀 节点选择",
+        "update_interval": "48h"
+      },
+      //INSD规则集
+      {
+        "tag": "Instagram",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/instagram.srs",
+        "format": "binary",
+        "download_detour": "🚀 节点选择",
+        "update_interval": "48h"
+      },
+      //FB规则集
+      {
+        "tag": "Facebook",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/facebook.srs",
+        "format": "binary",
+        "download_detour": "🚀 节点选择",
+        "update_interval": "48h"
+      },
+      //去广告的规则集
+      {
+        "tag": "Category-Ads",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ads-all.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连",
+        "update_interval": "48h"
+      },
+      {
+        "tag": "GeoIP-Private",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/private.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连",
+        "update_interval": "48h"
+      },
+      {
+        "tag": "GeoSite-Private",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/private.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连",
+        "update_interval": "48h"
+      },
+      {
+        "tag": "GeoSite-CN",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连",
+        "update_interval": "48h"
+      },
+      {
+        "tag": "geoip-cn",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连",
+        "update_interval": "48h"
+      },
+      {
+        "tag": "geosite-geolocation-cn",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-cn.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连",
+        "update_interval": "48h"
+      },
+      {
+        "tag": "geosite-geolocation-!cn",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连",
+        "update_interval": "48h"
+      },
+      // PayPal规则集改为通过代理下载
+      {
+        "tag": "PayPal",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/PayPal/PayPal.srs",
+        "format": "binary",
+        "download_detour": "🚀 节点选择", // 安全加固
+        "update_interval": "48h"
+      },
+      //MetaCubeX维护的公共追踪器
+      {
+        "tag": "Tracking",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-public-tracker.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连",
+        "update_interval": "48h"
+      },
+      {
+        "tag": "Tracker",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tracker.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连",
+        "update_interval": "48h"
+      },
+      {
+        "tag": "GitHub",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/GitHub/GitHub.srs",
+        "format": "binary",
+        "download_detour": "🚀 节点选择",
+        "update_interval": "48h"
+      },
+      {
+        "tag": "Line",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Line/Line.srs",
+        "format": "binary",
+        "download_detour": "🚀 节点选择",
+        "update_interval": "48h"
+      },
+      {
+        "tag": "Telegram",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Telegram/Telegram.srs",
+        "format": "binary",
+        "download_detour": "🚀 节点选择",
+        "update_interval": "48h"
+      },
+      //拒绝的dns
+      {
+        "tag": "BlockHttpDNS",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/BlockHttpDNS/BlockHttpDNS.srs",
+        "format": "binary",
+        "download_detour": "🚀 节点选择",
+        "update_interval": "48h"
+      }
+    ],
+    //自动检测出站接口
+    "auto_detect_interface": true,
+    "default_mark": 233,
+    //查找进程信息
+    "find_process": true,
+    //没在规则里的走指定规则
+    "final": "🐟 漏网之鱼"
   }
+}

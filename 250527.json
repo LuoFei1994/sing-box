@@ -210,6 +210,16 @@
   ],
   //出站设置
   "outbounds": [
+    
+    //加密DNS出站示例
+    {
+      "type": "dns",
+      "tag": "dns-out",
+      "server": "tls://dns.quad9.net",  // 使用DoT加密
+      "server_port": 853
+    },
+
+    
     //直连
     {
       "type": "direct",
@@ -425,7 +435,7 @@
       {
         "network": "udp",
         "port": 53,
-        "outbound": "🚀 节点选择"  // 指向加密DNS的出站
+        "outbound": "dns-out"  // 指向加密DNS的出站
       },
 
 

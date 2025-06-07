@@ -390,11 +390,16 @@
           {"ip_is_private": true},
           {"domain_suffix": [".apple.com", ".icloud.com", ".mzstatic.com",".apple-cloudkit.com",".apple-mapkit.com",".apple-dns.net",".cdn-apple.com"]},   //苹果服务
           {"domain": ["zoom.us","discord.com"],"port": 443,"network": "udp"},                                                                              //可能影响部分使用UDP/443的合法服务（如WebRTC），建议通过domain白名单排除
-          {"domain": ["*.apple.com","*.icloud.com"],"network": "udp"},                                                                                     // 例外放行443和80端口的Apple服务
+          {"domain": ["*.apple.com","*.icloud.com"],"network": "udp"}                                                                                      // 例外放行443和80端口的Apple服务
+        ]
+      },
+      {
+        "action": "direct",
+        "rules": [
           {"domain_suffix": [".alipay.com",".wechatpay.com"]},                                                                                             // 支付服务走直连
           {"domain": ["c50s2.portablesubmarines.com", "100.bgp.666888.biz"]},                                                                              // 阻止代理节点被二次代理
           {"rule_set": ["GeoSite-CN", "geoip-cn","GeoSite-Private","GeoIP-Private","geosite-geolocation-cn","PayPal"]}                                     //中国网点走直连的规则
-        ]
+           ]
       },
 
       // ===== 代理规则组 =====

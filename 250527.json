@@ -91,6 +91,8 @@
       //],
       //"server": "Local-DNS"
       //},
+
+      //calsh的模式
       {
         "action": "route",
         "clash_mode": "direct",
@@ -101,6 +103,8 @@
         "clash_mode": "global",
         "server": "Remote-DNS"
       },
+
+      // 中国域名使用国内DNS
       {
         "action": "route",
         "rule_set": [
@@ -108,6 +112,7 @@
         ],
         "server": "Local-DNS"
       },
+      
       {
         "action": "route",
         "rule_set": [
@@ -115,6 +120,8 @@
         ],
         "server": "Local-DNS"
       },
+
+      // 其他域名使用隐私DNS
       {
         "action": "route",
         "rule_set": [
@@ -122,6 +129,15 @@
         ],
         "server": "Remote-DNS"
       },
+
+      // 苹果服务特殊处理
+      {
+        "domain_suffix": [".apple.com", ".icloud.com", ".mzstatic.com", ".apple-cloudkit.com"],
+        "server": "Local-DNS",
+        "disable_cache": true
+      },
+
+      
       {
         //"action": "route",
         //"rule_set": "geosite-geolocation-!cn",

@@ -146,13 +146,7 @@
         "server": "fakeip"
       },
 
-      //DNS故障转移机制
-      {
-      "server": ["Remote-DNS", "Remote-DNS1"],
-      "fallback_delay": "500ms"
-      }
-
-
+  
       
     ],
     "strategy": "prefer_ipv4", //默认ipv4优选

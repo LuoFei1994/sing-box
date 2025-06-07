@@ -347,6 +347,30 @@
         "action": "hijack-dns"
       },
 
+      // ===== clash mode规则组 =====
+      {
+        "action": "route",
+        "clash_mode": "direct",
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "clash_mode": "global",
+        "outbound": "GLOBAL"
+      },
+
+      // ===== 拦截规则组 =====
+      {
+        "action": "reject",
+        "rules": [
+          {"rule_set": ["Category-Ads", "BlockHttpDNS"]},  //去广告
+          {"port": [3478, 5349, 19302, 19305]},    //端口拦截
+          {"protocol": "quic"},   // 阻止未加密QUIC协议
+          {"rule_set": ["Tracking", "Tracker"]},    // 添加隐私保护规则（置于广告规则后）
+          {"port": [443,80],"network": "udp"}     // 阻止UDP潜在泄露 拦截UDP/443流量
+        ]
+      },
+
       {
         "action": "reject",
         "rules": [
@@ -358,139 +382,40 @@
           {"protocol": ["ftp", "telnet", "smtp", "bitcoin", "tor", "bittorrent","bitcoin"]}   // 新增隐私敏感协议拦截,拦截加密货币和Tor流量
         ]
       },
-      
-     
 
-
-
-
-
-      
-      //去广告
+      // ===== 直连规则组 =====
       {
-        "rule_set": [
-          "Category-Ads"
-        ],
-        "action": "reject"
-      },
-      {
-        "rule_set": [
-          "BlockHttpDNS"
-        ],
-        "action": "reject"
-      },
-
-     
-      {
-        "port": [
-          3478,
-          5349,
-          19302,
-          19305
-        ],
-        "action": "reject"
-      },
-      // 阻止未加密QUIC协议
-      {
-        "action": "reject",
-        "protocol": [
-          "quic"
+        "action": "direct",
+        "rules": [
+          {"ip_cidr": ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16","198.18.0.0/15","fc00::/7"]},
+          {"ip_is_private": true},
+          {"domain_suffix": [".apple.com", ".icloud.com", ".mzstatic.com",".apple-cloudkit.com",".apple-mapkit.com",".apple-dns.net",".cdn-apple.com"]},
+          {"rule_set": ["GeoSite-CN", "geoip-cn"]}
         ]
       },
-      // 阻止UDP潜在泄露 拦截UDP/443流量
+
+      //1,可能影响部分使用UDP/443的合法服务（如WebRTC），建议通过domain白名单排除  2,例外放行443和80端口的Apple服务   3,阻止代理节点被二次代理
       {
-        "type": "logical",
-        "mode": "or",
+        "action": "direct",
         "rules": [
-          {
-            "port": [
-              443,
-              80
-            ],
-            "network": "udp"
-          }, // 拦截QUIC常用端口
-          {
-            "protocol": "quic"
-          } // 补充拦截QUIC协议
-        ],
-        "action": "reject"
+          
+          {"domain": ["zoom.us","discord.com"],"port": 443},  
+          
+          {"domain": ["*.apple.com","*.icloud.com"],"network": "udp"},   
+          
+          {"domain": ["c50s2.portablesubmarines.com", "100.bgp.666888.biz"]}    
+        ]
       },
-      //可能影响部分使用UDP/443的合法服务（如WebRTC），建议通过domain白名单排除：
-      {
-        "domain": [
-          "zoom.us",
-          "discord.com"
-        ],
-        "port": 443,
-        "network": "udp",
-        "outbound": "🎯 全球直连"
-      },
-      // 例外放行443和80端口的Apple服务
-      {
-        "domain": [
-          "*.apple.com",
-          "*.icloud.com"
-        ],
-        "network": "udp",
-        "outbound": "direct"
-      },
+      
+     
+
+      
 
 
 
-
-
-
-      // 添加隐私保护规则（置于广告规则后）
-      {
-        "rule_set": [
-          "Tracking",
-          "Tracker"
-        ],
-        "action": "reject"
-      },
-      // ===== 内置动作 (官方推荐) =====
-      {
-        "ip_cidr": [
-          "10.0.0.0/8",
-          "172.16.0.0/12",
-          "192.168.0.0/16",
-          "198.18.0.0/15",
-          "fc00::/7"
-        ],
-        "action": "direct"
-      },
-      {
-        "ip_is_private": true,
-        "action": "route",
-        "outbound": "🎯 全球直连"
-      },
-      //页面的模式
-      {
-        "action": "route",
-        "clash_mode": "direct",
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "clash_mode": "global",
-        "outbound": "GLOBAL"
-      },
-      // ===== 苹果服务走直连 =====
-      {
-        "domain_suffix": [
-          ".apple.com",
-          ".icloud.com",
-          ".mzstatic.com",
-          ".apple-cloudkit.com",
-          ".apple-mapkit.com",
-          ".apple-dns.net",
-          ".cdn-apple.com"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      // 阻止代理节点被二次代理
+      
       //{
-      //"domain": ["c50s2.portablesubmarines.com", "100.bgp.666888.biz"],
+      //",
       //"outbound": "🎯 全球直连"
       //},
       //中国网点走直连的规则

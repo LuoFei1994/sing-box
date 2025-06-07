@@ -61,18 +61,11 @@
             //},
             {
                 "tag": "Remote-DNS",
-                //"address": "tls://9.9.9.11:853",  // Quad9的DoT（带恶意软件过滤）
-                "address": "tls://dns11.quad9.net",
-                //用tls解析这个域名
-                "address_resolver": "Remote-Resolver-DNS", 
-                "detour": "🚀 节点选择"
-            },
-            {
-                "tag": "Remote-Resolver-DNS",
                 // Quad9的DoT（带恶意软件过滤）
-                "address": "tls://9.9.9.11:853",
+                "address": "tls://9.9.9.11:853",  
                 "detour": "🚀 节点选择"
             },
+            
             //{
             //"tag": "Remote-DNS1",
             //"address": "https://1.1.1.1/dns-query", // 使用Cloudflare的DoH
@@ -196,12 +189,12 @@
             "mtu": 1400, 
             "auto_route": true,
             //改false的话可以禁用TUN严格路由（解决部分WiFi断流）
-            "strict_route": true, 
+            "strict_route": false, 
             "sniff": true,
             // 提升NAT兼容性
             "endpoint_independent_nat": false, 
             // 避免IPv6泄露
-            "domain_strategy": "ipv4_only", 
+            "domain_strategy": "prefer_ipv4", 
             //mixed、system、gvisor   
             //这三个的区别system 性能:高、安全性:低、兼容性:高(依赖系统)、复杂性:简单、 适用场景：性能优先
             //===========gvisor 性能:低、安全性:高、兼容性:中         、复杂性:较复杂、适用场景：安全隔离
@@ -377,145 +370,7 @@
             },
             
 
-            // =======拒绝的规则组=======
-            // 新增隐私保护域关键词拦截
-            {
-                "domain_keyword": [
-                    "stun:",
-                    "turn:",
-                    "webrtc",
-                    "quic"
-                ],
-                "action": "reject"
-            },
-
-            //配合上面，端口禁止
-            {
-                "port": [
-                    3478,
-                    5349,
-                    19302,
-                    19305
-                ],
-                "action": "reject"
-            },
-
-            // 新增隐私敏感协议拦截,拦截加密货币和Tor流量
-            {
-                "protocol": [
-                    "ftp",
-                    "telnet",
-                    "smtp",
-                    "bitcoin",
-                    "tor",
-                    "bittorrent",
-                    "bitcoin"
-                ],
-                "action": "reject"
-            },
-
-            // 阻止未加密QUIC协议
-            {
-                "action": "reject",
-                "protocol": [
-                    "quic"
-                ]
-            },
-            // 阻止UDP潜在泄露 拦截UDP/443流量
-            {
-                "type": "logical",
-                "mode": "or",
-                "rules": [
-                    // 拦截QUIC常用端口
-                    {
-                        "port": [
-                            443,
-                            80
-                        ],
-                        "network": "udp"
-                    }, 
-                    // 补充拦截QUIC协议
-                    {
-                        "protocol": "quic"
-                    } 
-                ],
-                "action": "reject"
-            },
-
-            //配合上面的规则，可能影响部分使用UDP/443的合法服务（如WebRTC），建议通过domain白名单排除：
-            {
-                "domain": [
-                    "zoom.us",
-                    "discord.com"
-                ],
-                "port": 443,
-                "network": "udp",
-                "outbound": "🎯 全球直连"
-            },
-            // 例外放行443和80端口的Apple服务
-            {
-                "domain": [
-                    "*.apple.com",
-                    "*.icloud.com"
-                ],
-                "network": "udp",
-                "outbound": "🎯 全球直连"
-            },
-
-            // 增强WebRTC阻止
-            {
-                "domain_regex": "^(stun|turn|webrtc)\\.",
-                "action": "reject"
-            },
-
-            // 强化追踪拦截
-            {
-                "domain_regex": "(analytics|track|metrics|telemetry)\\.",
-                "action": "reject"
-            },
-
-             // 新增浏览器指纹保护
-            {
-                "domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs)\\.(com|io)",
-                "action": "reject"
-            },
-
-            //加强追踪阻止
-            {
-                "domain_keyword": [
-                    "analytics",
-                    "tracking"
-                ],
-                "action": "reject"
-            },
             
-
-            //去广告
-            {
-                "rule_set": [
-                    "Category-Ads"
-                ],
-                "action": "reject"
-            },
-
-            //拦截dns的广告
-            {
-                "rule_set": [
-                    "BlockHttpDNS"
-                ],
-                "action": "reject"
-            },
-            
-            
-            
-            // 添加隐私保护规则（置于广告规则后）
-            {
-                "rule_set": [
-                    "Tracking",
-                    "Tracker"
-                ],
-                "action": "reject"
-            },
             
             // ===== 直连的规则组 =====
             {
@@ -629,8 +484,155 @@
                     "Telegram"
                 ],
                 "outbound": "🚀 节点选择"
+            },
+
+            //=======例外规则========
+            
+            //配合上面的规则，可能影响部分使用UDP/443的合法服务（如WebRTC），建议通过domain白名单排除：
+            {
+                "domain": [
+                    "zoom.us",
+                    "discord.com"
+                ],
+                "port": 443,
+                "network": "udp",
+                "outbound": "🎯 全球直连"
+            },
+            // 例外放行443和80端口的Apple服务
+            {
+                "domain": [
+                    "*.apple.com",
+                    "*.icloud.com"
+                ],
+                "network": "udp",
+                "outbound": "🎯 全球直连"
+            },
+
+            
+            // =======拒绝的规则组=======
+            // 新增隐私保护域关键词拦截
+            {
+                "domain_keyword": [
+                    "stun:",
+                    "turn:",
+                    "webrtc",
+                    "quic"
+                ],
+                "action": "reject"
+            },
+
+            //配合上面，端口禁止
+            {
+                "port": [
+                    3478,
+                    5349,
+                    19302,
+                    19305
+                ],
+                "action": "reject"
+            },
+
+            // 新增隐私敏感协议拦截,拦截加密货币和Tor流量
+            {
+                "protocol": [
+                    "ftp",
+                    "telnet",
+                    "smtp",
+                    "tor",
+                    "bittorrent",
+                    "bitcoin"
+                ],
+                "action": "reject"
+            },
+
+            // 阻止未加密QUIC协议
+            {
+                "action": "reject",
+                "protocol": [
+                    "quic"
+                ]
+            },
+            // 阻止UDP潜在泄露 拦截UDP/443流量
+            {
+                "type": "logical",
+                "mode": "or",
+                "rules": [
+                    // 拦截QUIC常用端口
+                    {
+                        "port": [
+                            443,
+                            80
+                        ],
+                        "network": "udp"
+                    }, 
+                    // 补充拦截QUIC协议
+                    {
+                        "protocol": "quic"
+                    } 
+                ],
+                "action": "reject"
+            },
+
+            
+
+            // 增强WebRTC阻止
+            {
+                "domain_regex": "^(stun|turn|webrtc)\\.",
+                "action": "reject"
+            },
+
+            // 强化追踪拦截
+            {
+                "domain_regex": "(analytics|track|metrics|telemetry)\\.",
+                "action": "reject"
+            },
+
+             // 新增浏览器指纹保护
+            {
+                "domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs)\\.(com|io)",
+                "action": "reject"
+            },
+
+            //加强追踪阻止
+            {
+                "domain_keyword": [
+                    "analytics",
+                    "tracking"
+                ],
+                "action": "reject"
+            },
+            
+
+            //去广告
+            {
+                "rule_set": [
+                    "Category-Ads"
+                ],
+                "action": "reject"
+            },
+
+            //拦截dns的广告
+            {
+                "rule_set": [
+                    "BlockHttpDNS"
+                ],
+                "action": "reject"
+            },
+            
+            
+            
+            // 添加隐私保护规则（置于广告规则后）
+            {
+                "rule_set": [
+                    "Tracking",
+                    "Tracker"
+                ],
+                "action": "reject"
             }
         ],
+
+
+        
         //出站的分流规则集
         "rule_set": [
             //油管规则集

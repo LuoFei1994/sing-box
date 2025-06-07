@@ -457,7 +457,6 @@
           ".apple-dns.net",
           ".cdn-apple.com"
         ],
-        "action": "resolve",  // 避免FakeIP干扰
         "outbound": "🎯 全球直连"
       },
 

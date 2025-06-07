@@ -741,7 +741,7 @@
     ],
     //自动检测出站接口
     "auto_detect_interface": false,
-    "default_interface": "en0" 
+    "default_interface": "en0",
   
     "default_mark": 233,
     //查找进程信息

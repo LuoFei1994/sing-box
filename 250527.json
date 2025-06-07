@@ -166,8 +166,8 @@
       "server_port": 7395,
       "method": "chacha20-ietf-poly1305",
       "password": "kQBeCDXbwoSW2wVC",
-      "plugin": "obfs-local", //启用HTTP流量混淆插件
-      "plugin_opts": "host=cloudflare.com;path=/ws;tls", // 升级为WebSocket+TLS混淆
+      "plugin": "",                     //启用HTTP流量混淆插件
+      "plugin_opts": "",                // 升级为WebSocket+TLS混淆
       "network": "udp",
       "udp_over_tcp": true, // 强制UDP over TCP
       "multiplex": {}

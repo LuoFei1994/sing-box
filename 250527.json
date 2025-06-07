@@ -557,7 +557,7 @@
       
       {
         "tag": "Remote-DNS",
-        "address": "tls://9.9.9.9:853",  // Quad9的DoT
+        "address": "tls://9.9.9.11:853",  // Quad9的DoT
         "detour": "🚀 节点选择"
       },
 

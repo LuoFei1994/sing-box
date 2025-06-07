@@ -75,6 +75,7 @@
       {
         "tag": "Remote-DNS2",
         "address": "https://doh.opendns.com/dns-query",
+        "address_resolver": "Local-DNS-Resolver",  
         "detour": "🚀🚀 节点选择"
       },
       

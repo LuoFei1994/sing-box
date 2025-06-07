@@ -49,6 +49,7 @@
         "tag": "Local-DNS",
         "address": "https://223.5.5.5:443/dns-query",
         //"address_resolver": "Local-DNS-Resolver",  
+        "disable_cache": true,
         "detour": "🎯 全球直连"
       },
 
@@ -413,7 +414,7 @@
         "type": "logical",
         "mode": "or",
         "rules": [
-          {"port": 443, "network": "udp"},
+          {"port": [443, 80], "network": "udp"},   // 拦截QUIC常用端口
           {"protocol": "quic"}  // 补充拦截QUIC协议
         ],
         "action": "reject"
@@ -428,6 +429,13 @@
         "port": 443, 
         "network": "udp",
         "outbound": "🎯 全球直连"
+      },
+
+      // 例外放行443和80端口的Apple服务
+      {  
+        "domain": ["*.apple.com", "*.icloud.com"],
+        "network": "udp",
+        "outbound": "direct"
       },
 
       

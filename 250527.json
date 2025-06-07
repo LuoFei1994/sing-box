@@ -417,8 +417,7 @@
       {
         "rule_set": [
           "Tracking",
-          "Tracker",
-          "Privacy"    // 新增隐私保护规则集
+          "Tracker"
         ],
         "action": "reject"
       },
@@ -621,14 +620,6 @@
       },
 
 
-      // 新增隐私保护规则集
-      {
-        "tag": "Privacy",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/StevenBlack/hosts@master/hosts.srs",
-        "download_detour": "🚀 节点选择",
-        "update_interval": "24h"
-      },
 
       
       {

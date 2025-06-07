@@ -410,16 +410,14 @@
 
 
       // ===== 代理规则组 =====
-      {
-        "outbound": "🚀 节点选择",
-        "rules": [
-          {"domain_keyword": ["banking", "financial", "secret"]},
-          {"domain_suffix": [".stripe.com", ".venmo.com"]},                             // 支付服务走代理（安全加固）
-          {"rule_set": ["geosite-geolocation-!cn"]},                                // 走代理的规则：非中国域名
-          {"domain_keyword": ["coinbase","binance","metamask"]},                    // 强化加密货币保护
-          {"rule_set": ["Youtube", "Tiktok", "Whatsapp", "Instagram", "Facebook","GitHub","Line","Telegram"]}
-        ]
-      }
+      
+      {"domain_keyword": ["banking", "financial", "secret"],"outbound": "🚀 节点选择"},
+      {"domain_suffix": [".stripe.com", ".venmo.com"],"outbound": "🚀 节点选择"},                             // 支付服务走代理（安全加固）
+      {"rule_set": ["geosite-geolocation-!cn"],"outbound": "🚀 节点选择"},                                // 走代理的规则：非中国域名
+      {"domain_keyword": ["coinbase","binance","metamask"],"outbound": "🚀 节点选择"},                    // 强化加密货币保护
+      {"rule_set": ["Youtube", "Tiktok", "Whatsapp", "Instagram", "Facebook","GitHub","Line","Telegram"],"outbound": "🚀 节点选择"}
+        
+      
       
      
 

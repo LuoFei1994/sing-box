@@ -37,7 +37,117 @@
     "server_port": 123,
     "interval": "30m"
   },
-  //进站监控
+
+//以下是dns服务和规则设置
+  "dns": {
+    "servers": [
+      {
+        "tag": "Local-DNS",
+        "address": "h3://223.5.5.5:443/dns-query",
+        "address_resolver": "Local-DNS-Resolver",
+        "detour": "🎯 全球直连"
+      },
+
+      {
+        "tag": "Local-DNS-Resolver",
+        "address": "udp://223.5.5.5:53",
+        "detour": "🎯 全球直连"
+      },
+
+      
+      {
+        "tag": "Remote-DNS",
+        "address": "tls://9.9.9.11:853",  // Quad9的DoT
+        "detour": "🚀 节点选择"
+      },
+
+      {
+        "tag": "Remote-DNS1",
+        "address": "https://1.1.1.1/dns-query", // 使用Cloudflare的DoH
+        "detour": "🚀 节点选择"
+      },
+      
+      //fakeip的设置
+      {
+        "address": "fakeip",
+        "tag": "fakeip"
+      },
+      {
+        "address": "rcode://success",
+        "tag": "block"
+      }
+    ],
+    //dns的规则
+    "rules": [
+      {
+        "action": "route",
+        "server": "Local-DNS",
+        "outbound": "any"
+      },
+      //{
+      //"inbound":[
+      //"tun-in",
+      //"mixed-in"
+      //],
+      //"server": "Local-DNS"
+      //},
+      {
+        "action": "route",
+        "clash_mode": "direct",
+        "server": "Local-DNS"
+      },
+      {
+        "action": "route",
+        "clash_mode": "global",
+        "server": "Remote-DNS"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "GeoSite-CN"
+        ],
+        "server": "Local-DNS"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "geosite-geolocation-cn"
+        ],
+        "server": "Local-DNS"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "geosite-geolocation-!cn"
+        ],
+        "server": "Remote-DNS"
+      },
+      {
+        //"action": "route",
+        //"rule_set": "geosite-geolocation-!cn",
+        "query_type": [
+          "A",
+          "AAAA"
+        ],
+        "server": "fakeip"
+      }
+
+      
+    ],
+    "strategy": "prefer_ipv4", //默认ipv4优选
+    "disable_cache": false,
+    "disable_expire": false,
+    "independent_cache": true,
+    //没找到的dns走指定
+    "final": "Remote-DNS",
+    "fakeip": {
+      "enabled": true,
+      "inet4_range": "198.18.0.0/15",
+      "inet6_range": "fc00::/18"
+    }
+  },
+  
+//进站监控
   "inbounds": [
     {
       "type": "mixed",
@@ -537,113 +647,5 @@
     "find_process": true,
     //没在规则里的走指定规则
     "final": "🐟 漏网之鱼"
-  },
-  //以下是dns服务和规则设置
-  "dns": {
-    "servers": [
-      {
-        "tag": "Local-DNS",
-        "address": "h3://223.5.5.5:443/dns-query",
-        "address_resolver": "Local-DNS-Resolver",
-        "detour": "🎯 全球直连"
-      },
-
-      {
-        "tag": "Local-DNS-Resolver",
-        "address": "udp://223.5.5.5:53",
-        "detour": "🎯 全球直连"
-      },
-
-      
-      {
-        "tag": "Remote-DNS",
-        "address": "tls://9.9.9.11:853",  // Quad9的DoT
-        "detour": "🚀 节点选择"
-      },
-
-      {
-        "tag": "Remote-DNS1",
-        "address": "https://1.1.1.1/dns-query", // 使用Cloudflare的DoH
-        "detour": "🚀 节点选择"
-      },
-      
-      //fakeip的设置
-      {
-        "address": "fakeip",
-        "tag": "fakeip"
-      },
-      {
-        "address": "rcode://success",
-        "tag": "block"
-      }
-    ],
-    //dns的规则
-    "rules": [
-      {
-        "action": "route",
-        "server": "Local-DNS",
-        "outbound": "any"
-      },
-      //{
-      //"inbound":[
-      //"tun-in",
-      //"mixed-in"
-      //],
-      //"server": "Local-DNS"
-      //},
-      {
-        "action": "route",
-        "clash_mode": "direct",
-        "server": "Local-DNS"
-      },
-      {
-        "action": "route",
-        "clash_mode": "global",
-        "server": "Remote-DNS"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "GeoSite-CN"
-        ],
-        "server": "Local-DNS"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "geosite-geolocation-cn"
-        ],
-        "server": "Local-DNS"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "geosite-geolocation-!cn"
-        ],
-        "server": "Remote-DNS"
-      },
-      {
-        //"action": "route",
-        //"rule_set": "geosite-geolocation-!cn",
-        "query_type": [
-          "A",
-          "AAAA"
-        ],
-        "server": "fakeip"
-      }
-
-      
-    ],
-    "strategy": "prefer_ipv4", //默认ipv4优选
-    "disable_cache": false,
-    "disable_expire": false,
-    "independent_cache": true,
-    //没找到的dns走指定
-    "final": "Remote-DNS",
-    "fakeip": {
-      "enabled": true,
-      "inet4_range": "198.18.0.0/15",
-      "inet6_range": "fc00::/18"
-    }
   }
 }

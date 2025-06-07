@@ -375,7 +375,7 @@
       {
         "action": "reject",
         "rules": [
-          {"domain_regex": "^(stun|turn|webrtc)\\."},                                        // 增强WebRTC阻止
+          {"domain_regex": "^(stun|turn|webrtc)\\."},                                        // 增强WebRTC阻止 
           {"domain_keyword": ["stun:", "turn:", "webrtc", "quic"]},                          //域名拦截
           {"domain_keyword": ["analytics", "tracking"]},                                     // 新增隐私保护规则
           {"domain_regex": "(analytics|track|metrics|telemetry)\\."},                        // 强化追踪拦截

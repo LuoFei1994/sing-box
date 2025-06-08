@@ -385,9 +385,30 @@
         "rules": [
             
             // ===== 1. 关键进站处理 =====
+            
+             {
+                "ip_is_private": true,
+                "action": "route",
+                "outbound": "🎯 全球直连"
+            },
 
+            //拦截dns
+            {
+                "type": "logical",
+                "mode": "or",
+                "rules": [
+                    {
+                        "port": 53
+                    },
+                    {
+                        "protocol": "dns"
+                    }
+                ],
+                "action": "hijack-dns"
+            },
+            
+            //嗅探
             {    
-                
                 "action": "sniff", 
                 "inbound": [
                     "tun-in",
@@ -403,20 +424,7 @@
                 "action": "resolve",
                 "strategy": "prefer_ipv4"
             },
-            //拦截dns
-            {
-                "type": "logical",
-                "mode": "or",
-                "rules": [
-                    {
-                        "port": 53
-                    },
-                    {
-                        "protocol": "dns"
-                    }
-                ],
-                "action": "hijack-dns"
-            },
+            
             
             
             
@@ -655,11 +663,7 @@
                 ],
                 "action": "direct"
             },
-            {
-                "ip_is_private": true,
-                "action": "route",
-                "outbound": "🎯 全球直连"
-            },
+           
 
             //中国网点走直连的规则
             {
@@ -760,6 +764,16 @@
         
         //出站的分流规则集
         "rule_set": [
+
+            //senshinya隐私规则集
+            {
+                "tag": "AntiFingerprinting",
+                "type": "remote",
+                "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Privacy/Privacy.srs",
+                "format": "binary",
+                "download_detour": "🎯 全球直连",
+                "update_interval": "48h"
+            },
 
             //senshinya隐私规则集
             {

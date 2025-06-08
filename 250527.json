@@ -179,14 +179,13 @@
         "disable_cache": true, 
         "disable_expire": false,
         "independent_cache": true,
-        //没找到的dns走指定
-        "final": "Remote-DNS",
+        //没找到的dns走指定，注释掉，强制所有DNS走FakeIP。
+        //"final": "Remote-DNS",
         "fakeip": {
             "enabled": true,
             "inet4_range": "198.18.0.0/16",
             "inet6_range": "fc00::/18"
         }
-        
     },
     //进站监控
     "inbounds": [
@@ -317,7 +316,7 @@
             // 关闭UDP减少耗电，选tcp
             "network": "udp", 
             // 强制UDP over TCP 
-            "udp_over_tcp": true,
+            "udp_over_tcp": false,
             "multiplex": {
                 // 启用多路复用
                 "enabled": true,      
@@ -342,7 +341,7 @@
             // 关闭UDP减少耗电，选tcp
             "network": "udp", 
             // 强制UDP over TCP 
-            "udp_over_tcp": true,
+            "udp_over_tcp": false,
             "multiplex": {
                 // 启用多路复用
                 "enabled": true,  
@@ -417,11 +416,12 @@
                 "action": "route",
                 "outbound": "🎯 全球直连"
             },
-            //NTP服务直连规则,避免代理不稳定时可能回退直连
+
+            //添加NTP服务直连规则,避免代理不稳定时可能回退直连。
             { 
                 "domain": ["time.apple.com"], 
                 "outbound": "🎯 全球直连" 
-            },
+            }
 
         //=======放行直连域名（如Apple、支付、代理节点域名等）=======
 
@@ -435,15 +435,6 @@
                 "network": "udp",
                 "outbound": "🎯 全球直连"
             },
-            {
-                "domain": [
-                    "zoom.us",
-                    "discord.com"
-                ],
-                "port": 443,
-                "network": "tcp",
-                "outbound": "🎯 全球直连"
-            },
 
             {   
                 // 例外放行443和80端口的Apple服务
@@ -452,15 +443,6 @@
                     "*.icloud.com"
                 ],
                 "network": "udp",
-                "outbound": "🎯 全球直连"
-            },
-            {   
-                // 例外放行443和80端口的Apple服务
-                "domain": [
-                    "*.apple.com",
-                    "*.icloud.com"
-                ],
-                "network": "tcp",
                 "outbound": "🎯 全球直连"
             },
 
@@ -610,8 +592,8 @@
                   "domain_regex": "(coinbase|binance|metamask|tron|okx|bybit|kucoin)\\.(com|io|net)"
             },
             
-            //WebRTC协议泄露防护
-            {
+           //WebRTC协议泄露防护
+           {
               "action": "reject",
               "protocol": [
                   "stun",
@@ -621,8 +603,8 @@
               ],
               "network": "udp"
             },
-            //WebRTC协议泄露防护,tcp层防护
-            {
+            //WebRTC协议泄露防护，TCP层WebRTC流量
+           {
               "action": "reject",
               "protocol": [
                   "stun",
@@ -632,7 +614,7 @@
               ],
               "network": "tcp"
             },
-            //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口,tcp层防护
+            //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口
             {
                 "port": [
                     80,
@@ -647,7 +629,7 @@
                 "network": "udp",
                 "action": "reject"
             },
-            //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口,tcp层防护
+            //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口，TCP层WebRTC流量
             {
                 "port": [
                     80,
@@ -660,7 +642,7 @@
                     19305
                 ],
                 "network": "tcp",
-                "action": "reject" 
+                "action": "reject"
             },
             // WebRTC泄露防护
             {

@@ -179,13 +179,14 @@
         "disable_cache": true, 
         "disable_expire": false,
         "independent_cache": true,
-        //没找到的dns走指定
-        "final": "Remote-DNS",
+        
         "fakeip": {
             "enabled": true,
             "inet4_range": "198.18.0.0/16",
             "inet6_range": "fc00::/18"
-        }
+        },
+        //没找到的dns走指定
+        "final": "Remote-DNS"
     },
     //进站监控
     "inbounds": [
@@ -416,7 +417,11 @@
                 "action": "route",
                 "outbound": "🎯 全球直连"
             },
-            
+            //NTP服务直连规则,避免代理不稳定时可能回退直连
+            { 
+                "domain": ["time.apple.com"], 
+                "outbound": "🎯 全球直连" 
+            },
 
         //=======放行直连域名（如Apple、支付、代理节点域名等）=======
 
@@ -598,7 +603,18 @@
               ],
               "network": "udp"
             },
-             //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口
+            //WebRTC协议泄露防护,tcp层防护
+            {
+              "action": "reject",
+              "protocol": [
+                  "stun",
+                  "turn",
+                  "quic",
+                  "webrtc"
+              ],
+              "network": "tcp"
+            },
+            //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口,tcp层防护
             {
                 "port": [
                     80,
@@ -611,6 +627,21 @@
                     19305
                 ],
                 "network": "udp",
+                "action": "reject"
+            },
+            //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口,tcp层防护
+            {
+                "port": [
+                    80,
+                    443,
+                    3478,
+                    3479,
+                    5349,
+                    5350,
+                    19302,
+                    19305
+                ],
+                "network": "tcp",
                 "action": "reject"
             },
             // WebRTC泄露防护

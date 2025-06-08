@@ -324,7 +324,7 @@
                 "max_connections": 8,
                 // 新增流量填充防分析
                 "padding": true  
-            }
+            } 
         },
         {
             "type": "shadowsocks",

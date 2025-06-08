@@ -127,7 +127,7 @@
 
             // 2. 隐私防护规则
             {
-                "domain_keyword": ["stun:", "turn:", "webrtc","quic"],
+                "domain_keyword": ["stun", "turn", "webrtc","quic"],
                 "server": "block"
             },
             {

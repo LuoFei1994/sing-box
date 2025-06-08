@@ -82,6 +82,7 @@
             {
                 "address": "fakeip",
                 "tag": "fakeip",
+                // 仅使用IPv4 FakeIP
                 "strategy": "prefer_ipv4"
             },
             {
@@ -106,6 +107,14 @@
                 "action": "route",
                 "clash_mode": "global",
                 "server": "Remote-DNS"
+            },
+
+
+            {
+               "domain_suffix": [".apple.com", ".icloud.com"],
+                // 苹果服务专用DNS
+               "server": "tls://1.1.1.1",  
+               "disable_cache": true
             },
             
             // 中国域名使用国内DNS

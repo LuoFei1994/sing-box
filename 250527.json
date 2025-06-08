@@ -593,31 +593,26 @@
             },
             
            //WebRTC协议泄露防护
-           {
-              "action": "reject",
-              "protocol": [
-                  "stun",
-                  "turn",
-                  "quic",
-                  "webrtc"
-              ],
-              "network": "udp"
+            {
+                  "type": "logical",
+                  "mode": "or",
+                  "rules": [
+                    {"protocol": ["stun","turn","quic","webrtc"],"network": "udp"},
+                    {"protocol": ["stun","turn","quic","webrtc"],"network": "tcp"}
+                  ],
+                  "action": "reject"
             },
             //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口
             {
-                "port": [
-                    80,
-                    443,
-                    3478,
-                    3479,
-                    5349,
-                    5350,
-                    19302,
-                    19305
-                ],
-                "network": "udp",
-                "action": "reject"
+                  "type": "logical",
+                  "mode": "or",
+                  "rules": [
+                    {"port": [80,443,3478,3479,5349,5350,19302,19305],"network": "udp"},
+                    {"port": [80,443,3478,3479,5349,5350,19302,19305],"network": "tcp"}
+                  ],
+                  "action": "reject"
             },
+
             // WebRTC泄露防护
             {
                 "domain_regex": "^(stun|turn|webrtc)\\.",

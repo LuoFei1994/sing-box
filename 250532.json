@@ -640,27 +640,27 @@
                     ]
             },
             //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口
-            {
-                  "type": "logical",
-                  "mode": "or",
-                  "rules": [
-                    {"port": [80,443,3478,3479,5349,5350,19302,19305],"network": "udp"},
-                    {"port": [80,443,3478,3479,5349,5350,19302,19305],"network": "tcp"}
-                  ],
-                  "action": "reject",
-                  // 排除这些域名
-                  "invert": true,  
-                  "domain": [
-                      "google.com", "youtube.com", "googlevideo.com",
-                      "cloudflare.com", "cloudflare-dns.com",
-                      "facebook.com", "whatsapp.com", "instagram.com",
-                      "netflix.com", "spotify.com",
+            //{
+                  //"type": "logical",
+                  //"mode": "or",
+                  //"rules": [
+                    //{"port": [80,443,3478,3479,5349,5350,19302,19305],"network": "udp"},
+                    //{"port": [80,443,3478,3479,5349,5350,19302,19305],"network": "tcp"}
+                  //],
+                  //"action": "reject",
+                  //// 排除这些域名
+                  //"invert": true,  
+                 // "domain": [
+                     // "google.com", "youtube.com", "googlevideo.com",
+                      //"cloudflare.com", "cloudflare-dns.com",
+                      //"facebook.com", "whatsapp.com", "instagram.com",
+                      //"netflix.com", "spotify.com",
                       
                       // 包含新增域名
-                      "tiktok.com", "tiktokcdn.com", "tiktokv.com",
-                      "telegram.org", "t.me", "telegram.me"
-                    ]
-            },
+                      //"tiktok.com", "tiktokcdn.com", "tiktokv.com",
+                      //"telegram.org", "t.me", "telegram.me"
+                    //]
+            //},
             // WebRTC泄露防护
             {
                 "domain_regex": "^(stun|turn|webrtc)\\.",

@@ -554,7 +554,7 @@
                 "domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs|deviceid|analytics|sentry)\\.(com|io|net)",
                 "inbound": ["tun-in", "mixed-in"],
                 // 覆盖主流浏览器
-                "process_name": ["Safari", "Chrome"],
+                "process_name": ["Safari", "Chrome", "Firefox"],
                 "action": "reject"
             },
            

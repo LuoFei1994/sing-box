@@ -600,7 +600,17 @@
                     {"protocol": ["stun","turn","quic","webrtc"],"network": "udp"},
                     {"protocol": ["stun","turn","quic","webrtc"],"network": "tcp"}
                   ],
-                  "action": "reject"
+                  "action": "reject",
+                  // 排除这些域名
+                  "invert": true,  
+                  "domain": [
+                      "google.com", "youtube.com", "googlevideo.com",
+                      "cloudflare.com", "cloudflare-dns.com",
+                      "facebook.com", "whatsapp.com",
+                      "netflix.com", "spotify.com",
+                      "tiktok.com", "telegram.com",
+                      "instagram.com", "x.com","snapchat.com","messenger.com"
+                    ]
             },
             //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口
             {
@@ -611,6 +621,16 @@
                     {"port": [80,443,3478,3479,5349,5350,19302,19305],"network": "tcp"}
                   ],
                   "action": "reject"
+                  // 排除这些域名
+                  "invert": true,  
+                  "domain": [
+                      "google.com", "youtube.com", "googlevideo.com",
+                      "cloudflare.com", "cloudflare-dns.com",
+                      "facebook.com", "whatsapp.com",
+                      "netflix.com", "spotify.com",
+                      "tiktok.com", "telegram.com",
+                      "instagram.com", "x.com","snapchat.com","messenger.com"
+                    ]
             },
 
             // WebRTC泄露防护

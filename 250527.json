@@ -114,43 +114,16 @@
                 //"server": "Local-DNS",
                 //"outbound": "any"
             //},
-            //====clash mode的规则=====
-            {
-                "action": "route",
-                "clash_mode": "direct",
-                "server": "Local-DNS"
-            },
-            {
-                "action": "route",
-                "clash_mode": "global",
-                "server": "Remote-DNS"
-            },
 
+            //端口的有限拒绝
             //阻止DNS劫持（端口53重定向）
             {
                 "port": 53,
-                "server": "Private-DoH",
+                "server": "Remote-DNS",
                 "rewrite_ttl": 300
             },
-
             
-            // 中国域名使用国内加密的DNS，不保证是否加密了
-            {
-                "action": "route",
-                "rule_set": [
-                    "GeoSite-CN"
-                ],
-                "server": "Local-DNS"
-            },
-            
-            // 非中国域名使用隐私DNS（优先使用Remote-DNS，如果失败则使用Remote-DNS1）
-            {
-                "action": "route",
-                "rule_set": [
-                    "geosite-geolocation-!cn"
-                ],
-                "server": "Remote-DNS"
-            },
+            // 1. 关键服务优先处理
             // 苹果服务特殊处理,使用专门服务器
             {
                 "domain_suffix": [
@@ -173,15 +146,60 @@
                 "server": "Local-DNS"
             },
 
+            // 2. 隐私防护规则
+            {
+                "domain_keyword": ["stun:", "turn:", "webrtc"],
+                "server": "block"
+            },
+            {
+                "domain_regex": "(analytics|track|metrics|telemetry)\\.",
+                "server": "block"
+            },
+
             //配置中已经在路由层reject，所以DNS层面阻止也可以，但可能不是必须（因为reject会返回失败，而DNS返回空可能更快）
             {
                 "action": "route",
                 "rule_set": ["Tracking", "Tracker", "Category-Ads"],
                 "server": "block"
             },
+        
+            
+            //====clash mode的规则=====
             {
-                //"action": "route",
-                //"rule_set": "geosite-geolocation-!cn",
+                "action": "route",
+                "clash_mode": "direct",
+                "server": "Local-DNS"
+            },
+            {
+                "action": "route",
+                "clash_mode": "global",
+                "server": "Remote-DNS"
+            },
+
+            // 3. 区域分流规则
+            // 中国域名使用国内加密的DNS，不保证是否加密了
+            {
+                "action": "route",
+                "rule_set": [
+                    "GeoSite-CN"
+                ],
+                "server": "Local-DNS"
+            },
+            
+            // 非中国域名使用隐私DNS（优先使用Remote-DNS，如果失败则使用Remote-DNS1）
+            {
+                "action": "route",
+                "rule_set": [
+                    "geosite-geolocation-!cn"
+                ],
+                "server": "Remote-DNS"
+            },
+            
+
+           
+
+            // 4. 兜底规则（最后）
+            {
                 "query_type": [
                     "A",
                     "AAAA"
@@ -390,7 +408,7 @@
     "route": {
         "rules": [
             
-            //=======进站的优先处理=======
+            // ===== 1. 关键进站处理 =====
             //嗅探进站网络
             {    
                 
@@ -423,7 +441,7 @@
                 ],
                 "action": "hijack-dns"
             },
-
+            
             
             //====== clash mode 规则组=====
             {
@@ -437,116 +455,28 @@
                 "outbound": "GLOBAL"
             },
             
+            // ===== 2. 隐私防护盾（高优先级）=====
 
-            
-            
-            // ===== 直连的规则组 =====
+            // 新增隐私敏感协议拦截,拦截加密货币和Tor流量
             {
-                "ip_cidr": [
-                    "10.0.0.0/8",
-                    "172.16.0.0/12",
-                    "192.168.0.0/16",
-                    "198.18.0.0/15",
-                    "fc00::/7"
+              "action": "reject",
+              "ip_cidr": [
+                    // Tor出口节点
+                    "176.10.104.240/28",  
+                    "178.16.208.56/29",
+                    "192.42.116.16/28"
+                ]
+            },
+            {
+                "protocol": [
+                    "ftp",
+                    "telnet",
+                    "smtp",
+                    "tor",
+                    "bittorrent",
+                    "bitcoin"
                 ],
-                "action": "direct"
-            },
-            {
-                "ip_is_private": true,
-                "action": "route",
-                "outbound": "🎯 全球直连"
-            },
-            
-            // ===== 苹果服务走直连 =====
-            {
-                "domain_suffix": [
-                    ".apple.com",
-                    ".icloud.com",
-                    ".mzstatic.com",
-                    ".apple-cloudkit.com",
-                    ".apple-mapkit.com",
-                    ".apple-dns.net",
-                    ".cdn-apple.com",
-                    ".icloud-content.com",
-                    ".apple-livephotoskit.com"
-                ],
-                "outbound": "🎯 全球直连"
-            },
-            
-            // 阻止代理节点被二次代理，会配合dns的规则
-            {
-                "domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz"],
-                "outbound": "🎯 全球直连"
-            },
-            
-            //支付渠道走直连，避免出问题
-            {
-                "domain_suffix": [
-                    ".alipay.com",
-                    ".wechatpay.com"
-                ],
-                "outbound": "🎯 全球直连"
-            },
-            
-            //中国网点走直连的规则
-            {
-                "action": "route",
-                "rule_set": [
-                    "GeoSite-CN",
-                    "geoip-cn",
-                    "iOS-Services",
-                    "PayPal"
-                ],
-                "outbound": "🎯 全球直连"
-            },
-            //合并例子"mode": "or" "and" {"type": "logical","mode": "or","rules":[{"protocol": "dns"},{"port": 53}//],//"outbound": "dns"//},
-
-
-            
-            //======= 国外媒体app走代理的规则组=========
-            {
-                "domain_keyword": [
-                    "banking",
-                    "financial",
-                    "secret"
-                ],
-                "outbound": "🚀 节点选择"
-            },
-            
-            // 走代理的规则：非中国域名
-            {
-                "action": "route",
-                "rule_set": [
-                    "geosite-geolocation-!cn"
-                ],
-                "outbound": "🚀 节点选择"
-            },
-            
-            // 支付服务走代理（安全加固）
-            {
-                "domain_suffix": [
-                    ".stripe.com",
-                    ".venmo.com"
-                ],
-                "outbound": "🚀 节点选择"
-            },
-            
-            
-            
-            //国外媒体走代理
-            {
-                "action": "route",
-                "rule_set": [
-                    "Youtube",
-                    "Tiktok",
-                    "Whatsapp",
-                    "Instagram",
-                    "Facebook",
-                    "GitHub",
-                    "Line",
-                    "Telegram"
-                ],
-                "outbound": "🚀 节点选择"
+                "action": "reject"
             },
 
             //=======例外规则========
@@ -570,9 +500,39 @@
                 "network": "udp",
                 "outbound": "🎯 全球直连"
             },
-
+        
+            //WebRTC泄露防护
+            {
+              "action": "reject",
+              "protocol": ["stun", "turn"],
+              "network": "udp"
+            },
+            // 增强WebRTC阻止
+            {
+                "domain_regex": "^(stun|turn|webrtc)\\.",
+                "action": "reject"
+            },
             
-            // =======拒绝的规则组=======
+            
+            // 全端口UDP拦截
+            {
+                  "action": "reject",
+                  "protocol": [
+                        "quic",
+                        "udp/443",
+                        "udp/80"
+                      ]
+            },
+            //配合下面，端口禁止
+            {
+                "port": [
+                    3478,
+                    5349,
+                    19302,
+                    19305
+                ],
+                "action": "reject"
+            },
             // 新增隐私保护域关键词拦截
             {
                 "domain_keyword": [
@@ -583,40 +543,7 @@
                 ],
                 "action": "reject"
             },
-
-            //配合上面，端口禁止
-            {
-                "port": [
-                    3478,
-                    5349,
-                    19302,
-                    19305
-                ],
-                "action": "reject"
-            },
-
-            // 新增隐私敏感协议拦截,拦截加密货币和Tor流量
-            {
-                "protocol": [
-                    "ftp",
-                    "telnet",
-                    "smtp",
-                    "tor",
-                    "bittorrent",
-                    "bitcoin"
-                ],
-                "action": "reject"
-            },
-            {
-              "action": "reject",
-              "ip_cidr": [
-                    // Tor出口节点
-                    "176.10.104.240/28",  
-                    "178.16.208.56/29",
-                    "192.42.116.16/28"
-                ]
-            },
-
+        
             // 阻止未加密QUIC协议
             {
                 "action": "reject",
@@ -644,29 +571,7 @@
                 ],
                 "action": "reject"
             },
-            // 全端口UDP拦截
-            {
-                  "action": "reject",
-                  "protocol": [
-                        "quic",
-                        "udp/443",
-                        "udp/80"
-                      ]
-            },
-
             
-
-            // 增强WebRTC阻止
-            {
-                "domain_regex": "^(stun|turn|webrtc)\\.",
-                "action": "reject"
-            },
-            //WebRTC泄露防护
-            {
-              "action": "reject",
-              "protocol": ["stun", "turn"],
-              "network": "udp"
-            },
 
             // 强化追踪拦截
             {
@@ -731,7 +636,126 @@
                   ]
             },
             
+            
+            // ===== 3. 基础分流规则 =====
+            {
+                "ip_cidr": [
+                    "10.0.0.0/8",
+                    "172.16.0.0/12",
+                    "192.168.0.0/16",
+                    "198.18.0.0/15",
+                    "fc00::/7"
+                ],
+                "action": "direct"
+            },
+            {
+                "ip_is_private": true,
+                "action": "route",
+                "outbound": "🎯 全球直连"
+            },
 
+            //中国网点走直连的规则
+            {
+                "action": "route",
+                "rule_set": [
+                    "GeoSite-CN",
+                    "geoip-cn",
+                    "iOS-Services",
+                    "PayPal"
+                ],
+                "outbound": "🎯 全球直连"
+            },
+
+            //合并例子"mode": "or" "and" {"type": "logical","mode": "or","rules":[{"protocol": "dns"},{"port": 53}//],//"outbound": "dns"//},
+
+
+            / ===== 4. 特殊服务直连 =====
+            {
+                "domain_suffix": [
+                    ".apple.com",
+                    ".icloud.com",
+                    ".mzstatic.com",
+                    ".apple-cloudkit.com",
+                    ".apple-mapkit.com",
+                    ".apple-dns.net",
+                    ".cdn-apple.com",
+                    ".icloud-content.com",
+                    ".apple-livephotoskit.com"
+                ],
+                "outbound": "🎯 全球直连"
+            },
+            
+            // 阻止代理节点被二次代理，会配合dns的规则
+            {
+                "domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz"],
+                "outbound": "🎯 全球直连"
+            },
+            
+            //支付渠道走直连，避免出问题
+            {
+                "domain_suffix": [
+                    ".alipay.com",
+                    ".wechatpay.com"
+                ],
+                "outbound": "🎯 全球直连"
+            },
+            
+            
+
+
+            
+            // ===== 5. 代理规则 =====
+            {
+                "domain_keyword": [
+                    "banking",
+                    "financial",
+                    "secret"
+                ],
+                "outbound": "🚀 节点选择"
+            },
+            
+            // 走代理的规则：非中国域名
+            {
+                "action": "route",
+                "rule_set": [
+                    "geosite-geolocation-!cn"
+                ],
+                "outbound": "🚀 节点选择"
+            },
+            
+            // 支付服务走代理（安全加固）
+            {
+                "domain_suffix": [
+                    ".stripe.com",
+                    ".venmo.com"
+                ],
+                "outbound": "🚀 节点选择"
+            },
+            
+            
+            
+            //国外媒体走代理
+            {
+                "action": "route",
+                "rule_set": [
+                    "Youtube",
+                    "Tiktok",
+                    "Whatsapp",
+                    "Instagram",
+                    "Facebook",
+                    "GitHub",
+                    "Line",
+                    "Telegram"
+                ],
+                "outbound": "🚀 节点选择"
+            },
+
+            
+
+            
+            
+            
+            // ===== 6. 补充防护（低优先级）=====
             //去广告
             {
                 "rule_set": [
@@ -927,7 +951,7 @@
         "default_mark": 233,
         //查找进程信息
         "find_process": true,
-        //没在规则里的走指定规则
+        // ===== 7. 最终兜底 =====
         "final": "🐟 漏网之鱼"
     }
 }

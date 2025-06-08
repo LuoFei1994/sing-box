@@ -126,6 +126,13 @@
                 "server": "Remote-DNS"
             },
 
+            //阻止DNS劫持（端口53重定向）
+            {
+                "port": 53,
+                "server": "Private-DoH",
+                "rewrite_ttl": 300
+            },
+
             
             // 中国域名使用国内加密的DNS，不保证是否加密了
             {
@@ -654,6 +661,12 @@
                 "domain_regex": "^(stun|turn|webrtc)\\.",
                 "action": "reject"
             },
+            //WebRTC泄露防护
+            {
+              "action": "reject",
+              "protocol": ["stun", "turn"],
+              "network": "udp"
+            },
 
             // 强化追踪拦截
             {
@@ -665,6 +678,10 @@
             {
                 "domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs|deviceid|analytics|sentry)\\.(com|io|net)",
                 "inbound": ["tun-in", "mixed-in"],
+                "action": "reject"
+            },
+            {
+                "domain_regex": "(fingerprintjs|fpjs\\.io|sentry\\.io)\\.?$",
                 "action": "reject"
             },
         
@@ -760,7 +777,7 @@
             {
                 "tag": "Tiktok",
                 "type": "remote",
-                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@refs/heads/sing/geo/geosite/tiktok.srs",
+                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tiktok.srs",
                 "format": "binary",
                 "download_detour": "🚀 节点选择",
                 "update_interval": "48h"

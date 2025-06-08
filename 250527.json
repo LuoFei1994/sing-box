@@ -34,7 +34,7 @@
             // 禁用FakeIP持久化,更隐秘
             "store_fakeip": false,
             //持久化已拒绝的dns响应
-            "store_rdrc": false,
+            "store_rdrc": true,
             // 缩短拒绝缓存时间
             "rdrc_timeout": "12h"
         }
@@ -122,8 +122,7 @@
             // 新增代理节点域名直连（防DNS污染）,配合底下的出站规则
             {
                 "domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz"],
-                "server": "Local-DNS",
-                "disable_cache": true
+                "server": "Local-DNS"
             },
 
             // 2. 隐私防护规则
@@ -500,28 +499,7 @@
                 ],
                 "outbound": "🎯 全球直连"
             },
-         // =====放行代理的域名，quic协议的=======
-            {
-                "domain": [
-                    "google.com",
-                    "youtube.com",
-                    "googlevideo.com",
-                    "cloudflare.com",
-                    "cloudflare-dns.com",
-                    "facebook.com", 
-                    "whatsapp.com",
-                    "netflix.com", 
-                    "spotify.com",
-                    "tiktok.com", 
-                    "telegram.com",
-                    "instagram.com", 
-                    "x.com",
-                    "snapchat.com",
-                    "messenger.com"
-                ],
-                "protocol": ["quic"],
-                "outbound": "🚀 节点选择"
-            },
+
 
          // =====拦截规则（隐私防护、广告、加密货币等）=====
             //拦截的广告
@@ -614,64 +592,31 @@
             },
             
            //WebRTC协议泄露防护
-            {
-                  "type": "logical",
-                  "mode": "or",
-                  "rules": [
-                    {"protocol": ["stun","turn","quic","webrtc"],"network": "udp"},
-                    {"protocol": ["stun","turn","quic","webrtc"],"network": "tcp"}
-                  ],
-                  "action": "reject",
-                  // 排除这些域名
-                  "invert": true,  
-                  "domain": [
-                      "google.com",
-                      "youtube.com", 
-                      "googlevideo.com",
-                      "cloudflare.com", 
-                      "cloudflare-dns.com",
-                      "facebook.com", 
-                      "whatsapp.com",
-                      "netflix.com", 
-                      "spotify.com",
-                      "tiktok.com", 
-                      "telegram.com",
-                      "instagram.com", 
-                      "x.com",
-                      "snapchat.com",
-                      "messenger.com"
-                    ]
+           {
+              "action": "reject",
+              "protocol": [
+                  "stun",
+                  "turn",
+                  "quic",
+                  "webrtc"
+              ],
+              "network": "udp"
             },
             //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口
             {
-                  "type": "logical",
-                  "mode": "or",
-                  "rules": [
-                    {"port": [80,443,3478,3479,5349,5350,19302,19305],"network": "udp"},
-                    {"port": [80,443,3478,3479,5349,5350,19302,19305],"network": "tcp"}
-                  ],
-                  "action": "reject"
-                  // 排除这些域名
-                  "invert": true,  
-                  "domain": [
-                      "google.com",
-                      "youtube.com", 
-                      "googlevideo.com",
-                      "cloudflare.com", 
-                      "cloudflare-dns.com",
-                      "facebook.com", 
-                      "whatsapp.com",
-                      "netflix.com", 
-                      "spotify.com",
-                      "tiktok.com", 
-                      "telegram.com",
-                      "instagram.com", 
-                      "x.com",
-                      "snapchat.com",
-                      "messenger.com"
-                    ]
+                "port": [
+                    80,
+                    443,
+                    3478,
+                    3479,
+                    5349,
+                    5350,
+                    19302,
+                    19305
+                ],
+                "network": "udp",
+                "action": "reject"
             },
-
             // WebRTC泄露防护
             {
                 "domain_regex": "^(stun|turn|webrtc)\\.",
@@ -796,7 +741,7 @@
                 "type": "remote",
                 "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/refs/heads/main/rule/PrivateTracker/PrivateTracker.srs",
                 "format": "binary",
-                "download_detour": "🚀 节点选择",
+                "download_detour": "🎯 全球直连",
                 "update_interval": "48h"
             },
 

@@ -602,6 +602,11 @@
               ],
               "network": "udp"
             },
+            { 
+                "action": "reject",
+                "protocol": ["stun", "turn", "webrtc"],
+                "network": "tcp"
+            },
             //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口
             {
                 "port": [

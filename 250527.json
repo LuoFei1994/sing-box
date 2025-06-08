@@ -53,7 +53,14 @@
         "servers": [
             {
                 "tag": "Local-DNS",
-                "address": "https://223.5.5.5:443/dns-query",
+                "address": "https://dns.quad9.net/dns-query",
+                "address_resolver": "Local-DNS-Resolver",
+                "detour": "🎯 全球直连"
+            },
+            
+            {
+                "tag": "Local-DNS-Resolver",
+                "address": "9.9.9.9",
                 "detour": "🎯 全球直连"
             },
             

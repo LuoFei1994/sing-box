@@ -500,9 +500,7 @@
                 "action": "route",
                 "rule_set": [
                     "GeoSite-CN",
-                    "geoip-cn",
-                    "iOS-Services",
-                    "PayPal"
+                    "geoip-cn"
                 ],
                 "outbound": "🎯 全球直连"
             },
@@ -720,21 +718,18 @@
                 "outbound": "GLOBAL"
             },
             
-            
-                   
-        //===== 代理规则 =====
-            
-            
-            // 走代理的规则：非中国域名
+        //===== 直连规则 =====
             {
                 "action": "route",
                 "rule_set": [
-                    "geosite-geolocation-!cn"
+                    "iOS-Services",
+                    "PayPal"
                 ],
-                "outbound": "🚀 节点选择"
+                "outbound": "🎯 全球直连"
             },
-            
-           
+                   
+        //===== 代理规则 =====
+    
             //国外媒体走代理
             {
                 "action": "route",
@@ -747,6 +742,15 @@
                     "GitHub",
                     "Line",
                     "Telegram"
+                ],
+                "outbound": "🚀 节点选择"
+            },
+
+            // 走代理的规则：非中国域名
+            {
+                "action": "route",
+                "rule_set": [
+                    "geosite-geolocation-!cn"
                 ],
                 "outbound": "🚀 节点选择"
             }

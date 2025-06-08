@@ -109,17 +109,12 @@
                 "server": "Remote-DNS"
             },
 
-            {
-                "action": "route",
-                "server": "Remote-DNS",
-                "disable_cache": true
-            },
-
+      
 
             {
                "domain_suffix": [".apple.com", ".icloud.com"],
                 // 苹果服务专用DNS
-               "server": "Remote-DNS",  
+               "server": "tls://1.1.1.1",  
                "disable_cache": true
             },
             

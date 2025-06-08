@@ -501,22 +501,21 @@
             },
         // =====放行代理的域名，quic协议的=======
             {
-                "domain": [
-                    "google.com",
-                    "youtube.com",
-                    "googlevideo.com",
-                    "cloudflare.com",
-                    "cloudflare-dns.com",
-                    "facebook.com", 
-                    "whatsapp.com",
-                    "netflix.com", 
-                    "spotify.com",
-                    "tiktok.com", 
-                    "telegram.com",
-                    "instagram.com", 
-                    "x.com",
-                    "snapchat.com",
-                    "messenger.com"
+                "domain_keyword": [
+                    "google",
+                    "youtube",
+                    "googlevideo",
+                    "cloudflare",
+                    "cloudflare-dns",
+                    "facebook", 
+                    "whatsapp",
+                    "netflix", 
+                    "spotify",
+                    "tiktok", 
+                    "telegram",
+                    "instagram", 
+                    "snapchat",
+                    "messenger"
                 ],
                 "protocol": ["quic"],
                 "outbound": "🚀 节点选择"
@@ -623,22 +622,21 @@
                   "action": "reject",
                   // 排除这些域名
                   "invert": true,  
-                  "domain": [
-                      "google.com",
-                      "youtube.com", 
-                      "googlevideo.com",
-                      "cloudflare.com", 
-                      "cloudflare-dns.com",
-                      "facebook.com", 
-                      "whatsapp.com",
-                      "netflix.com", 
-                      "spotify.com",
-                      "tiktok.com", 
-                      "telegram.com",
-                      "instagram.com", 
-                      "x.com",
-                      "snapchat.com",
-                      "messenger.com"
+                  "domain_keyword": [
+                        "google",
+                        "youtube",
+                        "googlevideo",
+                        "cloudflare",
+                        "cloudflare-dns",
+                        "facebook", 
+                        "whatsapp",
+                        "netflix", 
+                        "spotify",
+                        "tiktok", 
+                        "telegram",
+                        "instagram", 
+                        "snapchat",
+                        "messenger"
                     ]
             },
             //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口
@@ -652,22 +650,21 @@
                   "action": "reject",
                   // 排除这些域名
                   "invert": true,  
-                  "domain": [
-                      "google.com",
-                      "youtube.com", 
-                      "googlevideo.com",
-                      "cloudflare.com", 
-                      "cloudflare-dns.com",
-                      "facebook.com", 
-                      "whatsapp.com",
-                      "netflix.com", 
-                      "spotify.com",
-                      "tiktok.com", 
-                      "telegram.com",
-                      "instagram.com", 
-                      "x.com",
-                      "snapchat.com",
-                      "messenger.com"
+                  "domain_keyword": [
+                        "google",
+                        "youtube",
+                        "googlevideo",
+                        "cloudflare",
+                        "cloudflare-dns",
+                        "facebook", 
+                        "whatsapp",
+                        "netflix", 
+                        "spotify",
+                        "tiktok", 
+                        "telegram",
+                        "instagram", 
+                        "snapchat",
+                        "messenger"
                     ]
             },
             // WebRTC泄露防护

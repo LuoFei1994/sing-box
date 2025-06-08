@@ -106,6 +106,14 @@
                 "clash_mode": "global",
                 "server": "Remote-DNS"
             },
+
+            //=======
+            {
+                "action": "route",
+                "server": "Remote-DNS",
+                "strategy": "ipv4_only",
+                "disable_cache": true
+            },
             
             // 中国域名使用国内DNS
             {

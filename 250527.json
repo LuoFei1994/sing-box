@@ -144,9 +144,11 @@
                     ".apple.com",
                     ".icloud.com",
                     ".mzstatic.com",
-                    ".apple-cloudkit.com"
+                    ".apple-cloudkit.com",
+                    ".icloud-content.com",
+                    ".apple-livephotoskit.com"
                 ],
-                "server": "Remote-DNS-1",
+                "server": "Local-DNS",
                 // 替代always_real_ip 
                 "disable_cache": true 
             },
@@ -444,6 +446,8 @@
                     ".apple-mapkit.com",
                     ".apple-dns.net",
                     ".cdn-apple.com"
+                    ".icloud-content.com",
+                    ".apple-livephotoskit.com"
                 ],
                 "outbound": "🎯 全球直连"
             },
@@ -649,6 +653,17 @@
                 "inbound": ["tun-in", "mixed-in"],
                 "action": "reject"
             },
+
+            //Safari防护
+            {
+                  "action": "reject",
+                  "domain_suffix": [
+                    "safari-tracker.com",
+                    "apple-analytics.com"
+                  ],
+                  // 仅针对Safari生效
+                  "process_name": ["Safari"]  
+            }
 
             //加强追踪阻止
             {

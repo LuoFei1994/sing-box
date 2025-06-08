@@ -660,7 +660,7 @@
                     19305
                 ],
                 "network": "tcp",
-                "action": "reject"
+                "action": "reject" 
             },
             // WebRTC泄露防护
             {

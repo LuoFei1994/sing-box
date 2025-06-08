@@ -125,6 +125,15 @@
                 "server": "Local-DNS"
             },
 
+            {
+                "domain_suffix": [
+                  ".tiktok.com", ".tiktokcdn.com", ".tiktokv.com",
+                  ".telegram.org", ".t.me"
+                ],
+                "server": "Remote-DNS",
+                "disable_cache": true
+            },
+
             // 2. 隐私防护规则
             {
                 "domain_keyword": ["stun", "turn", "webrtc","quic"],
@@ -501,21 +510,19 @@
             },
         // =====放行代理的域名，quic协议的=======
             {
-                "domain_keyword": [
-                    "google",
-                    "youtube",
-                    "googlevideo",
-                    "cloudflare",
-                    "cloudflare-dns",
-                    "facebook", 
-                    "whatsapp",
-                    "netflix", 
-                    "spotify",
-                    "tiktok", 
-                    "telegram",
-                    "instagram", 
-                    "snapchat",
-                    "messenger"
+                "domain": [
+                  "google.com", "youtube.com", "googlevideo.com",  // Google服务
+                  "cloudflare.com", "cloudflare-dns.com",          // Cloudflare
+                  "facebook.com", "whatsapp.com", "instagram.com", // Meta
+                  "netflix.com", "spotify.com",                   // 流媒体
+                  
+                  // 新增TikTok服务域名
+                  "tiktok.com", "tiktokcdn.com", "tiktokv.com", "muscdn.com",
+                  "tiktokcdn-us.com", "byteoversea.com",
+                  
+                  // 新增Telegram服务域名
+                  "telegram.org", "t.me", "telegram.me", "tdesktop.com",
+                  "telegra.ph", "telesco.pe"
                 ],
                 "protocol": ["quic"],
                 "outbound": "🚀 节点选择"
@@ -613,30 +620,23 @@
             
            //WebRTC协议泄露防护
            {
-                  "type": "logical",
-                  "mode": "or",
-                  "rules": [
-                    {"protocol": ["stun","turn","quic","webrtc"],"network": "udp"},
-                    {"protocol": ["stun","turn","quic","webrtc"],"network": "tcp"}
-                  ],
-                  "action": "reject",
-                  // 排除这些域名
-                  "invert": true,  
-                  "domain_keyword": [
-                        "google",
-                        "youtube",
-                        "googlevideo",
-                        "cloudflare",
-                        "cloudflare-dns",
-                        "facebook", 
-                        "whatsapp",
-                        "netflix", 
-                        "spotify",
-                        "tiktok", 
-                        "telegram",
-                        "instagram", 
-                        "snapchat",
-                        "messenger"
+                "type": "logical",
+                "mode": "or",
+                "rules": [
+                  {"protocol": ["stun","turn","quic","webrtc"], "network": "udp"},
+                  {"protocol": ["stun","turn","quic","webrtc"], "network": "tcp"}
+                ],
+                "action": "reject",
+                "invert": true,
+                "domain": [
+                      "google.com", "youtube.com", "googlevideo.com",
+                      "cloudflare.com", "cloudflare-dns.com",
+                      "facebook.com", "whatsapp.com", "instagram.com",
+                      "netflix.com", "spotify.com",
+                      
+                      // 包含新增域名
+                      "tiktok.com", "tiktokcdn.com", "tiktokv.com",
+                      "telegram.org", "t.me", "telegram.me"
                     ]
             },
             //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口
@@ -650,21 +650,15 @@
                   "action": "reject",
                   // 排除这些域名
                   "invert": true,  
-                  "domain_keyword": [
-                        "google",
-                        "youtube",
-                        "googlevideo",
-                        "cloudflare",
-                        "cloudflare-dns",
-                        "facebook", 
-                        "whatsapp",
-                        "netflix", 
-                        "spotify",
-                        "tiktok", 
-                        "telegram",
-                        "instagram", 
-                        "snapchat",
-                        "messenger"
+                  "domain": [
+                      "google.com", "youtube.com", "googlevideo.com",
+                      "cloudflare.com", "cloudflare-dns.com",
+                      "facebook.com", "whatsapp.com", "instagram.com",
+                      "netflix.com", "spotify.com",
+                      
+                      // 包含新增域名
+                      "tiktok.com", "tiktokcdn.com", "tiktokv.com",
+                      "telegram.org", "t.me", "telegram.me"
                     ]
             },
             // WebRTC泄露防护

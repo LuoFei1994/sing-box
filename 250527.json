@@ -663,8 +663,8 @@
                   ],
                   // 仅针对Safari生效
                   "process_name": ["Safari"]  
-            }
-
+            },
+        
             //加强追踪阻止
             {
                 "domain_keyword": [

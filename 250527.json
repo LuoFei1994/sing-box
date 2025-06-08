@@ -34,7 +34,7 @@
             // 禁用FakeIP持久化,更隐秘
             "store_fakeip": false,
             //持久化已拒绝的dns响应
-            "store_rdrc": true,
+            "store_rdrc": false,
             // 缩短拒绝缓存时间
             "rdrc_timeout": "12h"
         }
@@ -122,7 +122,8 @@
             // 新增代理节点域名直连（防DNS污染）,配合底下的出站规则
             {
                 "domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz"],
-                "server": "Local-DNS"
+                "server": "Local-DNS",
+                "disable_cache": true
             },
 
             // 2. 隐私防护规则
@@ -602,11 +603,6 @@
               ],
               "network": "udp"
             },
-            { 
-                "action": "reject",
-                "protocol": ["stun", "turn", "webrtc"],
-                "network": "tcp"
-            },
             //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口
             {
                 "port": [
@@ -746,7 +742,7 @@
                 "type": "remote",
                 "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/refs/heads/main/rule/PrivateTracker/PrivateTracker.srs",
                 "format": "binary",
-                "download_detour": "🎯 全球直连",
+                "download_detour": "🚀 节点选择",
                 "update_interval": "48h"
             },
 

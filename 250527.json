@@ -76,12 +76,13 @@
             //"tag": "Remote-DNS2",
             //"address": "https://doh.opendns.com/dns-query",
             //"address_resolver": "Local-DNS-Resolver",  
-            //"detour": "🚀🚀 节点选择"
+            //"detour": "🚀 节点选择"
             //},
             //fakeip的设置
             {
                 "address": "fakeip",
-                "tag": "fakeip"
+                "tag": "fakeip",
+                "strategy": "prefer_ipv4"
             },
             {
                 "address": "rcode://success",

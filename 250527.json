@@ -41,9 +41,12 @@
     //和苹果服务器时间同步  
     "ntp": {
         "enabled": true,
+        // 匿名时间同步
         "server": "time.apple.com",
         "server_port": 123,
-        "interval": "1h"
+        // 减少同步频率
+        "interval": "6h"
+        "detour": "🚀 节点选择"
     },
     //以下是dns服务和规则设置
     "dns": {
@@ -91,7 +94,7 @@
                 "address": "fakeip",
                 "tag": "fakeip",
                 // 仅使用IPv4 FakeIP
-                "strategy": "prefer_ipv4"
+                "strategy": "ipv4_only"
             },
             {
                 "address": "rcode://success",
@@ -164,7 +167,7 @@
             }
         ],
         //默认ipv4优选
-        "strategy": "prefer_ipv4", 
+        "strategy": "ipv4_only", 
         // 关闭DNS缓存减少CPU负载,避免缓存污染
         "disable_cache": true, 
         "disable_expire": false,
@@ -503,15 +506,7 @@
                 "outbound": "🚀 节点选择"
             },
             
-            // 强化加密货币保护
-            {
-                "domain_keyword": [
-                    "coinbase",
-                    "binance",
-                    "metamask"
-                ],
-                "outbound": "🚀 节点选择"
-            },
+            
             
             //国外媒体走代理
             {
@@ -587,6 +582,15 @@
                 ],
                 "action": "reject"
             },
+            {
+              "action": "reject",
+              "ip_cidr": [
+                    // Tor出口节点
+                    "176.10.104.240/28",  
+                    "178.16.208.56/29",
+                    "192.42.116.16/28"
+                ]
+            },
 
             // 阻止未加密QUIC协议
             {
@@ -615,6 +619,15 @@
                 ],
                 "action": "reject"
             },
+            // 全端口UDP拦截
+            {
+                  "action": "reject",
+                  "protocol": [
+                        "quic",
+                        "udp/443",  
+                        "udp/80"
+                      ]
+            },
 
             
 
@@ -632,7 +645,8 @@
 
              // 新增浏览器指纹保护
             {
-                "domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs)\\.(com|io)",
+                "domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs|deviceid|analytics|sentry)\\.(com|io|net)",
+                "inbound": ["tun-in", "mixed-in"],
                 "action": "reject"
             },
 
@@ -644,6 +658,26 @@
                 ],
                 "action": "reject"
             },
+        
+            // 强化加密货币保护
+            {
+                "action": "reject",
+                "domain_keyword": [
+                    "coinbase",
+                    "binance",
+                    "metamask"
+                ]
+            },
+            {
+                  "action": "reject",
+                  "domain_suffix": [
+                    ".coinbase.com",
+                    ".binance.com",
+                    ".metamask.io",
+                    ".tron.network"
+                  ]
+            },
+        
             
 
             //去广告

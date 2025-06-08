@@ -316,7 +316,7 @@
             // 关闭UDP减少耗电，选tcp
             "network": "udp", 
             // 强制UDP over TCP 
-            "udp_over_tcp": true,
+            "udp_over_tcp": false,
             "multiplex": {
                 // 启用多路复用
                 "enabled": true,      
@@ -341,7 +341,7 @@
             // 关闭UDP减少耗电，选tcp
             "network": "udp", 
             // 强制UDP over TCP 
-            "udp_over_tcp": true,
+            "udp_over_tcp": false,
             "multiplex": {
                 // 启用多路复用
                 "enabled": true,  

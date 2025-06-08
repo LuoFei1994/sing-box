@@ -111,13 +111,7 @@
                 "server": "Remote-DNS"
             },
 
-            // 禁用远程Remote-DNS的缓存防追踪
-            {
-                "action":"route",
-                "server":"Remote-DNS",
-                "strategy":"ipv4_only",
-                "disable_cache":true
-            },
+            
 
             // 中国域名使用国内DNS
             {

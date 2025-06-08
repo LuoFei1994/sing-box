@@ -73,11 +73,8 @@
                 "tag": "Remote-DNS",
                 // Quad9的DoT（带恶意软件过滤） 直接使用IP避免二次解析
                 "address": "tls://9.9.9.11:853",  
-                "detour": "🚀 节点选择",
-                "dialer_options": {
-                    // 实际允许UDP但不使用非法参数
-                    "force_tcp": false  
-                }
+                "detour": "🚀 节点选择"
+            
             },
             
             {
@@ -153,7 +150,8 @@
                     ".apple-livephotoskit.com"
                 ],
                 "server": "Local-DNS",
-                // 替代always_real_ip 
+    
+                // 替代always_real_ip  替代skip_resolve的方案
                 "disable_cache": true 
             },
 
@@ -657,6 +655,13 @@
                 "inbound": ["tun-in", "mixed-in"],
                 "action": "reject"
             },
+        
+            // 指纹防护（兼容iOS Safari）
+            {
+                "action": "reject",
+                "domain_regex": "(fpjs\\.io|fingerprintjs\\.com|deviceident\\.com)",
+                "process_name": ["Safari"]
+            },
 
             //Safari防护
             {
@@ -696,7 +701,6 @@
                     ".tron.network"
                   ]
             },
-        
             
 
             //去广告

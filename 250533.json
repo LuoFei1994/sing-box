@@ -524,7 +524,6 @@
                   "telegram.org", "t.me", "telegram.me", "tdesktop.com",
                   "telegra.ph", "telesco.pe"
                 ],
-                "protocol": ["quic"],
                 "outbound": "🚀 节点选择"
             },
 
@@ -619,26 +618,26 @@
             },
             
            //WebRTC协议泄露防护
-           {
-                "type": "logical",
-                "mode": "or",
-                "rules": [
-                  {"protocol": ["stun","turn","quic","webrtc"], "network": "udp"},
-                  {"protocol": ["stun","turn","quic","webrtc"], "network": "tcp"}
-                ],
-                "action": "reject",
-                "invert": true,
-                "domain": [
-                      "google.com", "youtube.com", "googlevideo.com",
-                      "cloudflare.com", "cloudflare-dns.com",
-                      "facebook.com", "whatsapp.com", "instagram.com",
-                      "netflix.com", "spotify.com",
+           //{
+                //"type": "logical",
+                //"mode": "or",
+                //"rules": [
+                  //{"protocol": ["stun","turn","quic","webrtc"], "network": "udp"},
+                  //{"protocol": ["stun","turn","quic","webrtc"], "network": "tcp"}
+                //],
+                //"action": "reject",
+                //"invert": true,
+                //"domain": [
+                      //"google.com", "youtube.com", "googlevideo.com",
+                      //"cloudflare.com", "cloudflare-dns.com",
+                      //"facebook.com", "whatsapp.com", "instagram.com",
+                      //"netflix.com", "spotify.com",
                       
                       // 包含新增域名
-                      "tiktok.com", "tiktokcdn.com", "tiktokv.com",
-                      "telegram.org", "t.me", "telegram.me"
-                    ]
-            },
+                      //"tiktok.com", "tiktokcdn.com", "tiktokv.com",
+                      //"telegram.org", "t.me", "telegram.me"
+                    //]
+            //},
             //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口
             //{
                   //"type": "logical",

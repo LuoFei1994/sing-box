@@ -464,7 +464,7 @@
 
             //=======例外规则========
             
-            //配合上面的规则，可能影响部分使用UDP/443的合法服务（如WebRTC），建议通过domain白名单排除：
+            //配合下面的规则，可能影响部分使用UDP/443的合法服务（如WebRTC），建议通过domain白名单排除：
             {
                 "domain": [
                     "zoom.us",
@@ -650,7 +650,6 @@
                 "outbound": "🎯 全球直连"
             },
 
-            //合并例子"mode": "or" "and" {"type": "logical","mode": "or","rules":[{"protocol": "dns"},{"port": 53}//],//"outbound": "dns"//},
 
 
             // ===== 4. 特殊服务直连 =====

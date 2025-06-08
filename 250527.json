@@ -66,11 +66,12 @@
                 "detour": "🚀 节点选择"
             },
             
-            //{
-            //"tag": "Remote-DNS1",
-            //"address": "https://1.1.1.1/dns-query", // 使用Cloudflare的DoH
-            //"detour": "🚀 节点选择"
-            //},
+            {
+                "tag": "Remote-DNS1",
+                // 使用Cloudflare的DoH
+                "address": "https://1.1.1.1/dns-query", 
+                "detour": "🚀 节点选择"
+            },
             // 新增加密DNS兜底
             //{
             //"tag": "Remote-DNS2",
@@ -109,14 +110,6 @@
                 "server": "Remote-DNS"
             },
 
-      
-
-            {
-               "domain_suffix": [".apple.com", ".icloud.com"],
-                // 苹果服务专用DNS
-               "server": "tls://1.1.1.1",  
-               "disable_cache": true
-            },
             
             // 中国域名使用国内DNS
             {
@@ -135,7 +128,7 @@
                 ],
                 "server": "Remote-DNS"
             },
-            // 苹果服务特殊处理
+            // 苹果服务特殊处理,使用专门服务器
             {
                 "domain_suffix": [
                     ".apple.com",
@@ -143,7 +136,7 @@
                     ".mzstatic.com",
                     ".apple-cloudkit.com"
                 ],
-                "server": "Local-DNS",
+                "server": "Remote-DNS1",
                 // 替代always_real_ip 
                 "disable_cache": true 
             },

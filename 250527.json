@@ -65,7 +65,7 @@
                 "address": "tls://9.9.9.11:853",  
                 "detour": "🚀 节点选择",
                 // UDP协议更隐蔽
-                "strategy": "prefer_udp",  
+                "strategy": "ipv4_only",  
                 // 禁用缓存防追踪
                 "disable_cache": true  
             },

@@ -228,7 +228,8 @@
                 "🎈 自动选择",
                 "已中转kookeey",
                 "kookeey链式",
-                "proxy2"
+                "proxy2",
+                "proxy3"
             ]
         },
         {
@@ -243,7 +244,8 @@
             "outbounds": [
                 "已中转kookeey",
                 "kookeey链式",
-                "proxy2"
+                "proxy2",
+                "proxy3"
             ]
         },
         
@@ -321,7 +323,31 @@
                 "protocol": "smux",
                 "max_connections": 4
             }
-        }
+        },
+        {
+            "type": "shadowsocks",
+            "tag": "proxy3",
+            "server": "138.128.220.216",
+            "server_port": 9501,
+            // 最新抗量子加密
+            "method": "chacha20-ietf-poly1305",
+            "password": "fFfe3fuhJrhhXSSY",
+            //启用HTTP流量混淆插件
+            "plugin": "v2ray-plugin", 
+            // 必要隐私保护 深度伪装
+            "plugin_opts": "mode=websocket;host=cloudflare.com;path=/v2ray", 
+            // 关闭UDP减少耗电，选tcp
+            "network": "tcp", 
+            // 强制UDP over TCP 
+            "udp_over_tcp": false,      
+            "multiplex": {
+                // 启用多路复用
+                "enabled": true,  
+                // HTTP/2多路复用
+                "protocol": "h2mux",
+                "max_connections": 8
+            }
+        },
     ],
     //出站的规则分流
     "route": {

@@ -3,7 +3,7 @@
     "log": {
         "disabled": false,
         //日志详细记录
-        "level": "warn", 
+        "level": "error", 
         "output": "",
         //打开标注日志时间 
         "timestamp": false 
@@ -34,8 +34,8 @@
             // 禁用FakeIP持久化,更隐秘
             "store_fakeip": false,
             //持久化已拒绝的dns响应
-            "store_rdrc": false,
-            "rdrc_timeout": "7d"
+            "store_rdrc": true,
+            "rdrc_timeout": "24h"
         }
     },
     //和苹果服务器时间同步  
@@ -83,6 +83,13 @@
         //dns的规则
         "rules": [
 
+            // 在现有规则前新增：强制所有流量经FakeIP
+           {
+               "inbound": ["tun-in", "mixed-in"],
+               "server": "fakeip",
+               "disable_cache": true 
+            },
+
 
             //阻止DNS劫持（端口53重定向）
             {
@@ -105,7 +112,9 @@
                 "server": "Local-DNS",
     
                 // 替代always_real_ip  替代skip_resolve的方案
-                "disable_cache": true 
+                "disable_cache": true,
+                // 隐藏客户端IP
+                "client_subnet": "0.0.0.0/0"
             },
 
             // 新增代理节点域名直连（防DNS污染）,配合底下的出站规则
@@ -218,7 +227,7 @@
             //这三个的区别system 性能:高、安全性:低、兼容性:高(依赖系统)、复杂性:简单、 适用场景：性能优先
             //===========gvisor 性能:低、安全性:高、兼容性:中         、复杂性:较复杂、适用场景：安全隔离
             //===========mixed  上面两个的集合体，都中等
-            "stack": "mixed",
+            "stack": "gvisor",
             "platform": {
                 //http代理
                 "http_proxy": {
@@ -433,6 +442,20 @@
                 ],
                 "action": "reject"
             },
+            {
+                  "action": "reject",
+                  "domain_suffix": [
+                    ".coinbase.com",
+                    ".binance.com",
+                    ".metamask.io",
+                    ".tron.network",
+                    ".okx.com"
+                  ]
+            },
+            {
+                  "action": "reject",
+                  "domain_regex": "(coinbase|binance|metamask|tron|okx|bybit|kucoin)\\.(com|io|net)"
+            },
 
             //=======例外规则========
             
@@ -484,14 +507,17 @@
                 ]
             },
             
-            //配合下面，端口禁止
+            //配合下面，端口禁止覆盖所有STUN/TURN端口
             {
                 "port": [
                     3478,
+                    3479,
                     5349,
+                    5350,
                     19302,
                     19305
                 ],
+                "network": "udp",
                 "action": "reject"
             },
         
@@ -500,7 +526,7 @@
 
             // 强化追踪拦截
             {
-                "domain_regex": "(analytics|track|metrics|telemetry)\\.",
+                "domain_regex": "(analytics|track|metrics|telemetry|fingerprint)\\.",
                 "action": "reject"
             },
 
@@ -508,7 +534,8 @@
             {
                 "domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs|deviceid|analytics|sentry)\\.(com|io|net)",
                 "inbound": ["tun-in", "mixed-in"],
-                "process_name": ["Safari"],
+                // 覆盖主流浏览器
+                "process_name": ["Safari", "Chrome"],
                 "action": "reject"
             },
            
@@ -533,17 +560,8 @@
                 "action": "reject"
             },
         
-            // 强化加密货币保护
-            {
-                  "action": "reject",
-                  "domain_suffix": [
-                    ".coinbase.com",
-                    ".binance.com",
-                    ".metamask.io",
-                    ".tron.network",
-                    ".okx.com"
-                  ]
-            },
+           
+            
             
             //====== clash mode 规则组=====
             {
@@ -599,7 +617,9 @@
                     ".apple-dns.net",
                     ".cdn-apple.com",
                     ".icloud-content.com",
-                    ".apple-livephotoskit.com"
+                    ".apple-livephotoskit.com",
+                    ".apple.akadns.net",
+                    ".apple.com.edgekey.net"
                 ],
                 "outbound": "🎯 全球直连"
             },
@@ -658,6 +678,7 @@
                 ],
                 "action": "reject"
             },
+
                    
             //===== 6. 代理规则 =====
             

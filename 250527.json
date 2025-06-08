@@ -628,7 +628,7 @@
                   "action": "reject",
                   "protocol": [
                         "quic",
-                        "udp/443",  
+                        "udp/443",
                         "udp/80"
                       ]
             },

@@ -179,14 +179,14 @@
         "disable_cache": true, 
         "disable_expire": false,
         "independent_cache": true,
-        
+        //没找到的dns走指定
+        "final": "Remote-DNS"
         "fakeip": {
             "enabled": true,
             "inet4_range": "198.18.0.0/16",
             "inet6_range": "fc00::/18"
         },
-        //没找到的dns走指定
-        "final": "Remote-DNS"
+        
     },
     //进站监控
     "inbounds": [

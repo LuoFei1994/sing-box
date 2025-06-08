@@ -63,12 +63,12 @@
             //"detour": "🎯 全球直连" 
             //},
 
-            //国内加密dns，腾讯，不保证
-            {
-                "tag": "Local-DNS-1",
-                "address": "https://120.53.53.53/dns-query",
-                "detour": "🎯 全球直连"
-            },
+            //国内加密dns，腾讯，不保证，会记录日志
+            //{
+                //"tag": "Local-DNS-1",
+                //"address": "https://120.53.53.53/dns-query",
+                //"detour": "🎯 全球直连"
+            //},
             {
                 "tag": "Remote-DNS",
                 // Quad9的DoT（带恶意软件过滤） 直接使用IP避免二次解析
@@ -97,6 +97,8 @@
                 // 仅使用IPv4 FakeIP
                 "strategy": "ipv4_only"
             },
+
+            //拒绝的DNS
             {
                 "address": "rcode://success",
                 "tag": "block"
@@ -104,11 +106,14 @@
         ],
         //dns的规则
         "rules": [
-            {
-                "action": "route",
-                "server": "Local-DNS",
-                "outbound": "any"
-            },
+
+            //匹配进站（outbound: any）并指向Local-DNS。但实际进站流量（如tun-in和mixed-in）已经被前面的规则处理（resolve和sniff），
+            //所以这条规则可能不必要。而且outbound: any是指任意出站，但DNS查询本身没有出站标签。这条规则可能无效。建议移除。
+            //{
+                //"action": "route",
+                //"server": "Local-DNS",
+                //"outbound": "any"
+            //},
             //====clash mode的规则=====
             {
                 "action": "route",
@@ -128,7 +133,7 @@
                 "rule_set": [
                     "GeoSite-CN"
                 ],
-                "server": "Local-DNS-1"
+                "server": "Local-DNS"
             },
             
             // 非中国域名使用隐私DNS（优先使用Remote-DNS，如果失败则使用Remote-DNS1）
@@ -160,6 +165,13 @@
                 "domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz"],
                 "server": "Local-DNS"
             },
+
+            //配置中已经在路由层reject，所以DNS层面阻止也可以，但可能不是必须（因为reject会返回失败，而DNS返回空可能更快）
+            {
+                "action": "route",
+                "rule_set": ["Tracking", "Tracker", "Category-Ads"],
+                "server": "block"
+            }
             {
                 //"action": "route",
                 //"rule_set": "geosite-geolocation-!cn",
@@ -819,13 +831,13 @@
                 "download_detour": "🎯 全球直连",
                 "update_interval": "48h"
             },
-            // PayPal规则集改为通过代理下载，安全加固
+            // PayPal规则集
             {
                 "tag": "PayPal",
                 "type": "remote",
                 "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/PayPal/PayPal.srs",
                 "format": "binary",
-                "download_detour": "🚀 节点选择", 
+                "download_detour": "🎯 全球直连", 
                 "update_interval": "48h"
             },
             

@@ -765,15 +765,6 @@
         //出站的分流规则集
         "rule_set": [
 
-            //senshinya隐私规则集
-            {
-                "tag": "AntiFingerprinting",
-                "type": "remote",
-                "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Privacy/Privacy.srs",
-                "format": "binary",
-                "download_detour": "🎯 全球直连",
-                "update_interval": "48h"
-            },
 
             //senshinya隐私规则集
             {

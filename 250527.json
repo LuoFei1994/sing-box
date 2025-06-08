@@ -60,7 +60,7 @@
             
             {
                 "tag": "Local-DNS-Resolver",
-                "address": "udp://9.9.9.11:853",
+                "address": "udp://9.9.9.11:853", 
                 "detour": "🚀 节点选择"
             },
             

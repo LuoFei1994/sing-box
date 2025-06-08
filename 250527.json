@@ -82,8 +82,7 @@
             {
                 "address": "fakeip",
                 "tag": "fakeip",
-                / 仅使用IPv4 FakeIP
-                "strategy": "ipv4_only" 
+                "strategy": "prefer_ipv4"
             },
             {
                 "address": "rcode://success",
@@ -108,7 +107,6 @@
                 "clash_mode": "global",
                 "server": "Remote-DNS"
             },
-
             
             // 中国域名使用国内DNS
             {

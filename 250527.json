@@ -35,7 +35,8 @@
             "store_fakeip": false,
             //持久化已拒绝的dns响应
             "store_rdrc": true,
-            "rdrc_timeout": "24h"
+            // 缩短拒绝缓存时间
+            "rdrc_timeout": "12h"
         }
     },
     //和苹果服务器时间同步  
@@ -349,7 +350,9 @@
                 // 启用多路复用
                 "enabled": true,      
                 "protocol": "h2mux",
-                "max_connections": 8
+                "max_connections": 8,
+                // 新增流量填充防分析
+                "padding": true  
             }
         },
         {
@@ -530,8 +533,15 @@
                 "domain_regex": "(analytics|track|metrics|telemetry|fingerprint)\\.",
                 "action": "reject"
             },
+            
+            //隐私服务拦截,阻止隐私服务探测
+            {
+                "domain_regex": "(privacy|vpn|proxy|anonym)\\.(com|net|io|org)",
+                "action": "reject",
+            },
 
              // 新增浏览器指纹保护
+            
             {
                 "domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs|deviceid|analytics|sentry)\\.(com|io|net)",
                 "inbound": ["tun-in", "mixed-in"],
@@ -546,10 +556,12 @@
                   "action": "reject",
                   "domain_suffix": [
                     "safari-tracker.com",
-                    "apple-analytics.com"
+                    "apple-analytics.com",
+                    ".advertising.apple.com",
+                    ".metrics.apple.com"
                   ],
                   // 仅针对Safari生效
-                  "process_name": ["Safari"]  
+                  "process_name": ["Safari", "MobileSafari"]
             },
         
             //加强追踪阻止
@@ -560,6 +572,44 @@
                 ],
                 "action": "reject"
             },
+
+            {
+                "protocol": ["fingerprint", "device_id"],
+                "action": "reject"
+            },
+            {
+                "domain_keyword": ["canvas_fingerprint", "webgl_fingerprint"],
+                "action": "reject"
+            },
+
+            // ===== 3. 补充防护（低优先级）=====
+            {
+                "rule_set": [
+                    "Category-Ads"
+                ],
+                "action": "reject"
+            },
+
+            //拦截dns的广告
+            {
+                "rule_set": [
+                    "BlockHttpDNS"
+                ],
+                "action": "reject"
+            },
+            
+            
+            
+            // 添加隐私保护规则（置于广告规则后）
+            {
+                "rule_set": [
+                    "Tracking",
+                    "Tracker",
+                    "Privacy"
+                ],
+                "action": "reject"
+            },
+
         
            
             
@@ -576,7 +626,7 @@
                 "outbound": "GLOBAL"
             },
             
-            // ===== 3. 基础分流规则 =====
+            // ===== 4. 基础分流规则 =====
             {
                 "ip_cidr": [
                     "10.0.0.0/8",
@@ -607,7 +657,7 @@
 
 
 
-            // ===== 4. 特殊服务直连 =====
+            // ===== 5. 特殊服务直连 =====
             {
                 "domain_suffix": [
                     ".apple.com",
@@ -652,34 +702,7 @@
                 "outbound": "🎯 全球直连"
             },
 
-            // ===== 5. 补充防护（低优先级）=====
-            {
-                "rule_set": [
-                    "Category-Ads"
-                ],
-                "action": "reject"
-            },
-
-            //拦截dns的广告
-            {
-                "rule_set": [
-                    "BlockHttpDNS"
-                ],
-                "action": "reject"
-            },
             
-            
-            
-            // 添加隐私保护规则（置于广告规则后）
-            {
-                "rule_set": [
-                    "Tracking",
-                    "Tracker",
-                    "Privacy"
-                ],
-                "action": "reject"
-            },
-
                    
             //===== 6. 代理规则 =====
             

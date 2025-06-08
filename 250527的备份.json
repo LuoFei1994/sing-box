@@ -61,18 +61,11 @@
             //},
             {
                 "tag": "Remote-DNS",
-                //"address": "tls://9.9.9.11:853",  // Quad9的DoT（带恶意软件过滤）
-                "address": "tls://dns11.quad9.net",
-                //用tls解析这个域名
-                "address_resolver": "Remote-Resolver-DNS", 
+                // Quad9的DoT（带恶意软件过滤） 直接使用IP避免二次解析
+                "address": "tls://9.9.9.11:853",  
                 "detour": "🚀 节点选择"
             },
-            {
-                "tag": "Remote-Resolver-DNS",
-                // Quad9的DoT（带恶意软件过滤）
-                "address": "tls://9.9.9.11:853",
-                "detour": "🚀 节点选择"
-            },
+            
             //{
             //"tag": "Remote-DNS1",
             //"address": "https://1.1.1.1/dns-query", // 使用Cloudflare的DoH
@@ -122,13 +115,7 @@
                 ],
                 "server": "Local-DNS"
             },
-            {
-                "action": "route",
-                "rule_set": [
-                    "geosite-geolocation-cn"
-                ],
-                "server": "Local-DNS"
-            },
+            
             // 非中国域名使用隐私DNS（优先使用Remote-DNS，如果失败则使用Remote-DNS1）
             {
                 "action": "route",
@@ -202,12 +189,12 @@
             "mtu": 1400, 
             "auto_route": true,
             //改false的话可以禁用TUN严格路由（解决部分WiFi断流）
-            "strict_route": true, 
+            "strict_route": false, 
             "sniff": true,
             // 提升NAT兼容性
             "endpoint_independent_nat": false, 
             // 避免IPv6泄露
-            "domain_strategy": "ipv4_only", 
+            "domain_strategy": "prefer_ipv4", 
             //mixed、system、gvisor   
             //这三个的区别system 性能:高、安全性:低、兼容性:高(依赖系统)、复杂性:简单、 适用场景：性能优先
             //===========gvisor 性能:低、安全性:高、兼容性:中         、复杂性:较复杂、适用场景：安全隔离
@@ -241,7 +228,8 @@
                 "🎈 自动选择",
                 "已中转kookeey",
                 "kookeey链式",
-                "proxy2"
+                "proxy2",
+                "proxy3"
             ]
         },
         {
@@ -256,7 +244,8 @@
             "outbounds": [
                 "已中转kookeey",
                 "kookeey链式",
-                "proxy2"
+                "proxy2",
+                "proxy3"
             ]
         },
         
@@ -328,8 +317,37 @@
             "network": "udp", 
             // 强制UDP over TCP 
             "udp_over_tcp": true,      
-            "multiplex": {}
-        }
+            "multiplex": {
+                // 启用多路复用
+                "enabled": true,      
+                "protocol": "smux",
+                "max_connections": 4
+            }
+        },
+        {
+            "type": "shadowsocks",
+            "tag": "proxy3",
+            "server": "138.128.220.216",
+            "server_port": 9501,
+            // 最新抗量子加密
+            "method": "chacha20-ietf-poly1305",
+            "password": "fFfe3fuhJrhhXSSY",
+            //启用HTTP流量混淆插件
+            "plugin": "v2ray-plugin", 
+            // 必要隐私保护 深度伪装
+            "plugin_opts": "mode=websocket;host=cloudflare.com;path=/v2ray", 
+            // 关闭UDP减少耗电，选tcp
+            "network": "tcp", 
+            // 强制UDP over TCP 
+            "udp_over_tcp": false,      
+            "multiplex": {
+                // 启用多路复用
+                "enabled": true,  
+                // HTTP/2多路复用
+                "protocol": "h2mux",
+                "max_connections": 8
+            }
+        },
     ],
     //出站的规则分流
     "route": {
@@ -383,145 +401,7 @@
             },
             
 
-            // =======拒绝的规则组=======
-            // 新增隐私保护域关键词拦截
-            {
-                "domain_keyword": [
-                    "stun:",
-                    "turn:",
-                    "webrtc",
-                    "quic"
-                ],
-                "action": "reject"
-            },
-
-            //配合上面，端口禁止
-            {
-                "port": [
-                    3478,
-                    5349,
-                    19302,
-                    19305
-                ],
-                "action": "reject"
-            },
-
-            // 新增隐私敏感协议拦截,拦截加密货币和Tor流量
-            {
-                "protocol": [
-                    "ftp",
-                    "telnet",
-                    "smtp",
-                    "bitcoin",
-                    "tor",
-                    "bittorrent",
-                    "bitcoin"
-                ],
-                "action": "reject"
-            },
-
-            // 阻止未加密QUIC协议
-            {
-                "action": "reject",
-                "protocol": [
-                    "quic"
-                ]
-            },
-            // 阻止UDP潜在泄露 拦截UDP/443流量
-            {
-                "type": "logical",
-                "mode": "or",
-                "rules": [
-                    // 拦截QUIC常用端口
-                    {
-                        "port": [
-                            443,
-                            80
-                        ],
-                        "network": "udp"
-                    }, 
-                    // 补充拦截QUIC协议
-                    {
-                        "protocol": "quic"
-                    } 
-                ],
-                "action": "reject"
-            },
-
-            //配合上面的规则，可能影响部分使用UDP/443的合法服务（如WebRTC），建议通过domain白名单排除：
-            {
-                "domain": [
-                    "zoom.us",
-                    "discord.com"
-                ],
-                "port": 443,
-                "network": "udp",
-                "outbound": "🎯 全球直连"
-            },
-            // 例外放行443和80端口的Apple服务
-            {
-                "domain": [
-                    "*.apple.com",
-                    "*.icloud.com"
-                ],
-                "network": "udp",
-                "outbound": "🎯 全球直连"
-            },
-
-            // 增强WebRTC阻止
-            {
-                "domain_regex": "^(stun|turn|webrtc)\\.",
-                "action": "reject"
-            },
-
-            // 强化追踪拦截
-            {
-                "domain_regex": "(analytics|track|metrics|telemetry)\\.",
-                "action": "reject"
-            },
-
-             // 新增浏览器指纹保护
-            {
-                "domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs)\\.(com|io)",
-                "action": "reject"
-            },
-
-            //加强追踪阻止
-            {
-                "domain_keyword": [
-                    "analytics",
-                    "tracking"
-                ],
-                "action": "reject"
-            },
             
-
-            //去广告
-            {
-                "rule_set": [
-                    "Category-Ads"
-                ],
-                "action": "reject"
-            },
-
-            //拦截dns的广告
-            {
-                "rule_set": [
-                    "BlockHttpDNS"
-                ],
-                "action": "reject"
-            },
-            
-            
-            
-            // 添加隐私保护规则（置于广告规则后）
-            {
-                "rule_set": [
-                    "Tracking",
-                    "Tracker"
-                ],
-                "action": "reject"
-            },
             
             // ===== 直连的规则组 =====
             {
@@ -573,11 +453,9 @@
             {
                 "action": "route",
                 "rule_set": [
-                    "GeoSite-Private",
                     "GeoSite-CN",
-                    "GeoIP-Private",
                     "geoip-cn",
-                    "geosite-geolocation-cn",
+                    "iOS-Services",
                     "PayPal"
                 ],
                 "outbound": "🎯 全球直连"
@@ -638,8 +516,155 @@
                     "Telegram"
                 ],
                 "outbound": "🚀 节点选择"
+            },
+
+            //=======例外规则========
+            
+            //配合上面的规则，可能影响部分使用UDP/443的合法服务（如WebRTC），建议通过domain白名单排除：
+            {
+                "domain": [
+                    "zoom.us",
+                    "discord.com"
+                ],
+                "port": 443,
+                "network": "udp",
+                "outbound": "🎯 全球直连"
+            },
+            // 例外放行443和80端口的Apple服务
+            {
+                "domain": [
+                    "*.apple.com",
+                    "*.icloud.com"
+                ],
+                "network": "udp",
+                "outbound": "🎯 全球直连"
+            },
+
+            
+            // =======拒绝的规则组=======
+            // 新增隐私保护域关键词拦截
+            {
+                "domain_keyword": [
+                    "stun:",
+                    "turn:",
+                    "webrtc",
+                    "quic"
+                ],
+                "action": "reject"
+            },
+
+            //配合上面，端口禁止
+            {
+                "port": [
+                    3478,
+                    5349,
+                    19302,
+                    19305
+                ],
+                "action": "reject"
+            },
+
+            // 新增隐私敏感协议拦截,拦截加密货币和Tor流量
+            {
+                "protocol": [
+                    "ftp",
+                    "telnet",
+                    "smtp",
+                    "tor",
+                    "bittorrent",
+                    "bitcoin"
+                ],
+                "action": "reject"
+            },
+
+            // 阻止未加密QUIC协议
+            {
+                "action": "reject",
+                "protocol": [
+                    "quic"
+                ]
+            },
+            // 阻止UDP潜在泄露 拦截UDP/443流量
+            {
+                "type": "logical",
+                "mode": "or",
+                "rules": [
+                    // 拦截QUIC常用端口
+                    {
+                        "port": [
+                            443,
+                            80
+                        ],
+                        "network": "udp"
+                    }, 
+                    // 补充拦截QUIC协议
+                    {
+                        "protocol": "quic"
+                    } 
+                ],
+                "action": "reject"
+            },
+
+            
+
+            // 增强WebRTC阻止
+            {
+                "domain_regex": "^(stun|turn|webrtc)\\.",
+                "action": "reject"
+            },
+
+            // 强化追踪拦截
+            {
+                "domain_regex": "(analytics|track|metrics|telemetry)\\.",
+                "action": "reject"
+            },
+
+             // 新增浏览器指纹保护
+            {
+                "domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs)\\.(com|io)",
+                "action": "reject"
+            },
+
+            //加强追踪阻止
+            {
+                "domain_keyword": [
+                    "analytics",
+                    "tracking"
+                ],
+                "action": "reject"
+            },
+            
+
+            //去广告
+            {
+                "rule_set": [
+                    "Category-Ads"
+                ],
+                "action": "reject"
+            },
+
+            //拦截dns的广告
+            {
+                "rule_set": [
+                    "BlockHttpDNS"
+                ],
+                "action": "reject"
+            },
+            
+            
+            
+            // 添加隐私保护规则（置于广告规则后）
+            {
+                "rule_set": [
+                    "Tracking",
+                    "Tracker"
+                ],
+                "action": "reject"
             }
         ],
+
+
+        
         //出站的分流规则集
         "rule_set": [
             //油管规则集
@@ -696,24 +721,8 @@
                 "download_detour": "🎯 全球直连",
                 "update_interval": "48h"
             },
-            //中国地址
-            {
-                "tag": "GeoIP-Private",
-                "type": "remote",
-                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/private.srs",
-                "format": "binary",
-                "download_detour": "🎯 全球直连",
-                "update_interval": "48h"
-            },
-            //中国地址
-            {
-                "tag": "GeoSite-Private",
-                "type": "remote",
-                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/private.srs",
-                "format": "binary",
-                "download_detour": "🎯 全球直连",
-                "update_interval": "48h"
-            },
+            
+           
             //中国地址
             {
                 "tag": "GeoSite-CN",
@@ -732,15 +741,7 @@
                 "download_detour": "🎯 全球直连",
                 "update_interval": "48h"
             },
-            //中国地址
-            {
-                "tag": "geosite-geolocation-cn",
-                "type": "remote",
-                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-cn.srs",
-                "format": "binary",
-                "download_detour": "🎯 全球直连",
-                "update_interval": "48h"
-            },
+            
             //非中国地址
             {
                 "tag": "geosite-geolocation-!cn",
@@ -815,6 +816,13 @@
                 "format": "binary",
                 "download_detour": "🚀 节点选择",
                 "update_interval": "48h"
+            },
+            {
+              "tag": "iOS-Services",
+              "type": "remote",
+              "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/apple.srs",
+              "format": "binary",
+              "download_detour": "🎯 全球直连"
             }
         ],
         //自动检测出站接口

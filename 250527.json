@@ -507,109 +507,6 @@
 
 
          // =====拦截规则（隐私防护、广告、加密货币等）=====
-            //1，精确域名匹配 (domain)
-
-
-            //2，域名后缀匹配 (domain_suffix)
-            // 隐私敏感协议拦截,拦截加密货币和Tor流量
-            {
-                  "action": "reject",
-                  "domain_suffix": [
-                    ".coinbase.com",
-                    ".binance.com",
-                    ".metamask.io",
-                    ".tron.network",
-                    ".okx.com"
-                  ]
-            },
-
-            //指纹拦截
-            {
-                  "action": "reject",
-                  "domain_suffix": [
-                    "safari-tracker.com",
-                    "apple-analytics.com",
-                    ".advertising.apple.com",
-                    ".metrics.apple.com"
-                  ],
-                  // 仅针对Safari生效
-                  "process_name": ["Safari", "MobileSafari"]
-            },
-
-            //3，正则表达式匹配 (domain_regex)
-            // 隐私敏感协议拦截,拦截加密货币和Tor流量
-            {
-                  "action": "reject",
-                  "domain_regex": "(coinbase|binance|metamask|tron|okx|bybit|kucoin)\\.(com|io|net)"
-            },
-
-            // WebRTC泄露防护
-            {
-                "domain_regex": "^(stun|turn|webrtc)\\.",
-                "action": "reject"
-            },
-
-            // 强化追踪拦截
-            {
-                "domain_regex": "(^(analytics|track|metrics|telemetry|fingerprint)\\.\\w+\\.com$)",
-                "action": "reject"
-            },
-            
-            //隐私服务拦截,阻止隐私服务探测
-            {
-                "domain_regex": "(privacy|vpn|proxy|anonym)\\.(com|net|io|org)",
-                "action": "reject",
-            },
-
-            //指纹拦截
-            {
-                "domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs|deviceid|analytics|sentry)\\.(com|io|net)",
-                "inbound": ["tun-in", "mixed-in"],
-                // 覆盖主流浏览器
-                "process_name": ["Safari", "Chrome", "Firefox"],
-                "action": "reject"
-            },
-
-            
-            //2-1，域名关键词匹配,加强追踪阻止
-            {
-                "domain_keyword": [
-                    "analytics",
-                    "tracking"
-                ],
-                "action": "reject"
-            },
-
-            //指纹拦截
-            {
-                "domain_keyword": ["canvas_fingerprint", "webgl_fingerprint"],
-                "action": "reject"
-            },
-
-
-            //4，IP CIDR 匹配 (ip_cidr)
-            // 隐私敏感协议拦截,拦截加密货币和Tor流量
-            {
-              "action": "reject",
-              "ip_cidr": [
-                    // Tor出口节点
-                    "176.10.104.240/28",
-                    "179.43.128.0/24",
-                    "185.220.101.0/24",
-                    "178.16.208.56/29",
-                    "192.42.116.16/28"
-                ]
-            },
-            
-            //5，规则集匹配 (rule_set)
-            // 隐私敏感协议拦截,拦截加密货币和Tor流量
-            {
-                "rule_set": [
-                    "Crypto"
-                ],
-                "action": "reject"
-            },
-
             //拦截的广告
             {
                 "rule_set": [
@@ -625,31 +522,32 @@
                 ],
                 "action": "reject"
             },
-            
-            
-            
+
             //拦截隐私的广告
+            {
+                "rule_set": [
+                    "Privacy",
+                    "PrivacyEnhanced"
+                ],
+                "action": "reject"
+            },
+            //拦截追踪的广告
             {
                 "rule_set": [
                     "Tracking",
                     "Tracker",
-                    "Privacy"
-                ],
-                "action": "reject"
-            },
-
-            //拦截隐私的广告
-            {
-                "rule_set": [
-                    "PrivacyEnhanced",
                     "PrivateTracker"
                 ],
                 "action": "reject"
             },
+            //隐私服务拦截,补充上面广告
+            {
+                "domain_regex": "(privacy|vpn|proxy|anonym)\\.(com|net|io|org)",
+                "action": "reject",
+            },
             
 
-            
-            //6，协议/端口匹配
+
             // 隐私敏感协议拦截,拦截加密货币和Tor流量
             {
                 "protocol": [
@@ -662,38 +560,58 @@
                 ],
                 "action": "reject"
             },
-
-            //WebRTC泄露防护
+            // 隐私敏感协议拦截,拦截加密货币和Tor流量
             {
               "action": "reject",
-              "protocol": ["stun", "turn"],
-              "network": "udp"
-            },
-            
-            // 阻止未加密QUIC协议
-            {
-                "action": "reject",
-                "protocol": [
-                    "quic"
+              "ip_cidr": [
+                    // Tor出口节点
+                    "176.10.104.240/28",
+                    "179.43.128.0/24",
+                    "185.220.101.0/24",
+                    "178.16.208.56/29",
+                    "192.42.116.16/28"
                 ]
             },
-
-            //指纹拦截
+            // 隐私敏感协议拦截,拦截加密货币和Tor流量
             {
-                "protocol": ["fingerprint", "device_id"],
+                "rule_set": [
+                    "Crypto"
+                ],
                 "action": "reject"
             },
-
-            // 全端口UDP拦截
+            // 隐私敏感协议拦截,拦截加密货币和Tor流量
             {
-              "network": "udp",
-              "port": [443, 80],
-              "action": "reject"
+                  "action": "reject",
+                  "domain_suffix": [
+                    ".coinbase.com",
+                    ".binance.com",
+                    ".metamask.io",
+                    ".tron.network",
+                    ".okx.com"
+                  ]
             },
-
-             //配合下面，端口禁止覆盖所有STUN/TURN端口
+            // 隐私敏感协议拦截,拦截加密货币和Tor流量
+            {
+                  "action": "reject",
+                  "domain_regex": "(coinbase|binance|metamask|tron|okx|bybit|kucoin)\\.(com|io|net)"
+            },
+            
+            //WebRTC协议泄露防护
+            {
+              "action": "reject",
+              "protocol": [
+                  "stun",
+                  "turn",
+                  "quic",
+                  "webrtc"
+              ],
+              "network": "udp"
+            },
+             //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口
             {
                 "port": [
+                    80,
+                    443,
                     3478,
                     3479,
                     5349,
@@ -704,6 +622,55 @@
                 "network": "udp",
                 "action": "reject"
             },
+            // WebRTC泄露防护
+            {
+                "domain_regex": "^(stun|turn|webrtc)\\.",
+                "action": "reject"
+            },
+
+
+            
+            //指纹拦截
+            {
+                "protocol": ["fingerprint", "device_id"],
+                "action": "reject"
+            },
+            //指纹拦截
+            {
+                  "action": "reject",
+                  "domain_suffix": [
+                    "safari-tracker.com",
+                    "apple-analytics.com",
+                    ".advertising.apple.com",
+                    ".metrics.apple.com"
+                  ],
+                  // 仅针对Safari生效
+                  "process_name": ["Safari", "MobileSafari"]
+            },
+            //指纹拦截
+            {
+                "domain_keyword": [
+                    "canvas_fingerprint",
+                    "webgl_fingerprint",
+                    "analytics",
+                    "tracking"
+                ],
+                "action": "reject"
+            },
+            //指纹拦截
+            {
+                "domain_regex": "(^(analytics|track|metrics|telemetry|fingerprint)\\.\\w+\\.com$)",
+                "action": "reject"
+            },
+        
+            //指纹拦截
+            {
+                "domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs|deviceid|analytics|sentry)\\.(com|io|net)",
+                // 覆盖主流浏览器
+                //"process_name": ["Safari", "Chrome", "Firefox"],
+                "action": "reject"
+            },
+
 
 
         //====== clash mode 规则组=====

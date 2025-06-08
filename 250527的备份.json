@@ -66,22 +66,25 @@
                 "detour": "🚀 节点选择"
             },
             
-            //{
-            //"tag": "Remote-DNS1",
-            //"address": "https://1.1.1.1/dns-query", // 使用Cloudflare的DoH
-            //"detour": "🚀 节点选择"
-            //},
+            {
+                "tag": "Remote-DNS1",
+                // 使用Cloudflare的DoH
+                "address": "https://1.1.1.1/dns-query", 
+                "detour": "🚀 节点选择"
+            },
             // 新增加密DNS兜底
             //{
             //"tag": "Remote-DNS2",
             //"address": "https://doh.opendns.com/dns-query",
             //"address_resolver": "Local-DNS-Resolver",  
-            //"detour": "🚀🚀 节点选择"
+            //"detour": "🚀 节点选择"
             //},
             //fakeip的设置
             {
                 "address": "fakeip",
-                "tag": "fakeip"
+                "tag": "fakeip",
+                // 仅使用IPv4 FakeIP
+                "strategy": "prefer_ipv4"
             },
             {
                 "address": "rcode://success",
@@ -106,6 +109,7 @@
                 "clash_mode": "global",
                 "server": "Remote-DNS"
             },
+
             
             // 中国域名使用国内DNS
             {
@@ -124,7 +128,7 @@
                 ],
                 "server": "Remote-DNS"
             },
-            // 苹果服务特殊处理
+            // 苹果服务特殊处理,使用专门服务器
             {
                 "domain_suffix": [
                     ".apple.com",
@@ -132,7 +136,7 @@
                     ".mzstatic.com",
                     ".apple-cloudkit.com"
                 ],
-                "server": "Local-DNS",
+                "server": "Remote-DNS1",
                 // 替代always_real_ip 
                 "disable_cache": true 
             },
@@ -307,7 +311,7 @@
             "tag": "proxy2",
             "server": "c50s2.portablesubmarines.com",
             "server_port": 7395,
-            "method": "chacha20-ietf-poly1305",
+            "method": "aes-256-gcm",
             "password": "kQBeCDXbwoSW2wVC",
             //启用HTTP流量混淆插件
             "plugin": "", 
@@ -329,8 +333,8 @@
             "tag": "proxy3",
             "server": "138.128.220.216",
             "server_port": 9501,
-            // 最新抗量子加密
-            "method": "chacha20-ietf-poly1305",
+            // 最新抗量子加密chacha20-ietf-poly1305
+            "method": "aes-256-gcm",
             "password": "fFfe3fuhJrhhXSSY",
             //启用HTTP流量混淆插件
             "plugin": "v2ray-plugin", 

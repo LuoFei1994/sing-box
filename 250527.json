@@ -385,28 +385,6 @@
         "rules": [
             
             // ===== 1. 关键进站处理 =====
-            
-             {
-                "ip_is_private": true,
-                "action": "route",
-                "outbound": "🎯 全球直连"
-            },
-
-            //拦截dns
-            {
-                "type": "logical",
-                "mode": "or",
-                "rules": [
-                    {
-                        "port": 53
-                    },
-                    {
-                        "protocol": "dns"
-                    }
-                ],
-                "action": "hijack-dns"
-            },
-            
             //嗅探
             {    
                 "action": "sniff", 
@@ -424,7 +402,20 @@
                 "action": "resolve",
                 "strategy": "prefer_ipv4"
             },
-            
+            //拦截dns
+            {
+                "type": "logical",
+                "mode": "or",
+                "rules": [
+                    {
+                        "port": 53
+                    },
+                    {
+                        "protocol": "dns"
+                    }
+                ],
+                "action": "hijack-dns"
+            },
             
             
             
@@ -663,6 +654,12 @@
                 ],
                 "action": "direct"
             },
+            {
+                "ip_is_private": true,
+                "action": "route",
+                "outbound": "🎯 全球直连"
+            },
+
            
 
             //中国网点走直连的规则

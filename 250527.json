@@ -109,6 +109,12 @@
                 "server": "Remote-DNS"
             },
 
+            {
+                "action": "route",
+                "server": "Remote-DNS",
+                "disable_cache": true
+            },
+
 
             {
                "domain_suffix": [".apple.com", ".icloud.com"],

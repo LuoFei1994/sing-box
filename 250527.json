@@ -51,16 +51,10 @@
     //以下是dns服务和规则设置
     "dns": {
         "servers": [
-            {
-                "tag": "Local-DNS",
-                "address": "https://dns.quad9.net/dns-query",
-                "address_resolver": "Local-DNS-Resolver",
-                "detour": "🚀 节点选择"
-            },
             
             {
-                "tag": "Local-DNS-Resolver",
-                "address": "udp://9.9.9.11:853", 
+                "tag": "Local-DNS",
+                "address": "tls://9.9.9.11:853", 
                 "detour": "🚀 节点选择"
             },
             

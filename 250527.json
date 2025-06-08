@@ -328,8 +328,6 @@
             "network": "udp", 
             // 强制UDP over TCP 
             "udp_over_tcp": true,
-            // TCP Fast Open加速
-            "tfo": true,
             "multiplex": {
                 // 启用多路复用
                 "enabled": true,      
@@ -353,8 +351,6 @@
             "network": "udp", 
             // 强制UDP over TCP 
             "udp_over_tcp": true,
-            // TCP Fast Open加速
-            "tfo": true,
             "multiplex": {
                 // 启用多路复用
                 "enabled": true,  

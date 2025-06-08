@@ -63,11 +63,7 @@
                 "tag": "Remote-DNS",
                 // Quad9的DoT（带恶意软件过滤） 直接使用IP避免二次解析
                 "address": "tls://9.9.9.11:853",  
-                "detour": "🚀 节点选择",
-                // UDP协议更隐蔽
-                "strategy": "ipv4_only" 
-                
-                
+                "detour": "🚀 节点选择"
             },
             
             //{
@@ -110,9 +106,7 @@
                 "clash_mode": "global",
                 "server": "Remote-DNS"
             },
-
             
-
             // 中国域名使用国内DNS
             {
                 "action": "route",
@@ -313,7 +307,7 @@
             "tag": "proxy2",
             "server": "c50s2.portablesubmarines.com",
             "server_port": 7395,
-            "method": "aes-256-gcm",
+            "method": "chacha20-ietf-poly1305",
             "password": "kQBeCDXbwoSW2wVC",
             //启用HTTP流量混淆插件
             "plugin": "", 
@@ -333,19 +327,19 @@
         {
             "type": "shadowsocks",
             "tag": "proxy3",
-            "server": "c62s2.portablesubmarines.com",
+            "server": "138.128.220.216",
             "server_port": 9501,
-            // 最新抗量子加密chacha20-ietf-poly1305
-            "method": "aes-256-gcm",
+            // 最新抗量子加密
+            "method": "chacha20-ietf-poly1305",
             "password": "fFfe3fuhJrhhXSSY",
             //启用HTTP流量混淆插件
             "plugin": "v2ray-plugin", 
             // 必要隐私保护 深度伪装
             "plugin_opts": "mode=websocket;host=cloudflare.com;path=/v2ray", 
             // 关闭UDP减少耗电，选tcp
-            "network": "udp", 
+            "network": "tcp", 
             // 强制UDP over TCP 
-            "udp_over_tcp": true,      
+            "udp_over_tcp": false,      
             "multiplex": {
                 // 启用多路复用
                 "enabled": true,  

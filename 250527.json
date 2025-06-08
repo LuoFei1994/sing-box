@@ -303,25 +303,6 @@
             "version": "5"
         },
         {
-            "type": "socks",
-            "tag": "kookeey链式",
-            "server": "204.242.254.64",
-            "server_port": 31012,
-            "detour": "proxy2",
-            "username": "5258f8e2",
-            "password": "56864eaa",
-            "version": "5"
-        },
-        //{
-        //"type": "vmess",
-        //"tag": "proxy2",
-        //"server": "c50s2.portablesubmarines.com",
-        //"server_port": 19868,
-        //"uuid": "30a5efe1-3235-4b93-a8ee-71b1d1834c5b",
-        //"security": "auto",
-        //"alter_id": 0
-        //}
-        {
             "type": "shadowsocks",
             "tag": "proxy2",
             "server": "c50s2.portablesubmarines.com",
@@ -368,7 +349,27 @@
                 "protocol": "h2mux",
                 "max_connections": 8
             }
+        },
+        {
+            "type": "socks",
+            "tag": "kookeey链式",
+            "server": "204.242.254.64",
+            "server_port": 31012,
+            "detour": "proxy2",
+            "username": "5258f8e2",
+            "password": "56864eaa",
+            "version": "5"
         }
+        //{
+        //"type": "vmess",
+        //"tag": "proxy2",
+        //"server": "c50s2.portablesubmarines.com",
+        //"server_port": 19868,
+        //"uuid": "30a5efe1-3235-4b93-a8ee-71b1d1834c5b",
+        //"security": "auto",
+        //"alter_id": 0
+        //}
+        
     ],
     //出站的规则分流
     "route": {
@@ -414,16 +415,6 @@
                 "ip_is_private": true,
                 "action": "route",
                 "outbound": "🎯 全球直连"
-            },
-            {
-                "ip_cidr": [
-                    "10.0.0.0/8",
-                    "172.16.0.0/12",
-                    "192.168.0.0/16",
-                    "198.18.0.0/15",
-                    "fc00::/7"
-                ],
-                "action": "direct"
             },
             
 

@@ -499,7 +499,28 @@
                 ],
                 "outbound": "🎯 全球直连"
             },
-
+        // =====放行代理的域名，quic协议的=======
+            {
+                "domain": [
+                    "google.com",
+                    "youtube.com",
+                    "googlevideo.com",
+                    "cloudflare.com",
+                    "cloudflare-dns.com",
+                    "facebook.com", 
+                    "whatsapp.com",
+                    "netflix.com", 
+                    "spotify.com",
+                    "tiktok.com", 
+                    "telegram.com",
+                    "instagram.com", 
+                    "x.com",
+                    "snapchat.com",
+                    "messenger.com"
+                ],
+                "protocol": ["quic"],
+                "outbound": "🚀 节点选择"
+            },
 
          // =====拦截规则（隐私防护、广告、加密货币等）=====
             //拦截的广告

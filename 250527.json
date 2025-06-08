@@ -311,7 +311,7 @@
             "tag": "proxy2",
             "server": "c50s2.portablesubmarines.com",
             "server_port": 7395,
-            "method": "chacha20-ietf-poly1305",
+            "method": "aes-256-gcm",
             "password": "kQBeCDXbwoSW2wVC",
             //启用HTTP流量混淆插件
             "plugin": "", 
@@ -333,8 +333,8 @@
             "tag": "proxy3",
             "server": "138.128.220.216",
             "server_port": 9501,
-            // 最新抗量子加密
-            "method": "chacha20-ietf-poly1305",
+            // 最新抗量子加密chacha20-ietf-poly1305
+            "method": "aes-256-gcm",
             "password": "fFfe3fuhJrhhXSSY",
             //启用HTTP流量混淆插件
             "plugin": "v2ray-plugin", 

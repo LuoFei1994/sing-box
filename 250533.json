@@ -135,10 +135,10 @@
             },
 
             // 2. 隐私防护规则
-            {
-                "domain_keyword": ["stun", "turn", "webrtc","quic"],
-                "server": "block"
-            },
+            //{
+                //"domain_keyword": ["stun", "turn", "webrtc","quic"],
+                //"server": "block"
+            //},
             
             
             
@@ -661,10 +661,10 @@
                     //]
             //},
             // WebRTC泄露防护
-            {
-                "domain_regex": "^(stun|turn|webrtc)\\.",
-                "action": "reject"
-            },
+            //{
+                //"domain_regex": "^(stun|turn|webrtc)\\.",
+                //"action": "reject"
+            //},
 
 
             

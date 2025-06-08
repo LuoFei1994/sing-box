@@ -649,7 +649,7 @@
                     {"port": [80,443,3478,3479,5349,5350,19302,19305],"network": "udp"},
                     {"port": [80,443,3478,3479,5349,5350,19302,19305],"network": "tcp"}
                   ],
-                  "action": "reject"
+                  "action": "reject",
                   // 排除这些域名
                   "invert": true,  
                   "domain": [

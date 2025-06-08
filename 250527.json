@@ -57,12 +57,7 @@
                 //"address_resolver": "Local-DNS-Resolver",
                 "detour": "🎯 全球直连"
             },
-            //{
-            //"tag": "Local-DNS-Resolver",
-            //"address": "udp://223.5.5.5:53",
-            //"detour": "🎯 全球直连" 
-            //},
-
+            
   
             {
                 "tag": "Remote-DNS",
@@ -71,20 +66,7 @@
                 "detour": "🚀 节点选择"
             
             },
-            
-            {
-                "tag": "Remote-DNS-1",
-                // 使用Cloudflare的DoH
-                "address": "https://1.1.1.1/dns-query", 
-                "detour": "🚀 节点选择"
-            },
-            // 新增加密DNS兜底
-            //{
-            //"tag": "Remote-DNS2",
-            //"address": "https://doh.opendns.com/dns-query",
-            //"address_resolver": "Local-DNS-Resolver",  
-            //"detour": "🚀 节点选择"
-            //},
+        
             //fakeip的设置
             {
                 "address": "fakeip",
@@ -135,7 +117,7 @@
 
             // 2. 隐私防护规则
             {
-                "domain_keyword": ["stun:", "turn:", "webrtc"],
+                "domain_keyword": ["stun:", "turn:", "webrtc","quic"],
                 "server": "block"
             },
             {
@@ -145,7 +127,6 @@
 
             //配置中已经在路由层reject，所以DNS层面阻止也可以，但可能不是必须（因为reject会返回失败，而DNS返回空可能更快）
             {
-                "action": "route",
                 "rule_set": ["Tracking", "Tracker", "Category-Ads"],
                 "server": "block"
             },
@@ -354,7 +335,7 @@
             // 关闭UDP减少耗电，选tcp
             "network": "udp", 
             // 强制UDP over TCP 
-            "udp_over_tcp": true,
+            "udp_over_tcp": false,
             "multiplex": {
                 // 启用多路复用
                 "enabled": true,      
@@ -377,7 +358,7 @@
             // 关闭UDP减少耗电，选tcp
             "network": "udp", 
             // 强制UDP over TCP 
-            "udp_over_tcp": true,
+            "udp_over_tcp": false,
             "multiplex": {
                 // 启用多路复用
                 "enabled": true,  
@@ -426,17 +407,7 @@
             },
             
             
-            //====== clash mode 规则组=====
-            {
-                "action": "route",
-                "clash_mode": "direct",
-                "outbound": "🎯 全球直连"
-            },
-            {
-                "action": "route",
-                "clash_mode": "global",
-                "outbound": "GLOBAL"
-            },
+            
             
             // ===== 2. 隐私防护盾（高优先级）=====
 
@@ -445,7 +416,9 @@
               "action": "reject",
               "ip_cidr": [
                     // Tor出口节点
-                    "176.10.104.240/28",  
+                    "176.10.104.240/28",
+                    "179.43.128.0/24",
+                    "185.220.101.0/24",
                     "178.16.208.56/29",
                     "192.42.116.16/28"
                 ]
@@ -500,13 +473,18 @@
             
             // 全端口UDP拦截
             {
-                  "action": "reject",
-                  "protocol": [
-                        "quic",
-                        "udp/443",
-                        "udp/80"
-                      ]
+              "network": "udp",
+              "port": [443, 80],
+              "action": "reject"
             },
+            // 阻止未加密QUIC协议
+            {
+                "action": "reject",
+                "protocol": [
+                    "quic"
+                ]
+            },
+            
             //配合下面，端口禁止
             {
                 "port": [
@@ -517,44 +495,8 @@
                 ],
                 "action": "reject"
             },
-            // 新增隐私保护域关键词拦截
-            {
-                "domain_keyword": [
-                    "stun:",
-                    "turn:",
-                    "webrtc",
-                    "quic"
-                ],
-                "action": "reject"
-            },
         
-            // 阻止未加密QUIC协议
-            {
-                "action": "reject",
-                "protocol": [
-                    "quic"
-                ]
-            },
-            // 阻止UDP潜在泄露 拦截UDP/443流量
-            {
-                "type": "logical",
-                "mode": "or",
-                "rules": [
-                    // 拦截QUIC常用端口
-                    {
-                        "port": [
-                            443,
-                            80
-                        ],
-                        "network": "udp"
-                    }, 
-                    // 补充拦截QUIC协议
-                    {
-                        "protocol": "quic"
-                    } 
-                ],
-                "action": "reject"
-            },
+            
             
 
             // 强化追踪拦截
@@ -567,19 +509,10 @@
             {
                 "domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs|deviceid|analytics|sentry)\\.(com|io|net)",
                 "inbound": ["tun-in", "mixed-in"],
+                "process_name": ["Safari"],
                 "action": "reject"
             },
-            {
-                "domain_regex": "(fingerprintjs|fpjs\\.io|sentry\\.io)\\.?$",
-                "action": "reject"
-            },
-        
-            // 指纹防护（兼容iOS Safari）
-            {
-                "action": "reject",
-                "domain_regex": "(fpjs\\.io|fingerprintjs\\.com|deviceident\\.com)",
-                "process_name": ["Safari"]
-            },
+           
 
             //Safari防护
             {
@@ -603,23 +536,27 @@
         
             // 强化加密货币保护
             {
-                "action": "reject",
-                "domain_keyword": [
-                    "coinbase",
-                    "binance",
-                    "metamask"
-                ]
-            },
-            {
                   "action": "reject",
                   "domain_suffix": [
                     ".coinbase.com",
                     ".binance.com",
                     ".metamask.io",
-                    ".tron.network"
+                    ".tron.network",
+                    ".okx.com"
                   ]
             },
             
+            //====== clash mode 规则组=====
+            {
+                "action": "route",
+                "clash_mode": "direct",
+                "outbound": "🎯 全球直连"
+            },
+            {
+                "action": "route",
+                "clash_mode": "global",
+                "outbound": "GLOBAL"
+            },
             
             // ===== 3. 基础分流规则 =====
             {

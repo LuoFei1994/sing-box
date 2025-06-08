@@ -317,7 +317,7 @@
             // 关闭UDP减少耗电，选tcp
             "network": "udp", 
             // 强制UDP over TCP 
-            "udp_over_tcp": false,
+            "udp_over_tcp": true,
             "multiplex": {
                 // 启用多路复用
                 "enabled": true,      
@@ -342,7 +342,7 @@
             // 关闭UDP减少耗电，选tcp
             "network": "udp", 
             // 强制UDP over TCP 
-            "udp_over_tcp": false,
+            "udp_over_tcp": true,
             "multiplex": {
                 // 启用多路复用
                 "enabled": true,  
@@ -435,6 +435,15 @@
                 "network": "udp",
                 "outbound": "🎯 全球直连"
             },
+            {
+                "domain": [
+                    "zoom.us",
+                    "discord.com"
+                ],
+                "port": 443,
+                "network": "tcp",
+                "outbound": "🎯 全球直连"
+            },
 
             {   
                 // 例外放行443和80端口的Apple服务
@@ -443,6 +452,15 @@
                     "*.icloud.com"
                 ],
                 "network": "udp",
+                "outbound": "🎯 全球直连"
+            },
+            {   
+                // 例外放行443和80端口的Apple服务
+                "domain": [
+                    "*.apple.com",
+                    "*.icloud.com"
+                ],
+                "network": "tcp",
                 "outbound": "🎯 全球直连"
             },
 

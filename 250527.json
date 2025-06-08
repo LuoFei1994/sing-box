@@ -63,11 +63,7 @@
                 "tag": "Remote-DNS",
                 // Quad9的DoT（带恶意软件过滤） 直接使用IP避免二次解析
                 "address": "tls://9.9.9.11:853",  
-                "detour": "🚀 节点选择"，
-                // UDP协议更隐蔽
-                "strategy": "prefer_udp",
-                // 禁用缓存防追踪
-                "disable_cache": true
+                "detour": "🚀 节点选择"
             },
             
             //{
@@ -85,9 +81,7 @@
             //fakeip的设置
             {
                 "address": "fakeip",
-                "tag": "fakeip"，
-                // 仅使用IPv4 FakeIP
-                "strategy": "ipv4_only" 
+                "tag": "fakeip"
             },
             {
                 "address": "rcode://success",
@@ -112,7 +106,6 @@
                 "clash_mode": "global",
                 "server": "Remote-DNS"
             },
-
             
             // 中国域名使用国内DNS
             {
@@ -336,7 +329,7 @@
             "tag": "proxy3",
             "server": "138.128.220.216",
             "server_port": 9501,
-            // 最新抗量子加密
+            // 最新抗量子加密chacha20-ietf-poly1305
             "method": "aes-256-gcm",
             "password": "fFfe3fuhJrhhXSSY",
             //启用HTTP流量混淆插件

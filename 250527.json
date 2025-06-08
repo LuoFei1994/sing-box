@@ -45,7 +45,7 @@
         "server": "time.apple.com",
         "server_port": 123,
         // 减少同步频率
-        "interval": "6h"
+        "interval": "6h",
         "detour": "🚀 节点选择"
     },
     //以下是dns服务和规则设置
@@ -347,9 +347,9 @@
             "method": "aes-256-gcm",
             "password": "fFfe3fuhJrhhXSSY",
             //启用HTTP流量混淆插件
-            "plugin": "v2ray-plugin", 
+            "plugin": "", 
             // 必要隐私保护 深度伪装
-            "plugin_opts": "mode=websocket;host=cloudflare.com;path=/v2ray", 
+            "plugin_opts": "", 
             // 关闭UDP减少耗电，选tcp
             "network": "udp", 
             // 强制UDP over TCP 
@@ -450,7 +450,7 @@
             
             // 阻止代理节点被二次代理，会配合dns的规则
             {
-                "domain": ["c50s2.portablesubmarines.com", "100.bgp.666888.biz"],
+                "domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz"],
                 "outbound": "🎯 全球直连"
             },
             

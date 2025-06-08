@@ -65,9 +65,9 @@
                 "address": "tls://9.9.9.11:853",  
                 "detour": "🚀 节点选择",
                 // UDP协议更隐蔽
-                "strategy": "ipv4_only",  
-                // 禁用缓存防追踪
-                "disable_cache": true  
+                "strategy": "ipv4_only" 
+                
+                
             },
             
             //{
@@ -110,6 +110,17 @@
                 "clash_mode": "global",
                 "server": "Remote-DNS"
             },
+
+            // 禁用远程Remote-DNS的缓存防追踪
+            {
+                "action": "route",  
+                "server": "Remote-DNS",
+                "strategy": "ipv4_only",
+                "disable_cache": true
+            },
+
+            
+                "disable_cache": true  
             
             // 中国域名使用国内DNS
             {

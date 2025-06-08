@@ -316,7 +316,7 @@
             // 关闭UDP减少耗电，选tcp
             "network": "udp", 
             // 强制UDP over TCP 
-            "udp_over_tcp": false,
+            "udp_over_tcp": true,
             "multiplex": {
                 // 启用多路复用
                 "enabled": true,      
@@ -341,7 +341,7 @@
             // 关闭UDP减少耗电，选tcp
             "network": "udp", 
             // 强制UDP over TCP 
-            "udp_over_tcp": false,
+            "udp_over_tcp": true,
             "multiplex": {
                 // 启用多路复用
                 "enabled": true,  
@@ -376,7 +376,6 @@
         "rules": [
             
         // =======必要的技术规则（如sniff, resolve, hijack-dns）======
-
             {    
                 
                 "action": "sniff", 
@@ -421,7 +420,7 @@
             { 
                 "domain": ["time.apple.com"], 
                 "outbound": "🎯 全球直连" 
-            }
+            },
 
         //=======放行直连域名（如Apple、支付、代理节点域名等）=======
 

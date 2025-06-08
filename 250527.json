@@ -385,23 +385,13 @@
         "rules": [
             
             // ===== 1. 关键进站处理 =====
-            //嗅探
-            {    
-                "action": "sniff", 
-                "inbound": [
-                    "tun-in",
-                    "mixed-in"
-                ]
-            },
-            //进站来的都从域解析到ip，ipv4优先
+
             {
-                "inbound": [
-                    "tun-in",
-                    "mixed-in"
-                ],
-                "action": "resolve",
-                "strategy": "prefer_ipv4"
+                "ip_is_private": true,
+                "action": "route",
+                "outbound": "🎯 全球直连"
             },
+
             //拦截dns
             {
                 "type": "logical",
@@ -416,6 +406,28 @@
                 ],
                 "action": "hijack-dns"
             },
+
+            //进站来的都从域解析到ip，ipv4优先
+            {
+                "inbound": [
+                    "tun-in",
+                    "mixed-in"
+                ],
+                "action": "resolve",
+                "strategy": "prefer_ipv4"
+            },
+
+            
+            //嗅探
+            {    
+                "action": "sniff", 
+                "inbound": [
+                    "tun-in",
+                    "mixed-in"
+                ]
+            },
+            
+            
             
             
             
@@ -654,11 +666,7 @@
                 ],
                 "action": "direct"
             },
-            {
-                "ip_is_private": true,
-                "action": "route",
-                "outbound": "🎯 全球直连"
-            },
+            
 
            
 

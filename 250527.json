@@ -81,7 +81,9 @@
             //fakeip的设置
             {
                 "address": "fakeip",
-                "tag": "fakeip"
+                "tag": "fakeip",
+                / 仅使用IPv4 FakeIP
+                "strategy": "ipv4_only" 
             },
             {
                 "address": "rcode://success",
@@ -107,13 +109,6 @@
                 "server": "Remote-DNS"
             },
 
-            //=======
-            {
-                "action": "route",
-                "server": "Remote-DNS",
-                "strategy": "ipv4_only",
-                "disable_cache": true
-            },
             
             // 中国域名使用国内DNS
             {

@@ -54,8 +54,7 @@
             {
                 "tag": "Local-DNS",
                 //https://223.5.5.5:443/dns-query
-                "address": "https://dns.quad9.net/dns-query",
-                "address_resolver": "Remote-DNS",
+                "address": "https://9.9.9.11/dns-query",
                 "detour": "🚀 节点选择"
             },
             

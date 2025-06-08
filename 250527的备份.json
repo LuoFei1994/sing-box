@@ -59,6 +59,13 @@
             //"address": "udp://223.5.5.5:53",
             //"detour": "🎯 全球直连" 
             //},
+
+            //国内加密dns，腾讯，不保证
+            {
+                "tag": "Local-DNS-1",
+                "address": "https://120.53.53.53/dns-query",
+                "detour": "🎯 全球直连"
+            },
             {
                 "tag": "Remote-DNS",
                 // Quad9的DoT（带恶意软件过滤） 直接使用IP避免二次解析
@@ -67,7 +74,7 @@
             },
             
             {
-                "tag": "Remote-DNS1",
+                "tag": "Remote-DNS-1",
                 // 使用Cloudflare的DoH
                 "address": "https://1.1.1.1/dns-query", 
                 "detour": "🚀 节点选择"
@@ -111,13 +118,13 @@
             },
 
             
-            // 中国域名使用国内DNS
+            // 中国域名使用国内加密的DNS，不保证是否加密了
             {
                 "action": "route",
                 "rule_set": [
                     "GeoSite-CN"
                 ],
-                "server": "Local-DNS"
+                "server": "Local-DNS-1"
             },
             
             // 非中国域名使用隐私DNS（优先使用Remote-DNS，如果失败则使用Remote-DNS1）
@@ -136,7 +143,7 @@
                     ".mzstatic.com",
                     ".apple-cloudkit.com"
                 ],
-                "server": "Remote-DNS1",
+                "server": "Remote-DNS-1",
                 // 替代always_real_ip 
                 "disable_cache": true 
             },
@@ -320,7 +327,7 @@
             // 关闭UDP减少耗电，选tcp
             "network": "udp", 
             // 强制UDP over TCP 
-            "udp_over_tcp": true,      
+            "udp_over_tcp": true,
             "multiplex": {
                 // 启用多路复用
                 "enabled": true,      
@@ -333,7 +340,7 @@
             "tag": "proxy3",
             "server": "c62s2.portablesubmarines.com",
             "server_port": 9501,
-            // 最新抗量子加密chacha20-ietf-poly1305
+            // 最新抗量子加密chacha20-ietf-poly1305 
             "method": "aes-256-gcm",
             "password": "fFfe3fuhJrhhXSSY",
             //启用HTTP流量混淆插件
@@ -343,7 +350,7 @@
             // 关闭UDP减少耗电，选tcp
             "network": "udp", 
             // 强制UDP over TCP 
-            "udp_over_tcp": true,      
+            "udp_over_tcp": true,
             "multiplex": {
                 // 启用多路复用
                 "enabled": true,  

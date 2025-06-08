@@ -324,7 +324,7 @@
                 "max_connections": 8,
                 // 新增流量填充防分析
                 "padding": true  
-            }
+            } 
         },
         {
             "type": "shadowsocks",
@@ -602,17 +602,6 @@
               ],
               "network": "udp"
             },
-            //WebRTC协议泄露防护，TCP层WebRTC流量
-           {
-              "action": "reject",
-              "protocol": [
-                  "stun",
-                  "turn",
-                  "quic",
-                  "webrtc"
-              ],
-              "network": "tcp"
-            },
             //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口
             {
                 "port": [
@@ -626,21 +615,6 @@
                     19305
                 ],
                 "network": "udp",
-                "action": "reject"
-            },
-            //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口，TCP层WebRTC流量
-            {
-                "port": [
-                    80,
-                    443,
-                    3478,
-                    3479,
-                    5349,
-                    5350,
-                    19302,
-                    19305
-                ],
-                "network": "tcp",
                 "action": "reject"
             },
             // WebRTC泄露防护

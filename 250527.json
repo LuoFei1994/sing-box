@@ -81,8 +81,7 @@
             //fakeip的设置
             {
                 "address": "fakeip",
-                "tag": "fakeip",
-                "strategy": "prefer_ipv4"
+                "tag": "fakeip"
             },
             {
                 "address": "rcode://success",

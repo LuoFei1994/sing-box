@@ -55,13 +55,13 @@
                 "tag": "Local-DNS",
                 "address": "https://dns.quad9.net/dns-query",
                 "address_resolver": "Local-DNS-Resolver",
-                "detour": "🎯 全球直连"
+                "detour": "🚀 节点选择"
             },
             
             {
                 "tag": "Local-DNS-Resolver",
-                "address": "9.9.9.9",
-                "detour": "🎯 全球直连"
+                "address": "tls://9.9.9.11:853",
+                "detour": "🚀 节点选择"
             },
             
   

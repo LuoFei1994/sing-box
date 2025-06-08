@@ -461,6 +461,14 @@
                   "domain_regex": "(coinbase|binance|metamask|tron|okx|bybit|kucoin)\\.(com|io|net)"
             },
 
+            //扩展加密货币服务拦截
+            {
+                "rule_set": [
+                    "Crypto"
+                ],
+                "action": "reject"
+            },
+
             //=======例外规则========
             
             //配合下面的规则，可能影响部分使用UDP/443的合法服务（如WebRTC），建议通过domain白名单排除：
@@ -610,6 +618,16 @@
                 "action": "reject"
             },
 
+            //Privacy-Enhanced规则集
+            {
+                "rule_set": [
+                    "PrivacyEnhanced",
+                    "PrivateTracker"
+                ],
+                "action": "reject"
+            },
+            
+
         
            
             
@@ -742,6 +760,38 @@
         
         //出站的分流规则集
         "rule_set": [
+
+            //senshinya隐私规则集
+            {
+                "tag": "PrivacyEnhanced",
+                "type": "remote",
+                "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Privacy/Privacy.srs",
+                "format": "binary",
+                "download_detour": "🎯 全球直连",
+                "update_interval": "48h"
+            },
+
+            //senshinya私人追踪
+            {
+                "tag": "PrivateTracker",
+                "type": "remote",
+                "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/refs/heads/main/rule/PrivateTracker/PrivateTracker.srs",
+                "format": "binary",
+                "download_detour": "🎯 全球直连",
+                "update_interval": "48h"
+            },
+
+            
+
+            //Crypto-Block货币加密规则集
+            {
+                "tag": "Crypto",
+                "type": "remote",
+                "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Crypto/Crypto.srs",
+                "format": "binary",
+                "download_detour": "🎯 全球直连",
+                "update_interval": "48h"
+            },
 
             //专门的隐私规则集
             {

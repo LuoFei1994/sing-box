@@ -53,9 +53,8 @@
         "servers": [
             {
                 "tag": "Local-DNS",
-                //https://223.5.5.5:443/dns-query
-                "address": "https://9.9.9.11/dns-query",
-                "detour": "🚀 节点选择"
+                "address": "https://223.5.5.5:443/dns-query",
+                "detour": "🎯 全球直连"
             },
             
   
@@ -615,7 +614,9 @@
             {
                 "domain_suffix": [
                     ".alipay.com",
-                    ".wechatpay.com"
+                    ".wechatpay.com",
+                    ".stripe.com",
+                    ".venmo.com"
                 ],
                 "outbound": "🎯 全球直连"
             },
@@ -629,47 +630,8 @@
                 ],
                 "outbound": "🎯 全球直连"
             },
-                   
-            //===== 5. 代理规则 =====
-            
-            
-            // 走代理的规则：非中国域名
-            {
-                "action": "route",
-                "rule_set": [
-                    "geosite-geolocation-!cn"
-                ],
-                "outbound": "🚀 节点选择"
-            },
-            
-            // 支付服务走代理（安全加固）
-            {
-                "domain_suffix": [
-                    ".stripe.com",
-                    ".venmo.com"
-                ],
-                "outbound": "🚀 节点选择"
-            },
-            
-            
-            
-            //国外媒体走代理
-            {
-                "action": "route",
-                "rule_set": [
-                    "Youtube",
-                    "Tiktok",
-                    "Whatsapp",
-                    "Instagram",
-                    "Facebook",
-                    "GitHub",
-                    "Line",
-                    "Telegram"
-                ],
-                "outbound": "🚀 节点选择"
-            },
 
-            // ===== 6. 补充防护（低优先级）=====
+            // ===== 5. 补充防护（低优先级）=====
             {
                 "rule_set": [
                     "Category-Ads"
@@ -691,16 +653,60 @@
             {
                 "rule_set": [
                     "Tracking",
-                    "Tracker"
+                    "Tracker",
+                    "Privacy"
                 ],
                 "action": "reject"
+            },
+                   
+            //===== 6. 代理规则 =====
+            
+            
+            // 走代理的规则：非中国域名
+            {
+                "action": "route",
+                "rule_set": [
+                    "geosite-geolocation-!cn"
+                ],
+                "outbound": "🚀 节点选择"
+            },
+            
+           
+            
+            
+            //国外媒体走代理
+            {
+                "action": "route",
+                "rule_set": [
+                    "Youtube",
+                    "Tiktok",
+                    "Whatsapp",
+                    "Instagram",
+                    "Facebook",
+                    "GitHub",
+                    "Line",
+                    "Telegram"
+                ],
+                "outbound": "🚀 节点选择"
             }
+
+            
         ],
 
 
         
         //出站的分流规则集
         "rule_set": [
+
+            //专门的隐私规则集
+            {
+                "tag": "Privacy",
+                "type": "remote",
+                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/private.srs",
+                "format": "binary",
+                "download_detour": "🎯 全球直连",
+                "update_interval": "48h"
+            },
             //油管规则集
             {
                 "tag": "Youtube",

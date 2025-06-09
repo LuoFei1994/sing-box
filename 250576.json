@@ -56,18 +56,30 @@
             {
                 "tag": "Local-DNS", 
                 "address": "https://223.5.5.5:443/dns-query",
+                "address_resolver": "Local-DNS-Resolver",
                 "detour": "🎯 全球直连",
                 "strategy": "ipv4_only"
             },
-            
-  
+
+            {
+                "tag": "Local-DNS-Resolver",
+                "address": "udp://223.5.5.5:53",
+                "detour": "🎯 全球直连"
+            },
+
             {
                 "tag": "Remote-DNS",
                 // Quad9的DoT（带恶意软件过滤） 直接使用IP避免二次解析
-                "address": "tls://9.9.9.11:853", 
+                "address": "tls://9.9.9.11:853",
+                "address_resolver": "Remote-DNS-Resolver",
                 "detour": "🚀 节点选择",
                 "strategy": "ipv4_only"
-            
+            },
+
+            {
+                "tag": "Remote-DNS-Resolver",
+                "address": "udp://9.9.9.11:53",
+                "detour": "🚀 节点选择"
             },
         
             //fakeip的设置

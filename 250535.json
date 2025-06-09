@@ -419,7 +419,6 @@
                     "tiktok.com", "*.tiktokcdn.com", "tiktokv.com", "muscdn.com",
                     "telegram.org", "t.me", "telegram.me"
                 ],
-                "protocol": ["quic"],
                 "outbound": "🚀 节点选择"
             },
             

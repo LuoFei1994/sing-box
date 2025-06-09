@@ -599,23 +599,45 @@
                 "action": "reject"
             },
 
+             //指纹拦截
+            {
+                "protocol": ["fingerprint", "device_id"],
+                "action": "reject"
+            },
             //指纹拦截
             {
-                "action": "reject",
-                "type": "logical",
-                "mode": "or",
-                "rules": [
-                // 协议拦截
-                { "protocol": ["fingerprint", "device_id"] },
-                // 域名后缀
-                { "domain_suffix": ["safari-tracker.com", "apple-analytics.com", ".advertising.apple.com", ".metrics.apple.com"] },
-                // 关键词
-                { "domain_keyword": ["canvas_fingerprint", "webgl_fingerprint", "analytics", "tracking"] },
-                // 正则1
-                { "domain_regex": "(^(analytics|track|metrics|telemetry|fingerprint)\.\w+\.com$)" },
-                // 正则2
-                { "domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs|deviceid|analytics|sentry)\.(com|io|net)" }
-                ]
+                  "action": "reject",
+                  "domain_suffix": [
+                    "safari-tracker.com",
+                    "apple-analytics.com",
+                    ".advertising.apple.com",
+                    ".metrics.apple.com"
+                  ],
+                  // 仅针对Safari生效
+                  "process_name": ["Safari", "MobileSafari"]
+            },
+            //指纹拦截
+            {
+                "domain_keyword": [
+                    "canvas_fingerprint",
+                    "webgl_fingerprint",
+                    "analytics",
+                    "tracking"
+                ],
+                "action": "reject"
+            },
+            //指纹拦截
+            {
+                "domain_regex": "(^(analytics|track|metrics|telemetry|fingerprint)\\.\\w+\\.com$)",
+                "action": "reject"
+            },
+        
+            //指纹拦截
+            {
+                "domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs|deviceid|analytics|sentry)\\.(com|io|net)",
+                // 覆盖主流浏览器
+                //"process_name": ["Safari", "Chrome", "Firefox"],
+                "action": "reject"
             },
 
 

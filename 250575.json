@@ -355,13 +355,7 @@
         "server_port": 9501,
         "uuid": "83e68f47-bf95-454e-8ba0-4a83a42848ba",
         "security": "auto",
-        "alter_id": 0,
-        "transport": {
-                "type": "tcp",  // 显式指定TCP传输
-                "headers": {}    // 空头避免检测
-            },
-        "packet_encoding": "xudp",  // 使用更高效的XUDP编码
-        "connect_timeout": "10s"    // 添加连接超时
+        "alter_id": 0
         }
         
     ],

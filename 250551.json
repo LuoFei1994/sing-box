@@ -249,7 +249,8 @@
                 "已中转kookeey",
                 "kookeey链式",
                 "proxy2",
-                "proxy3"
+                "proxy3",
+                "vmess1"
             ]
         },
         {
@@ -265,7 +266,8 @@
                 "已中转kookeey",
                 "kookeey链式",
                 "proxy2",
-                "proxy3"
+                "proxy3",
+                "vmess1"
             ]
         },
         
@@ -339,13 +341,8 @@
             "plugin": "", 
             // 必要隐私保护 深度伪装
             "plugin_opts": "", 
-            "multiplex": {
-                // 启用多路复用
-                "enabled": true,  
-                // HTTP/2多路复用
-                "protocol": "h2mux",
-                "max_connections": 8
-            }
+            "network": "udp",
+            "udp_over_tcp": false
         },
         {
             "type": "socks",
@@ -356,16 +353,16 @@
             "username": "5258f8e2",
             "password": "56864eaa",
             "version": "5"
+        },
+        {
+        "type": "vmess",
+        "tag": "vmess1",
+        "server": "c50s2.portablesubmarines.com",
+        "server_port": 19868,
+        "uuid": "30a5efe1-3235-4b93-a8ee-71b1d1834c5b",
+        "security": "auto",
+        "alter_id": 0
         }
-        //{
-        //"type": "vmess",
-        //"tag": "proxy2",
-        //"server": "c50s2.portablesubmarines.com",
-        //"server_port": 19868,
-        //"uuid": "30a5efe1-3235-4b93-a8ee-71b1d1834c5b",
-        //"security": "auto",
-        //"alter_id": 0
-        //}
         
     ],
     //出站的规则分流

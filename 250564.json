@@ -599,45 +599,24 @@
                 "action": "reject"
             },
 
-             //指纹拦截
+             // ===== 指纹拦截优化版 =====
             {
-                "protocol": ["fingerprint", "device_id"],
-                "action": "reject"
+                "action": "reject",
+                "domain_regex": [
+                    "(fingerprint(js)?|device(id|ident)|canvas|webgl|analytics|track(ing|er)?|metrics|telemetry|sentry)\\.(com|io|net|org)",
+                    "\\.?(safari-tracker|apple-analytics|advertising\\.apple|metrics\\.apple)\\.com"
+                ]
             },
-            //指纹拦截
             {
-                  "action": "reject",
-                  "domain_suffix": [
-                    "safari-tracker.com",
-                    "apple-analytics.com",
-                    ".advertising.apple.com",
-                    ".metrics.apple.com"
-                  ],
-                  // 仅针对Safari生效
-                  "process_name": ["Safari", "MobileSafari"]
-            },
-            //指纹拦截
-            {
+                "action": "reject",
                 "domain_keyword": [
+                    "privacy",
+                    "vpn",
+                    "proxy",
+                    "anonym",
                     "canvas_fingerprint",
-                    "webgl_fingerprint",
-                    "analytics",
-                    "tracking"
-                ],
-                "action": "reject"
-            },
-            //指纹拦截
-            {
-                "domain_regex": "(^(analytics|track|metrics|telemetry|fingerprint)\\.\\w+\\.com$)",
-                "action": "reject"
-            },
-        
-            //指纹拦截
-            {
-                "domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs|deviceid|analytics|sentry)\\.(com|io|net)",
-                // 覆盖主流浏览器
-                //"process_name": ["Safari", "Chrome", "Firefox"],
-                "action": "reject"
+                    "webgl_fingerprint"
+                ]
             },
 
 

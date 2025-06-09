@@ -216,7 +216,8 @@
             "listen_port": 20122,
             "tcp_fast_open": false,
             "tcp_multi_path": false,
-            "udp_fragment": false
+            "udp_fragment": true,  // 入站启用UDP分片
+            "udp_over_tcp": true,  // 出站启用UDP over TCP
         },
         {
             "type": "tun",
@@ -263,7 +264,7 @@
         {
             "type": "selector",
             "tag": "🚀 节点选择",
-            "interrupt_exist_connections": true,
+            "interrupt_exist_connections": false,
             "outbounds": [
                 "已中转kookeey",
                 "kookeey链式",
@@ -278,7 +279,7 @@
             "interval": "10m", 
             // 降低切换灵敏度
             "tolerance": 150, 
-            "interrupt_exist_connections": true,
+            "interrupt_exist_connections": false,
             "outbounds": [
                 "已中转kookeey",
                 "kookeey链式",
@@ -290,7 +291,7 @@
         {
             "type": "selector",
             "tag": "GLOBAL",
-            "interrupt_exist_connections": true,
+            "interrupt_exist_connections": false,
             "outbounds": [
                 "🚀 节点选择",
                 "🎈 自动选择",
@@ -303,7 +304,7 @@
         {
             "type": "selector",
             "tag": "🐟 漏网之鱼",
-            "interrupt_exist_connections": true,
+            "interrupt_exist_connections": false,
             "outbounds": [
                 "🚀 节点选择",
                 "🎯 全球直连"

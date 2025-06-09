@@ -406,28 +406,8 @@
 
         //=======放行直连域名（如Apple、支付、代理节点域名等）=======
 
-            //配合下面的规则，可能影响部分使用UDP/443的合法服务（如WebRTC），建议通过domain白名单排除：
-            {
-                "domain": [
-                    "zoom.us",
-                    "discord.com"
-                ],
-                "port": 443,
-                "network": "udp",
-                "outbound": "🎯 全球直连"
-            },
-
-            {   
-                // 例外放行443和80端口的Apple服务
-                "domain": [
-                    "*.apple.com",
-                    "*.icloud.com"
-                ],
-                "network": "udp",
-                "outbound": "🎯 全球直连"
-            },
-
-             // Apple服务直连
+        
+            // Apple服务直连
             {
                 "domain_suffix": [
                     ".apple.com",
@@ -445,11 +425,7 @@
                 "outbound": "🎯 全球直连"
             },
             
-            // 阻止代理节点被二次代理，会配合dns的规则
-            //{
-                //"domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz"],
-                //"outbound": "🎯 全球直连"
-            //},
+  
             
             //支付渠道走直连，避免出问题
             {
@@ -477,79 +453,45 @@
                 "action": "route",
                 "rule_set": [
                     "GeoSite-CN",
-                    "geoip-cn"
+                    "geoip-cn",
+                    "iOS-Services",
+                    "PayPal"
                 ],
                 "outbound": "🎯 全球直连"
             },
 
+
         
 
          // =====拦截规则（隐私防护、广告、加密货币等）=====
-            //拦截的广告
+            
             {
                 "rule_set": [
-                    "Category-Ads"
-                ],
-                "action": "reject"
-            },
-
-            //拦截dns的广告
-            {
-                "rule_set": [
+                    //拦截的广告
+                    "Category-Ads",
                     "BlockHttpDNS"
                 ],
                 "action": "reject"
             },
-
-            //拦截隐私的广告
-            {
+            {    
                 "rule_set": [
+                    //底下拦截隐私的广告
                     "Privacy",
-                    "PrivacyEnhanced"
-                ],
-                "action": "reject"
-            },
-            //拦截追踪的广告
-            {
-                "rule_set": [
+                    "PrivacyEnhanced",
+                    //底下拦截追踪的广告
                     "Tracking",
                     "Tracker",
                     "PrivateTracker"
                 ],
                 "action": "reject"
             },
+      
             //隐私服务拦截,补充上面广告
             {
                 "domain_regex": "(privacy|vpn|proxy|anonym)\\.(com|net|io|org)",
                 "action": "reject",
             },
-            
 
-
-            // 隐私敏感协议拦截,拦截加密货币和Tor流量
-            {
-                "protocol": [
-                    "ftp",
-                    "telnet",
-                    "smtp",
-                    "tor",
-                    "bittorrent",
-                    "bitcoin"
-                ],
-                "action": "reject"
-            },
-            // 隐私敏感协议拦截,拦截加密货币和Tor流量
-            {
-              "action": "reject",
-              "ip_cidr": [
-                    // Tor出口节点
-                    "176.10.104.240/28",
-                    "179.43.128.0/24",
-                    "185.220.101.0/24",
-                    "178.16.208.56/29",
-                    "192.42.116.16/28"
-                ]
-            },
             // 隐私敏感协议拦截,拦截加密货币和Tor流量
             {
                 "rule_set": [
@@ -576,6 +518,33 @@
                   "action": "reject",
                   "domain_regex": "(coinbase|binance|metamask|tron|okx|bybit|kucoin)\\.(com|io|net)"
             },
+
+
+            // 隐私敏感协议拦截,拦截加密货币和Tor流量
+            {
+                "protocol": [
+                    "ftp",
+                    "telnet",
+                    "smtp",
+                    "tor",
+                    "bittorrent",
+                    "bitcoin"
+                ],
+                "action": "reject"
+            },
+            // 隐私敏感协议拦截,拦截加密货币和Tor流量
+            {
+              "action": "reject",
+              "ip_cidr": [
+                    // Tor出口节点
+                    "176.10.104.240/28",
+                    "179.43.128.0/24",
+                    "185.220.101.0/24",
+                    "178.16.208.56/29",
+                    "192.42.116.16/28"
+                ]
+            },
+            
             
            //WebRTC协议泄露防护
            //HTTP(80) 安全处理,非中国域名强制拒绝 HTTP 明文传输,保留国内网站兼容性（银行/政府网站等）
@@ -646,7 +615,7 @@
                     ".metrics.apple.com"
                   ],
                   // 仅针对Safari生效
-                  "process_name": ["Safari", "MobileSafari"]
+                  //"process_name": ["Safari", "MobileSafari"]
             },
             //指纹拦截
             {
@@ -686,15 +655,6 @@
                 "outbound": "GLOBAL"
             },
             
-        //===== 直连规则 =====
-            {
-                "action": "route",
-                "rule_set": [
-                    "iOS-Services",
-                    "PayPal"
-                ],
-                "outbound": "🎯 全球直连"
-            },
                    
         //===== 代理规则 =====
     

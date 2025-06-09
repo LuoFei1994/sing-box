@@ -19,6 +19,7 @@
             "secret": "", 
             //工作模式rule/global/Enhanced
             "default_mode": "Enhanced",
+            "external_ui_password": "YzjYpp@TT.0713",
             // 限制控制台访问源
             "access_control_allow_origin": [
                 "http://localhost:*"

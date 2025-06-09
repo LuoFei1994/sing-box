@@ -86,7 +86,7 @@
             {
                 "address": "fakeip",
                 "tag": "fakeip",
-                "strategy": "ipv4_only",  // 明确限制仅IPv4
+                "strategy": "ipv4_only"
             },
 
             //拒绝的DNS

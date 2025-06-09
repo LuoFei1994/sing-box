@@ -58,7 +58,7 @@
                 "address": "https://223.5.5.5:443/dns-query",
                 "address_resolver": "Local-DNS-Resolver",
                 "detour": "🎯 全球直连",
-                "strategy": "ipv4_only"
+                "strategy": "prefer_ipv4"
             },
 
             {
@@ -73,7 +73,7 @@
                 "address": "tls://9.9.9.11:853",
                 "address_resolver": "Remote-DNS-Resolver",
                 "detour": "🚀 节点选择",
-                "strategy": "ipv4_only"
+                "strategy": "prefer_ipv4"
             },
 
             {
@@ -86,8 +86,8 @@
             {
                 "address": "fakeip",
                 "tag": "fakeip",
-                //仅使用IPv4 FakeIP
-                "strategy": "ipv4_only"
+                "strategy": "ipv4_only",  // 明确限制仅IPv4
+                "query_type": ["A", "AAAA"]  // 仅响应基础查询
             },
 
             //拒绝的DNS
@@ -150,12 +150,7 @@
                 "server": "Local-DNS"
             },
 
-            // 拦截新型 DNS 记录
-            {
-              "query_type": ["HTTPS","SVCB"],
-              "server": "block"  
-            },
-            
+
             // 本地域名直连
             {
               "domain_suffix": [".arpa",".local"],
@@ -202,10 +197,20 @@
                     "AAAA"
                 ],
                 "server": "fakeip"
-            }
+            },
+            {
+                "query_type": [
+                    "HTTPS", 
+                    "SVCB", 
+                    "TXT", 
+                    "MX", 
+                    "CNAME"
+                ],
+                "server": "Remote-DNS"  // 使用支持DoT的远程DNS
+             }
         ],
         //默认ipv4优选
-        "strategy": "ipv4_only", 
+        "strategy": "prefer_ipv4", 
         // 关闭DNS缓存减少CPU负载,避免缓存污染
         "disable_cache": true, 
         "disable_expire": false,
@@ -216,7 +221,6 @@
             "inet4_range": "198.18.0.0/15",
             "inet6_range": "fc00::/18"
         },
-        //没找到的dns走指定，注释掉，强制所有DNS走FakeIP。
         "final": "Remote-DNS"
     },
     //进站监控
@@ -743,7 +747,7 @@
             {
                 "tag": "PrivateTracker",
                 "type": "remote",
-                "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/refs/heads/main/rule/PrivateTracker/PrivateTracker.srs",
+                "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset/refs/heads/main/rule/PrivateTracker/PrivateTracker.srs",
                 "format": "binary",
                 "download_detour": "🎯 全球直连",
                 "update_interval": "48h"

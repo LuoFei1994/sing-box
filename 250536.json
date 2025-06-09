@@ -63,7 +63,7 @@
             {
                 "tag": "Remote-DNS",
                 // Quad9的DoT（带恶意软件过滤） 直接使用IP避免二次解析
-                "address": "tls://9.9.9.11:853",  
+                "address": "tls://9.9.9.9:853",  
                 "detour": "🚀 节点选择"
             
             },
@@ -184,7 +184,7 @@
         "final": "Remote-DNS",
         "fakeip": {
             "enabled": true,
-            "inet4_range": "198.18.0.0/16",
+            "inet4_range": "198.18.0.0/15",
             "inet6_range": "fc00::/18"
         }
     },

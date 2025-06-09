@@ -100,7 +100,7 @@
                 "rewrite_ttl": 300
             },
 
-            / 在DNS规则中添加iOS隐私保护
+            // 在DNS规则中添加iOS隐私保护
             {
                   "domain_suffix": [
                     "metrics.icloud.com",

@@ -86,7 +86,7 @@
             {
                 "address": "fakeip",
                 "tag": "fakeip",
-                "strategy": "ipv4_only"
+                "strategy": "prefer_ipv4"
             },
 
             //拒绝的DNS
@@ -104,24 +104,25 @@
                "server": "fakeip",
                "disable_cache": true 
             },
-
-
+            
             //阻止DNS劫持（端口53重定向）
             {
                 "port": 53,
                 "server": "Remote-DNS",
                 "rewrite_ttl": 300
             },
-
-            // 在DNS规则中添加iOS隐私保护
+            
+            // 新增代理节点域名直连（防DNS污染）,配合底下的出站规则
             {
-                  "domain_suffix": [
-                    "metrics.icloud.com",
-                    "diagnostics.apple.com",
-                    "analytics.apple.com",
-                    "crashlogs.apple.com"
-                  ],
-                  "server": "block"
+                "domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz"],
+                "server": "Local-DNS"
+            },
+
+            
+            // 本地域名直连
+            {
+              "domain_suffix": [".arpa",".local"],
+              "server": "Local-DNS"  
             },
             
             // 1. 关键服务优先处理
@@ -143,17 +144,22 @@
                 "client_subnet": "0.0.0.0/0"
             },
 
-            // 新增代理节点域名直连（防DNS污染）,配合底下的出站规则
+            // 在DNS规则中添加iOS隐私保护
             {
-                "domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz"],
-                "server": "Local-DNS"
+                  "domain_suffix": [
+                    "metrics.icloud.com",
+                    "diagnostics.apple.com",
+                    "analytics.apple.com",
+                    "crashlogs.apple.com"
+                  ],
+                  "server": "block"
             },
             
-            // 本地域名直连
-            {
-              "domain_suffix": [".arpa",".local"],
-              "server": "Local-DNS"  
-            },
+            
+
+            
+            
+            
             
 
             
@@ -214,13 +220,12 @@
         "disable_cache": true, 
         "disable_expire": false,
         "independent_cache": true,
-        
+        "final": "Remote-DNS",
         "fakeip": {
             "enabled": true,
-            "inet4_range": "198.18.0.0/15",
+            "inet4_range": "198.18.0.0/16",
             "inet6_range": "fc00::/18"
-        },
-        "final": "Remote-DNS"
+        }
     },
     //进站监控
     "inbounds": [

@@ -317,16 +317,8 @@
             // 必要隐私保护
             "plugin_opts": "", 
             // 关闭UDP减少耗电，选tcp
-            "network": "tcp", 
-            // 强制UDP over TCP 
-            "udp_over_tcp": false,
-            "multiplex": {
-                // 启用多路复用
-                "enabled": true,      
-                "protocol": "h2mux",
-                "max_connections": 8,
-                // 新增流量填充防分析
-                "padding": true  
+            "network": "udp",
+            "udp_over_tcp": false
             } 
         },
         {
@@ -357,9 +349,9 @@
         {
         "type": "vmess",
         "tag": "vmess1",
-        "server": "c50s2.portablesubmarines.com",
-        "server_port": 19868,
-        "uuid": "30a5efe1-3235-4b93-a8ee-71b1d1834c5b",
+        "server": "c62s3.portablesubmarines.com",
+        "server_port": 9501,
+        "uuid": "83e68f47-bf95-454e-8ba0-4a83a42848ba",
         "security": "auto",
         "alter_id": 0
         }

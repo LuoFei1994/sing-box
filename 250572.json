@@ -216,8 +216,8 @@
             "listen_port": 20122,
             "tcp_fast_open": false,
             "tcp_multi_path": false,
-            "udp_fragment": true,  // 入站启用UDP分片
-            "udp_over_tcp": true   // 出站启用UDP over TCP
+            "udp_fragment": false
+
         },
         {
             "type": "tun",

@@ -181,7 +181,7 @@
         "disable_expire": false,
         "independent_cache": true,
         //没找到的dns走指定，注释掉，强制所有DNS走FakeIP。
-        "final": "Remote-DNS",
+        "final": "fakeip",
         "fakeip": {
             "enabled": true,
             "inet4_range": "198.18.0.0/15",
@@ -248,8 +248,6 @@
             "outbounds": [
                 "已中转kookeey",
                 "kookeey链式",
-                "proxy2",
-                "proxy3",
                 "vmess1"
             ]
         },
@@ -265,8 +263,6 @@
             "outbounds": [
                 "已中转kookeey",
                 "kookeey链式",
-                "proxy2",
-                "proxy3",
                 "vmess1"
             ]
         },
@@ -305,42 +301,29 @@
             "password": "56864eaa",
             "version": "5"
         },
-        {
-            "type": "shadowsocks",
-            "tag": "proxy2",
-            "server": "c50s2.portablesubmarines.com",
-            "server_port": 7395,
-            "method": "aes-256-gcm",
-            "password": "kQBeCDXbwoSW2wVC",
-            //启用HTTP流量混淆插件
-            "plugin": "", 
-            // 必要隐私保护
-            "plugin_opts": "", 
-            // 关闭UDP减少耗电，选tcp
-            "network": "udp",
-            "udp_over_tcp": false
-        },
-        {
-            "type": "shadowsocks",
-            "tag": "proxy3",
-            "server": "c62s2.portablesubmarines.com",
-            "server_port": 9501,
-            // 最新抗量子加密chacha20-ietf-poly1305 
-            "method": "aes-256-gcm",
-            "password": "fFfe3fuhJrhhXSSY",
-            //启用HTTP流量混淆插件
-            "plugin": "", 
-            // 必要隐私保护 深度伪装
-            "plugin_opts": "", 
-            "network": "udp",
-            "udp_over_tcp": false
-        },
+        //shadowsocks无法直接使用
+        //{
+            //"type": "shadowsocks",
+            //"tag": "proxy2",
+            //"server": "c50s2.portablesubmarines.com",
+            //"server_port": 7395,
+            //"method": "aes-256-gcm",
+            //"password": "kQBeCDXbwoSW2wVC",
+            ////启用HTTP流量混淆插件
+            //"plugin": "", 
+            //// 必要隐私保护
+            //"plugin_opts": "", 
+            //// 关闭UDP减少耗电，选tcp
+            //"network": "udp",
+            //"udp_over_tcp": false
+        //},
+        
         {
             "type": "socks",
             "tag": "kookeey链式",
             "server": "204.242.254.64",
             "server_port": 31012,
-            "detour": "proxy2",
+            "detour": "vmess1",
             "username": "5258f8e2",
             "password": "56864eaa",
             "version": "5"

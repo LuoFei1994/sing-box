@@ -467,10 +467,10 @@
             },
             
             // 阻止代理节点被二次代理，会配合dns的规则
-            {
-                "domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz"],
-                "outbound": "🎯 全球直连"
-            },
+            //{
+                //"domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz"],
+                //"outbound": "🎯 全球直连"
+            //},
             
             //支付渠道走直连，避免出问题
             {

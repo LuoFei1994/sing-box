@@ -148,6 +148,17 @@
                 "domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz"],
                 "server": "Local-DNS"
             },
+            
+            {
+                "query_type": [
+                    "HTTPS", 
+                    "SVCB", 
+                    "TXT", 
+                    "MX", 
+                    "CNAME"
+                ],
+                "server": "Remote-DNS"  // 使用支持DoT的远程DNS
+             },
 
 
             // 本地域名直连
@@ -196,17 +207,8 @@
                     "AAAA"
                 ],
                 "server": "fakeip"
-            },
-            {
-                "query_type": [
-                    "HTTPS", 
-                    "SVCB", 
-                    "TXT", 
-                    "MX", 
-                    "CNAME"
-                ],
-                "server": "Local-DNS"  // 使用支持DoT的远程DNS
-             }
+            }
+            
         ],
         //默认ipv4优选
         "strategy": "prefer_ipv4", 

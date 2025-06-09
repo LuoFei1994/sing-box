@@ -99,6 +99,17 @@
                 "server": "Remote-DNS",
                 "rewrite_ttl": 300
             },
+
+            / 在DNS规则中添加iOS隐私保护
+            {
+                  "domain_suffix": [
+                    "metrics.icloud.com",
+                    "diagnostics.apple.com",
+                    "analytics.apple.com",
+                    "crashlogs.apple.com"
+                  ],
+                  "server": "block"
+            },
             
             // 1. 关键服务优先处理
             // 苹果服务特殊处理,使用专门服务器
@@ -446,6 +457,17 @@
                     "secret"
                 ],
                 "outbound": "🎯 全球直连"
+            },
+            / 在路由规则中添加位置服务防护
+            {
+                  "domain_keyword": [
+                    "location",
+                    "geolocation",
+                    "gps",
+                    "positioning"
+                  ],
+                  "protocol": ["tls"],
+                  "outbound": "🎯 全球直连"
             },
 
         //=======放行中国域名和IP（规则集GeoSite-CN, geoip-cn等）======

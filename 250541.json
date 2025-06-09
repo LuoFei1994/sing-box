@@ -63,19 +63,18 @@
             {
                 "tag": "Remote-DNS",
                 // Quad9的DoT（带恶意软件过滤） 直接使用IP避免二次解析
-                //"address": "tls://9.9.9.9:853", 
-                "address": "tls://8.8.8.8:853",  
+                "address": "tls://9.9.9.11:853", 
                 "detour": "🚀 节点选择"
             
             },
         
             //fakeip的设置
-            //{
-                //"address": "fakeip",
-                //"tag": "fakeip",
-                // 仅使用IPv4 FakeIP
-                //"strategy": "ipv4_only"
-            //},
+            {
+                "address": "fakeip",
+                "tag": "fakeip",
+                //仅使用IPv4 FakeIP
+                "strategy": "ipv4_only"
+            },
 
             //拒绝的DNS
             {
@@ -87,11 +86,11 @@
         "rules": [
 
             // 在现有规则前新增：强制所有流量经FakeIP
-           //{
-               //"inbound": ["tun-in", "mixed-in"],
-               //"server": "fakeip",
-               //"disable_cache": true 
-            //},
+           {
+               "inbound": ["tun-in", "mixed-in"],
+               "server": "fakeip",
+               "disable_cache": true 
+            },
 
 
             //阻止DNS劫持（端口53重定向）
@@ -162,18 +161,18 @@
                     "geosite-geolocation-!cn"
                 ],
                 "server": "Remote-DNS"
-            }
+            },
             
 
         
             // 4. 兜底规则（最后）
-           // {
-                //"query_type": [
-                    //"A",
-                    //"AAAA"
-                //],
-                //"server": "fakeip"
-            //}
+            {
+                "query_type": [
+                    "A",
+                    "AAAA"
+                ],
+                "server": "fakeip"
+            }
         ],
         //默认ipv4优选
         "strategy": "ipv4_only", 
@@ -182,12 +181,12 @@
         "disable_expire": false,
         "independent_cache": true,
         //没找到的dns走指定，注释掉，强制所有DNS走FakeIP。
-        "final": "Remote-DNS"
-        //"fakeip": {
-            //"enabled": true,
-            //"inet4_range": "198.18.0.0/15",
-            //"inet6_range": "fc00::/18"
-        //}
+        "final": "Remote-DNS",
+        "fakeip": {
+            "enabled": true,
+            "inet4_range": "198.18.0.0/15",
+            "inet6_range": "fc00::/18"
+        }
     },
     //进站监控
     "inbounds": [
@@ -624,8 +623,8 @@
                 "type": "logical",
                 "mode": "or",
                 "rules": [
-                    {"protocol": ["stun","turn","quic","webrtc"], "network": "udp"},
-                    {"protocol": ["stun","turn","quic","webrtc"], "network": "tcp"}
+                    {"protocol": ["stun","turn","webrtc"], "network": "udp"},
+                    {"protocol": ["stun","turn","webrtc"], "network": "tcp"}
                 ],
                 "action": "reject",
                 "invert": true,  // 排除白名单
@@ -644,8 +643,8 @@
                 "type": "logical",
                 "mode": "or",
                 "rules": [
-                    {"port": [80,443,3478,3479,5349,5350,19302,19305], "network": "udp"},
-                    {"port": [80,443,3478,3479,5349,5350,19302,19305], "network": "tcp"}
+                    {"port": [3478,3479,5349,5350,19302,19305], "network": "udp"},
+                    {"port": [3478,3479,5349,5350,19302,19305], "network": "tcp"}
                 ],
                 "action": "reject",
                 "invert": true,  // 排除白名单

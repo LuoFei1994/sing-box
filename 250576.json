@@ -127,6 +127,16 @@
             
             // 1. 关键服务优先处理
             // 苹果服务特殊处理,使用专门服务器
+            // 在DNS规则中添加iOS隐私保护
+            {
+                  "domain_suffix": [
+                    "metrics.icloud.com",
+                    "diagnostics.apple.com",
+                    "analytics.apple.com",
+                    "crashlogs.apple.com"
+                  ],
+                  "server": "block"
+            },
             {
                 "domain_suffix": [
                     ".apple.com",
@@ -144,22 +154,6 @@
                 "client_subnet": "0.0.0.0/0"
             },
 
-            // 在DNS规则中添加iOS隐私保护
-            {
-                  "domain_suffix": [
-                    "metrics.icloud.com",
-                    "diagnostics.apple.com",
-                    "analytics.apple.com",
-                    "crashlogs.apple.com"
-                  ],
-                  "server": "block"
-            },
-            
-            
-
-            
-            
-            
             
 
             

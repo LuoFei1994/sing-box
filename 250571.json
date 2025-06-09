@@ -217,7 +217,7 @@
             "tcp_fast_open": false,
             "tcp_multi_path": false,
             "udp_fragment": true,  // 入站启用UDP分片
-            "udp_over_tcp": true,  // 出站启用UDP over TCP
+            "udp_over_tcp": true   // 出站启用UDP over TCP
         },
         {
             "type": "tun",
@@ -364,9 +364,9 @@
                 "type": "tcp",  // 显式指定TCP传输
                 "headers": {}    // 空头避免检测
             },
-            "packet_encoding": "xudp",  // 使用更高效的XUDP编码
-            "udp_over_tcp": true,       // 启用UDP over TCP
-            "connect_timeout": "10s"    // 添加连接超时
+        "packet_encoding": "xudp",  // 使用更高效的XUDP编码
+        "udp_over_tcp": true,       // 启用UDP over TCP
+        "connect_timeout": "10s"    // 添加连接超时
         }
         
     ],
@@ -517,7 +517,7 @@
                 ],
                 "action": "reject"
             },
-            / ===== 节点健康检查路由 =====
+            // ===== 节点健康检查路由 =====
             {
                 "protocol": "tcp",
                 "port": [80, 443],
@@ -540,7 +540,7 @@
             //隐私服务拦截,补充上面广告
             {
                 "domain_regex": "(privacy|vpn|proxy|anonym)\\.(com|net|io|org)",
-                "action": "reject",
+                "action": "reject"
             },
 
             // 隐私敏感协议拦截,拦截加密货币和Tor流量

@@ -409,29 +409,7 @@
                 "action": "hijack-dns"
             },
 
-        // ===== 1. 优先放行QUIC白名单域名 =====
-            {
-                "process_name": [
-                    "TikTok",
-                    "Telegram",
-                    "google",
-                    "youtube",
-                    "googlevideo",
-                    "cloudflare",
-                    "cloudflare-dns",
-                    "facebook",
-                    "whatsapp",
-                    "instagram",
-                    "netflix",
-                    "spotify",
-                    "tiktok",
-                    "tiktokv",
-                    "tiktokcdn",
-                    "muscdn",
-                    "telegram"
-                ],
-                "outbound": "🚀 节点选择"
-            },
+        
             
         //=======放行私有IP（ip_is_private和ip_cidr私有地址）======
 
@@ -620,42 +598,25 @@
            //WebRTC协议泄露防护
            // ===== 2. 更新WebRTC拦截规则 =====
             {
-                "type": "logical",
-                "mode": "or",
-                "rules": [
-                    {"protocol": ["stun","turn","webrtc"], "network": "udp"},
-                    {"protocol": ["stun","turn","webrtc"], "network": "tcp"}
+                "protocol": [
+                    "stun",
+                    "turn",
+                    "webrtc"
                 ],
-                "action": "reject",
-                "invert": true,  // 排除白名单
-                "domain": [
-                    "google.com", "youtube.com", "googlevideo.com",
-                    "cloudflare.com", "cloudflare-dns.com",
-                    "facebook.com", "whatsapp.com", "instagram.com",
-                    "netflix.com", "spotify.com",
-                    "tiktok.com", "*.tiktokcdn.com", "tiktokv.com",
-                    "telegram.org", "t.me", "telegram.me"
-                ]
+                "action": "reject"
             },
             
             // ===== 3. 更新端口拦截规则 =====
             {
-                "type": "logical",
-                "mode": "or",
-                "rules": [
-                    {"port": [3478,3479,5349,5350,19302,19305], "network": "udp"},
-                    {"port": [3478,3479,5349,5350,19302,19305], "network": "tcp"}
+                "port": [
+                    3478,
+                    3479,
+                    5349,
+                    5350,
+                    19302,
+                    19305
                 ],
-                "action": "reject",
-                "invert": true,  // 排除白名单
-                "domain": [
-                    "google.com", "youtube.com", "googlevideo.com",
-                    "cloudflare.com", "cloudflare-dns.com",
-                    "facebook.com", "whatsapp.com", "instagram.com",
-                    "netflix.com", "spotify.com",
-                    "tiktok.com", "*.tiktokcdn.com", "tiktokv.com",
-                    "telegram.org", "t.me", "telegram.me"
-                ]
+                "action": "reject"
             },
             // WebRTC泄露防护
             //{

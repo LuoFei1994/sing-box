@@ -380,15 +380,26 @@
             
         // =======必要的技术规则（如sniff, resolve, hijack-dns）======
 
-            // 禁用 IPv6
+            
+            
             {
-              "ip_version": 6,
-              "action": "reject"
+                "ip_is_private": true,
+                "action": "route",
+                "outbound": "🎯 全球直连"
             },
+            //拦截dns
             {
-                "protocol": "udp",
-                "port": [443, 80],
-                "action": "reject"  // 阻止QUIC等UDP协议
+                "type": "logical",
+                "mode": "or",
+                "rules": [
+                    {
+                        "port": 53
+                    },
+                    {
+                        "protocol": "dns"
+                    }
+                ],
+                "action": "hijack-dns"
             },
     
             {    
@@ -408,30 +419,22 @@
                 "action": "resolve",
                 "strategy": "prefer_ipv4"
             },
-            //拦截dns
+            // 禁用 IPv6
             {
-                "type": "logical",
-                "mode": "or",
-                "rules": [
-                    {
-                        "port": 53
-                    },
-                    {
-                        "protocol": "dns"
-                    }
-                ],
-                "action": "hijack-dns"
+              "ip_version": 6,
+              "action": "reject"
             },
+            {
+                "protocol": "udp",
+                "port": [443, 80],
+                "action": "reject"  // 阻止QUIC等UDP协议
+            },
+            
 
         
             
-        //=======放行私有IP（ip_is_private和ip_cidr私有地址）======
 
-            {
-                "ip_is_private": true,
-                "action": "route",
-                "outbound": "🎯 全球直连"
-            },
+            
 
             
 

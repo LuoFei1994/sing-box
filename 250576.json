@@ -381,7 +381,14 @@
         // =======必要的技术规则（如sniff, resolve, hijack-dns）======
 
             
-            
+           {    
+                
+                "action": "sniff", 
+                "inbound": [
+                    "tun-in",
+                    "mixed-in"
+                ]
+            },
             {
                 "ip_is_private": true,
                 "action": "route",
@@ -401,24 +408,6 @@
                 ],
                 "action": "hijack-dns"
             },
-    
-            {    
-                
-                "action": "sniff", 
-                "inbound": [
-                    "tun-in",
-                    "mixed-in"
-                ]
-            },
-            //进站来的都从域解析到ip，ipv4优先
-            {
-                "inbound": [
-                    "tun-in",
-                    "mixed-in"
-                ],
-                "action": "resolve",
-                "strategy": "prefer_ipv4"
-            },
             // 禁用 IPv6
             {
               "ip_version": 6,
@@ -429,12 +418,17 @@
                 "port": [443, 80],
                 "action": "reject"  // 阻止QUIC等UDP协议
             },
+    
             
-
-        
-            
-
-            
+            //进站来的都从域解析到ip，ipv4优先
+            //{
+                //"inbound": [
+                    //"tun-in",
+                    //"mixed-in"
+                //],
+                //"action": "resolve",
+                //"strategy": "prefer_ipv4"
+            //},
 
             
 

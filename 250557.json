@@ -582,7 +582,7 @@
             {
               "protocol": "http",
               "port": 80,
-              "outbound": "reject",
+              "outbound": "🚀 节点选择",
               // 仅针对非中国域名
               "invert": true
             },

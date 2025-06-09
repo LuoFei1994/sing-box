@@ -3,7 +3,7 @@
     "log": {
         "disabled": false,
         //日志详细记录
-        "level": "error", 
+        "level": "debug", 
         "output": "",
         //打开标注日志时间 
         "timestamp": false 
@@ -63,7 +63,7 @@
             {
                 "tag": "Remote-DNS",
                 // Quad9的DoT（带恶意软件过滤） 直接使用IP避免二次解析
-                "address": "tls://9.9.9.11:853",  
+                "address": "tls://9.9.9.11:853", 
                 "detour": "🚀 节点选择"
             
             },
@@ -72,7 +72,7 @@
             {
                 "address": "fakeip",
                 "tag": "fakeip",
-                // 仅使用IPv4 FakeIP
+                //仅使用IPv4 FakeIP
                 "strategy": "ipv4_only"
             },
 
@@ -125,11 +125,12 @@
                 "server": "Local-DNS"
             },
 
+          
             // 2. 隐私防护规则
-            {
-                "domain_keyword": ["stun", "turn", "webrtc","quic"],
-                "server": "block"
-            },
+            //{
+                //"domain_keyword": ["stun", "turn", "webrtc","quic"],
+                //"server": "block"
+            //},
             
             
             
@@ -179,13 +180,14 @@
         "disable_cache": true, 
         "disable_expire": false,
         "independent_cache": true,
-        //没找到的dns走指定，注释掉，强制所有DNS走FakeIP。
-        //"final": "Remote-DNS",
+        
         "fakeip": {
             "enabled": true,
-            "inet4_range": "198.18.0.0/16",
+            "inet4_range": "198.18.0.0/15",
             "inet6_range": "fc00::/18"
-        }
+        },
+        //没找到的dns走指定，注释掉，强制所有DNS走FakeIP。
+        "final": "Remote-DNS"
     },
     //进站监控
     "inbounds": [
@@ -247,8 +249,7 @@
             "outbounds": [
                 "已中转kookeey",
                 "kookeey链式",
-                "proxy2",
-                "proxy3"
+                "vmess1"
             ]
         },
         {
@@ -263,8 +264,7 @@
             "outbounds": [
                 "已中转kookeey",
                 "kookeey链式",
-                "proxy2",
-                "proxy3"
+                "vmess1"
             ]
         },
         
@@ -302,73 +302,42 @@
             "password": "56864eaa",
             "version": "5"
         },
-        {
-            "type": "shadowsocks",
-            "tag": "proxy2",
-            "server": "c50s2.portablesubmarines.com",
-            "server_port": 7395,
-            "method": "aes-256-gcm",
-            "password": "kQBeCDXbwoSW2wVC",
-            //启用HTTP流量混淆插件
-            "plugin": "", 
-            // 必要隐私保护
-            "plugin_opts": "", 
-            // 关闭UDP减少耗电，选tcp
-            "network": "udp", 
-            // 强制UDP over TCP 
-            "udp_over_tcp": true,
-            "multiplex": {
-                // 启用多路复用
-                "enabled": true,      
-                "protocol": "h2mux",
-                "max_connections": 8,
-                // 新增流量填充防分析
-                "padding": true  
-            } 
-        },
-        {
-            "type": "shadowsocks",
-            "tag": "proxy3",
-            "server": "c62s2.portablesubmarines.com",
-            "server_port": 9501,
-            // 最新抗量子加密chacha20-ietf-poly1305 
-            "method": "aes-256-gcm",
-            "password": "fFfe3fuhJrhhXSSY",
-            //启用HTTP流量混淆插件
-            "plugin": "", 
-            // 必要隐私保护 深度伪装
-            "plugin_opts": "", 
-            // 关闭UDP减少耗电，选tcp
-            "network": "udp", 
-            // 强制UDP over TCP 
-            "udp_over_tcp": true,
-            "multiplex": {
-                // 启用多路复用
-                "enabled": true,  
-                // HTTP/2多路复用
-                "protocol": "h2mux",
-                "max_connections": 8
-            }
-        },
+        //shadowsocks无法直接使用
+        //{
+            //"type": "shadowsocks",
+            //"tag": "proxy2",
+            //"server": "c50s2.portablesubmarines.com",
+            //"server_port": 7395,
+            //"method": "aes-256-gcm",
+            //"password": "kQBeCDXbwoSW2wVC",
+            ////启用HTTP流量混淆插件
+            //"plugin": "", 
+            //// 必要隐私保护
+            //"plugin_opts": "", 
+            //// 关闭UDP减少耗电，选tcp
+            //"network": "udp",
+            //"udp_over_tcp": false
+        //},
+        
         {
             "type": "socks",
             "tag": "kookeey链式",
             "server": "204.242.254.64",
             "server_port": 31012,
-            "detour": "proxy2",
+            "detour": "vmess1",
             "username": "5258f8e2",
             "password": "56864eaa",
             "version": "5"
+        },
+        {
+        "type": "vmess",
+        "tag": "vmess1",
+        "server": "c62s3.portablesubmarines.com",
+        "server_port": 9501,
+        "uuid": "83e68f47-bf95-454e-8ba0-4a83a42848ba",
+        "security": "auto",
+        "alter_id": 0
         }
-        //{
-        //"type": "vmess",
-        //"tag": "proxy2",
-        //"server": "c50s2.portablesubmarines.com",
-        //"server_port": 19868,
-        //"uuid": "30a5efe1-3235-4b93-a8ee-71b1d1834c5b",
-        //"security": "auto",
-        //"alter_id": 0
-        //}
         
     ],
     //出站的规则分流
@@ -407,6 +376,8 @@
                 ],
                 "action": "hijack-dns"
             },
+
+        
             
         //=======放行私有IP（ip_is_private和ip_cidr私有地址）======
 
@@ -464,10 +435,10 @@
             },
             
             // 阻止代理节点被二次代理，会配合dns的规则
-            {
-                "domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz"],
-                "outbound": "🎯 全球直连"
-            },
+            //{
+                //"domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz"],
+                //"outbound": "🎯 全球直连"
+            //},
             
             //支付渠道走直连，避免出问题
             {
@@ -499,28 +470,8 @@
                 ],
                 "outbound": "🎯 全球直连"
             },
-        // =====放行代理的域名，quic协议的=======
-            {
-                "domain": [
-                    "google.com",
-                    "youtube.com",
-                    "googlevideo.com",
-                    "cloudflare.com",
-                    "cloudflare-dns.com",
-                    "facebook.com", 
-                    "whatsapp.com",
-                    "netflix.com", 
-                    "spotify.com",
-                    "tiktok.com", 
-                    "telegram.com",
-                    "instagram.com", 
-                    "x.com",
-                    "snapchat.com",
-                    "messenger.com"
-                ],
-                "protocol": ["quic"],
-                "outbound": "🚀 节点选择"
-            },
+
+        
 
          // =====拦截规则（隐私防护、广告、加密货币等）=====
             //拦截的广告
@@ -613,21 +564,20 @@
             },
             
            //WebRTC协议泄露防护
-           {
-              "action": "reject",
-              "protocol": [
-                  "stun",
-                  "turn",
-                  "quic",
-                  "webrtc"
-              ],
-              "network": "udp"
+           // ===== 2. 更新WebRTC拦截规则 =====
+            {
+                "protocol": [
+                    "stun",
+                    "turn",
+                    "quic",
+                    "webrtc"
+                ],
+                "action": "reject"
             },
-            //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口
+            
+            // ===== 3. 更新端口拦截规则 =====
             {
                 "port": [
-                    80,
-                    443,
                     3478,
                     3479,
                     5349,
@@ -635,14 +585,13 @@
                     19302,
                     19305
                 ],
-                "network": "udp",
                 "action": "reject"
             },
             // WebRTC泄露防护
-            {
-                "domain_regex": "^(stun|turn|webrtc)\\.",
-                "action": "reject"
-            },
+            //{
+                //"domain_regex": "^(stun|turn|webrtc)\\.",
+                //"action": "reject"
+            //},
 
 
             

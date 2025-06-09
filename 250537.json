@@ -412,13 +412,24 @@
 
         // ===== 1. 优先放行QUIC白名单域名 =====
             {
-                "domain": [
-                    "google.com", "youtube.com", "googlevideo.com", 
-                    "cloudflare.com", "cloudflare-dns.com",
-                    "facebook.com", "whatsapp.com", "instagram.com",
-                    "netflix.com", "spotify.com",
-                    "tiktok.com", "*.tiktokcdn.com", "tiktokv.com", "muscdn.com",
-                    "telegram.org", "t.me", "telegram.me"
+                "process_name": [
+                    "TikTok",
+                    "Telegram",
+                    "google",
+                    "youtube",
+                    "googlevideo",
+                    "cloudflare",
+                    "cloudflare-dns",
+                    "facebook",
+                    "whatsapp",
+                    "instagram",
+                    "netflix",
+                    "spotify",
+                    "tiktok",
+                    "tiktokv",
+                    "tiktokcdn",
+                    "muscdn",
+                    "telegram"
                 ],
                 "outbound": "🚀 节点选择"
             },

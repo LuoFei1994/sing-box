@@ -87,7 +87,6 @@
                 "address": "fakeip",
                 "tag": "fakeip",
                 "strategy": "ipv4_only",  // 明确限制仅IPv4
-                "query_type": ["A", "AAAA"]  // 仅响应基础查询
             },
 
             //拒绝的DNS

@@ -125,14 +125,19 @@
                 "server": "Local-DNS"
             },
 
-          
-            // 2. 隐私防护规则
-            //{
-                //"domain_keyword": ["stun", "turn", "webrtc","quic"],
-                //"server": "block"
-            //},
+            // 拦截新型 DNS 记录
+            {
+              "query_type": ["HTTPS","SVCB"],
+              "server": "block"  
+            },
             
+            // 本地域名直连
+            {
+              "domain_suffix": [".arpa",".local"],
+              "server": "Local-DNS"  
+            },
             
+
             
             //====clash mode的规则=====
             {
@@ -387,6 +392,12 @@
                 "outbound": "🎯 全球直连"
             },
 
+            // 禁用 IPv6
+            {
+              "ip_version": 6,
+              "outbound": "🎯 全球直连"  
+            },
+
             //添加NTP服务直连规则,避免代理不稳定时可能回退直连。
             { 
                 "domain": ["time.apple.com"], 
@@ -550,11 +561,14 @@
             {
                   "action": "reject",
                   "domain_suffix": [
-                    ".coinbase.com",
-                    ".binance.com",
-                    ".metamask.io",
-                    ".tron.network",
-                    ".okx.com"
+                      ".coinbase.com",
+                      ".binance.com",
+                      ".metamask.io",
+                      ".tron.network",
+                      ".okx.com",
+                      ".crypto",
+                      ".eth",
+                      ".bit"
                   ]
             },
             // 隐私敏感协议拦截,拦截加密货币和Tor流量
@@ -564,6 +578,28 @@
             },
             
            //WebRTC协议泄露防护
+           //HTTP(80) 安全处理,非中国域名强制拒绝 HTTP 明文传输,保留国内网站兼容性（银行/政府网站等）
+            {
+              "protocol": "http",
+              "port": 80,
+              "outbound": "reject",
+              // 仅针对非中国域名
+              "invert": true
+            },
+            //HTTPS(443) 隐私过滤,拦截含 tracking/analytics 等关键词的加密跟踪域,覆盖 Google Analytics、Adobe Tracking 等常见追踪器
+            {
+              "protocol": "tls",
+              "port": 443,
+              "domain_keyword": ["tracking","analytics","metrics"],
+              "outbound": "reject"
+            },
+            //QUIC 协议阻断,阻止 UDP/80+443 端口的 QUIC 协议,强制回退到 TCP 增强可监控性
+            {
+              "port": [80, 443],
+              "network": "udp",
+            // 阻止 QUIC 协议
+              "outbound": "reject"  
+            },
            // ===== 2. 更新WebRTC拦截规则 =====
             {
                 "protocol": [
@@ -588,10 +624,10 @@
                 "action": "reject"
             },
             // WebRTC泄露防护
-            //{
-                //"domain_regex": "^(stun|turn|webrtc)\\.",
-                //"action": "reject"
-            //},
+            {
+                "domain_regex": "^(stun|turn|webrtc)\\..+",
+                "action": "reject"
+            },
 
 
             

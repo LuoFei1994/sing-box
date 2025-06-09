@@ -34,7 +34,7 @@
             // 禁用FakeIP持久化,更隐秘
             "store_fakeip": false,
             //持久化已拒绝的dns响应
-            "store_rdrc": true,
+            "store_rdrc": false,
             // 缩短拒绝缓存时间
             "rdrc_timeout": "12h"
         }
@@ -219,8 +219,8 @@
             //改false的话可以禁用TUN严格路由（解决部分WiFi断流）
             "strict_route": false, 
             "sniff": true,
-            // 提升NAT兼容性
-            "endpoint_independent_nat": false, 
+            // 禁用可以提升NAT兼容性
+            "endpoint_independent_nat": true, 
             // 避免IPv6泄露
             "domain_strategy": "prefer_ipv4", 
             //mixed、system、gvisor   

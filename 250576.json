@@ -149,18 +149,6 @@
                 "server": "Local-DNS"
             },
             
-            {
-                "query_type": [
-                    "HTTPS", 
-                    "SVCB", 
-                    "TXT", 
-                    "MX", 
-                    "CNAME"
-                ],
-                "server": "Remote-DNS"  // 使用支持DoT的远程DNS
-             },
-
-
             // 本地域名直连
             {
               "domain_suffix": [".arpa",".local"],
@@ -207,7 +195,17 @@
                     "AAAA"
                 ],
                 "server": "fakeip"
-            }
+            },
+            {
+                "query_type": [
+                    "HTTPS", 
+                    "SVCB", 
+                    "TXT", 
+                    "MX", 
+                    "CNAME"
+                ],
+                "server": "Remote-DNS"  // 使用支持DoT的远程DNS
+             }
             
         ],
         //默认ipv4优选

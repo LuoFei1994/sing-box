@@ -205,7 +205,7 @@
                     "MX", 
                     "CNAME"
                 ],
-                "server": "Remote-DNS"  // 使用支持DoT的远程DNS
+                "server": "Local-DNS"  // 使用支持DoT的远程DNS
              }
         ],
         //默认ipv4优选

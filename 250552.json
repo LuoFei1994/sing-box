@@ -319,7 +319,6 @@
             // 关闭UDP减少耗电，选tcp
             "network": "udp",
             "udp_over_tcp": false
-            } 
         },
         {
             "type": "shadowsocks",

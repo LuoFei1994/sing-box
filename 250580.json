@@ -57,7 +57,9 @@
                 "address": "https://223.5.5.5:443/dns-query",
                 "address_resolver": "Local-DNS-Resolver",
                 "detour": "🎯 全球直连",
-                "strategy": "prefer_ipv4"
+                "strategy": "prefer_ipv4",
+                // 隐藏客户端IP
+                "client_subnet": "0.0.0.0/0"
             },
             {
                 "tag": "Local-DNS-Resolver",
@@ -70,7 +72,9 @@
                 "address": "tls://9.9.9.11:853",
                 "address_resolver": "Remote-DNS-Resolver",
                 "detour": "🚀 节点选择",
-                "strategy": "prefer_ipv4"
+                "strategy": "prefer_ipv4",
+                // 隐藏客户端IP
+                "client_subnet": "0.0.0.0/0"
             },
             {
                 "tag": "Remote-DNS-Resolver",
@@ -91,6 +95,26 @@
         ],
         //dns的规则
         "rules": [
+            //====clash mode的规则=====
+            {
+                "action": "route",
+                "clash_mode": "direct",
+                "server": "Local-DNS"
+            },
+            {
+                "action": "route",
+                "clash_mode": "global",
+                "server": "Remote-DNS"
+            },
+            
+            
+            // 这只是模块，不影响底下的规则匹配，最终都会把解析到的IP转为虚假IP：强制所有流量经FakeIP
+           {
+               "inbound": ["tun-in", "mixed-in"],
+               "server": "fakeip",
+               "disable_cache": true 
+            },
+            
             // 1. 基础防护规则
             {
                 "port": 53,
@@ -107,6 +131,23 @@
                 ],
                 "server": "block"
             },
+            
+            // 4. 区域分流规则
+            {
+                "action": "route",
+                "rule_set": [
+                    "GeoSite-CN"
+                ],
+                "server": "Local-DNS" // 中国域名直连
+            },
+            {
+                "action": "route",
+                "rule_set": [
+                    "geosite-geolocation-!cn"
+                ],
+                "server": "Remote-DNS" // 非中国域名代理
+            },
+            
             // 3. 直连规则,节点域名直连（防DNS污染）
             {
                 "domain_suffix": [
@@ -145,32 +186,8 @@
                 // 隐藏客户端IP
                 "client_subnet": "0.0.0.0/0"
             },
-            //====clash mode的规则=====
-            {
-                "action": "route",
-                "clash_mode": "direct",
-                "server": "Local-DNS"
-            },
-            {
-                "action": "route",
-                "clash_mode": "global",
-                "server": "Remote-DNS"
-            },
-            // 4. 区域分流规则
-            {
-                "action": "route",
-                "rule_set": [
-                    "GeoSite-CN"
-                ],
-                "server": "Local-DNS" // 中国域名直连
-            },
-            {
-                "action": "route",
-                "rule_set": [
-                    "geosite-geolocation-!cn"
-                ],
-                "server": "Remote-DNS" // 非中国域名代理
-            },
+            
+            
             // 4. 兜底规则（最后）
             {
                 "query_type": [
@@ -191,6 +208,8 @@
                 "server": "Remote-DNS" // 使用支持DoT的远程DNS
             }
         ],
+        // 隐藏客户端IP
+        "client_subnet": "0.0.0.0/0",
         //默认ipv4优选
         "strategy": "prefer_ipv4",
         // 关闭DNS缓存减少CPU负载,避免缓存污染

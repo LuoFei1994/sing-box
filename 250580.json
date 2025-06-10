@@ -719,7 +719,7 @@
             {
                 "tag": "PrivateTracker",
                 "type": "remote",
-                "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset/refs/heads/main/rule/PrivateTracker/PrivateTracker.srs",
+                "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/refs/heads/main/rule/PrivateTracker/PrivateTracker.srs",
                 "format": "binary",
                 "download_detour": "🎯 全球直连",
                 "update_interval": "48h"

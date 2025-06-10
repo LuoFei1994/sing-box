@@ -2,7 +2,7 @@
 {
     "log": {
         "disabled": false,
-        //日志详细记录
+        //日志详细记录 
         "level": "warn", 
         "output": "",
         //打开标注日志时间 
@@ -58,7 +58,7 @@
                 "address": "https://223.5.5.5:443/dns-query",
                 "address_resolver": "Local-DNS-Resolver",
                 "detour": "🎯 全球直连",
-                "strategy": "ipv4_only"
+                "strategy": "prefer_ipv4"
             },
 
             {
@@ -73,7 +73,7 @@
                 "address": "tls://9.9.9.11:853",
                 "address_resolver": "Remote-DNS-Resolver",
                 "detour": "🚀 节点选择",
-                "strategy": "ipv4_only"
+                "strategy": "prefer_ipv4"
             },
 
             {
@@ -86,8 +86,7 @@
             {
                 "address": "fakeip",
                 "tag": "fakeip",
-                //仅使用IPv4 FakeIP
-                "strategy": "ipv4_only"
+                "strategy": "prefer_ipv4"
             },
 
             //拒绝的DNS
@@ -105,15 +104,29 @@
                "server": "fakeip",
                "disable_cache": true 
             },
-
-
+            
             //阻止DNS劫持（端口53重定向）
             {
                 "port": 53,
                 "server": "Remote-DNS",
                 "rewrite_ttl": 300
             },
+            
+            // 新增代理节点域名直连（防DNS污染）,配合底下的出站规则
+            {
+                "domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz"],
+                "server": "Local-DNS"
+            },
 
+            
+            // 本地域名直连
+            {
+              "domain_suffix": [".arpa",".local"],
+              "server": "Local-DNS"  
+            },
+            
+            // 1. 关键服务优先处理
+            // 苹果服务特殊处理,使用专门服务器
             // 在DNS规则中添加iOS隐私保护
             {
                   "domain_suffix": [
@@ -124,9 +137,6 @@
                   ],
                   "server": "block"
             },
-            
-            // 1. 关键服务优先处理
-            // 苹果服务特殊处理,使用专门服务器
             {
                 "domain_suffix": [
                     ".apple.com",
@@ -144,23 +154,6 @@
                 "client_subnet": "0.0.0.0/0"
             },
 
-            // 新增代理节点域名直连（防DNS污染）,配合底下的出站规则
-            {
-                "domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz"],
-                "server": "Local-DNS"
-            },
-
-            // 拦截新型 DNS 记录
-            {
-              "query_type": ["HTTPS","SVCB"],
-              "server": "block"  
-            },
-            
-            // 本地域名直连
-            {
-              "domain_suffix": [".arpa",".local"],
-              "server": "Local-DNS"  
-            },
             
 
             
@@ -202,22 +195,31 @@
                     "AAAA"
                 ],
                 "server": "fakeip"
-            }
+            },
+            {
+                "query_type": [
+                    "HTTPS", 
+                    "SVCB", 
+                    "TXT", 
+                    "MX", 
+                    "CNAME"
+                ],
+                "server": "Remote-DNS"  // 使用支持DoT的远程DNS
+             }
+            
         ],
         //默认ipv4优选
-        "strategy": "ipv4_only", 
+        "strategy": "prefer_ipv4", 
         // 关闭DNS缓存减少CPU负载,避免缓存污染
         "disable_cache": true, 
         "disable_expire": false,
         "independent_cache": true,
-        
+        "final": "Remote-DNS",
         "fakeip": {
             "enabled": true,
-            "inet4_range": "198.18.0.0/15",
+            "inet4_range": "198.18.0.0/16",
             "inet6_range": "fc00::/18"
-        },
-        //没找到的dns走指定，注释掉，强制所有DNS走FakeIP。
-        "final": "Remote-DNS"
+        }
     },
     //进站监控
     "inbounds": [
@@ -376,26 +378,25 @@
         "rules": [
             
         // =======必要的技术规则（如sniff, resolve, hijack-dns）======
-
-            // 禁用 IPv6
-            {
+           // 禁用 IPv6
+           {
               "ip_version": 6,
               "action": "reject"
-            },
-            {
+           },
+           {
                 "protocol": "udp",
                 "port": [443, 80],
                 "action": "reject"  // 阻止QUIC等UDP协议
-            },
-    
-            {    
-                
+           },
+            
+           {    
                 "action": "sniff", 
                 "inbound": [
                     "tun-in",
                     "mixed-in"
                 ]
             },
+            
             //进站来的都从域解析到ip，ipv4优先
             {
                 "inbound": [
@@ -404,6 +405,12 @@
                 ],
                 "action": "resolve",
                 "strategy": "prefer_ipv4"
+            },
+            
+            {
+                "ip_is_private": true,
+                "action": "route",
+                "outbound": "🎯 全球直连"
             },
             //拦截dns
             {
@@ -419,16 +426,9 @@
                 ],
                 "action": "hijack-dns"
             },
-
-        
+    
             
-        //=======放行私有IP（ip_is_private和ip_cidr私有地址）======
-
-            {
-                "ip_is_private": true,
-                "action": "route",
-                "outbound": "🎯 全球直连"
-            },
+            
 
             
 
@@ -743,7 +743,7 @@
             {
                 "tag": "PrivateTracker",
                 "type": "remote",
-                "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/refs/heads/main/rule/PrivateTracker/PrivateTracker.srs",
+                "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset/refs/heads/main/rule/PrivateTracker/PrivateTracker.srs",
                 "format": "binary",
                 "download_detour": "🎯 全球直连",
                 "update_interval": "48h"

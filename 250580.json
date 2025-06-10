@@ -365,10 +365,20 @@
     //出站的规则分流
     "route": {
         "rules": [
-            // ==== 第1层：基础安全 ====
+            
             {
                 "ip_version": 6,
                 "action": "reject" // 禁用IPv6
+            },
+            //QUIC 协议阻断,阻止 UDP/80+443 端口的 QUIC 协议,强制回退到 TCP 增强可监控性
+            {
+                "port": [
+                    80,
+                    443
+                ],
+                "network": "udp",
+                // 阻止 QUIC 协议
+                "outbound": "reject"
             },
             {
                 "protocol": "udp",
@@ -378,28 +388,72 @@
                 ],
                 "action": "reject" // 阻止QUIC等UDP协议
             },
+            
+            //HTTP(80) 安全处理,非中国域名强制拒绝 HTTP 明文传输,保留国内网站兼容性（银行/政府网站等）
             {
-                "action": "sniff",
-                "inbound": [
-                    "tun-in",
-                    "mixed-in"
+                "protocol": "http",
+                "port": 80,
+                "outbound": "🚀 节点选择",
+                // 仅针对非中国域名
+                "invert": true
+            },
+            
+            // 隐私敏感协议拦截,拦截加密货币和Tor流量
+            {
+                "protocol": [
+                    "ftp",
+                    "telnet",
+                    "smtp",
+                    "tor",
+                    "bittorrent",
+                    "bitcoin"
+                ],
+                "action": "reject"
+            },
+            
+            // ===== 2. 更新WebRTC拦截规则 =====
+            {
+                "action": "reject",
+                "protocol": [
+                    "stun",
+                    "turn",
+                    "quic",
+                    "webrtc"
                 ]
             },
-            //进站来的都从域解析到ip，ipv4优先
+            // ===== 3. 更新端口拦截规则 =====
             {
-                "inbound": [
-                    "tun-in",
-                    "mixed-in"
-                ],
-                "action": "resolve",
-                "strategy": "prefer_ipv4"
+                "action": "reject",
+                "port": [
+                    3478,
+                    3479,
+                    5349,
+                    5350,
+                    19302,
+                    19305
+                ]
             },
+            
             {
                 "ip_is_private": true,
                 "action": "route",
                 "outbound": "🎯 全球直连"
             },
-            //拦截dns
+            
+            // ===== 节点健康检查路由 =====
+            {
+                "protocol": "tcp",
+                "port": [
+                    80,
+                    443
+                ],
+                "domain": [
+                    "www.gstatic.com"
+                ],
+                "outbound": "🎈 自动选择"
+            },
+        
+        //拦截dns
             {
                 "type": "logical",
                 "mode": "or",
@@ -413,6 +467,180 @@
                 ],
                 "action": "hijack-dns"
             },
+            
+            
+            
+            //解析得到域名或者ip，对HTTPS流量解析不到IP，那只能拿到真实域名和上面给到的fakeip
+            {
+                "action": "sniff",
+                "inbound": [
+                    "tun-in",
+                    "mixed-in"
+                ]
+            },
+            //进站来的都从域解析到ip，ipv4优先，HTTPS流量解析不了，遇到只会走兜底漏网之鱼规则
+            {
+                "inbound": [
+                    "tun-in",
+                    "mixed-in"
+                ],
+                "action": "resolve",
+                "strategy": "prefer_ipv4"
+            },
+            
+            
+            
+            
+            
+            // ==== 第2层：隐私防护 ====
+            
+            //HTTPS(443) 隐私过滤,拦截含 tracking/analytics 等关键词的加密跟踪域,覆盖 Google Analytics、Adobe Tracking 等常见追踪器
+            {
+                "protocol": "tls",
+                "port": 443,
+                "domain_keyword": [
+                    "tracking",
+                    "analytics",
+                    "metrics"
+                ],
+                "outbound": "reject"
+            },
+            
+            {
+                "rule_set": [
+                    //拦截的广告
+                    "Category-Ads",
+                    "BlockHttpDNS"
+                ],
+                "action": "reject"
+            },
+            {
+                "rule_set": [
+                    //底下拦截隐私的广告
+                    "Privacy",
+                    "PrivacyEnhanced",
+                    //底下拦截追踪的广告
+                    "Tracking",
+                    "Tracker",
+                    "PrivateTracker"
+                ],
+                "action": "reject"
+            },
+            //隐私服务拦截,补充上面广告
+            {
+                "domain_regex": "(privacy|vpn|proxy|anonym)\\.(com|net|io|org)",
+                "action": "reject"
+            },
+            
+            // 隐私敏感协议拦截,拦截加密货币和Tor流量
+            {
+                "action": "reject",
+                "ip_cidr": [
+                    // Tor出口节点
+                    "176.10.104.240/28",
+                    "179.43.128.0/24",
+                    "185.220.101.0/24",
+                    "178.16.208.56/29",
+                    "192.42.116.16/28"
+                ]
+            },
+            // 隐私敏感协议拦截,拦截加密货币和Tor流量
+            {
+                "rule_set": [
+                    "Crypto"
+                ],
+                "action": "reject"
+            },
+            
+            // 隐私敏感协议拦截,拦截加密货币和Tor流量
+            {
+                "action": "reject",
+                "domain_suffix": [
+                    ".coinbase.com",
+                    ".binance.com",
+                    ".metamask.io",
+                    ".tron.network",
+                    ".okx.com",
+                    ".crypto",
+                    ".eth",
+                    ".bit"
+                ]
+            },
+            // 隐私敏感协议拦截,拦截加密货币和Tor流量
+            {
+                "action": "reject",
+                "domain_regex": "(coinbase|binance|metamask|tron|okx|bybit|kucoin)\\.(com|io|net)"
+            },
+            
+            
+            
+            // WebRTC泄露防护
+            {
+                "domain_regex": "^(stun|turn|webrtc)\\..+",
+                "action": "reject"
+            },
+            // ===== 指纹拦截优化版 =====
+            {
+                "action": "reject",
+                "domain_regex": [
+                    "(fingerprint(js)?|device(id|ident)|canvas|webgl|analytics|track(ing|er)?|metrics|telemetry|sentry)\\.(com|io|net|org)",
+                    "\\.?(safari-tracker|apple-analytics|advertising\\.apple|metrics\\.apple)\\.com"
+                ]
+            },
+            {
+                "action": "reject",
+                "domain_keyword": [
+                    "privacy",
+                    "vpn",
+                    "proxy",
+                    "anonym",
+                    "canvas_fingerprint",
+                    "webgl_fingerprint"
+                ]
+            },
+            
+            //====== clash mode 规则组=====
+            {
+                "action": "route",
+                "clash_mode": "direct",
+                "outbound": "🎯 全球直连"
+            },
+            {
+                "action": "route",
+                "clash_mode": "global",
+                "outbound": "GLOBAL"
+            },
+            
+            // ==== 第1层：基础安全 ====
+            // 在路由规则中添加位置服务防护
+            {
+                "domain_keyword": [
+                    "location",
+                    "geolocation",
+                    "gps",
+                    "positioning"
+                ],
+                "protocol": [
+                    "tls"
+                ],
+                "outbound": "🎯 全球直连"
+            },
+            
+            //=======放行中国域名和IP（规则集GeoSite-CN, geoip-cn等）======
+            {
+                "action": "route",
+                "rule_set": [
+                    "GeoSite-CN",
+                    "geoip-cn",
+                    "iOS-Services",
+                    "PayPal"
+                ],
+                "outbound": "🎯 全球直连"
+            },
+            
+            
+            
+            
             //=======放行直连域名（如Apple、支付、代理节点域名等）=======
             // Apple服务直连
             {
@@ -450,193 +678,7 @@
                 ],
                 "outbound": "🎯 全球直连"
             },
-            // 在路由规则中添加位置服务防护
-            {
-                "domain_keyword": [
-                    "location",
-                    "geolocation",
-                    "gps",
-                    "positioning"
-                ],
-                "protocol": [
-                    "tls"
-                ],
-                "outbound": "🎯 全球直连"
-            },
-            //=======放行中国域名和IP（规则集GeoSite-CN, geoip-cn等）======
-            {
-                "action": "route",
-                "rule_set": [
-                    "GeoSite-CN",
-                    "geoip-cn",
-                    "iOS-Services",
-                    "PayPal"
-                ],
-                "outbound": "🎯 全球直连"
-            },
-            // ==== 第2层：隐私防护 ====
-            {
-                "rule_set": [
-                    //拦截的广告
-                    "Category-Ads",
-                    "BlockHttpDNS"
-                ],
-                "action": "reject"
-            },
-            {
-                "rule_set": [
-                    //底下拦截隐私的广告
-                    "Privacy",
-                    "PrivacyEnhanced",
-                    //底下拦截追踪的广告
-                    "Tracking",
-                    "Tracker",
-                    "PrivateTracker"
-                ],
-                "action": "reject"
-            },
-            //隐私服务拦截,补充上面广告
-            {
-                "domain_regex": "(privacy|vpn|proxy|anonym)\\.(com|net|io|org)",
-                "action": "reject"
-            },
-            // 隐私敏感协议拦截,拦截加密货币和Tor流量
-            {
-                "rule_set": [
-                    "Crypto"
-                ],
-                "action": "reject"
-            },
-            // 隐私敏感协议拦截,拦截加密货币和Tor流量
-            {
-                "action": "reject",
-                "domain_suffix": [
-                    ".coinbase.com",
-                    ".binance.com",
-                    ".metamask.io",
-                    ".tron.network",
-                    ".okx.com",
-                    ".crypto",
-                    ".eth",
-                    ".bit"
-                ]
-            },
-            // 隐私敏感协议拦截,拦截加密货币和Tor流量
-            {
-                "action": "reject",
-                "domain_regex": "(coinbase|binance|metamask|tron|okx|bybit|kucoin)\\.(com|io|net)"
-            },
-            // 隐私敏感协议拦截,拦截加密货币和Tor流量
-            {
-                "protocol": [
-                    "ftp",
-                    "telnet",
-                    "smtp",
-                    "tor",
-                    "bittorrent",
-                    "bitcoin"
-                ],
-                "action": "reject"
-            },
-            // 隐私敏感协议拦截,拦截加密货币和Tor流量
-            {
-                "action": "reject",
-                "ip_cidr": [
-                    // Tor出口节点
-                    "176.10.104.240/28",
-                    "179.43.128.0/24",
-                    "185.220.101.0/24",
-                    "178.16.208.56/29",
-                    "192.42.116.16/28"
-                ]
-            },
-            //WebRTC协议泄露防护
-            //HTTP(80) 安全处理,非中国域名强制拒绝 HTTP 明文传输,保留国内网站兼容性（银行/政府网站等）
-            {
-                "protocol": "http",
-                "port": 80,
-                "outbound": "🚀 节点选择",
-                // 仅针对非中国域名
-                "invert": true
-            },
-            //HTTPS(443) 隐私过滤,拦截含 tracking/analytics 等关键词的加密跟踪域,覆盖 Google Analytics、Adobe Tracking 等常见追踪器
-            {
-                "protocol": "tls",
-                "port": 443,
-                "domain_keyword": [
-                    "tracking",
-                    "analytics",
-                    "metrics"
-                ],
-                "outbound": "reject"
-            },
-            //QUIC 协议阻断,阻止 UDP/80+443 端口的 QUIC 协议,强制回退到 TCP 增强可监控性
-            {
-                "port": [
-                    80,
-                    443
-                ],
-                "network": "udp",
-                // 阻止 QUIC 协议
-                "outbound": "reject"
-            },
-            // ===== 2. 更新WebRTC拦截规则 =====
-            {
-                "action": "reject",
-                "protocol": [
-                    "stun",
-                    "turn",
-                    "quic",
-                    "webrtc"
-                ]
-            },
-            // ===== 3. 更新端口拦截规则 =====
-            {
-                "action": "reject",
-                "port": [
-                    3478,
-                    3479,
-                    5349,
-                    5350,
-                    19302,
-                    19305
-                ]
-            },
-            // WebRTC泄露防护
-            {
-                "domain_regex": "^(stun|turn|webrtc)\\..+",
-                "action": "reject"
-            },
-            // ===== 指纹拦截优化版 =====
-            {
-                "action": "reject",
-                "domain_regex": [
-                    "(fingerprint(js)?|device(id|ident)|canvas|webgl|analytics|track(ing|er)?|metrics|telemetry|sentry)\\.(com|io|net|org)",
-                    "\\.?(safari-tracker|apple-analytics|advertising\\.apple|metrics\\.apple)\\.com"
-                ]
-            },
-            {
-                "action": "reject",
-                "domain_keyword": [
-                    "privacy",
-                    "vpn",
-                    "proxy",
-                    "anonym",
-                    "canvas_fingerprint",
-                    "webgl_fingerprint"
-                ]
-            },
-            //====== clash mode 规则组=====
-            {
-                "action": "route",
-                "clash_mode": "direct",
-                "outbound": "🎯 全球直连"
-            },
-            {
-                "action": "route",
-                "clash_mode": "global",
-                "outbound": "GLOBAL"
-            },
+            
             //===== 代理规则 =====
             //国外媒体走代理
             {
@@ -660,18 +702,6 @@
                     "geosite-geolocation-!cn"
                 ],
                 "outbound": "🚀 节点选择"
-            },
-            // ===== 节点健康检查路由 =====
-            {
-                "protocol": "tcp",
-                "port": [
-                    80,
-                    443
-                ],
-                "domain": [
-                    "www.gstatic.com"
-                ],
-                "outbound": "🎈 自动选择"
             }
         ],
         //出站的分流规则集

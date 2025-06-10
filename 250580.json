@@ -133,13 +133,7 @@
                 ],
                 "server": "Local-DNS" // 中国域名直连
             },
-            {
-                "action": "route",
-                "rule_set": [
-                    "geosite-geolocation-!cn"
-                ],
-                "server": "Remote-DNS" // 非中国域名代理
-            },
+            
             
             // 3. 直连规则,节点域名直连（防DNS污染）
             {
@@ -178,6 +172,14 @@
                 "disable_cache": true,
                 // 隐藏客户端IP
                 "client_subnet": "0.0.0.0/0"
+            },
+            
+            {
+                "action": "route",
+                "rule_set": [
+                    "geosite-geolocation-!cn"
+                ],
+                "server": "Remote-DNS" // 非中国域名代理
             },
             
             

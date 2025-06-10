@@ -108,13 +108,6 @@
             },
             
             
-            // 这只是模块，不影响底下的规则匹配，最终都会把解析到的IP转为虚假IP：强制所有流量经FakeIP
-           {
-               "inbound": ["tun-in", "mixed-in"],
-               "server": "fakeip",
-               "disable_cache": true 
-            },
-            
             // 1. 基础防护规则
             {
                 "port": 53,

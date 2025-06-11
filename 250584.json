@@ -377,11 +377,7 @@
                 "clash_mode": "global",
                 "outbound": "GLOBAL"
             },
-            {
-                "process_name": [
-                    
-                    ],
-                "outbound": "🎯 全球直连"
+
             
             {
                 "ip_version": 6,
@@ -489,6 +485,23 @@
                 "action": "resolve",
                 "strategy": "prefer_ipv4"
             },
+
+            //=======放行中国域名和IP（规则集GeoSite-CN, geoip-cn等）======
+            {
+                "action": "route",
+                "rule_set": [
+                    "GeoSite-CN",
+                    "geoip-cn",
+                    "iOS-Services",
+                    "PayPal"
+                ],
+                "outbound": "🎯 全球直连"
+            },
+
+
+
+
+            
             // ==== 第2层：隐私防护 ====
             //HTTPS(443) 隐私过滤,拦截含 tracking/analytics 等关键词的加密跟踪域,覆盖 Google Analytics、Adobe Tracking 等常见追踪器
             {
@@ -588,7 +601,7 @@
                     "webgl_fingerprint"
                 ]
             },
-            // ==== 第1层：基础安全 ====
+            
             // 在路由规则中添加位置服务防护
             {
                 "domain_keyword": [
@@ -602,17 +615,7 @@
                 ],
                 "outbound": "🎯 全球直连"
             },
-            //=======放行中国域名和IP（规则集GeoSite-CN, geoip-cn等）======
-            {
-                "action": "route",
-                "rule_set": [
-                    "GeoSite-CN",
-                    "geoip-cn",
-                    "iOS-Services",
-                    "PayPal"
-                ],
-                "outbound": "🎯 全球直连"
-            },
+            
             //=======放行直连域名（如Apple、支付、代理节点域名等）=======
             // Apple服务直连
             {

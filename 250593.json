@@ -383,6 +383,105 @@
                "outbound": "🎯 全球直连"
            },
 
+            
+
+            // 5. 系统级规则
+            {
+                "ip_is_private": true,
+                "action": "route",
+                "outbound": "🎯 全球直连"
+            },
+            
+            //拦截dns
+            {
+                "type": "logical",
+                "mode": "or",
+                "rules": [
+                    {
+                        "port": 53
+                    },
+                    {
+                        "protocol": "dns"
+                    }
+                ],
+                "action": "hijack-dns"
+            },
+            //解析得到域名或者ip，对HTTPS流量解析不到IP，那只能拿到真实域名和上面给到的fakeip
+            {
+                "action": "sniff",
+                "inbound": [
+                    "tun-in",
+                    "mixed-in"
+                ]
+            },
+            //进站来的都从域解析到ip，ipv4优先，HTTPS流量解析不了，遇到只会走兜底漏网之鱼规则
+            {
+                "inbound": [
+                    "tun-in",
+                    "mixed-in"
+                ],
+                "action": "resolve",
+                "strategy": "prefer_ipv4"
+            },
+
+            // 6. 直连规则
+            {
+                "domain_keyword": [
+                    "location",
+                    "geolocation",
+                    "gps",
+                    "positioning"
+                ],
+                "protocol": [
+                    "tls"
+                ],
+                "outbound": "🎯 全球直连"
+            },
+
+            {
+                "action": "route",
+                "rule_set": [
+                    "GeoSite-CN",
+                    "geoip-cn",
+                    "iOS-Services",
+                    "PayPal"
+                ],
+                "outbound": "🎯 全球直连"
+            },
+        
+           
+            //支付渠道走直连，避免出问题
+            {
+                "domain_suffix": [
+                    ".alipay.com",
+                    ".wechatpay.com",
+                    ".stripe.com",
+                    ".venmo.com"
+                ],
+                "outbound": "🎯 全球直连"
+            },
+            //银行服务
+            {
+                "domain_keyword": [
+                    "banking",
+                    "financial",
+                    "secret"
+                ],
+                "outbound": "🎯 全球直连"
+            },
+            // 添加CDN直连
+            {
+                "domain_keyword": [
+                    "cdn",
+                    "akamai"
+                ],
+                "domain_suffix": [
+                    ".cdn77.org"
+                ],
+                "outbound": "🎯 全球直连"
+            },
+            
+            
             // 3. 协议级拦截
             {
                 "ip_version": 6,
@@ -481,102 +580,6 @@
                     "(fingerprint|deviceid|canvasid|webglid|fontscan|browserspy|pixelscan)",
                     "\\.(fpjs|fingerprintjs|browserleaks|amiunique|pixelscan|creepjs)\\."
                 ]
-            },
-
-            // 5. 系统级规则
-            {
-                "ip_is_private": true,
-                "action": "route",
-                "outbound": "🎯 全球直连"
-            },
-            
-            //拦截dns
-            {
-                "type": "logical",
-                "mode": "or",
-                "rules": [
-                    {
-                        "port": 53
-                    },
-                    {
-                        "protocol": "dns"
-                    }
-                ],
-                "action": "hijack-dns"
-            },
-            //解析得到域名或者ip，对HTTPS流量解析不到IP，那只能拿到真实域名和上面给到的fakeip
-            {
-                "action": "sniff",
-                "inbound": [
-                    "tun-in",
-                    "mixed-in"
-                ]
-            },
-            //进站来的都从域解析到ip，ipv4优先，HTTPS流量解析不了，遇到只会走兜底漏网之鱼规则
-            {
-                "inbound": [
-                    "tun-in",
-                    "mixed-in"
-                ],
-                "action": "resolve",
-                "strategy": "prefer_ipv4"
-            },
-
-            // 6. 直连规则
-            {
-                "domain_keyword": [
-                    "location",
-                    "geolocation",
-                    "gps",
-                    "positioning"
-                ],
-                "protocol": [
-                    "tls"
-                ],
-                "outbound": "🎯 全球直连"
-            },
-
-            {
-                "action": "route",
-                "rule_set": [
-                    "GeoSite-CN",
-                    "geoip-cn",
-                    "iOS-Services",
-                    "PayPal"
-                ],
-                "outbound": "🎯 全球直连"
-            },
-        
-           
-            //支付渠道走直连，避免出问题
-            {
-                "domain_suffix": [
-                    ".alipay.com",
-                    ".wechatpay.com",
-                    ".stripe.com",
-                    ".venmo.com"
-                ],
-                "outbound": "🎯 全球直连"
-            },
-            //银行服务
-            {
-                "domain_keyword": [
-                    "banking",
-                    "financial",
-                    "secret"
-                ],
-                "outbound": "🎯 全球直连"
-            },
-            // 添加CDN直连
-            {
-                "domain_keyword": [
-                    "cdn",
-                    "akamai"
-                ],
-                "domain_suffix": [
-                    ".cdn77.org"
-                ],
-                "outbound": "🎯 全球直连"
             },
 
 

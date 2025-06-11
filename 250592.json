@@ -375,22 +375,19 @@
             },
 
             // 2. 节点域名直连
-            {
+           {
                "domain_suffix": [
                     ".portablesubmarines.com",
                     ".bgp.666888.biz"
                 ],
                "outbound": "🎯 全球直连"
-            },
-            {
-              "domain_keyword": ["qq.com", "tencent"],
-              "outbound": "🎯 全球直连"
-            },
-            {
+           },
+           {
               "protocol": "udp",
               "port": [7000-8000], // 游戏使用的UDP端口范围
               "outbound": "🎯 全球直连"
             },
+
 
             // 3. 协议级拦截
             {

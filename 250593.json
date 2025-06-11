@@ -555,9 +555,9 @@
                 "com.tencent.smoba",
                 "com.016888.shandongMarket",
                 "com.aliyizhan.gchyPro",
-                "com.tencent.tmgp.sgame",  // 官方王者荣耀
-                "com.tencent.tmgp.*",      // 所有渠道服
-                "com.tencent.ig"           // 和平精英
+                "com.tencent.tmgp.sgame",
+                "com.tencent.tmgp",
+                "com.tencent.ig"
               ],
               "outbound": "🎯 全球直连"
             },

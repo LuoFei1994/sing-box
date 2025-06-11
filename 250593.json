@@ -113,6 +113,21 @@
                 //"rewrite_ttl": 300
             //},
             // 2. 隐私保护规则,屏蔽苹果分析服务
+            
+        
+  {
+    "domain_suffix": [
+      "qq.com",
+      "gtimg.com",
+      "tencent.com",
+      "tencent-cloud.net",
+      "tcdn.qq.com",
+      "qlogo.cn",
+      "qpic.cn"
+    ],
+    "server": "Local-DNS"
+  },
+            
             {
                 "domain_suffix": [
                     "metrics.icloud.com",
@@ -414,6 +429,7 @@
     {
       "port_range": [
         "80:90",      // 登录认证端口
+        "7000:8000",
         "443:443",        // HTTPS端口
         "8080:8080",       // 备用登录
         "843:843",        // 安全连接

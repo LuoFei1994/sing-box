@@ -106,8 +106,6 @@
                 "clash_mode": "global",
                 "server": "Remote-DNS"
             },
-            
-            
             // 1. 基础防护规则
             {
                 "port": 53,
@@ -120,11 +118,13 @@
                     "metrics.icloud.com",
                     "diagnostics.apple.com",
                     "analytics.apple.com",
-                    "crashlogs.apple.com"
+                    "crashlogs.apple.com",
+                    "iad.apple.com",
+                    "identity.ess.apple.com",
+                    "gsa.apple.com"
                 ],
                 "server": "block"
             },
-            
             // 4. 区域分流规则
             {
                 "action": "route",
@@ -133,8 +133,6 @@
                 ],
                 "server": "Local-DNS" // 中国域名直连
             },
-            
-            
             // 3. 直连规则,节点域名直连（防DNS污染）
             {
                 "domain_suffix": [
@@ -165,7 +163,13 @@
                     ".mzstatic.com",
                     ".apple-cloudkit.com",
                     ".icloud-content.com",
-                    ".apple-livephotoskit.com"
+                    ".apple-livephotoskit.com",
+                    // 新增隐私敏感子域
+                    ".analytics.apple.com",
+                    ".metrics.apple.com",
+                    ".diagnostics.apple.com",
+                    ".crashlogs.apple.com",
+                    ".iad.apple.com"
                 ],
                 "server": "Local-DNS",
                 // 替代always_real_ip  替代skip_resolve的方案
@@ -173,7 +177,6 @@
                 // 隐藏客户端IP
                 "client_subnet": "0.0.0.0/0"
             },
-            
             {
                 "action": "route",
                 "rule_set": [
@@ -181,8 +184,6 @@
                 ],
                 "server": "Remote-DNS" // 非中国域名代理
             },
-            
-            
             // 4. 兜底规则（最后）
             {
                 "query_type": [
@@ -251,7 +252,7 @@
             //这三个的区别system 性能:高、安全性:低、兼容性:高(依赖系统)、复杂性:简单、 适用场景：性能优先
             //===========gvisor 性能:低、安全性:高、兼容性:中         、复杂性:较复杂、适用场景：安全隔离
             //===========mixed  上面两个的集合体，都中等
-            "stack": "gvisor",
+            "stack": "mixed",
             "platform": {
                 //http代理
                 "http_proxy": {
@@ -365,7 +366,6 @@
     //出站的规则分流
     "route": {
         "rules": [
-            
             //====== clash mode 规则组=====
             {
                 "action": "route",
@@ -377,6 +377,16 @@
                 "clash_mode": "global",
                 "outbound": "GLOBAL"
             },
+
+            // 节点域名走代理
+           {
+               "domain_suffix": [
+                    ".portablesubmarines.com",
+                    ".bgp.666888.biz"
+                ],
+               "outbound": "🎯 全球直连"
+           },
+
             
             {
                 "ip_version": 6,
@@ -388,19 +398,11 @@
                     80,
                     443
                 ],
+                //另一种写法"protocol": "udp",
                 "network": "udp",
                 // 阻止 QUIC 协议
                 "outbound": "reject"
             },
-            {
-                "protocol": "udp",
-                "port": [
-                    443,
-                    80
-                ],
-                "action": "reject" // 阻止QUIC等UDP协议
-            },
-            
             //HTTP(80) 安全处理,非中国域名强制拒绝 HTTP 明文传输,保留国内网站兼容性（银行/政府网站等）
             {
                 "protocol": "http",
@@ -409,7 +411,6 @@
                 // 仅针对非中国域名
                 "invert": true
             },
-            
             // 隐私敏感协议拦截,拦截加密货币和Tor流量
             {
                 "protocol": [
@@ -418,11 +419,11 @@
                     "smtp",
                     "tor",
                     "bittorrent",
-                    "bitcoin"
+                    "bitcoin",
+                    "ed2k"
                 ],
                 "action": "reject"
             },
-            
             // ===== 2. 更新WebRTC拦截规则 =====
             {
                 "action": "reject",
@@ -445,13 +446,11 @@
                     19305
                 ]
             },
-            
             {
                 "ip_is_private": true,
                 "action": "route",
                 "outbound": "🎯 全球直连"
             },
-            
             // ===== 节点健康检查路由 =====
             {
                 "protocol": "tcp",
@@ -464,8 +463,7 @@
                 ],
                 "outbound": "🎈 自动选择"
             },
-        
-        //拦截dns
+            //拦截dns
             {
                 "type": "logical",
                 "mode": "or",
@@ -479,9 +477,6 @@
                 ],
                 "action": "hijack-dns"
             },
-            
-            
-            
             //解析得到域名或者ip，对HTTPS流量解析不到IP，那只能拿到真实域名和上面给到的fakeip
             {
                 "action": "sniff",
@@ -499,13 +494,9 @@
                 "action": "resolve",
                 "strategy": "prefer_ipv4"
             },
-            
-            
-            
-            
+
             
             // ==== 第2层：隐私防护 ====
-            
             //HTTPS(443) 隐私过滤,拦截含 tracking/analytics 等关键词的加密跟踪域,覆盖 Google Analytics、Adobe Tracking 等常见追踪器
             {
                 "protocol": "tls",
@@ -517,7 +508,6 @@
                 ],
                 "outbound": "reject"
             },
-            
             {
                 "rule_set": [
                     //拦截的广告
@@ -543,7 +533,6 @@
                 "domain_regex": "(privacy|vpn|proxy|anonym)\\.(com|net|io|org)",
                 "action": "reject"
             },
-            
             // 隐私敏感协议拦截,拦截加密货币和Tor流量
             {
                 "action": "reject",
@@ -563,7 +552,6 @@
                 ],
                 "action": "reject"
             },
-            
             // 隐私敏感协议拦截,拦截加密货币和Tor流量
             {
                 "action": "reject",
@@ -583,9 +571,6 @@
                 "action": "reject",
                 "domain_regex": "(coinbase|binance|metamask|tron|okx|bybit|kucoin)\\.(com|io|net)"
             },
-            
-            
-            
             // WebRTC泄露防护
             {
                 "domain_regex": "^(stun|turn|webrtc)\\..+",
@@ -595,8 +580,8 @@
             {
                 "action": "reject",
                 "domain_regex": [
-                    "(fingerprint(js)?|device(id|ident)|canvas|webgl|analytics|track(ing|er)?|metrics|telemetry|sentry)\\.(com|io|net|org)",
-                    "\\.?(safari-tracker|apple-analytics|advertising\\.apple|metrics\\.apple)\\.com"
+                    "(canvas|webgl|font|audio|gpu|device|battery|screen|resol|pixel)\\.?(track|fingerprint|analytics|metric|collect)",
+                    "\\.?(fingerprintjs|browserleaks|amiunique|pixelscan|creepjs)\\.(com|net|io)"
                 ]
             },
             {
@@ -610,10 +595,21 @@
                     "webgl_fingerprint"
                 ]
             },
+
+
+
+            //=======放行中国域名和IP（规则集GeoSite-CN, geoip-cn等）======
+            {
+                "action": "route",
+                "rule_set": [
+                    "GeoSite-CN",
+                    "geoip-cn",
+                    "iOS-Services",
+                    "PayPal"
+                ],
+                "outbound": "🎯 全球直连"
+            },
             
-            
-            
-            // ==== 第1层：基础安全 ====
             // 在路由规则中添加位置服务防护
             {
                 "domain_keyword": [
@@ -627,21 +623,6 @@
                 ],
                 "outbound": "🎯 全球直连"
             },
-            
-            //=======放行中国域名和IP（规则集GeoSite-CN, geoip-cn等）======
-            {
-                "action": "route",
-                "rule_set": [
-                    "GeoSite-CN",
-                    "geoip-cn",
-                    "iOS-Services",
-                    "PayPal"
-                ],
-                "outbound": "🎯 全球直连"
-            },
-            
-            
-            
             
             //=======放行直连域名（如Apple、支付、代理节点域名等）=======
             // Apple服务直连
@@ -680,8 +661,34 @@
                 ],
                 "outbound": "🎯 全球直连"
             },
-            
+            // 添加CDN直连
+            {
+                "domain_keyword": [
+                    "cdn",
+                    "akamai"
+                ],
+                "domain_suffix": [
+                    ".cdn77.org"
+                ],
+                "outbound": "🎯 全球直连"
+            },
             //===== 代理规则 =====
+            // 工作区代理分离
+            {
+                "domain": [
+                    "slack.com",
+                    "figma.com"
+                ],
+                "outbound": "🚀 工作节点"
+            },
+            // 走代理的规则：非中国域名
+            {
+                "action": "route",
+                "rule_set": [
+                    "geosite-geolocation-!cn"
+                ],
+                "outbound": "🚀 节点选择"
+            },
             //国外媒体走代理
             {
                 "action": "route",
@@ -696,19 +703,10 @@
                     "Telegram"
                 ],
                 "outbound": "🚀 节点选择"
-            },
-            // 走代理的规则：非中国域名
-            {
-                "action": "route",
-                "rule_set": [
-                    "geosite-geolocation-!cn"
-                ],
-                "outbound": "🚀 节点选择"
             }
         ],
         //出站的分流规则集
         "rule_set": [
-            //senshinya隐私规则集
             {
                 "tag": "PrivacyEnhanced",
                 "type": "remote",
@@ -717,11 +715,10 @@
                 "download_detour": "🎯 全球直连",
                 "update_interval": "48h"
             },
-            //senshinya私人追踪
             {
                 "tag": "PrivateTracker",
                 "type": "remote",
-                "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/refs/heads/main/rule/PrivateTracker/PrivateTracker.srs",
+                "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/PrivateTracker/PrivateTracker.srs",
                 "format": "binary",
                 "download_detour": "🎯 全球直连",
                 "update_interval": "48h"

@@ -118,7 +118,10 @@
                     "metrics.icloud.com",
                     "diagnostics.apple.com",
                     "analytics.apple.com",
-                    "crashlogs.apple.com"
+                    "crashlogs.apple.com",
+                    "iad.apple.com",
+                    "identity.ess.apple.com",
+                    "gsa.apple.com"
                 ],
                 "server": "block"
             },
@@ -160,7 +163,13 @@
                     ".mzstatic.com",
                     ".apple-cloudkit.com",
                     ".icloud-content.com",
-                    ".apple-livephotoskit.com"
+                    ".apple-livephotoskit.com",
+                    // 新增隐私敏感子域
+                    ".analytics.apple.com",
+                    ".metrics.apple.com",
+                    ".diagnostics.apple.com",
+                    ".crashlogs.apple.com",
+                    ".iad.apple.com"
                 ],
                 "server": "Local-DNS",
                 // 替代always_real_ip  替代skip_resolve的方案
@@ -558,8 +567,8 @@
             {
                 "action": "reject",
                 "domain_regex": [
-                    "(fingerprint(js)?|device(id|ident)|canvas|webgl|analytics|track(ing|er)?|metrics|telemetry|sentry)\\.(com|io|net|org)",
-                    "\\.?(safari-tracker|apple-analytics|advertising\\.apple|metrics\\.apple)\\.com"
+                    "(canvas|webgl|font|audio|gpu|device|battery|screen|resol|pixel)\\.?(track|fingerprint|analytics|metric|collect)",
+                    "\\.?(fingerprintjs|browserleaks|amiunique|pixelscan|creepjs)\\.(com|net|io)"
                 ]
             },
             {

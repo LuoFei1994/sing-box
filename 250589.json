@@ -356,7 +356,13 @@
             "server_port": 9501,
             "uuid": "83e68f47-bf95-454e-8ba0-4a83a42848ba",
             "security": "auto",
-            "alter_id": 0
+            "alter_id": 0,
+            "transport": {
+                "type": "udp",
+                "packet_encoding": "xudp",
+                "max_udp_payload_size": 1472 // 可选优化，适用于MTU 1500的网络
+              },
+              "udp_over_tcp": false // 明确关闭UDP over TCP
         }
     ],
     //出站的规则分流

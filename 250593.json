@@ -107,11 +107,11 @@
                 "server": "Remote-DNS"
             },
             // 1. 基础防护规则
-            {
-                "port": 53,
-                "server": "Remote-DNS",
-                "rewrite_ttl": 300
-            },
+            //{
+                //"port": 53,
+                //"server": "Remote-DNS",
+                //"rewrite_ttl": 300
+            //},
             // 2. 隐私保护规则,屏蔽苹果分析服务
             {
                 "domain_suffix": [
@@ -140,6 +140,20 @@
                     ".bgp.666888.biz"
                 ],
                 "server": "Local-DNS"
+            },
+            
+            // 在 DNS 规则中
+            {
+              "domain_suffix": [
+                "qq.com",
+                "gtimg.com",
+                "tencent.com",
+                "tencent-cloud.net",
+                "tcdn.qq.com",
+                "qlogo.cn",
+                "qpic.cn"
+              ],
+              "server": "Local-DNS"  // 腾讯游戏域名直连解析
             },
             //添加NTP服务直连规则,避免代理不稳定时可能回退直连。
             {
@@ -382,21 +396,18 @@
                 ],
                "outbound": "🎯 全球直连"
             },
+            
             {
-                "process_name": [
-                    "com.tencent.smoba",
-                    "com.016888.shandongMarket",
-                    "com.aliyizhan.gchyPro"
-                    ],
-                "outbound": "🎯 全球直连"
-            },
-
-            {
-              "protocol": "udp",
-              "port": [7000,8000],
+              "ip_cidr": [
+                "119.28.0.0/16",
+                "129.226.0.0/16",
+                "150.109.0.0/16",
+                "162.14.0.0/16"
+              ],
               "outbound": "🎯 全球直连"
             },
-
+            
+                
             // 3. 协议级拦截
             {
                 "ip_version": 6,
@@ -537,6 +548,40 @@
             },
 
             // 6. 直连规则
+            
+            // 在路由规则中（放在直连规则部分）
+            {
+               "process_name": [
+                "com.tencent.smoba",
+                "com.016888.shandongMarket",
+                "com.aliyizhan.gchyPro",
+                "com.tencent.tmgp.sgame",  // 官方王者荣耀
+                "com.tencent.tmgp.*",      // 所有渠道服
+                "com.tencent.ig"           // 和平精英
+              ],
+              "outbound": "🎯 全球直连"
+            },
+            
+
+            {
+                  "protocol": "udp",
+                  "port": [
+                    [7000, 8000]  // 正确写法：匹配7000-8000所有端口
+                  ],
+                  "outbound": "🎯 全球直连"
+            },
+            
+            {
+              "domain_suffix": [
+                "qq.com",
+                "gtimg.com",
+                "tencent.com",
+                "tencent-cloud.net",
+                "tcdn.qq.com"
+              ],
+              "outbound": "🎯 全球直连"  // 腾讯游戏流量直连
+            },
+            
             {
                 "domain_keyword": [
                     "location",

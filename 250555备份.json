@@ -252,7 +252,7 @@
             //这三个的区别system 性能:高、安全性:低、兼容性:高(依赖系统)、复杂性:简单、 适用场景：性能优先
             //===========gvisor 性能:低、安全性:高、兼容性:中         、复杂性:较复杂、适用场景：安全隔离
             //===========mixed  上面两个的集合体，都中等
-            "stack": "mixed",
+            "stack": "gvisor",
             "platform": {
                 //http代理
                 "http_proxy": {
@@ -275,8 +275,6 @@
             "tag": "🚀 节点选择",
             "interrupt_exist_connections": false,
             "outbounds": [
-                "已中转kookeey",
-                "kookeey链式",
                 "vmess1"
             ]
         },
@@ -290,8 +288,6 @@
             "tolerance": 150,
             "interrupt_exist_connections": false,
             "outbounds": [
-                "已中转kookeey",
-                "kookeey链式",
                 "vmess1"
             ]
         },
@@ -318,15 +314,15 @@
             ]
         },
         //个人的节点
-        {
-            "type": "socks",
-            "tag": "已中转kookeey",
-            "server": "100.bgp.666888.biz",
-            "server_port": 46867,
-            "username": "5258f8e2",
-            "password": "56864eaa",
-            "version": "5"
-        },
+        //{
+            //"type": "socks",
+            //"tag": "已中转kookeey",
+            //"server": "100.bgp.666888.biz",
+            //"server_port": 46867,
+            //"username": "5258f8e2",
+            //"password": "56864eaa",
+            //"version": "5"
+        //},
         //shadowsocks无法直接使用
         //{
         //"type": "shadowsocks",
@@ -343,16 +339,16 @@
         //"network": "udp",
         //"udp_over_tcp": false
         //},
-        {
-            "type": "socks",
-            "tag": "kookeey链式",
-            "server": "204.242.254.64",
-            "server_port": 31012,
-            "detour": "vmess1",
-            "username": "5258f8e2",
-            "password": "56864eaa",
-            "version": "5"
-        },
+        //{
+            //"type": "socks",
+            //"tag": "kookeey链式",
+            //"server": "204.242.254.64",
+            //"server_port": 31012,
+            //"detour": "vmess1",
+            //"username": "5258f8e2",
+            //"password": "56864eaa",
+            //"version": "5"
+        //},
         {
             "type": "vmess",
             "tag": "vmess1",
@@ -577,6 +573,23 @@
                 "action": "reject"
             },
             // ===== 指纹拦截优化版 =====
+            {
+              "action": "reject",
+              "domain_keyword": [
+                "fingerprint",
+                "deviceid",
+                "canvasid",
+                "webglid",
+                "fontscan",
+                "browserspy",
+                "browserleaks",
+                "pixelscan"
+              ]
+            },
+            {
+              "action": "reject",
+              "domain_regex": "\\.?(fpjs\\.io|fingerprintjs\\.com|browserleaks\\.com|amiunique\\.org|pixelscan\\.net)"
+            },
             {
                 "action": "reject",
                 "domain_regex": [

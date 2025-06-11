@@ -358,7 +358,6 @@
             "security": "auto",
             "alter_id": 0,
             "transport": {
-                "type": "udp",
                 "packet_encoding": "xudp",
                 "max_udp_payload_size": 1472 // 可选优化，适用于MTU 1500的网络
               },

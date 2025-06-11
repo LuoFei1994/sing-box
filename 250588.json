@@ -349,6 +349,7 @@
             //"password": "56864eaa",
             //"version": "5"
         //},
+        
         {
             "type": "vmess",
             "tag": "vmess1",
@@ -356,7 +357,11 @@
             "server_port": 9501,
             "uuid": "83e68f47-bf95-454e-8ba0-4a83a42848ba",
             "security": "auto",
-            "alter_id": 0
+            "alter_id": 0,
+            // 添加以下配置开启UDP支持
+             "transport": {
+                "type": "udp", // 指定使用UDP传输
+                "packet_encoding": "xudp" // 推荐使用xudp编码（高性能UDP传输）
         }
     ],
     //出站的规则分流

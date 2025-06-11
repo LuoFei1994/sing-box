@@ -356,12 +356,7 @@
             "server_port": 9501,
             "uuid": "83e68f47-bf95-454e-8ba0-4a83a42848ba",
             "security": "auto",
-            "alter_id": 0,
-            "transport": {
-                "packet_encoding": "xudp",
-                "max_udp_payload_size": 1472 // 可选优化，适用于MTU 1500的网络
-              },
-              "udp_over_tcp": false // 明确关闭UDP over TCP
+            "alter_id": 0
         }
     ],
     //出站的规则分流
@@ -380,13 +375,17 @@
             },
 
             // 2. 节点域名直连
-           {
+            {
                "domain_suffix": [
                     ".portablesubmarines.com",
                     ".bgp.666888.biz"
                 ],
                "outbound": "🎯 全球直连"
-           },
+            },
+            {
+              "domain_keyword": ["qq.com", "tencent"],
+              "outbound": "🎯 全球直连"
+            },
 
             // 3. 协议级拦截
             {

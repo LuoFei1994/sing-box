@@ -378,6 +378,12 @@
                 "outbound": "GLOBAL"
             },
             {
+                "process_name": [
+                    
+                    ],
+                "outbound": "🎯 全球直连"
+            
+            {
                 "ip_version": 6,
                 "action": "reject" // 禁用IPv6
             },

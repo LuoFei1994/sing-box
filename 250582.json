@@ -524,11 +524,11 @@
                 "rule_set": [
                     //底下拦截隐私的广告
                     "Privacy",
-                    "PrivacyEnhanced",
+
                     //底下拦截追踪的广告
                     "Tracking",
-                    "Tracker",
-                    "PrivateTracker"
+                    "Tracker"
+
                 ],
                 "action": "reject"
             },
@@ -702,24 +702,7 @@
         ],
         //出站的分流规则集
         "rule_set": [
-            //senshinya隐私规则集
-            {
-                "tag": "PrivacyEnhanced",
-                "type": "remote",
-                "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Privacy/Privacy.srs",
-                "format": "binary",
-                "download_detour": "🎯 全球直连",
-                "update_interval": "48h"
-            },
-            //senshinya私人追踪
-            {
-                "tag": "PrivateTracker",
-                "type": "remote",
-                "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/refs/heads/main/rule/PrivateTracker/PrivateTracker.srs",
-                "format": "binary",
-                "download_detour": "🎯 全球直连",
-                "update_interval": "48h"
-            },
+            
             //Crypto-Block货币加密规则集
             {
                 "tag": "Crypto",

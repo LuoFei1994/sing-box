@@ -383,6 +383,15 @@
                "outbound": "🎯 全球直连"
             },
             {
+                "process_name": [
+                    "com.tencent.smoba",
+                    "com.016888.shandongMarket",
+                    "com.aliyizhan.gchyPro"
+                    ],
+                "outbound": "🎯 全球直连"
+            },
+
+            {
               "protocol": "udp",
               "port": [7000,8000],
               "outbound": "🎯 全球直连"

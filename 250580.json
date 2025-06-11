@@ -366,6 +366,18 @@
     "route": {
         "rules": [
             
+            //====== clash mode 规则组=====
+            {
+                "action": "route",
+                "clash_mode": "direct",
+                "outbound": "🎯 全球直连"
+            },
+            {
+                "action": "route",
+                "clash_mode": "global",
+                "outbound": "GLOBAL"
+            },
+            
             {
                 "ip_version": 6,
                 "action": "reject" // 禁用IPv6
@@ -599,17 +611,7 @@
                 ]
             },
             
-            //====== clash mode 规则组=====
-            {
-                "action": "route",
-                "clash_mode": "direct",
-                "outbound": "🎯 全球直连"
-            },
-            {
-                "action": "route",
-                "clash_mode": "global",
-                "outbound": "GLOBAL"
-            },
+            
             
             // ==== 第1层：基础安全 ====
             // 在路由规则中添加位置服务防护

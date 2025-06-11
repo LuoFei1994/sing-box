@@ -362,7 +362,7 @@
     //出站的规则分流
     "route": {
         "rules": [
-            //====== clash mode 规则组=====
+            // 1. Clash模式
             {
                 "action": "route",
                 "clash_mode": "direct",
@@ -374,7 +374,7 @@
                 "outbound": "GLOBAL"
             },
 
-            // 节点域名走代理
+            // 2. 节点域名直连
            {
                "domain_suffix": [
                     ".portablesubmarines.com",
@@ -383,7 +383,7 @@
                "outbound": "🎯 全球直连"
            },
 
-            
+            // 3. 协议级拦截
             {
                 "ip_version": 6,
                 "action": "reject" // 禁用IPv6
@@ -442,23 +442,54 @@
                     19305
                 ]
             },
+
+            // 4. 隐私防护核心
+            //HTTPS(443) 隐私过滤,拦截含 tracking/analytics 等关键词的加密跟踪域,覆盖 Google Analytics、Adobe Tracking 等常见追踪器
+            {
+                "protocol": "tls",
+                "port": 443,
+                "domain_keyword": [
+                    "tracking",
+                    "analytics",
+                    "metrics"
+                ],
+                "outbound": "reject"
+            },
+            {
+                "rule_set": [
+                    "Category-Ads",
+                    "BlockHttpDNS",
+                    "Privacy",        // 基础隐私
+                    "Tracking",       // 追踪器
+                    "Tracker",        // 综合追踪
+                    "Crypto",          // 加密货币
+                    "PrivacyEnhanced",
+                    "PrivateTracker"
+                ],
+                "action": "reject"
+            },
+            //隐私服务拦截,补充上面广告
+            {
+                "domain_regex": "(privacy|vpn|proxy|anonym)\\.(com|net|io|org)",
+                "action": "reject"
+            },
+
+            //指纹拦截
+            {
+                "action": "reject",
+                "domain_regex": [
+                    "(fingerprint|deviceid|canvasid|webglid|fontscan|browserspy|pixelscan)",
+                    "\\.(fpjs|fingerprintjs|browserleaks|amiunique|pixelscan|creepjs)\\."
+                ]
+            },
+
+            // 5. 系统级规则
             {
                 "ip_is_private": true,
                 "action": "route",
                 "outbound": "🎯 全球直连"
             },
-            // ===== 节点健康检查路由 =====
-            {
-                "protocol": "tcp",
-                "port": [
-                    80,
-                    443
-                ],
-                "domain": [
-                    "www.gstatic.com"
-                ],
-                "outbound": "🎈 自动选择"
-            },
+            
             //拦截dns
             {
                 "type": "logical",
@@ -491,139 +522,7 @@
                 "strategy": "prefer_ipv4"
             },
 
-            
-            // ==== 第2层：隐私防护 ====
-            //HTTPS(443) 隐私过滤,拦截含 tracking/analytics 等关键词的加密跟踪域,覆盖 Google Analytics、Adobe Tracking 等常见追踪器
-            {
-                "protocol": "tls",
-                "port": 443,
-                "domain_keyword": [
-                    "tracking",
-                    "analytics",
-                    "metrics"
-                ],
-                "outbound": "reject"
-            },
-            {
-                "rule_set": [
-                    //拦截的广告
-                    "Category-Ads",
-                    "BlockHttpDNS"
-                ],
-                "action": "reject"
-            },
-            {
-                "rule_set": [
-                    //底下拦截隐私的广告
-                    "Privacy",
-                    "PrivacyEnhanced",
-                    //底下拦截追踪的广告
-                    "Tracking",
-                    "Tracker",
-                    "PrivateTracker"
-                ],
-                "action": "reject"
-            },
-            //隐私服务拦截,补充上面广告
-            {
-                "domain_regex": "(privacy|vpn|proxy|anonym)\\.(com|net|io|org)",
-                "action": "reject"
-            },
-            // 隐私敏感协议拦截,拦截加密货币和Tor流量
-            {
-                "action": "reject",
-                "ip_cidr": [
-                    // Tor出口节点
-                    "176.10.104.240/28",
-                    "179.43.128.0/24",
-                    "185.220.101.0/24",
-                    "178.16.208.56/29",
-                    "192.42.116.16/28"
-                ]
-            },
-            // 隐私敏感协议拦截,拦截加密货币和Tor流量
-            {
-                "rule_set": [
-                    "Crypto"
-                ],
-                "action": "reject"
-            },
-            // 隐私敏感协议拦截,拦截加密货币和Tor流量
-            {
-                "action": "reject",
-                "domain_suffix": [
-                    ".coinbase.com",
-                    ".binance.com",
-                    ".metamask.io",
-                    ".tron.network",
-                    ".okx.com",
-                    ".crypto",
-                    ".eth",
-                    ".bit"
-                ]
-            },
-            // 隐私敏感协议拦截,拦截加密货币和Tor流量
-            {
-                "action": "reject",
-                "domain_regex": "(coinbase|binance|metamask|tron|okx|bybit|kucoin)\\.(com|io|net)"
-            },
-            // WebRTC泄露防护
-            {
-                "domain_regex": "^(stun|turn|webrtc)\\..+",
-                "action": "reject"
-            },
-            // ===== 指纹拦截优化版 =====
-            {
-              "action": "reject",
-              "domain_keyword": [
-                "fingerprint",
-                "deviceid",
-                "canvasid",
-                "webglid",
-                "fontscan",
-                "browserspy",
-                "browserleaks",
-                "pixelscan"
-              ]
-            },
-            {
-              "action": "reject",
-              "domain_regex": "\\.?(fpjs\\.io|fingerprintjs\\.com|browserleaks\\.com|amiunique\\.org|pixelscan\\.net)"
-            },
-            {
-                "action": "reject",
-                "domain_regex": [
-                    "(canvas|webgl|font|audio|gpu|device|battery|screen|resol|pixel)\\.?(track|fingerprint|analytics|metric|collect)",
-                    "\\.?(fingerprintjs|browserleaks|amiunique|pixelscan|creepjs)\\.(com|net|io)"
-                ]
-            },
-            {
-                "action": "reject",
-                "domain_keyword": [
-                    "privacy",
-                    "vpn",
-                    "proxy",
-                    "anonym",
-                    "canvas_fingerprint",
-                    "webgl_fingerprint"
-                ]
-            },
-
-
-
-            //=======放行中国域名和IP（规则集GeoSite-CN, geoip-cn等）======
-            {
-                "action": "route",
-                "rule_set": [
-                    "GeoSite-CN",
-                    "geoip-cn",
-                    "iOS-Services",
-                    "PayPal"
-                ],
-                "outbound": "🎯 全球直连"
-            },
-            
-            // 在路由规则中添加位置服务防护
+            // 6. 直连规则
             {
                 "domain_keyword": [
                     "location",
@@ -636,25 +535,19 @@
                 ],
                 "outbound": "🎯 全球直连"
             },
-            
-            //=======放行直连域名（如Apple、支付、代理节点域名等）=======
-            // Apple服务直连
+
             {
-                "domain_suffix": [
-                    ".apple.com",
-                    ".icloud.com",
-                    ".mzstatic.com",
-                    ".apple-cloudkit.com",
-                    ".apple-mapkit.com",
-                    ".apple-dns.net",
-                    ".cdn-apple.com",
-                    ".icloud-content.com",
-                    ".apple-livephotoskit.com",
-                    ".apple.akadns.net",
-                    ".apple.com.edgekey.net"
+                "action": "route",
+                "rule_set": [
+                    "GeoSite-CN",
+                    "geoip-cn",
+                    "iOS-Services",
+                    "PayPal"
                 ],
                 "outbound": "🎯 全球直连"
             },
+        
+           
             //支付渠道走直连，避免出问题
             {
                 "domain_suffix": [
@@ -685,6 +578,22 @@
                 ],
                 "outbound": "🎯 全球直连"
             },
+
+
+            
+            // 7. 代理规则
+            // ===== 节点健康检查路由 =====
+            {
+                "protocol": "tcp",
+                "port": [
+                    80,
+                    443
+                ],
+                "domain": [
+                    "www.gstatic.com"
+                ],
+                "outbound": "🎈 自动选择"
+            },
             //===== 代理规则 =====
             // 工作区代理分离
             {
@@ -692,16 +601,9 @@
                     "slack.com",
                     "figma.com"
                 ],
-                "outbound": "🚀 工作节点"
-            },
-            // 走代理的规则：非中国域名
-            {
-                "action": "route",
-                "rule_set": [
-                    "geosite-geolocation-!cn"
-                ],
                 "outbound": "🚀 节点选择"
             },
+
             //国外媒体走代理
             {
                 "action": "route",
@@ -716,10 +618,19 @@
                     "Telegram"
                 ],
                 "outbound": "🚀 节点选择"
+            },
+            // 走代理的规则：非中国域名
+            {
+                "action": "route",
+                "rule_set": [
+                    "geosite-geolocation-!cn"
+                ],
+                "outbound": "🚀 节点选择"
             }
         ],
         //出站的分流规则集
         "rule_set": [
+
             {
                 "tag": "PrivacyEnhanced",
                 "type": "remote",
@@ -736,6 +647,7 @@
                 "download_detour": "🎯 全球直连",
                 "update_interval": "48h"
             },
+            
             //Crypto-Block货币加密规则集
             {
                 "tag": "Crypto",

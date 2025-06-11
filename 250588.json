@@ -462,7 +462,9 @@
                     "Privacy",        // 基础隐私
                     "Tracking",       // 追踪器
                     "Tracker",        // 综合追踪
-                    "Crypto"          // 加密货币
+                    "Crypto",          // 加密货币
+                    "PrivacyEnhanced",
+                    "PrivateTracker"
                 ],
                 "action": "reject"
             },
@@ -628,6 +630,23 @@
         ],
         //出站的分流规则集
         "rule_set": [
+
+            {
+                "tag": "PrivacyEnhanced",
+                "type": "remote",
+                "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Privacy/Privacy.srs",
+                "format": "binary",
+                "download_detour": "🎯 全球直连",
+                "update_interval": "48h"
+            },
+            {
+                "tag": "PrivateTracker",
+                "type": "remote",
+                "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/PrivateTracker/PrivateTracker.srs",
+                "format": "binary",
+                "download_detour": "🎯 全球直连",
+                "update_interval": "48h"
+            },
             
             //Crypto-Block货币加密规则集
             {

@@ -106,8 +106,6 @@
                 "clash_mode": "global",
                 "server": "Remote-DNS"
             },
-            
-            
             // 1. 基础防护规则
             {
                 "port": 53,
@@ -124,7 +122,6 @@
                 ],
                 "server": "block"
             },
-            
             // 4. 区域分流规则
             {
                 "action": "route",
@@ -133,8 +130,6 @@
                 ],
                 "server": "Local-DNS" // 中国域名直连
             },
-            
-            
             // 3. 直连规则,节点域名直连（防DNS污染）
             {
                 "domain_suffix": [
@@ -173,7 +168,6 @@
                 // 隐藏客户端IP
                 "client_subnet": "0.0.0.0/0"
             },
-            
             {
                 "action": "route",
                 "rule_set": [
@@ -181,8 +175,6 @@
                 ],
                 "server": "Remote-DNS" // 非中国域名代理
             },
-            
-            
             // 4. 兜底规则（最后）
             {
                 "query_type": [
@@ -365,7 +357,6 @@
     //出站的规则分流
     "route": {
         "rules": [
-            
             //====== clash mode 规则组=====
             {
                 "action": "route",
@@ -377,7 +368,6 @@
                 "clash_mode": "global",
                 "outbound": "GLOBAL"
             },
-            
             {
                 "ip_version": 6,
                 "action": "reject" // 禁用IPv6
@@ -393,8 +383,6 @@
                 // 阻止 QUIC 协议
                 "outbound": "reject"
             },
-          
-            
             //HTTP(80) 安全处理,非中国域名强制拒绝 HTTP 明文传输,保留国内网站兼容性（银行/政府网站等）
             {
                 "protocol": "http",
@@ -403,7 +391,6 @@
                 // 仅针对非中国域名
                 "invert": true
             },
-            
             // 隐私敏感协议拦截,拦截加密货币和Tor流量
             {
                 "protocol": [
@@ -412,11 +399,11 @@
                     "smtp",
                     "tor",
                     "bittorrent",
-                    "bitcoin"
+                    "bitcoin",
+                    "ed2k"
                 ],
                 "action": "reject"
             },
-            
             // ===== 2. 更新WebRTC拦截规则 =====
             {
                 "action": "reject",
@@ -439,13 +426,11 @@
                     19305
                 ]
             },
-            
             {
                 "ip_is_private": true,
                 "action": "route",
                 "outbound": "🎯 全球直连"
             },
-            
             // ===== 节点健康检查路由 =====
             {
                 "protocol": "tcp",
@@ -458,8 +443,7 @@
                 ],
                 "outbound": "🎈 自动选择"
             },
-        
-        //拦截dns
+            //拦截dns
             {
                 "type": "logical",
                 "mode": "or",
@@ -473,9 +457,6 @@
                 ],
                 "action": "hijack-dns"
             },
-            
-            
-            
             //解析得到域名或者ip，对HTTPS流量解析不到IP，那只能拿到真实域名和上面给到的fakeip
             {
                 "action": "sniff",
@@ -493,13 +474,7 @@
                 "action": "resolve",
                 "strategy": "prefer_ipv4"
             },
-            
-            
-            
-            
-            
             // ==== 第2层：隐私防护 ====
-            
             //HTTPS(443) 隐私过滤,拦截含 tracking/analytics 等关键词的加密跟踪域,覆盖 Google Analytics、Adobe Tracking 等常见追踪器
             {
                 "protocol": "tls",
@@ -511,7 +486,6 @@
                 ],
                 "outbound": "reject"
             },
-            
             {
                 "rule_set": [
                     //拦截的广告
@@ -524,11 +498,11 @@
                 "rule_set": [
                     //底下拦截隐私的广告
                     "Privacy",
-
+                    "PrivacyEnhanced",
                     //底下拦截追踪的广告
                     "Tracking",
-                    "Tracker"
-
+                    "Tracker",
+                    "PrivateTracker"
                 ],
                 "action": "reject"
             },
@@ -537,7 +511,6 @@
                 "domain_regex": "(privacy|vpn|proxy|anonym)\\.(com|net|io|org)",
                 "action": "reject"
             },
-            
             // 隐私敏感协议拦截,拦截加密货币和Tor流量
             {
                 "action": "reject",
@@ -557,7 +530,6 @@
                 ],
                 "action": "reject"
             },
-            
             // 隐私敏感协议拦截,拦截加密货币和Tor流量
             {
                 "action": "reject",
@@ -577,9 +549,6 @@
                 "action": "reject",
                 "domain_regex": "(coinbase|binance|metamask|tron|okx|bybit|kucoin)\\.(com|io|net)"
             },
-            
-            
-            
             // WebRTC泄露防护
             {
                 "domain_regex": "^(stun|turn|webrtc)\\..+",
@@ -604,9 +573,6 @@
                     "webgl_fingerprint"
                 ]
             },
-            
-            
-            
             // ==== 第1层：基础安全 ====
             // 在路由规则中添加位置服务防护
             {
@@ -621,7 +587,6 @@
                 ],
                 "outbound": "🎯 全球直连"
             },
-            
             //=======放行中国域名和IP（规则集GeoSite-CN, geoip-cn等）======
             {
                 "action": "route",
@@ -633,10 +598,6 @@
                 ],
                 "outbound": "🎯 全球直连"
             },
-            
-            
-            
-            
             //=======放行直连域名（如Apple、支付、代理节点域名等）=======
             // Apple服务直连
             {
@@ -674,8 +635,34 @@
                 ],
                 "outbound": "🎯 全球直连"
             },
-            
+            // 添加CDN直连
+            {
+                "domain_keyword": [
+                    "cdn",
+                    "akamai"
+                ],
+                "domain_suffix": [
+                    ".cdn77.org"
+                ],
+                "outbound": "🎯 全球直连"
+            },
             //===== 代理规则 =====
+            // 工作区代理分离
+            {
+                "domain": [
+                    "slack.com",
+                    "figma.com"
+                ],
+                "outbound": "🚀 工作节点"
+            },
+            // 走代理的规则：非中国域名
+            {
+                "action": "route",
+                "rule_set": [
+                    "geosite-geolocation-!cn"
+                ],
+                "outbound": "🚀 节点选择"
+            },
             //国外媒体走代理
             {
                 "action": "route",
@@ -690,19 +677,26 @@
                     "Telegram"
                 ],
                 "outbound": "🚀 节点选择"
-            },
-            // 走代理的规则：非中国域名
-            {
-                "action": "route",
-                "rule_set": [
-                    "geosite-geolocation-!cn"
-                ],
-                "outbound": "🚀 节点选择"
             }
         ],
         //出站的分流规则集
         "rule_set": [
-            
+            {
+                "tag": "PrivacyEnhanced",
+                "type": "remote",
+                "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Privacy/Privacy.srs",
+                "format": "binary",
+                "download_detour": "🎯 全球直连",
+                "update_interval": "48h"
+            },
+            {
+                "tag": "PrivateTracker",
+                "type": "remote",
+                "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/PrivateTracker/PrivateTracker.srs",
+                "format": "binary",
+                "download_detour": "🎯 全球直连",
+                "update_interval": "48h"
+            },
             //Crypto-Block货币加密规则集
             {
                 "tag": "Crypto",

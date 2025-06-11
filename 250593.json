@@ -407,6 +407,30 @@
               "outbound": "🎯 全球直连"
             },
             
+            {
+               "process_name": [
+                "com.tencent.smoba",
+                "com.016888.shandongMarket",
+                "com.aliyizhan.gchyPro",
+                "com.tencent.tmgp.sgame",
+                "com.tencent.tmgp.*",
+                "com.tencent.ig"
+              ],
+              "outbound": "🎯 全球直连"
+            },
+            
+            
+            {
+              "domain_suffix": [
+                "qq.com",
+                "gtimg.com",
+                "tencent.com",
+                "tencent-cloud.net",
+                "tcdn.qq.com"
+              ],
+              "outbound": "🎯 全球直连"  // 腾讯游戏流量直连
+            },
+            
                 
             // 3. 协议级拦截
             {
@@ -550,29 +574,7 @@
             // 6. 直连规则
             
             // 在路由规则中（放在直连规则部分）
-            {
-               "process_name": [
-                "com.tencent.smoba",
-                "com.016888.shandongMarket",
-                "com.aliyizhan.gchyPro",
-                "com.tencent.tmgp.sgame",
-                "com.tencent.tmgp",
-                "com.tencent.ig"
-              ],
-              "outbound": "🎯 全球直连"
-            },
             
-            
-            {
-              "domain_suffix": [
-                "qq.com",
-                "gtimg.com",
-                "tencent.com",
-                "tencent-cloud.net",
-                "tcdn.qq.com"
-              ],
-              "outbound": "🎯 全球直连"  // 腾讯游戏流量直连
-            },
             
             {
                 "domain_keyword": [

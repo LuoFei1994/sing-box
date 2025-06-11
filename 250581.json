@@ -251,7 +251,7 @@
             //这三个的区别system 性能:高、安全性:低、兼容性:高(依赖系统)、复杂性:简单、 适用场景：性能优先
             //===========gvisor 性能:低、安全性:高、兼容性:中         、复杂性:较复杂、适用场景：安全隔离
             //===========mixed  上面两个的集合体，都中等
-            "stack": "gvisor",
+            "stack": "mixed",
             "platform": {
                 //http代理
                 "http_proxy": {
@@ -388,18 +388,12 @@
                     80,
                     443
                 ],
+                //另一种写法"protocol": "udp",
                 "network": "udp",
                 // 阻止 QUIC 协议
                 "outbound": "reject"
             },
-            {
-                "protocol": "udp",
-                "port": [
-                    443,
-                    80
-                ],
-                "action": "reject" // 阻止QUIC等UDP协议
-            },
+          
             
             //HTTP(80) 安全处理,非中国域名强制拒绝 HTTP 明文传输,保留国内网站兼容性（银行/政府网站等）
             {

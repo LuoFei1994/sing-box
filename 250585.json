@@ -378,6 +378,15 @@
                 "outbound": "GLOBAL"
             },
 
+            // 节点域名走代理
+           {
+               "domain_suffix": [
+                    ".portablesubmarines.com",
+                    ".bgp.666888.biz"
+                ],
+               "outbound": "🎯 全球直连"
+           },
+
             
             {
                 "ip_version": 6,
@@ -486,21 +495,6 @@
                 "strategy": "prefer_ipv4"
             },
 
-            //=======放行中国域名和IP（规则集GeoSite-CN, geoip-cn等）======
-            {
-                "action": "route",
-                "rule_set": [
-                    "GeoSite-CN",
-                    "geoip-cn",
-                    "iOS-Services",
-                    "PayPal"
-                ],
-                "outbound": "🎯 全球直连"
-            },
-
-
-
-
             
             // ==== 第2层：隐私防护 ====
             //HTTPS(443) 隐私过滤,拦截含 tracking/analytics 等关键词的加密跟踪域,覆盖 Google Analytics、Adobe Tracking 等常见追踪器
@@ -600,6 +594,20 @@
                     "canvas_fingerprint",
                     "webgl_fingerprint"
                 ]
+            },
+
+
+
+            //=======放行中国域名和IP（规则集GeoSite-CN, geoip-cn等）======
+            {
+                "action": "route",
+                "rule_set": [
+                    "GeoSite-CN",
+                    "geoip-cn",
+                    "iOS-Services",
+                    "PayPal"
+                ],
+                "outbound": "🎯 全球直连"
             },
             
             // 在路由规则中添加位置服务防护

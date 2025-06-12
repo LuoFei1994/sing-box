@@ -468,15 +468,15 @@
 
             //共享货源
             {
-                "domain_suffix": [
-                    ".jpush.cn",
-                    ".qlogo.cn",
-                    ".4swd.com",
-                    ".jiguang.cn",
+                "domain": [
+                    "*.jpush.cn",
+                    "*.qlogo.cn",
+                    "*.4swd.com",
+                    "*.jiguang.cn",
                     //另一个
-                    ".openinstall.io",
-                    ".oceanengine.com",
-                    ".aliyizhan.com"
+                    "*.openinstall.io",
+                    "*.oceanengine.com",
+                    "*.aliyizhan.com"
                     
                 ],
                 "outbound": "🎯 全球直连"

@@ -115,18 +115,18 @@
             // 2. 隐私保护规则,屏蔽苹果分析服务
             
         
-  {
-    "domain_suffix": [
-      "qq.com",
-      "gtimg.com",
-      "tencent.com",
-      "tencent-cloud.net",
-      "tcdn.qq.com",
-      "qlogo.cn",
-      "qpic.cn"
-    ],
-    "server": "Local-DNS"
-  },
+              {
+                "domain_suffix": [
+                  "qq.com",
+                  "gtimg.com",
+                  "tencent.com",
+                  "tencent-cloud.net",
+                  "tcdn.qq.com",
+                  "qlogo.cn",
+                  "qpic.cn"
+                ],
+                "server": "Local-DNS"
+              },
             
             {
                 "domain_suffix": [
@@ -554,24 +554,24 @@
                 "action": "reject" // 禁用IPv6
             },
             //QUIC 协议阻断,阻止 UDP/80+443 端口的 QUIC 协议,强制回退到 TCP 增强可监控性
-            {
-                "port": [
-                    80,
-                    443
-                ],
+            //{
+                //"port": [
+                    //80,
+                    //443
+                //],
                 //另一种写法"protocol": "udp",
-                "network": "udp",
+                //"network": "udp",
                 // 阻止 QUIC 协议
-                "outbound": "reject"
-            },
+                //"outbound": "reject"
+            //},
             //HTTP(80) 安全处理,非中国域名强制拒绝 HTTP 明文传输,保留国内网站兼容性（银行/政府网站等）
-            {
-                "protocol": "http",
-                "port": 80,
-                "outbound": "🚀 节点选择",
+            //{
+                //"protocol": "http",
+                //"port": 80,
+                //"outbound": "🚀 节点选择",
                 // 仅针对非中国域名
-                "invert": true
-            },
+                //"invert": true
+            //},
             // 隐私敏感协议拦截,拦截加密货币和Tor流量
             {
                 "protocol": [

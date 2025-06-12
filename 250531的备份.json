@@ -55,7 +55,7 @@
             
             {
                 "tag": "Local-DNS", 
-                "address": "https://223.5.5.5:443/dns-query",
+                "address": "tls://223.5.5.5:853",
                 "detour": "🎯 全球直连"
             },
             

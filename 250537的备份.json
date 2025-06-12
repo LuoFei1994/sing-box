@@ -55,7 +55,15 @@
             
             {
                 "tag": "Local-DNS", 
-                //"address": "tls://223.5.5.5:853",
+                "address": "tls://223.5.5.5:853",
+                "address_resolver": "Local-DNS-Resolver",
+                "detour": "🎯 全球直连",
+                "strategy": "prefer_ipv4",
+                // 隐藏客户端IP
+                "client_subnet": "0.0.0.0/0"
+            },
+            {
+                "tag": "Local-DNS-Resolver",
                 "address": "udp://223.5.5.5:53",
                 "detour": "🎯 全球直连"
             },
@@ -65,7 +73,10 @@
                 "tag": "Remote-DNS",
                 // Quad9的DoT（带恶意软件过滤） 直接使用IP避免二次解析
                 "address": "tls://9.9.9.11:853",  
-                "detour": "🚀 节点选择"
+                "detour": "🚀 节点选择",
+                "strategy": "prefer_ipv4",
+                // 隐藏客户端IP
+                "client_subnet": "0.0.0.0/0"
             
             },
         
@@ -191,6 +202,8 @@
                 "server": "fakeip"
             }
         ],
+        // 隐藏客户端IP
+        "client_subnet": "0.0.0.0/0"
         //默认ipv4优选
         "strategy": "ipv4_only", 
         // 关闭DNS缓存减少CPU负载,避免缓存污染
@@ -198,7 +211,7 @@
         "disable_expire": false,
         "independent_cache": true,
         //没找到的dns走指定，注释掉，强制所有DNS走FakeIP。
-        //"final": "Remote-DNS",
+        "final": "Remote-DNS",
         "fakeip": {
             "enabled": true,
             "inet4_range": "198.18.0.0/16",

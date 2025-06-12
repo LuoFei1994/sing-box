@@ -248,7 +248,8 @@
                 "已中转kookeey",
                 "kookeey链式",
                 "proxy2",
-                "proxy3"
+                "proxy3",
+                "vmess1"
             ]
         },
         {
@@ -264,7 +265,8 @@
                 "已中转kookeey",
                 "kookeey链式",
                 "proxy2",
-                "proxy3"
+                "proxy3",
+                "vmess1"
             ]
         },
         
@@ -359,6 +361,15 @@
             "username": "5258f8e2",
             "password": "56864eaa",
             "version": "5"
+        },
+        {
+            "type": "vmess",
+            "tag": "vmess1",
+            "server": "c62s3.portablesubmarines.com",
+            "server_port": 9501,
+            "uuid": "83e68f47-bf95-454e-8ba0-4a83a42848ba",
+            "security": "auto",
+            "alter_id": 0
         }
         //{
         //"type": "vmess",
@@ -422,86 +433,7 @@
                 "outbound": "🎯 全球直连" 
             },
 
-        //=======放行直连域名（如Apple、支付、代理节点域名等）=======
-
-            //配合下面的规则，可能影响部分使用UDP/443的合法服务（如WebRTC），建议通过domain白名单排除：
-            {
-                "domain": [
-                    "zoom.us",
-                    "discord.com"
-                ],
-                "port": 443,
-                "network": "udp",
-                "outbound": "🎯 全球直连"
-            },
-
-            {   
-                // 例外放行443和80端口的Apple服务
-                "domain": [
-                    "*.apple.com",
-                    "*.icloud.com"
-                ],
-                "network": "udp",
-                "outbound": "🎯 全球直连"
-            },
-
-             // Apple服务直连
-            {
-                "domain_suffix": [
-                    ".apple.com",
-                    ".icloud.com",
-                    ".mzstatic.com",
-                    ".apple-cloudkit.com",
-                    ".apple-mapkit.com",
-                    ".apple-dns.net",
-                    ".cdn-apple.com",
-                    ".icloud-content.com",
-                    ".apple-livephotoskit.com",
-                    ".apple.akadns.net",
-                    ".apple.com.edgekey.net"
-                ],
-                "outbound": "🎯 全球直连"
-            },
-            
-            // 阻止代理节点被二次代理，会配合dns的规则
-            {
-                "domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz"],
-                "outbound": "🎯 全球直连"
-            },
-            
-            //支付渠道走直连，避免出问题
-            {
-                "domain_suffix": [
-                    ".alipay.com",
-                    ".wechatpay.com",
-                    ".stripe.com",
-                    ".venmo.com"
-                ],
-                "outbound": "🎯 全球直连"
-            },
-
-            //银行服务
-            {
-                "domain_keyword": [
-                    "banking",
-                    "financial",
-                    "secret"
-                ],
-                "outbound": "🎯 全球直连"
-            },
-
-        //=======放行中国域名和IP（规则集GeoSite-CN, geoip-cn等）======
-            {
-                "action": "route",
-                "rule_set": [
-                    "GeoSite-CN",
-                    "geoip-cn"
-                ],
-                "outbound": "🎯 全球直连"
-            },
-
-
-         // =====拦截规则（隐私防护、广告、加密货币等）=====
+            // =====拦截规则（隐私防护、广告、加密货币等）=====
             //拦截的广告
             {
                 "rule_set": [
@@ -666,6 +598,89 @@
                 "action": "reject"
             },
 
+
+
+
+        //=======放行直连域名（如Apple、支付、代理节点域名等）=======
+
+            //配合下面的规则，可能影响部分使用UDP/443的合法服务（如WebRTC），建议通过domain白名单排除：
+            {
+                "domain": [
+                    "zoom.us",
+                    "discord.com"
+                ],
+                "port": 443,
+                "network": "udp",
+                "outbound": "🎯 全球直连"
+            },
+
+            {   
+                // 例外放行443和80端口的Apple服务
+                "domain": [
+                    "*.apple.com",
+                    "*.icloud.com"
+                ],
+                "network": "udp",
+                "outbound": "🎯 全球直连"
+            },
+
+             // Apple服务直连
+            {
+                "domain_suffix": [
+                    ".apple.com",
+                    ".icloud.com",
+                    ".mzstatic.com",
+                    ".apple-cloudkit.com",
+                    ".apple-mapkit.com",
+                    ".apple-dns.net",
+                    ".cdn-apple.com",
+                    ".icloud-content.com",
+                    ".apple-livephotoskit.com",
+                    ".apple.akadns.net",
+                    ".apple.com.edgekey.net"
+                ],
+                "outbound": "🎯 全球直连"
+            },
+            
+            // 阻止代理节点被二次代理，会配合dns的规则
+            {
+                "domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz"],
+                "outbound": "🎯 全球直连"
+            },
+            
+            //支付渠道走直连，避免出问题
+            {
+                "domain_suffix": [
+                    ".alipay.com",
+                    ".wechatpay.com",
+                    ".stripe.com",
+                    ".venmo.com"
+                ],
+                "outbound": "🎯 全球直连"
+            },
+
+            //银行服务
+            {
+                "domain_keyword": [
+                    "banking",
+                    "financial",
+                    "secret"
+                ],
+                "outbound": "🎯 全球直连"
+            },
+
+        //=======放行中国域名和IP（规则集GeoSite-CN, geoip-cn等）======
+            {
+                "action": "route",
+                "rule_set": [
+                    "GeoSite-CN",
+                    "geoip-cn"
+                ],
+                "outbound": "🎯 全球直连"
+            },
+
+
+         
 
 
         //====== clash mode 规则组=====

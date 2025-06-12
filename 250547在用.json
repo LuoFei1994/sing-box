@@ -36,7 +36,7 @@
             //持久化已拒绝的dns响应
             "store_rdrc": true,
             // 缩短拒绝缓存时间
-            "rdrc_timeout": "12h"
+            "rdrc_timeout": "1h"
         }
     },
     //和苹果服务器时间同步  
@@ -209,12 +209,18 @@
                 ],
                 "server": "fakeip"
             },
-            
             {
-                "query_type": ["SRV", "TXT", "HTTPS"],
-                "server": "Raw-DNS",
-                "disable_cache": true
+                "query_type": [
+                    "HTTPS",
+                    "SVCB",
+                    "TXT",
+                    "MX",
+                   "CNAME"
+               ],
+               "server": "Raw-DNS",  // TCP的dns支持SRV等特殊查询
+               "disable_cache": true
             }
+            
         ],
         //默认ipv4优选
         "strategy": "ipv4_only", 

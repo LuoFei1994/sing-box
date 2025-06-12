@@ -620,19 +620,19 @@
                 ],
                 "outbound": "reject"
             },
-            {
-                "rule_set": [
-                    "Category-Ads",
-                    "BlockHttpDNS",
-                    "Privacy",        // 基础隐私
-                    "Tracking",       // 追踪器
-                    "Tracker",        // 综合追踪
-                    "Crypto",          // 加密货币
-                    "PrivacyEnhanced",
-                    "PrivateTracker"
-                ],
-                "action": "reject"
-            },
+            //{
+                //"rule_set": [
+                    //"Category-Ads",
+                    //"BlockHttpDNS",
+                    //"Privacy",        // 基础隐私
+                    //"Tracking",       // 追踪器
+                    //"Tracker",        // 综合追踪
+                    //"Crypto",          // 加密货币
+                    //"PrivacyEnhanced",
+                    //"PrivateTracker"
+                //],
+                //"action": "reject"
+           // },
             //隐私服务拦截,补充上面广告
             {
                 "domain_regex": "(privacy|vpn|proxy|anonym)\\.(com|net|io|org)",

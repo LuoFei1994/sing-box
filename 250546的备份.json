@@ -254,10 +254,6 @@
             "auto_route": true,
             //改false的话可以禁用TUN严格路由（解决部分WiFi断流）
             "strict_route": false,
-            "package_obfuscation": {
-                "enabled": true,
-                "padding": true
-                },
             "sniff": true,
             // 提升NAT兼容性
             "endpoint_independent_nat": false, 

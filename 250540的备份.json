@@ -191,16 +191,16 @@
                 "server": "Remote-DNS"
             },
 
-             {
-                "query_type": [
-                    "HTTPS",
-                    "SVCB",
-                    "TXT",
-                    "MX",
-                    "CNAME"
-                ],
-                "server": "Remote-DNS" // 使用支持DoT的远程DNS
-            },
+            //{
+                //"query_type": [
+                   // "HTTPS",
+                    //"SVCB",
+                    //"TXT",
+                    //"MX",
+                    //"CNAME"
+              // ],
+                //"server": "Remote-DNS" // 使用支持DoT的远程DNS
+           // },
             
 
         
@@ -213,8 +213,6 @@
                 "server": "fakeip"
             }
         ],
-        // 隐藏客户端IP
-        "client_subnet": "0.0.0.0/0",
         //默认ipv4优选
         "strategy": "ipv4_only", 
         // 关闭DNS缓存减少CPU负载,避免缓存污染

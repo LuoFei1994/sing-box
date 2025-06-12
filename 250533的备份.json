@@ -522,7 +522,7 @@
             //隐私服务拦截,补充上面广告
             {
                 "domain_regex": "(privacy|vpn|proxy|anonym)\\.(com|net|io|org)",
-                "action": "reject",
+                "action": "reject"
             },
             
 

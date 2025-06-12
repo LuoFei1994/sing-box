@@ -466,6 +466,24 @@
                 "outbound": "🎯 全球直连"
             },
 
+            //共享货源
+            {
+                "domain": [
+                    "product.aliyizhan.com",
+                    "user.jpush.cn",
+                    "thirdwx.qlogo.cn",
+                    "gz.4swd.com",
+                    //另一个
+                    "stat2.openinstall.io",
+                    "analytics.oceanengine.com",
+                    "api2.openinstall.io",
+                    "gz.aliyizhan.com",
+                    
+                ],
+                "outbound": "🎯 全球直连"
+            },
+
+
             
             // =====拦截规则（隐私防护、广告、加密货币等）=====
             //拦截的广告
@@ -673,10 +691,8 @@
                 "outbound": "🎯 全球直连"
             },
 
-
-        
-
-        
+            
+            //规则集
             {
                 "action": "route",
                 "rule_set": [

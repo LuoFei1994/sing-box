@@ -70,8 +70,8 @@
                 // 隐藏客户端IP
                 "client_subnet": "0.0.0.0/0"
             },
+
             
-  
             {
                 "tag": "Remote-DNS",
                 // Quad9的DoT（带恶意软件过滤） 直接使用IP避免二次解析
@@ -81,6 +81,14 @@
                 // 隐藏客户端IP
                 "client_subnet": "0.0.0.0/0"
             
+            },
+
+            // 添加支持原始查询的DNS
+            {
+                "tag": "Raw-DNS",
+                "address": "tcp://119.29.29.29:53", // TCP支持SRV等特殊查询
+                "detour": "🎯 全球直连",
+                "strategy": "prefer_ipv4"
             },
         
             //fakeip的设置
@@ -200,13 +208,19 @@
                     "AAAA"
                 ],
                 "server": "fakeip"
+            },
+            
+            {
+                "query_type": ["SRV", "TXT", "HTTPS"],
+                "server": "Raw-DNS",
+                "disable_cache": true
             }
         ],
         //默认ipv4优选
         "strategy": "ipv4_only", 
         // 关闭DNS缓存减少CPU负载,避免缓存污染
         "disable_cache": true,
-            "cache_size": 2048,
+            "cache_size": 512,
             "cache_ttl": 3600, 
         "disable_expire": false,
         "independent_cache": true,
@@ -241,7 +255,11 @@
             "mtu": 1400, 
             "auto_route": true,
             //改false的话可以禁用TUN严格路由（解决部分WiFi断流）
-            "strict_route": false, 
+            "strict_route": false,
+            "package_obfuscation": {
+                "enabled": true,
+                "padding": true
+                },
             "sniff": true,
             // 提升NAT兼容性
             "endpoint_independent_nat": false, 
@@ -631,6 +649,14 @@
                 "network": "udp",
                 "action": "reject"
             },
+            {   
+                "port_range": [
+                   "5000:65000"
+                  ],
+                "network": "udp",
+                "action": "reject"
+            },
+
             // WebRTC泄露防护
             {
                 "domain_regex": "^(stun|turn|webrtc)\\.",
@@ -663,6 +689,10 @@
             //指纹拦截
             {
                 "domain_regex": "(^(analytics|track|metrics|telemetry|fingerprint)\\.\\w+\\.com$)",
+                "action": "reject"
+            },
+            {
+                "domain_regex": "(fingerprint|deviceid|analytics|tracking)\\.(com|net|io)",
                 "action": "reject"
             },
         

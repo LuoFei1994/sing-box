@@ -190,6 +190,17 @@
                 ],
                 "server": "Remote-DNS"
             },
+
+             {
+                "query_type": [
+                    "HTTPS",
+                    "SVCB",
+                    "TXT",
+                    "MX",
+                    "CNAME"
+                ],
+                "server": "Remote-DNS" // 使用支持DoT的远程DNS
+            },
             
 
         

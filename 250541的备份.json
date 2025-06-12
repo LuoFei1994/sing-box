@@ -65,7 +65,10 @@
             {
                 "tag": "Local-DNS-Resolver",
                 "address": "udp://223.5.5.5:53",
-                "detour": "🎯 全球直连"
+                "detour": "🎯 全球直连",
+                "strategy": "prefer_ipv4",
+                // 隐藏客户端IP
+                "client_subnet": "0.0.0.0/0"
             },
             
   
@@ -213,6 +216,8 @@
                 "server": "fakeip"
             }
         ],
+        // 隐藏客户端IP
+        "client_subnet": "0.0.0.0/0",
         //默认ipv4优选
         "strategy": "ipv4_only", 
         // 关闭DNS缓存减少CPU负载,避免缓存污染

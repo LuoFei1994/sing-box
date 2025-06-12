@@ -468,7 +468,7 @@
 
             //共享货源
             {
-                "domain_suffix" [
+                "domain_suffix": [
                     ".jpush.cn",
                     ".qlogo.cn",
                     ".4swd.com",

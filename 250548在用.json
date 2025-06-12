@@ -70,6 +70,28 @@
                 // 隐藏客户端IP
                 "client_subnet": "0.0.0.0/0"
             },
+            
+            //对`Local-DNS`，配置一个链，先尝试UDP，再尝试TCP，最后尝试DoT
+            {
+                "tag": "Local-DNS-Chain",
+                "address": "chain",
+                "detour": "🎯 全球直连",
+                "strategy": "prefer_ipv4",
+                "servers": [
+                    {
+                        "tag": "UDP-DNS",
+                        "address": "udp://223.5.5.5:53"
+                    },
+                    {
+                        "tag": "TCP-DNS",
+                        "address": "tcp://223.5.5.5:53"
+                    },
+                    {
+                        "tag": "DoT-DNS",
+                        "address": "tls://223.5.5.5:853"
+                    }
+                ]
+            },
 
             
             {

@@ -47,7 +47,7 @@
         "server_port": 123,
         // 减少同步频率
         "interval": "6h",
-        "detour": "🚀 节点选择"
+        "detour": "🎯 全球直连"
     },
     //以下是dns服务和规则设置
     "dns": {
@@ -71,27 +71,7 @@
                 "client_subnet": "0.0.0.0/0"
             },
             
-            //对`Local-DNS`，配置一个链，先尝试UDP，再尝试TCP，最后尝试DoT
-            {
-                "tag": "Local-DNS-Chain",
-                "address": "chain",
-                "detour": "🎯 全球直连",
-                "strategy": "prefer_ipv4",
-                "servers": [
-                    {
-                        "tag": "UDP-DNS",
-                        "address": "udp://223.5.5.5:53"
-                    },
-                    {
-                        "tag": "TCP-DNS",
-                        "address": "tcp://223.5.5.5:53"
-                    },
-                    {
-                        "tag": "DoT-DNS",
-                        "address": "tls://223.5.5.5:853"
-                    }
-                ]
-            },
+            
 
             
             {
@@ -698,13 +678,18 @@
                   // 仅针对Safari生效
                   //"process_name": ["Safari", "MobileSafari"]
             },
-            //指纹拦截
+            //指纹拦截，阻止设备标识收集
             {
                 "domain_keyword": [
                     "canvas_fingerprint",
                     "webgl_fingerprint",
                     "analytics",
-                    "tracking"
+                    "tracking",
+                    "deviceid",
+                    "fingerprint",
+                    "adid",
+                    "gaid",
+                    "idfa"
                 ],
                 "action": "reject"
             },

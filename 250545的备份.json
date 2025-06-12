@@ -220,8 +220,6 @@
         "strategy": "ipv4_only", 
         // 关闭DNS缓存减少CPU负载,避免缓存污染
         "disable_cache": true,
-            "cache_size": 512,
-            "cache_ttl": 3600, 
         "disable_expire": false,
         "independent_cache": true,
         //没找到的dns走指定，注释掉，强制所有DNS走FakeIP。

@@ -433,6 +433,31 @@
                 "outbound": "🎯 全球直连" 
             },
 
+
+            //=======放行直连域名（如Apple、支付、代理节点域名等）=======
+
+            //配合下面的规则，可能影响部分使用UDP/443的合法服务（如WebRTC），建议通过domain白名单排除：
+            {
+                "domain": [
+                    "zoom.us",
+                    "discord.com"
+                ],
+                "port": 443,
+                "network": "udp",
+                "outbound": "🎯 全球直连"
+            },
+
+            {   
+                // 例外放行443和80端口的Apple服务
+                "domain": [
+                    "*.apple.com",
+                    "*.icloud.com"
+                ],
+                "network": "udp",
+                "outbound": "🎯 全球直连"
+            },
+
+            
             // =====拦截规则（隐私防护、广告、加密货币等）=====
             //拦截的广告
             {
@@ -570,9 +595,9 @@
                     "apple-analytics.com",
                     ".advertising.apple.com",
                     ".metrics.apple.com"
-                  ],
+                  ]
                   // 仅针对Safari生效
-                  "process_name": ["Safari", "MobileSafari"]
+                  //"process_name": ["Safari", "MobileSafari"]
             },
             //指纹拦截
             {
@@ -598,33 +623,8 @@
                 "action": "reject"
             },
 
-
-
-
-        //=======放行直连域名（如Apple、支付、代理节点域名等）=======
-
-            //配合下面的规则，可能影响部分使用UDP/443的合法服务（如WebRTC），建议通过domain白名单排除：
-            {
-                "domain": [
-                    "zoom.us",
-                    "discord.com"
-                ],
-                "port": 443,
-                "network": "udp",
-                "outbound": "🎯 全球直连"
-            },
-
-            {   
-                // 例外放行443和80端口的Apple服务
-                "domain": [
-                    "*.apple.com",
-                    "*.icloud.com"
-                ],
-                "network": "udp",
-                "outbound": "🎯 全球直连"
-            },
-
-             // Apple服务直连
+            //=======放行中国域名和IP（规则集GeoSite-CN, geoip-cn等）======
+         // Apple服务直连
             {
                 "domain_suffix": [
                     ".apple.com",
@@ -669,7 +669,10 @@
                 "outbound": "🎯 全球直连"
             },
 
-        //=======放行中国域名和IP（规则集GeoSite-CN, geoip-cn等）======
+
+        
+
+        
             {
                 "action": "route",
                 "rule_set": [
@@ -754,7 +757,7 @@
             {
                 "tag": "PrivateTracker",
                 "type": "remote",
-                "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/refs/heads/main/rule/PrivateTracker/PrivateTracker.srs",
+                "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/PrivateTracker/PrivateTracker.srs",
                 "format": "binary",
                 "download_detour": "🎯 全球直连",
                 "update_interval": "48h"

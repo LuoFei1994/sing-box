@@ -200,24 +200,24 @@
                 "server": "Remote-DNS" // 非中国域名代理
             },
             // 4. 兜底规则（最后）
-            {
-                "query_type": [
-                    "A",
-                    "AAAA"
-                ],
-                "server": "fakeip",
-                "disable_cache": true
-            },
-            {
-                "query_type": [
-                    "HTTPS",
-                    "SVCB",
-                    "TXT",
-                    "MX",
-                    "CNAME"
-                ],
-                "server": "Remote-DNS" // 使用支持DoT的远程DNS
-            }
+            //{
+                //"query_type": [
+                    //"A",
+                    //"AAAA"
+                //],
+                //"server": "fakeip",
+                //"disable_cache": true
+            //},
+           // {
+               // "query_type": [
+                    //"HTTPS",
+                    //"SVCB",
+                    //"TXT",
+                    //"MX",
+                    //"CNAME"
+                //],
+                //"server": "Remote-DNS" // 使用支持DoT的远程DNS
+            //}
         ],
         // 隐藏客户端IP
         "client_subnet": "0.0.0.0/0",

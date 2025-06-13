@@ -644,7 +644,7 @@
                     19302,
                     19305
                 ],
-                "network": "udp",
+                /*"network": "udp",*/
                 "action": "reject"
             },
             {   

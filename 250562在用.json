@@ -638,27 +638,19 @@
                       80,
                       443
                   ],
-                  "network": "tcp",
+                  "network": "udp",
                   "action": "reject" // 强制屏蔽HTTP明文传输
             },
             //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口
-            {
-                "port": [
-                    3478,
-                    3479,
-                    5349,
-                    5350,
-                    19302,
-                    19305
-                ],
-                /*"network": "udp",*/
-                "action": "reject"
-            },
             {   
                 "port_range": [
-                   "5000:65000"
+                    "3478:3479",
+                    "5349:5350",
+                    "19302:19302",
+                    "19305:19305",
+                    "5000:65000"
                   ],
-                "network": "udp",
+                /*"network": "udp",*/
                 "action": "reject"
             },
 

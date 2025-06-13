@@ -540,8 +540,8 @@
             //拦截隐私的广告
             {
                 "rule_set": [
-                    "Privacy",
-                    "PrivacyEnhanced"
+                    "Privacy"
+                    //"PrivacyEnhanced"
                 ],
                 "action": "reject"
             },

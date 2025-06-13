@@ -55,7 +55,7 @@
             
             {
                 "tag": "Local-DNS", 
-                    "address": "tls://dns.alidns.com:853",
+                "address": "tls://dns.alidns.com:853",
                 "address_resolver": "Local-DNS-Resolver",
                 "detour": "🎯 全球直连",
                 "strategy": "prefer_ipv4",

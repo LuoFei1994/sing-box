@@ -138,6 +138,22 @@
               "domain_regex": "metrics|analytics\\.apple\\.com",
               "server": "block"
             },
+
+            // 2. 隐私防护规则
+            {
+                "domain_keyword": ["stun", "turn", "webrtc","quic"],
+                "server": "block"
+            },
+
+            // 新增：屏蔽已知数据收集域名
+            {
+                  "domain_suffix": [
+                    "data.microsoft.com",
+                    "data.google.com",
+                    "metrics.icloud.com"
+                  ],
+                  "server": "block"
+            },
             
             // 1. 关键服务优先处理
             // 苹果服务特殊处理,使用专门服务器
@@ -157,16 +173,6 @@
                 // 隐藏客户端IP
                 "client_subnet": "0.0.0.0/0"
             },
-
-            
-
-            // 2. 隐私防护规则
-            {
-                "domain_keyword": ["stun", "turn", "webrtc","quic"],
-                "server": "block"
-            },
-            
-            
             
             //====clash mode的规则=====
             {
@@ -547,17 +553,22 @@
                 ],
                 "action": "reject"
             },
-            //隐私服务拦截,补充上面广告
-            {
-                "domain_regex": "(privacy|vpn|proxy|anonym)\\.(com|net|io|org)",
-                "action": "reject"
-            },
+           
 
 
             // 新增：精准拦截Apple分析服务
             {
                   "domain_regex": "metrics|analytics\\.apple\\.com",
                   "action": "reject"
+            },
+
+            // 新增Apple精准防护
+            {
+              "domain_suffix": [
+                "apple.comscoreresearch.com", // 已知苹果数据收集域名
+                "apple-mapkit.com"
+              ],
+              "action": "reject"
             },
 
             // 隐私敏感协议拦截,拦截加密货币和Tor流量
@@ -618,8 +629,8 @@
                   "turn",
                   "quic",
                   "webrtc"
-              ],
-              "network": "udp"
+              ]
+              /*"network": "udp"*/
             },
             //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口
             {
@@ -688,13 +699,7 @@
                 "action": "reject"
             },
         
-            //指纹拦截
-            {
-                "domain_regex": "(fingerprintjs|fingerprint|deviceident|fpjs|deviceid|analytics|sentry)\\.(com|io|net)",
-                // 覆盖主流浏览器
-                //"process_name": ["Safari", "Chrome", "Firefox"],
-                "action": "reject"
-            },
+            
 
             //=======放行中国域名和IP（规则集GeoSite-CN, geoip-cn等）======
          // Apple服务直连

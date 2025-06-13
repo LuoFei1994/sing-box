@@ -85,29 +85,7 @@
             {
                 "tag": "Remote-DNS",
                 // Quad9的DoT（带恶意软件过滤） 直接使用IP避免二次解析
-                "address": "tls://dns11.quad9.net:853",  
-                "address_resolver": "Remote-DNS-UDP",
-                "detour": "🚀 节点选择",
-                "strategy": "prefer_ipv4",
-                // 隐藏客户端IP
-                "client_subnet": "0.0.0.0/0"
-            
-            },
-
-            {
-                "tag": "Remote-DNS-UDP",
-                "address": "udp://8.8.8.8:53",  
-                "address_resolver": "Remote-DNS-TCP",
-                "detour": "🚀 节点选择",
-                "strategy": "prefer_ipv4",
-                // 隐藏客户端IP
-                "client_subnet": "0.0.0.0/0"
-            
-            },
-
-            {
-                "tag": "Remote-DNS-TCP",
-                "address": "tcp://1.1.1.1:53",  
+                "address": "tls://9.9.9.11:853", 
                 "detour": "🚀 节点选择",
                 "strategy": "prefer_ipv4",
                 // 隐藏客户端IP
@@ -134,36 +112,31 @@
         //dns的规则
         "rules": [
 
+            
+
             // 在现有规则前新增：强制所有流量经FakeIP
-           {
+            {
                "inbound": ["tun-in", "mixed-in"],
                "server": "fakeip",
                "disable_cache": true 
             },
-
-
+            
+            // 新增代理节点域名直连（防DNS污染）,配合底下的出站规则
             {
-                "domain_keyword": [
-                    "jpush",
-                    "qlogo",
-                    "4swd",
-                    "jiguang",
-                    //另一个
-                    "openinstall",
-                    "oceanengine",
-                    "aliyizhan"
-                    
-                ],
-                "server": "Local-DNS",
-                "disable_cache": true
+                "domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz"],
+                "server": "Local-DNS"
             },
-
-
+            
             //阻止DNS劫持（端口53重定向）
             {
                 "port": 53,
                 "server": "Remote-DNS",
                 "rewrite_ttl": 300
+            },
+
+            {
+              "domain_regex": "metrics|analytics\\.apple\\.com",
+              "server": "block"
             },
             
             // 1. 关键服务优先处理
@@ -185,11 +158,7 @@
                 "client_subnet": "0.0.0.0/0"
             },
 
-            // 新增代理节点域名直连（防DNS污染）,配合底下的出站规则
-            {
-                "domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz"],
-                "server": "Local-DNS"
-            },
+            
 
             // 2. 隐私防护规则
             {
@@ -541,21 +510,6 @@
                 "outbound": "🎯 全球直连"
             },
 
-            //共享货源
-            {
-                "domain_keyword": [
-                    "jpush",
-                    "qlogo",
-                    "4swd",
-                    "jiguang",
-                    //另一个
-                    "openinstall",
-                    "oceanengine",
-                    "aliyizhan"
-                    
-                ],
-                "outbound": "🎯 全球直连"
-            },
 
 
             
@@ -598,8 +552,21 @@
                 "domain_regex": "(privacy|vpn|proxy|anonym)\\.(com|net|io|org)",
                 "action": "reject"
             },
-            
 
+
+            // 新增：精准拦截Apple分析服务
+            {
+                  "domain_regex": "metrics|analytics\\.apple\\.com",
+                  "action": "reject"
+            },
+
+            // 隐私敏感协议拦截,拦截加密货币和Tor流量
+            {
+                "rule_set": [
+                    "Crypto"
+                ],
+                "action": "reject"
+            },
 
             // 隐私敏感协议拦截,拦截加密货币和Tor流量
             {
@@ -625,13 +592,7 @@
                     "192.42.116.16/28"
                 ]
             },
-            // 隐私敏感协议拦截,拦截加密货币和Tor流量
-            {
-                "rule_set": [
-                    "Crypto"
-                ],
-                "action": "reject"
-            },
+            
             // 隐私敏感协议拦截,拦截加密货币和Tor流量
             {
                   "action": "reject",

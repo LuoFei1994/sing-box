@@ -55,7 +55,7 @@
             
             {
                 "tag": "Local-DNS", 
-                "address": "tls://223.5.5.5:853",
+                    "address": "tls://dns.alidns.com:853",
                 "address_resolver": "Local-DNS-Resolver",
                 "detour": "🎯 全球直连",
                 "strategy": "prefer_ipv4",
@@ -65,19 +65,28 @@
             {
                 "tag": "Local-DNS-Resolver",
                 "address": "udp://223.5.5.5:53",
+                "address_resolver": "Raw-DNS",
                 "detour": "🎯 全球直连",
                 "strategy": "prefer_ipv4",
                 // 隐藏客户端IP
                 "client_subnet": "0.0.0.0/0"
             },
-            
+
+             // 添加支持原始查询的DNS
+            {
+                "tag": "Raw-DNS",
+                "address": "tcp://223.5.5.5:53", // TCP支持SRV等特殊查询
+                "detour": "🎯 全球直连",
+                "strategy": "prefer_ipv4"
+            },
             
 
             
             {
                 "tag": "Remote-DNS",
                 // Quad9的DoT（带恶意软件过滤） 直接使用IP避免二次解析
-                "address": "tls://9.9.9.11:853",  
+                "address": "tls://dns11.quad9.net:853",  
+                "address_resolver": "Remote-DNS-UDP",
                 "detour": "🚀 节点选择",
                 "strategy": "prefer_ipv4",
                 // 隐藏客户端IP
@@ -85,13 +94,28 @@
             
             },
 
-            // 添加支持原始查询的DNS
             {
-                "tag": "Raw-DNS",
-                "address": "tcp://119.29.29.29:53", // TCP支持SRV等特殊查询
-                "detour": "🎯 全球直连",
-                "strategy": "prefer_ipv4"
+                "tag": "Remote-DNS-UDP",
+                "address": "udp://8.8.8.8:53",  
+                "address_resolver": "Remote-DNS-TCP",
+                "detour": "🚀 节点选择",
+                "strategy": "prefer_ipv4",
+                // 隐藏客户端IP
+                "client_subnet": "0.0.0.0/0"
+            
             },
+
+            {
+                "tag": "Remote-DNS-TCP",
+                "address": "tcp://1.1.1.1:53",  
+                "detour": "🚀 节点选择",
+                "strategy": "prefer_ipv4",
+                // 隐藏客户端IP
+                "client_subnet": "0.0.0.0/0"
+            
+            },
+
+           
         
             //fakeip的设置
             {

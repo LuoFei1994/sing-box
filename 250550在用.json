@@ -556,7 +556,8 @@
             {
                 "rule_set": [
                     "Privacy",
-                    "PrivacyEnhanced"
+                    "PrivacyEnhanced",
+                    "PrivacyPlus"
                 ],
                 "action": "reject"
             },
@@ -823,6 +824,14 @@
         
         //出站的分流规则集
         "rule_set": [
+            // 新增隐私规则集
+            {
+            "tag": "PrivacyPlus",
+            "type": "remote",
+            "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@main/wildcard/tif.txt",
+            "format": "text",
+            "download_detour": "🎯 全球直连"
+            },
 
             //senshinya隐私规则集
             {

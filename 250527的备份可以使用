@@ -29,7 +29,7 @@
             //实验性缓存
             "enabled": true,
             //缓存路径
-            "path": "cache.db",
+            "path": "rule-cache.db",
             //"cache_id": "cache.db",
             // 禁用FakeIP持久化,更隐秘
             "store_fakeip": false,
@@ -823,6 +823,7 @@
         
         //出站的分流规则集
         "rule_set": [
+            
 
             //senshinya隐私规则集
             {

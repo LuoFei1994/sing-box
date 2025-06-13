@@ -828,9 +828,10 @@
             {
             "tag": "PrivacyPlus",
             "type": "remote",
-            "url": "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@main/wildcard/tif.txt",
-            "format": "text",
-            "download_detour": "🎯 全球直连"
+            "url": "https://cdn.jsdelivr.net/gh/LuoFei1994/sing-box-rules@refs/heads/main/build/PrivacyPlus.srs",
+            "format": "binary",
+            "download_detour": "🎯 全球直连",
+            "update_interval": "48h"
             },
 
             //senshinya隐私规则集

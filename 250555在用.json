@@ -556,8 +556,7 @@
             {
                 "rule_set": [
                     "Privacy",
-                    "PrivacyEnhanced",
-                    "PrivacyPlus"
+                    "PrivacyEnhanced"
                 ],
                 "action": "reject"
             },
@@ -824,15 +823,7 @@
         
         //出站的分流规则集
         "rule_set": [
-            // 新增隐私规则集
-            {
-            "tag": "PrivacyPlus",
-            "type": "remote",
-            "url": "https://fastly.jsdelivr.net/gh/LuoFei1994/sing-box-rules@main/build/PrivacyPlus.srs",
-            "format": "binary",
-            "download_detour": "🚀 节点选择",
-            "update_interval": "168h"
-            },
+            
 
             //senshinya隐私规则集
             {

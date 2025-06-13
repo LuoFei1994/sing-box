@@ -523,7 +523,8 @@
             //拦截的广告
             {
                 "rule_set": [
-                    "Category-Ads"
+                    "Category-Ads",
+                    "UltimateDNSBlocklist"
                 ],
                 "action": "reject"
             },
@@ -1011,7 +1012,16 @@
               "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/apple.srs",
               "format": "binary",
               "download_detour": "🎯 全球直连"
+            },
+            {
+              "tag": "UltimateDNSBlocklist",
+              "type": "remote",
+              "url": "https://cdn.jsdelivr.net/gh/LuoFei1994/sing-box-rules@refs/heads/main/build/UltimateDNSBlocklist.srs",
+              "format": "binary",
+              "download_detour": "🎯 全球直连"
             }
+
+            
         ],
         //自动检测出站接口
         "auto_detect_interface": true,

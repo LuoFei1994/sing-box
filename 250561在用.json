@@ -632,11 +632,18 @@
               ]
               /*"network": "udp"*/
             },
+
+            {
+                  "port": [
+                      80,
+                      443
+                  ],
+                  "network": "tcp",
+                  "action": "reject" // 强制屏蔽HTTP明文传输
+            },
             //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口
             {
                 "port": [
-                    80,
-                    443,
                     3478,
                     3479,
                     5349,

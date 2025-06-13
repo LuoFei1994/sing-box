@@ -539,7 +539,7 @@
             //拦截隐私的广告
             {
                 "rule_set": [
-                    "Privacy"
+                    "Privacy",
                     "PrivacyEnhanced"
                 ],
                 "action": "reject"

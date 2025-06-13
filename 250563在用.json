@@ -523,8 +523,7 @@
             //拦截的广告
             {
                 "rule_set": [
-                    "Category-Ads",
-                    "UltimateDNSBlocklist"
+                    "Category-Ads"
                 ],
                 "action": "reject"
             },
@@ -541,7 +540,7 @@
             {
                 "rule_set": [
                     "Privacy"
-                    //"PrivacyEnhanced"
+                    "PrivacyEnhanced"
                 ],
                 "action": "reject"
             },

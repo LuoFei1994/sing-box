@@ -56,7 +56,7 @@
                 "tag": "Local-DNS",
                 "address": "tls://223.5.5.5:853",
                 "detour": "🎯 全球直连",
-                "strategy": "prefer_ipv4",
+                "strategy": "ipv4_only",
                 // 隐藏客户端IP
                 "client_subnet": "0.0.0.0/0"
             },
@@ -66,14 +66,14 @@
                 "tag": "Raw-DNS",
                 "address": "tcp://223.5.5.5:53", // TCP支持SRV等特殊查询
                 "detour": "🎯 全球直连",
-                "strategy": "prefer_ipv4"
+                "strategy": "ipv4_only"
             },
             {
                 "tag": "Remote-DNS",
                 // Quad9的DoT（带恶意软件过滤） 直接使用IP避免二次解析
                 "address": "tls://9.9.9.11:853",
                 "detour": "🚀 节点选择",
-                "strategy": "prefer_ipv4",
+                "strategy": "ipv4_only",
                 // 隐藏客户端IP
                 "client_subnet": "0.0.0.0/0"
             },
@@ -130,7 +130,9 @@
                 ],
                 "server": "Local-DNS",
                 "disable_cache": true
+                "strategy": "ipv4_only" // 强制IPv4解析
             },
+       
             
             {
                 "domain_regex": "metrics|analytics\\.apple\\.com",
@@ -247,8 +249,9 @@
             "interface_name": "",
             "address": [
                 "172.18.0.1/30",
-                "fdfe:dcba:9876::1/126"
+                //"fdfe:dcba:9876::1/126"
             ],
+            "inet6_address": [], // 明确禁用IPv6
             // 优化iOS的MTU值
             "mtu": 1400,
             "auto_route": true,
@@ -258,7 +261,7 @@
             // 提升NAT兼容性
             "endpoint_independent_nat": false,
             // 避免IPv6泄露
-            "domain_strategy": "prefer_ipv4",
+            "domain_strategy": "ipv4_only",
             //mixed、system、gvisor   
             //这三个的区别system 性能:高、安全性:低、兼容性:高(依赖系统)、复杂性:简单、 适用场景：性能优先
             //===========gvisor 性能:低、安全性:高、兼容性:中         、复杂性:较复杂、适用场景：安全隔离
@@ -443,8 +446,7 @@
             {
                 "domain_suffix": [
                     ".portablesubmarines.com",
-                    ".bgp.666888.biz",
-                    ".weixin.qq.com"
+                    ".bgp.666888.biz"
                 ],
                 "outbound": "🎯 全球直连"
             },
@@ -485,6 +487,15 @@
                 ],
                 "outbound": "🎯 全球直连"
             },
+            {
+                "domain": [
+                    "szextshort.weixin.qq.com",
+                    "short.weixin.qq.com"
+                ],
+                "outbound": "🎯 全球直连",
+                "domain_strategy": "ipv4_only" // 关键参数
+            },
+
             {
             "protocol": ["quic"],
             "domain_suffix": ["qq.com", "weixin.qq.com"],

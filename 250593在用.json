@@ -137,8 +137,19 @@
 
             //共享货源
             {
-                "domain_suffix": ["jpush.cn", "aliyizhan.com","4swd.com","jiguang.cn"],
-                "server": "System-DNS",
+                "domain_suffix": [
+                    ".jpush.cn",
+                    ".aliyizhan.com",
+                    ".4swd.com",
+                    ".jiguang.cn",
+                    ".appsflyersdk.com",
+                    ".dutils.com",
+                    ".live-helps.com",
+                    ".easemob.com",
+                    ".oceanengine.com",
+                    ".openinstall.io"
+                ],
+                "server": "Raw-DNS",
                 "disable_cache": true
             },
             
@@ -500,8 +511,10 @@
             {
                 "process_name": [
                     "WeChta",
-                    "com.tencent.xin"
-                ],
+                    "com.tencent.xin",
+                    "共享货源",
+                    "com.aliyizhan.gchyPro",
+                    "com.016888.shandongMrket"
                 "outbound": "🎯 全球直连"
             },
             //=======放行直连域名（如Apple、支付、代理节点域名等）=======

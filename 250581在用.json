@@ -188,7 +188,6 @@
                     "AAAA"
                 ],
                 "server": "fakeip",
-                "strategy": "ipv4_only",
                 "disable_cache": true
             },
             {

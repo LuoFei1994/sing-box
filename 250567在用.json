@@ -61,15 +61,7 @@
                 // 隐藏客户端IP
                 "client_subnet": "0.0.0.0/0"
             },
-            {
-                "tag": "Local-DNS-Resolver",
-                "address": "udp://223.5.5.5:53",
-                "address_resolver": "Raw-DNS",
-                "detour": "🎯 全球直连",
-                "strategy": "prefer_ipv4",
-                // 隐藏客户端IP
-                "client_subnet": "0.0.0.0/0"
-            },
+            
             // 添加支持原始查询的DNS
             {
                 "tag": "Raw-DNS",
@@ -477,7 +469,12 @@
                 "action": "route",
                 "outbound": "🎯 全球直连"
             },
-
+            // 添加微信专用UDP放行规则
+            {
+                "domain_keyword": ["weixin", "qq.com", "tencent"],
+                "network": "udp",
+                "outbound": "🎯 全球直连"
+            },
             // 微信服务直连（添加在私有IP规则后）
             {
                 "domain_suffix": [
@@ -488,6 +485,11 @@
                     "tencent.com"
                 ],
                 "outbound": "🎯 全球直连"
+            },
+            {
+            "protocol": ["quic"],
+            "domain_suffix": ["qq.com", "weixin.qq.com"],
+            "outbound": "🎯 全球直连"
             },
 
             //添加NTP服务直连规则,避免代理不稳定时可能回退直连。
@@ -618,7 +620,11 @@
                     "quic",
                     "webrtc"
                 ],
-                "network": "udp"
+                "domain_suffix": [
+                "weixin.qq.com",
+                "qpic.cn"
+                    ],
+                "invert": true   // 反转：除了微信域名外才拦截
             },
             {
                 "port": [
@@ -626,6 +632,7 @@
                     443
                 ],
                 "network": "udp",
+                "invert": true,
                 "action": "reject" // 强制屏蔽HTTP明文传输
             },
             //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口
@@ -637,7 +644,11 @@
                     "19305:19305",
                     "5000:65000"
                 ],
-                "network": "udp",
+                "domain_suffix": [
+                "weixin.qq.com",
+                "qpic.cn"
+                    ],
+                "invert": true,
                 "action": "reject"
             },
             // WebRTC泄露防护

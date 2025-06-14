@@ -125,12 +125,28 @@
                 "server": "Remote-DNS",
                 "rewrite_ttl": 300
             },
+
+            // 微信朋友圈专用规则（添加在顶部）
+            {
+                "domain": [
+                    "weixin.qq.com",
+                    "wx.qq.com",
+                    "qpic.cn",
+                    "qlogo.cn",
+                    "cdn.weixin.qq.com",
+                    "mmbiz.qpic.cn",
+                    "mp.weixin.qq.com"
+                ],
+                "server": "Local-DNS",
+                "disable_cache": true
+            },
+            
             {
                 "domain_regex": "metrics|analytics\\.apple\\.com",
                 "server": "block"
             },
             // 2. 隐私防护规则
-            /*{
+            {
                 "domain_keyword": [
                     "stun",
                     "turn",
@@ -138,7 +154,7 @@
                     "quic"
                 ],
                 "server": "block"
-            },*/
+            },
             // 新增：屏蔽已知数据收集域名
             {
                 "domain_suffix": [
@@ -461,6 +477,19 @@
                 "action": "route",
                 "outbound": "🎯 全球直连"
             },
+
+            // 微信服务直连（添加在私有IP规则后）
+            {
+                "domain_suffix": [
+                    "qq.com",
+                    "qpic.cn",
+                    "qlogo.cn",
+                    "wechat.com",
+                    "tencent.com"
+                ],
+                "outbound": "🎯 全球直连"
+            },
+
             //添加NTP服务直连规则,避免代理不稳定时可能回退直连。
             {
                 "domain": [

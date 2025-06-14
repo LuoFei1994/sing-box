@@ -230,8 +230,9 @@
             "interface_name": "",
             "address": [
                 "172.18.0.1/30",
-                "fdfe:dcba:9876::1/126"
+                //"fdfe:dcba:9876::1/126"
             ],
+            "inet6_address": [], // 禁用IPv6
             // 优化iOS的MTU值
             "mtu": 1400,
             "auto_route": true,

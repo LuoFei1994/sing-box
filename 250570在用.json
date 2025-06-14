@@ -203,8 +203,8 @@
                     "AAAA"
                 ],
                 "server": "fakeip"
-            },
-            {
+            }
+            /*{
                 "query_type": [
                     "HTTPS",
                     "SVCB",
@@ -214,7 +214,7 @@
                 ],
                 "server": "Raw-DNS", // TCP的dns支持SRV等特殊查询
                 "disable_cache": true
-            }
+            }*/
         ],
         //默认ipv4优选
         "strategy": "ipv4_only",

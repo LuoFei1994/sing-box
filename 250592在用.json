@@ -86,11 +86,19 @@
                 // 隐藏客户端IP
                 "client_subnet": "0.0.0.0/0"
             },
+            
             //fakeip的设置
             {
                 "address": "fakeip",
                 "tag": "fakeip"
             },
+
+            //系统的dns
+            {
+                "address": "local",
+                "tag": "System-DNS"
+            },
+            
             //拒绝的DNS
             {
                 "address": "rcode://success",
@@ -130,7 +138,7 @@
             //共享货源
             {
                 "domain_suffix": ["jpush.cn", "aliyizhan.com","4swd.com","jiguang.cn"],
-                "server": "TCP-DNS",
+                "server": "System-DNS",
                 "disable_cache": true
             },
             

@@ -617,7 +617,7 @@
                     "turn",
                     "quic",
                     "webrtc"
-                ]
+                ],
                 "network": "udp"
             },
             {

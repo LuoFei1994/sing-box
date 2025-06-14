@@ -618,7 +618,7 @@
                     "quic",
                     "webrtc"
                 ]
-                /*"network": "udp"*/
+                "network": "udp"
             },
             {
                 "port": [
@@ -637,7 +637,7 @@
                     "19305:19305",
                     "5000:65000"
                 ],
-                /*"network": "udp",*/
+                "network": "udp",
                 "action": "reject"
             },
             // WebRTC泄露防护

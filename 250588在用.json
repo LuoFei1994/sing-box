@@ -107,6 +107,16 @@
                 ],
                 "server": "Local-DNS"
             },
+            // 添加微信 QUIC 专用规则
+            {
+            "domain": [
+                "szquic.weixin.qq.com",
+                "szextshort.weixin.qq.com",
+                "short.weixin.qq.com"
+            ],
+            "server": "Raw-DNS",
+            "disable_cache": true
+            },
             //阻止DNS劫持（端口53重定向）
             {
                 "port": 53,

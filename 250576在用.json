@@ -129,8 +129,7 @@
                     "mp.weixin.qq.com"
                 ],
                 "server": "Local-DNS",
-                "disable_cache": true,
-                "strategy": "ipv4_only"
+                "disable_cache": true
             },
        
             

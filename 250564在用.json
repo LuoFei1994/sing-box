@@ -3,10 +3,10 @@
     "log": {
         "disabled": false,
         //日志详细记录
-        "level": "error", 
+        "level": "error",
         "output": "",
         //打开标注日志时间 
-        "timestamp": false 
+        "timestamp": false
     },
     //实验性  
     "experimental": {
@@ -16,13 +16,13 @@
             "external_ui_download_url": "",
             "external_ui_download_detour": "🎯 全球直连",
             // 留空自动生成随机密钥
-            "secret": "", 
+            "secret": "",
             //工作模式rule/global/Enhanced
             "default_mode": "Enhanced",
             // 限制控制台访问源
             "access_control_allow_origin": [
                 "http://localhost:*"
-            ], 
+            ],
             "access_control_allow_private_network": false
         },
         "cache_file": {
@@ -52,9 +52,8 @@
     //以下是dns服务和规则设置
     "dns": {
         "servers": [
-            
             {
-                "tag": "Local-DNS", 
+                "tag": "Local-DNS",
                 "address": "tls://dns.alidns.com:853",
                 "address_resolver": "Local-DNS-Resolver",
                 "detour": "🎯 全球直连",
@@ -71,30 +70,22 @@
                 // 隐藏客户端IP
                 "client_subnet": "0.0.0.0/0"
             },
-
-             // 添加支持原始查询的DNS
+            // 添加支持原始查询的DNS
             {
                 "tag": "Raw-DNS",
                 "address": "tcp://223.5.5.5:53", // TCP支持SRV等特殊查询
                 "detour": "🎯 全球直连",
                 "strategy": "prefer_ipv4"
             },
-            
-
-            
             {
                 "tag": "Remote-DNS",
                 // Quad9的DoT（带恶意软件过滤） 直接使用IP避免二次解析
-                "address": "tls://9.9.9.11:853", 
+                "address": "tls://9.9.9.11:853",
                 "detour": "🚀 节点选择",
                 "strategy": "prefer_ipv4",
                 // 隐藏客户端IP
                 "client_subnet": "0.0.0.0/0"
-            
             },
-
-           
-        
             //fakeip的设置
             {
                 "address": "fakeip",
@@ -102,7 +93,6 @@
                 // 仅使用IPv4 FakeIP
                 "strategy": "ipv4_only"
             },
-
             //拒绝的DNS
             {
                 "address": "rcode://success",
@@ -111,50 +101,53 @@
         ],
         //dns的规则
         "rules": [
-
-            
-
             // 在现有规则前新增：强制所有流量经FakeIP
             {
-               "inbound": ["tun-in", "mixed-in"],
-               "server": "fakeip",
-               "disable_cache": true 
+                "inbound": [
+                    "tun-in",
+                    "mixed-in"
+                ],
+                "server": "fakeip",
+                "disable_cache": true
             },
-            
             // 新增代理节点域名直连（防DNS污染）,配合底下的出站规则
             {
-                "domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz",".weixin.qq.com"],
+                "domain_suffix": [
+                    ".portablesubmarines.com",
+                    ".bgp.666888.biz",
+                    ".weixin.qq.com"
+                ],
                 "server": "Local-DNS"
             },
-            
             //阻止DNS劫持（端口53重定向）
             {
                 "port": 53,
                 "server": "Remote-DNS",
                 "rewrite_ttl": 300
             },
-
             {
-              "domain_regex": "metrics|analytics\\.apple\\.com",
-              "server": "block"
-            },
-
-            // 2. 隐私防护规则
-            {
-                "domain_keyword": ["stun", "turn", "webrtc","quic"],
+                "domain_regex": "metrics|analytics\\.apple\\.com",
                 "server": "block"
             },
-
+            // 2. 隐私防护规则
+            /*{
+                "domain_keyword": [
+                    "stun",
+                    "turn",
+                    "webrtc",
+                    "quic"
+                ],
+                "server": "block"
+            },*/
             // 新增：屏蔽已知数据收集域名
             {
-                  "domain_suffix": [
+                "domain_suffix": [
                     "data.microsoft.com",
                     "data.google.com",
                     "metrics.icloud.com"
-                  ],
-                  "server": "block"
+                ],
+                "server": "block"
             },
-            
             // 1. 关键服务优先处理
             // 苹果服务特殊处理,使用专门服务器
             {
@@ -167,13 +160,11 @@
                     ".apple-livephotoskit.com"
                 ],
                 "server": "Local-DNS",
-    
                 // 替代always_real_ip  替代skip_resolve的方案
                 "disable_cache": true,
                 // 隐藏客户端IP
                 "client_subnet": "0.0.0.0/0"
             },
-            
             //====clash mode的规则=====
             {
                 "action": "route",
@@ -185,7 +176,6 @@
                 "clash_mode": "global",
                 "server": "Remote-DNS"
             },
-
             // 3. 区域分流规则
             {
                 "rule_set": [
@@ -193,15 +183,12 @@
                 ],
                 "server": "Local-DNS"
             },
-
             {
                 "rule_set": [
                     "geosite-geolocation-!cn"
                 ],
                 "server": "Remote-DNS"
             },
-
-
             // 4. 兜底规则（最后）
             {
                 "query_type": [
@@ -216,15 +203,14 @@
                     "SVCB",
                     "TXT",
                     "MX",
-                   "CNAME"
-               ],
-               "server": "Raw-DNS",  // TCP的dns支持SRV等特殊查询
-               "disable_cache": true
+                    "CNAME"
+                ],
+                "server": "Raw-DNS", // TCP的dns支持SRV等特殊查询
+                "disable_cache": true
             }
-            
         ],
         //默认ipv4优选
-        "strategy": "ipv4_only", 
+        "strategy": "ipv4_only",
         // 关闭DNS缓存减少CPU负载,避免缓存污染
         "disable_cache": true,
         "disable_expire": false,
@@ -257,15 +243,15 @@
                 "fdfe:dcba:9876::1/126"
             ],
             // 优化iOS的MTU值
-            "mtu": 1400, 
+            "mtu": 1400,
             "auto_route": true,
             //改false的话可以禁用TUN严格路由（解决部分WiFi断流）
             "strict_route": false,
             "sniff": true,
             // 提升NAT兼容性
-            "endpoint_independent_nat": false, 
+            "endpoint_independent_nat": false,
             // 避免IPv6泄露
-            "domain_strategy": "prefer_ipv4", 
+            "domain_strategy": "prefer_ipv4",
             //mixed、system、gvisor   
             //这三个的区别system 性能:高、安全性:低、兼容性:高(依赖系统)、复杂性:简单、 适用场景：性能优先
             //===========gvisor 性能:低、安全性:高、兼容性:中         、复杂性:较复杂、适用场景：安全隔离
@@ -283,13 +269,11 @@
     ],
     //出站设置
     "outbounds": [
-
         //=========出站的规则=========
         {
             "type": "direct",
             "tag": "🎯 全球直连"
         },
-        
         {
             "type": "selector",
             "tag": "🚀 节点选择",
@@ -307,9 +291,9 @@
             "tag": "🎈 自动选择",
             "url": "https://www.gstatic.com/generate_204",
             // 测试时间间隔
-            "interval": "10m", 
+            "interval": "10m",
             // 降低切换灵敏度
-            "tolerance": 50, 
+            "tolerance": 50,
             "interrupt_exist_connections": true,
             "outbounds": [
                 "已中转kookeey",
@@ -319,7 +303,6 @@
                 "vmess1"
             ]
         },
-        
         //全局
         {
             "type": "selector",
@@ -333,7 +316,6 @@
             ]
             //"default": "手动选择"  这条可以让规则选一个默认的
         },
-        
         {
             "type": "selector",
             "tag": "🐟 漏网之鱼",
@@ -343,7 +325,6 @@
                 "🎯 全球直连"
             ]
         },
-        
         //个人的节点
         {
             "type": "socks",
@@ -362,21 +343,21 @@
             "method": "aes-256-gcm",
             "password": "kQBeCDXbwoSW2wVC",
             //启用HTTP流量混淆插件
-            "plugin": "", 
+            "plugin": "",
             // 必要隐私保护
-            "plugin_opts": "", 
+            "plugin_opts": "",
             // 关闭UDP减少耗电，选tcp
-            "network": "udp", 
+            "network": "udp",
             // 强制UDP over TCP 
             "udp_over_tcp": true,
             "multiplex": {
                 // 启用多路复用
-                "enabled": true,      
+                "enabled": true,
                 "protocol": "h2mux",
                 "max_connections": 8,
                 // 新增流量填充防分析
-                "padding": true  
-            } 
+                "padding": true
+            }
         },
         {
             "type": "shadowsocks",
@@ -387,16 +368,16 @@
             "method": "aes-256-gcm",
             "password": "fFfe3fuhJrhhXSSY",
             //启用HTTP流量混淆插件
-            "plugin": "", 
+            "plugin": "",
             // 必要隐私保护 深度伪装
-            "plugin_opts": "", 
+            "plugin_opts": "",
             // 关闭UDP减少耗电，选tcp
-            "network": "udp", 
+            "network": "udp",
             // 强制UDP over TCP 
             "udp_over_tcp": true,
             "multiplex": {
                 // 启用多路复用
-                "enabled": true,  
+                "enabled": true,
                 // HTTP/2多路复用
                 "protocol": "h2mux",
                 "max_connections": 8
@@ -430,16 +411,13 @@
         //"security": "auto",
         //"alter_id": 0
         //}
-        
     ],
     //出站的规则分流
     "route": {
         "rules": [
-            
-        // =======必要的技术规则（如sniff, resolve, hijack-dns）======
-            {    
-                
-                "action": "sniff", 
+            // =======必要的技术规则（如sniff, resolve, hijack-dns）======
+            {
+                "action": "sniff",
                 "inbound": [
                     "tun-in",
                     "mixed-in"
@@ -454,15 +432,14 @@
                 "action": "resolve",
                 "strategy": "prefer_ipv4"
             },
-
             // 阻止代理节点被二次代理，会配合dns的规则
             {
-               "domain_suffix": [
+                "domain_suffix": [
                     ".portablesubmarines.com",
                     ".bgp.666888.biz",
                     ".weixin.qq.com"
                 ],
-               "outbound": "🎯 全球直连"
+                "outbound": "🎯 全球直连"
             },
             //拦截dns
             {
@@ -478,24 +455,20 @@
                 ],
                 "action": "hijack-dns"
             },
-            
-        //=======放行私有IP（ip_is_private和ip_cidr私有地址）======
-
+            //=======放行私有IP（ip_is_private和ip_cidr私有地址）======
             {
                 "ip_is_private": true,
                 "action": "route",
                 "outbound": "🎯 全球直连"
             },
-
             //添加NTP服务直连规则,避免代理不稳定时可能回退直连。
-            { 
-                "domain": ["time.apple.com"], 
-                "outbound": "🎯 全球直连" 
+            {
+                "domain": [
+                    "time.apple.com"
+                ],
+                "outbound": "🎯 全球直连"
             },
-
-
             //=======放行直连域名（如Apple、支付、代理节点域名等）=======
-
             //配合下面的规则，可能影响部分使用UDP/443的合法服务（如WebRTC），建议通过domain白名单排除：
             {
                 "domain": [
@@ -506,8 +479,7 @@
                 "network": "udp",
                 "outbound": "🎯 全球直连"
             },
-
-            {   
+            {
                 // 例外放行443和80端口的Apple服务
                 "domain": [
                     "*.apple.com",
@@ -516,10 +488,6 @@
                 "network": "udp",
                 "outbound": "🎯 全球直连"
             },
-
-
-
-            
             // =====拦截规则（隐私防护、广告、加密货币等）=====
             //拦截的广告
             {
@@ -528,7 +496,6 @@
                 ],
                 "action": "reject"
             },
-
             //拦截dns的广告
             {
                 "rule_set": [
@@ -536,7 +503,6 @@
                 ],
                 "action": "reject"
             },
-
             //拦截隐私的广告
             {
                 "rule_set": [
@@ -554,24 +520,19 @@
                 ],
                 "action": "reject"
             },
-           
-
-
             // 新增：精准拦截Apple分析服务
             {
-                  "domain_regex": "metrics|analytics\\.apple\\.com",
-                  "action": "reject"
+                "domain_regex": "metrics|analytics\\.apple\\.com",
+                "action": "reject"
             },
-
             // 新增Apple精准防护
             {
-              "domain_suffix": [
-                "apple.comscoreresearch.com", // 已知苹果数据收集域名
-                "apple-mapkit.com"
-              ],
-              "action": "reject"
+                "domain_suffix": [
+                    "apple.comscoreresearch.com", // 已知苹果数据收集域名
+                    "apple-mapkit.com"
+                ],
+                "action": "reject"
             },
-
             // 隐私敏感协议拦截,拦截加密货币和Tor流量
             {
                 "rule_set": [
@@ -579,7 +540,6 @@
                 ],
                 "action": "reject"
             },
-
             // 隐私敏感协议拦截,拦截加密货币和Tor流量
             {
                 "protocol": [
@@ -594,8 +554,8 @@
             },
             // 隐私敏感协议拦截,拦截加密货币和Tor流量
             {
-              "action": "reject",
-              "ip_cidr": [
+                "action": "reject",
+                "ip_cidr": [
                     // Tor出口节点
                     "176.10.104.240/28",
                     "179.43.128.0/24",
@@ -604,75 +564,69 @@
                     "192.42.116.16/28"
                 ]
             },
-            
             // 隐私敏感协议拦截,拦截加密货币和Tor流量
             {
-                  "action": "reject",
-                  "domain_suffix": [
+                "action": "reject",
+                "domain_suffix": [
                     ".coinbase.com",
                     ".binance.com",
                     ".metamask.io",
                     ".tron.network",
                     ".okx.com"
-                  ]
+                ]
             },
             // 隐私敏感协议拦截,拦截加密货币和Tor流量
             {
-                  "action": "reject",
-                  "domain_regex": "(coinbase|binance|metamask|tron|okx|bybit|kucoin)\\.(com|io|net)"
+                "action": "reject",
+                "domain_regex": "(coinbase|binance|metamask|tron|okx|bybit|kucoin)\\.(com|io|net)"
             },
-            
-           //WebRTC协议泄露防护
-           {
-              "action": "reject",
-              "protocol": [
-                  "stun",
-                  "turn",
-                  "quic",
-                  "webrtc"
-              ]
-              /*"network": "udp"*/
-            },
-
+            //WebRTC协议泄露防护
             {
-                  "port": [
-                      80,
-                      443
-                  ],
-                  "network": "udp",
-                  "action": "reject" // 强制屏蔽HTTP明文传输
+                "action": "reject",
+                "protocol": [
+                    "stun",
+                    "turn",
+                    "quic",
+                    "webrtc"
+                ]
+                /*"network": "udp"*/
+            },
+            {
+                "port": [
+                    80,
+                    443
+                ],
+                "network": "udp",
+                "action": "reject" // 强制屏蔽HTTP明文传输
             },
             //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口
-            {   
+            {
                 "port_range": [
                     "3478:3479",
                     "5349:5350",
                     "19302:19302",
                     "19305:19305",
                     "5000:65000"
-                  ],
+                ],
                 /*"network": "udp",*/
                 "action": "reject"
             },
-
             // WebRTC泄露防护
             {
                 "domain_regex": "^(stun|turn|webrtc)\\.",
                 "action": "reject"
             },
-
-
             //指纹拦截
             {
-                  "action": "reject",
-                  "domain_suffix": [
+                "action": "reject",
+                "domain_suffix": [
                     "safari-tracker.com",
                     "apple-analytics.com",
                     ".advertising.apple.com",
                     ".metrics.apple.com"
-                  ]
-                  // 仅针对Safari生效
-                  //"process_name": ["Safari", "MobileSafari"]
+                ]
+                // 仅针对Safari生效
+                //"process_name": ["Safari", "MobileSafari"]
             },
             //指纹拦截，阻止设备标识收集
             {
@@ -698,11 +652,8 @@
                 "domain_regex": "(fingerprint|deviceid|analytics|tracking)\\.(com|net|io)",
                 "action": "reject"
             },
-        
-            
-
             //=======放行中国域名和IP（规则集GeoSite-CN, geoip-cn等）======
-         // Apple服务直连
+            // Apple服务直连
             {
                 "domain_suffix": [
                     ".apple.com",
@@ -719,8 +670,6 @@
                 ],
                 "outbound": "🎯 全球直连"
             },
-      
-            
             //支付渠道走直连，避免出问题
             {
                 "domain_suffix": [
@@ -731,7 +680,6 @@
                 ],
                 "outbound": "🎯 全球直连"
             },
-
             //银行服务
             {
                 "domain_keyword": [
@@ -741,8 +689,6 @@
                 ],
                 "outbound": "🎯 全球直连"
             },
-
-            
             //规则集
             {
                 "action": "route",
@@ -752,12 +698,7 @@
                 ],
                 "outbound": "🎯 全球直连"
             },
-
-
-         
-
-
-        //====== clash mode 规则组=====
+            //====== clash mode 规则组=====
             {
                 "action": "route",
                 "clash_mode": "direct",
@@ -768,8 +709,7 @@
                 "clash_mode": "global",
                 "outbound": "GLOBAL"
             },
-            
-        //===== 直连规则 =====
+            //===== 直连规则 =====
             {
                 "action": "route",
                 "rule_set": [
@@ -778,9 +718,7 @@
                 ],
                 "outbound": "🎯 全球直连"
             },
-                   
-        //===== 代理规则 =====
-    
+            //===== 代理规则 =====
             //国外媒体走代理
             {
                 "action": "route",
@@ -796,7 +734,6 @@
                 ],
                 "outbound": "🚀 节点选择"
             },
-
             // 走代理的规则：非中国域名
             {
                 "action": "route",
@@ -805,16 +742,9 @@
                 ],
                 "outbound": "🚀 节点选择"
             }
-
-            
         ],
-
-
-        
         //出站的分流规则集
         "rule_set": [
-            
-
             //senshinya隐私规则集
             {
                 "tag": "PrivacyEnhanced",
@@ -824,7 +754,6 @@
                 "download_detour": "🎯 全球直连",
                 "update_interval": "48h"
             },
-
             //senshinya私人追踪
             {
                 "tag": "PrivateTracker",
@@ -834,9 +763,6 @@
                 "download_detour": "🎯 全球直连",
                 "update_interval": "48h"
             },
-
-            
-
             //Crypto-Block货币加密规则集
             {
                 "tag": "Crypto",
@@ -846,7 +772,6 @@
                 "download_detour": "🎯 全球直连",
                 "update_interval": "48h"
             },
-
             //专门的隐私规则集
             {
                 "tag": "Privacy",
@@ -910,8 +835,6 @@
                 "download_detour": "🎯 全球直连",
                 "update_interval": "48h"
             },
-            
-           
             //中国地址
             {
                 "tag": "GeoSite-CN",
@@ -930,7 +853,6 @@
                 "download_detour": "🎯 全球直连",
                 "update_interval": "48h"
             },
-            
             //非中国地址
             {
                 "tag": "geosite-geolocation-!cn",
@@ -946,10 +868,9 @@
                 "type": "remote",
                 "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/PayPal/PayPal.srs",
                 "format": "binary",
-                "download_detour": "🎯 全球直连", 
+                "download_detour": "🎯 全球直连",
                 "update_interval": "48h"
             },
-            
             //MetaCubeX维护的公共追踪器
             {
                 "tag": "Tracking",
@@ -976,7 +897,6 @@
                 "download_detour": "🚀 节点选择",
                 "update_interval": "48h"
             },
-            
             //Line规则集
             {
                 "tag": "Line",
@@ -986,7 +906,6 @@
                 "download_detour": "🚀 节点选择",
                 "update_interval": "48h"
             },
-            
             //Telegram规则集
             {
                 "tag": "Telegram",
@@ -996,7 +915,6 @@
                 "download_detour": "🚀 节点选择",
                 "update_interval": "48h"
             },
-            
             //拒绝的dns
             {
                 "tag": "BlockHttpDNS",
@@ -1007,13 +925,12 @@
                 "update_interval": "48h"
             },
             {
-              "tag": "iOS-Services",
-              "type": "remote",
-              "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/apple.srs",
-              "format": "binary",
-              "download_detour": "🎯 全球直连"
+                "tag": "iOS-Services",
+                "type": "remote",
+                "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/apple.srs",
+                "format": "binary",
+                "download_detour": "🎯 全球直连"
             }
-            
         ],
         //自动检测出站接口
         "auto_detect_interface": true,

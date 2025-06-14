@@ -593,7 +593,8 @@
                     80,
                     443
                 ],
-                "network": "udp"
+                "network": "udp",
+                "action": "reject"
             },
             //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口
             {

@@ -189,15 +189,6 @@
                 ],
                 "server": "Remote-DNS"
             },
-            // 4. 兜底规则（最后）
-            {
-                "query_type": [
-                    "A",
-                    "AAAA"
-                ],
-                "server": "fakeip",
-                "disable_cache": true
-            },
             {
                 "query_type": [
                     "HTTPS",
@@ -208,7 +199,17 @@
                 ],
                 "server": "Raw-DNS", // TCP的dns支持SRV等特殊查询
                 "disable_cache": true
+            },
+            // 4. 兜底规则（最后）
+            {
+                "query_type": [
+                    "A",
+                    "AAAA"
+                ],
+                "server": "fakeip",
+                "disable_cache": true
             }
+            
         ],
         //默认ipv4优选
         "strategy": "ipv4_only",

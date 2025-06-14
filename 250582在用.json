@@ -80,9 +80,7 @@
             //fakeip的设置
             {
                 "address": "fakeip",
-                "tag": "fakeip",
-                // 仅使用IPv4 FakeIP
-                "strategy": "ipv4_only"
+                "tag": "fakeip"
             },
             //拒绝的DNS
             {
@@ -93,14 +91,14 @@
         //dns的规则
         "rules": [
             // 在现有规则前新增：强制所有流量经FakeIP
-            //{
-                //"inbound": [
-                    //"tun-in",
-                    //"mixed-in"
-                //],
-                //"server": "fakeip",
-                //"disable_cache": true
-            //},
+            {
+                "inbound": [
+                    "tun-in",
+                    "mixed-in"
+                ],
+                "server": "fakeip",
+                "disable_cache": true
+            },
             // 新增代理节点域名直连（防DNS污染）,配合底下的出站规则
             {
                 "domain_suffix": [

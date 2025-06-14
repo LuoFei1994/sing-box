@@ -123,7 +123,7 @@
             
             // 新增代理节点域名直连（防DNS污染）,配合底下的出站规则
             {
-                "domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz"],
+                "domain_suffix": [".portablesubmarines.com", ".bgp.666888.biz",".weixin.qq.com"],
                 "server": "Local-DNS"
             },
             

@@ -491,8 +491,7 @@
                     "szextshort.weixin.qq.com",
                     "short.weixin.qq.com"
                 ],
-                "outbound": "🎯 全球直连",
-                "strategy": "ipv4_only"
+                "outbound": "🎯 全球直连"
             },
 
             {

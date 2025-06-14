@@ -129,7 +129,7 @@
                     "mp.weixin.qq.com"
                 ],
                 "server": "Local-DNS",
-                "disable_cache": true
+                "disable_cache": true,
                 "strategy": "ipv4_only" // 强制IPv4解析
             },
        
@@ -248,7 +248,7 @@
             "tag": "tun-in",
             "interface_name": "",
             "address": [
-                "172.18.0.1/30",
+                "172.18.0.1/30"
                 //"fdfe:dcba:9876::1/126"
             ],
             "inet6_address": [], // 明确禁用IPv6

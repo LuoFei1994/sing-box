@@ -492,7 +492,7 @@
                     "short.weixin.qq.com"
                 ],
                 "outbound": "🎯 全球直连",
-                "strategy": "ipv4_only" // 关键参数
+                "strategy": "ipv4_only"
             },
 
             {

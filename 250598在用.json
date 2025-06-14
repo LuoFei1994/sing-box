@@ -108,24 +108,6 @@
         //dns的规则
         "rules": [
 
-            //共享货源
-            {
-                "domain_suffix": [
-                    ".jpush.cn",
-                    ".aliyizhan.com",
-                    ".4swd.com",
-                    ".jiguang.cn",
-                    ".appsflyersdk.com",
-                    ".dutils.com",
-                    ".live-helps.com",
-                    ".easemob.com",
-                    ".oceanengine.com",
-                    ".openinstall.io"
-                ],
-                "server": "Raw-DNS",
-                "disable_cache": true
-            },
-            
             // 在现有规则前新增：强制所有流量经FakeIP
             {
                 "inbound": [
@@ -245,6 +227,23 @@
                     "AAAA"
                 ],
                 "server": "fakeip",
+                "disable_cache": true
+            },
+            //共享货源
+            {
+                "domain_suffix": [
+                    ".jpush.cn",
+                    ".aliyizhan.com",
+                    ".4swd.com",
+                    ".jiguang.cn",
+                    ".appsflyersdk.com",
+                    ".dutils.com",
+                    ".live-helps.com",
+                    ".easemob.com",
+                    ".oceanengine.com",
+                    ".openinstall.io"
+                ],
+                "server": "Raw-DNS",
                 "disable_cache": true
             }
             

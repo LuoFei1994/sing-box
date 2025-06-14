@@ -107,33 +107,6 @@
         ],
         //dns的规则
         "rules": [
-            // 在现有规则前新增：强制所有流量经FakeIP
-            {
-                "inbound": [
-                    "tun-in",
-                    "mixed-in"
-                ],
-                "server": "fakeip",
-                "disable_cache": true
-            },
-            // 新增代理节点域名直连（防DNS污染）,配合底下的出站规则
-            {
-                "domain_suffix": [
-                    ".portablesubmarines.com",
-                    ".bgp.666888.biz"
-                ],
-                "server": "Local-DNS"
-            },
-            // 添加微信 QUIC 专用规则
-            {
-            "domain": [
-                "szquic.weixin.qq.com",
-                "szextshort.weixin.qq.com",
-                "short.weixin.qq.com"
-            ],
-            "server": "Raw-DNS",
-            "disable_cache": true
-            },
 
             //共享货源
             {
@@ -153,6 +126,24 @@
                 "disable_cache": true
             },
             
+            // 在现有规则前新增：强制所有流量经FakeIP
+            {
+                "inbound": [
+                    "tun-in",
+                    "mixed-in"
+                ],
+                "server": "fakeip",
+                "disable_cache": true
+            },
+            // 新增代理节点域名直连（防DNS污染）,配合底下的出站规则
+            {
+                "domain_suffix": [
+                    ".portablesubmarines.com",
+                    ".bgp.666888.biz"
+                ],
+                "server": "Local-DNS"
+            },
+
             //阻止DNS劫持（端口53重定向）
             {
                 "port": 53,
@@ -160,6 +151,16 @@
                 "rewrite_ttl": 300
             },
 
+            // 添加微信 QUIC 专用规则
+            {
+            "domain": [
+                "szquic.weixin.qq.com",
+                "szextshort.weixin.qq.com",
+                "short.weixin.qq.com"
+            ],
+            "server": "Raw-DNS",
+            "disable_cache": true
+            },
             
             {
                 "domain_regex": "metrics|analytics\\.apple\\.com",

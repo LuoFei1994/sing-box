@@ -228,25 +228,7 @@
                 ],
                 "server": "fakeip",
                 "disable_cache": true
-            },
-            //共享货源
-            {
-                "domain_suffix": [
-                    ".jpush.cn",
-                    ".aliyizhan.com",
-                    ".4swd.com",
-                    ".jiguang.cn",
-                    ".appsflyersdk.com",
-                    ".dutils.com",
-                    ".live-helps.com",
-                    ".easemob.com",
-                    ".oceanengine.com",
-                    ".openinstall.io"
-                ],
-                "server": "Raw-DNS",
-                "disable_cache": true
             }
-            
         ],
         //默认ipv4优选
         "strategy": "ipv4_only",

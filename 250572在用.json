@@ -611,28 +611,21 @@
                 "domain_regex": "(coinbase|binance|metamask|tron|okx|bybit|kucoin)\\.(com|io|net)"
             },
             //WebRTC协议泄露防护
-            {
+            /*{
                 "action": "reject",
                 "protocol": [
                     "stun",
                     "turn",
                     "quic",
                     "webrtc"
-                ],
-                "domain_suffix": [
-                "weixin.qq.com",
-                "qpic.cn"
-                    ],
-                "invert": true   // 反转：除了微信域名外才拦截
+                ]
             },
             {
                 "port": [
                     80,
                     443
                 ],
-                "network": "udp",
-                "invert": true,
-                "action": "reject" // 强制屏蔽HTTP明文传输
+                "network": "udp"
             },
             //配合上面面，端口禁止覆盖所有UDP/STUN/TURN端口
             {
@@ -642,14 +635,9 @@
                     "19302:19302",
                     "19305:19305",
                     "5000:65000"
-                ],
-                "domain_suffix": [
-                "weixin.qq.com",
-                "qpic.cn"
-                    ],
-                "invert": true,
+                ]
                 "action": "reject"
-            },
+            },*/
             // WebRTC泄露防护
             {
                 "domain_regex": "^(stun|turn|webrtc)\\.",

@@ -64,10 +64,19 @@
             // 添加支持原始查询的DNS
             {
                 "tag": "Raw-DNS",
-                "address": "tcp://223.5.5.5:53", // TCP支持SRV等特殊查询
+                "address": "udp://223.5.5.5:53", // TCP支持SRV等特殊查询
                 "detour": "🎯 全球直连",
                 "strategy": "ipv4_only"
             },
+
+            // 添加支持原始查询的DNS
+            {
+                "tag": "TCP-DNS",
+                "address": "tcp://119.29.29.29:53",
+                "detour": "🎯 全球直连",
+                "strategy": "ipv4_only"
+            },
+            
             {
                 "tag": "Remote-DNS",
                 // Quad9的DoT（带恶意软件过滤） 直接使用IP避免二次解析
@@ -117,6 +126,14 @@
             "server": "Raw-DNS",
             "disable_cache": true
             },
+
+            //共享货源
+            {
+                "domain_suffix": ["jpush.cn", "aliyizhan.com","4swd.com"],
+                "server": "TCP-DNS",
+                "disable_cache": true
+            },
+            
             //阻止DNS劫持（端口53重定向）
             {
                 "port": 53,
@@ -195,7 +212,8 @@
                     "SVCB",
                     "TXT",
                     "MX",
-                    "CNAME"
+                    "CNAME",
+                    "SRV"
                 ],
                 "server": "Raw-DNS", // TCP的dns支持SRV等特殊查询
                 "disable_cache": true

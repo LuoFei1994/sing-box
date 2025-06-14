@@ -54,8 +54,7 @@
         "servers": [
             {
                 "tag": "Local-DNS",
-                "address": "tls://dns.alidns.com:853",
-                "address_resolver": "Local-DNS-Resolver",
+                "address": "tls://223.5.5.5:853",
                 "detour": "🎯 全球直连",
                 "strategy": "prefer_ipv4",
                 // 隐藏客户端IP

@@ -93,20 +93,19 @@
         //dns的规则
         "rules": [
             // 在现有规则前新增：强制所有流量经FakeIP
-            {
-                "inbound": [
-                    "tun-in",
-                    "mixed-in"
-                ],
-                "server": "fakeip",
-                "disable_cache": true
-            },
+            //{
+                //"inbound": [
+                    //"tun-in",
+                    //"mixed-in"
+                //],
+                //"server": "fakeip",
+                //"disable_cache": true
+            //},
             // 新增代理节点域名直连（防DNS污染）,配合底下的出站规则
             {
                 "domain_suffix": [
                     ".portablesubmarines.com",
-                    ".bgp.666888.biz",
-                    ".weixin.qq.com"
+                    ".bgp.666888.biz"
                 ],
                 "server": "Local-DNS"
             },
@@ -117,21 +116,6 @@
                 "rewrite_ttl": 300
             },
 
-            // 微信朋友圈专用规则（添加在顶部）
-            {
-                "domain": [
-                    "weixin.qq.com",
-                    "wx.qq.com",
-                    "qpic.cn",
-                    "qlogo.cn",
-                    "cdn.weixin.qq.com",
-                    "mmbiz.qpic.cn",
-                    "mp.weixin.qq.com"
-                ],
-                "server": "Local-DNS",
-                "disable_cache": true
-            },
-       
             
             {
                 "domain_regex": "metrics|analytics\\.apple\\.com",
@@ -203,9 +187,11 @@
                     "A",
                     "AAAA"
                 ],
-                "server": "fakeip"
-            }
-            /*{
+                "server": "fakeip",
+                "strategy": "ipv4_only",
+                "disable_cache": true
+            },
+            {
                 "query_type": [
                     "HTTPS",
                     "SVCB",
@@ -215,7 +201,7 @@
                 ],
                 "server": "Raw-DNS", // TCP的dns支持SRV等特殊查询
                 "disable_cache": true
-            }*/
+            }
         ],
         //默认ipv4优选
         "strategy": "ipv4_only",
@@ -223,7 +209,6 @@
         "disable_cache": true,
         "disable_expire": false,
         "independent_cache": true,
-        //没找到的dns走指定，注释掉，强制所有DNS走FakeIP。
         "final": "Remote-DNS",
         "fakeip": {
             "enabled": true,
@@ -247,10 +232,9 @@
             "tag": "tun-in",
             "interface_name": "",
             "address": [
-                "172.18.0.1/30"
-                //"fdfe:dcba:9876::1/126"
+                "172.18.0.1/30",
+                "fdfe:dcba:9876::1/126"
             ],
-            "inet6_address": [], // 明确禁用IPv6
             // 优化iOS的MTU值
             "mtu": 1400,
             "auto_route": true,
@@ -265,7 +249,7 @@
             //这三个的区别system 性能:高、安全性:低、兼容性:高(依赖系统)、复杂性:简单、 适用场景：性能优先
             //===========gvisor 性能:低、安全性:高、兼容性:中         、复杂性:较复杂、适用场景：安全隔离
             //===========mixed  上面两个的集合体，都中等
-            "stack": "gvisor",
+            "stack": "mixed",
             "platform": {
                 //http代理
                 "http_proxy": {
@@ -439,7 +423,7 @@
                     "mixed-in"
                 ],
                 "action": "resolve",
-                "strategy": "prefer_ipv4"
+                "strategy": "ipv4_only"
             },
             // 阻止代理节点被二次代理，会配合dns的规则
             {
@@ -469,41 +453,19 @@
                 "action": "route",
                 "outbound": "🎯 全球直连"
             },
-            // 添加微信专用UDP放行规则
-            {
-                "domain_keyword": ["weixin", "qq.com", "tencent"],
-                "network": "udp",
-                "outbound": "🎯 全球直连"
-            },
-            // 微信服务直连（添加在私有IP规则后）
-            {
-                "domain_suffix": [
-                    "qq.com",
-                    "qpic.cn",
-                    "qlogo.cn",
-                    "wechat.com",
-                    "tencent.com"
-                ],
-                "outbound": "🎯 全球直连"
-            },
-            {
-                "domain": [
-                    "szextshort.weixin.qq.com",
-                    "short.weixin.qq.com"
-                ],
-                "outbound": "🎯 全球直连"
-            },
-
-            {
-            "protocol": ["quic"],
-            "domain_suffix": ["qq.com", "weixin.qq.com"],
-            "outbound": "🎯 全球直连"
-            },
-
+ 
             //添加NTP服务直连规则,避免代理不稳定时可能回退直连。
             {
                 "domain": [
                     "time.apple.com"
+                ],
+                "outbound": "🎯 全球直连"
+            },
+
+            {
+                "process_name": [
+                    "WeChta",
+                    "com.tencent.xin"
                 ],
                 "outbound": "🎯 全球直连"
             },
@@ -620,7 +582,7 @@
                 "domain_regex": "(coinbase|binance|metamask|tron|okx|bybit|kucoin)\\.(com|io|net)"
             },
             //WebRTC协议泄露防护
-            /*{
+            {
                 "action": "reject",
                 "protocol": [
                     "stun",
@@ -646,7 +608,7 @@
                     "5000:65000"
                 ]
                 "action": "reject"
-            },*/
+            },
             // WebRTC泄露防护
             {
                 "domain_regex": "^(stun|turn|webrtc)\\.",
@@ -688,6 +650,7 @@
                 "domain_regex": "(fingerprint|deviceid|analytics|tracking)\\.(com|net|io)",
                 "action": "reject"
             },
+
             //=======放行中国域名和IP（规则集GeoSite-CN, geoip-cn等）======
             // Apple服务直连
             {

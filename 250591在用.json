@@ -64,7 +64,7 @@
             // 添加支持原始查询的DNS
             {
                 "tag": "Raw-DNS",
-                "address": "udp://223.5.5.5:53", // TCP支持SRV等特殊查询
+                "address": "tcp://223.5.5.5:53", // TCP支持SRV等特殊查询
                 "detour": "🎯 全球直连",
                 "strategy": "ipv4_only"
             },
@@ -72,7 +72,7 @@
             // 添加支持原始查询的DNS
             {
                 "tag": "TCP-DNS",
-                "address": "tcp://119.29.29.29:53",
+                "address": "udp://119.29.29.29:53",
                 "detour": "🎯 全球直连",
                 "strategy": "ipv4_only"
             },
@@ -129,7 +129,7 @@
 
             //共享货源
             {
-                "domain_suffix": ["jpush.cn", "aliyizhan.com","4swd.com"],
+                "domain_suffix": ["jpush.cn", "aliyizhan.com","4swd.com","jiguang.cn"],
                 "server": "TCP-DNS",
                 "disable_cache": true
             },

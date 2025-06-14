@@ -459,7 +459,8 @@
             {
                "domain_suffix": [
                     ".portablesubmarines.com",
-                    ".bgp.666888.biz"
+                    ".bgp.666888.biz",
+                    ".weixin.qq.com"
                 ],
                "outbound": "🎯 全球直连"
             },

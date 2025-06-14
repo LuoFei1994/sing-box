@@ -65,7 +65,7 @@
             {
                 "tag": "Local-DNS-Resolver",
                 "address": "udp://223.5.5.5:53",
-               // "address_resolver": "Raw-DNS",
+                "address_resolver": "Raw-DNS",
                 "detour": "🎯 全球直连",
                 "strategy": "prefer_ipv4",
                 // 隐藏客户端IP
@@ -73,12 +73,12 @@
             },
 
              // 添加支持原始查询的DNS
-            //{
-                //"tag": "Raw-DNS",
-               // "address": "tcp://223.5.5.5:53", // TCP支持SRV等特殊查询
-                //"detour": "🎯 全球直连",
-                //"strategy": "prefer_ipv4"
-            //},
+            {
+                "tag": "Raw-DNS",
+                "address": "tcp://223.5.5.5:53", // TCP支持SRV等特殊查询
+                "detour": "🎯 全球直连",
+                "strategy": "prefer_ipv4"
+            },
             
 
             

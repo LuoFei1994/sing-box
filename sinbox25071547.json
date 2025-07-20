@@ -299,6 +299,12 @@
           "Category-Ads"
         ]
       },
+      
+      {
+        "ip_is_private": true,
+        "outbound": "🎯 全球直连"
+      },
+      
       {
         "action": "route",
         "rule_set": [
@@ -398,7 +404,10 @@
     "final": "🐟 漏网之鱼",
     "default_domain_resolver": {
       "server": "Remote-DNS"
-    }
+    },
+    "default_network_strategy": "fallback",
+    "default_fallback_delay": "300ms"
+    
   },
   "dns": {
     "servers": [

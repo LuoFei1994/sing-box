@@ -434,6 +434,7 @@
       
     
       {
+        "tag": "ts",
         "type": "tailscale",
         "endpoint": "ts-ep",
         "accept_default_resolvers": true

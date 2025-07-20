@@ -434,13 +434,16 @@
       
     
       {
-        "tag": "ts",
         "type": "tailscale",
-        "endpoint": "ts-ep",
-        "accept_default_resolvers": true
+        "tag": "ts",
+        "endpoint": "ts-ep"
       }
     ],
     "rules": [
+      {
+        "ip_accept_any": true,
+        "server": "ts"
+      },
       {
         "action": "route",
         "clash_mode": "direct",

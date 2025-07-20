@@ -430,20 +430,10 @@
         "detour": "🚀 节点选择",
         "server_port": 53,
         "server": "8.8.8.8"
-      },
-      
-    
-      {
-        "type": "tailscale",
-        "tag": "ts",
-        "endpoint": "ts-ep"
       }
     ],
     "rules": [
-      {
-        "ip_accept_any": true,
-        "server": "ts"
-      },
+      
       {
         "action": "route",
         "clash_mode": "direct",

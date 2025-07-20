@@ -432,11 +432,7 @@
         "server": "8.8.8.8"
       },
       
-      {
-        "type": "resolved",
-        "service": "resolved",
-        "accept_default_resolvers": true
-      },
+    
       {
         "type": "tailscale",
         "endpoint": "ts-ep",

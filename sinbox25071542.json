@@ -430,6 +430,17 @@
         "detour": "🚀 节点选择",
         "server_port": 53,
         "server": "8.8.8.8"
+      },
+      
+      {
+        "type": "resolved",
+        "service": "resolved",
+        "accept_default_resolvers": true
+      },
+      {
+        "type": "tailscale",
+        "endpoint": "ts-ep",
+        "accept_default_resolvers": true
       }
     ],
     "rules": [

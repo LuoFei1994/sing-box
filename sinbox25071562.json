@@ -296,6 +296,20 @@
         "rule_set": "GeoLocation-CN",
         "outbound": "🎯 全球直连"
       },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "GeoIP-CN"
+          },
+          {
+            "rule_set": "GeoLocation-!CN",
+            "invert": true
+          }
+        ],
+        "outbound": "🎯 全球直连"
+      },
       
       {
         "action": "route",

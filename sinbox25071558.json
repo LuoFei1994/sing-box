@@ -1,7 +1,7 @@
 {
   "log": {
     "disabled": false,
-    "level": "error",
+    "level": "info",
     "output": "",
     "timestamp": false
   },
@@ -12,7 +12,7 @@
       "external_ui_download_url": "",
       "external_ui_download_detour": "🎯 全球直连",
       "secret": "860a0ddf740573ec6fe46fa81fb1857e18f2ee8673c328cf33cac376ad295544",
-      "default_mode": "Enhanced",
+      "default_mode": "rule",
       "access_control_allow_origin": [
         "*"
       ],

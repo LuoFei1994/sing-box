@@ -324,7 +324,7 @@
     "find_process": true,
     "final": "🐟 漏网之鱼",
     "default_domain_resolver": {
-      "server": "local",
+      "server": "Local-DNS",
       "rewrite_ttl": 60,
       "client_subnet": "0.0.0.0/0"
     },

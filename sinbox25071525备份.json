@@ -64,63 +64,6 @@
       "tag":"mixed-in",
       "type":"mixed",
       "users":[]
-    },
-    {
-      "type": "http",
-      "tag": "http-in",
-      "listen":"127.0.0.1",
-      "listen_port":2335,
-      "sniff":true,
-      "sniff_override_destination":true,
-      "users": [],
-      "tls": {},
-      "set_system_proxy": false
-    },
-    {
-      "type": "direct",
-      "tag": "direct-in",
-      "listen":"127.0.0.1",
-      "listen_port":2336,
-      "sniff":true,
-      "sniff_override_destination":true,
-      "network": "udp",
-      "override_address": "1.0.0.1",
-      "override_port": 53
-    },
-    {
-      "type": "vmess",
-      "tag": "vmess-in",
-      "listen":"127.0.0.1",
-      "listen_port":2337,
-      "sniff":true,
-      "sniff_override_destination":true,
-      "users": [],
-      "tls": {},
-      "multiplex": {},
-      "transport": {}
-    },
-    {
-      "type": "vless",
-      "tag": "vless-in",
-      "listen":"127.0.0.1",
-      "listen_port":2338,
-      "sniff":true,
-      "sniff_override_destination":true,
-      "users": [],
-      "tls": {},
-      "multiplex": {},
-      "transport": {}
-    },
-    {
-      "type": "anytls",
-      "tag": "anytls-in",
-      "listen":"127.0.0.1",
-      "listen_port":2339,
-      "sniff":true,
-      "sniff_override_destination":true,
-      "users": [],
-      "padding_scheme": [],
-      "tls": {}
     }
   ],
   "outbounds": [
@@ -412,7 +355,9 @@
     "find_process": true,
     "final": "🐟 漏网之鱼",
     "default_domain_resolver": {
-      "server": "Remote-DNS"
+      "server": "Local-DNS",
+      "rewrite_ttl": 60,
+      "client_subnet": "0.0.0.0/0"
     },
     "default_network_strategy": "fallback",
     "default_fallback_delay": "300ms"

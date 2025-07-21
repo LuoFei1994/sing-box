@@ -299,19 +299,22 @@
         "outbound": "🚀 节点选择"
       },
       {
+        "rule_set": "geosite-geolocation-cn",
+        "outbound": "direct"
+      },
+      {
         "type": "logical",
         "mode": "and",
         "rules": [
           {
-            "rule_set": "GeoLocation-!CN",
-            "invert": true
+            "rule_set": "GeoIP-CN"
           },
           {
-            "rule_set": "geoip-cn"
+            "rule_set": "GeoLocation-!CN",
+            "invert": true
           }
         ],
-        "server": "🚀 节点选择",
-        "client_subnet": "0.0.0.0/0"
+        "outbound": "🎯 全球直连"
       }
     ],
     "rule_set": [
@@ -442,6 +445,21 @@
           "GeoLocation-!CN"
         ],
         "server": "Remote-DNS"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "GeoLocation-!CN",
+            "invert": true
+          },
+          {
+            "rule_set": "geoip-cn"
+          }
+        ],
+        "server": "Remote-DNS",
+        "client_subnet": "0.0.0.0/0"
       }
     ],
     "disable_cache": false,

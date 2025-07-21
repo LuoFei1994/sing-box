@@ -12,7 +12,7 @@
       "external_ui_download_url": "",
       "external_ui_download_detour": "🎯 全球直连",
       "secret": "860a0ddf740573ec6fe46fa81fb1857e18f2ee8673c328cf33cac376ad295544",
-      "default_mode": "rule",
+      "default_mode": "Enhanced",
       "access_control_allow_origin": [
         "*"
       ],
@@ -219,6 +219,25 @@
         "clash_mode": "global",
         "outbound": "GLOBAL"
       },
+
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "port": 853
+          },
+          {
+            "network": "udp",
+            "port": 443
+          },
+          {
+            "protocol": "stun"
+          }
+        ],
+        "action": "reject"
+      },
+      
       {
         "action": "reject",
         "protocol": "quic"
@@ -268,9 +287,9 @@
       {
         "action": "route",
         "rule_set": [
-          "GeoLocation-!CN"
+          "GeoLocation-CN"
         ],
-        "outbound": "🚀 节点选择"
+        "outbound": "🎯 全球直连"
       },
       {
         "action": "route",
@@ -278,6 +297,21 @@
           "tiktok-geosite.srs"
         ],
         "outbound": "🚀 节点选择"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "GeoLocation-!CN",
+            "invert": true
+          },
+          {
+            "rule_set": "geoip-cn"
+          }
+        ],
+        "server": "🚀 节点选择",
+        "client_subnet": "0.0.0.0/0"
       }
     ],
     "rule_set": [
@@ -327,6 +361,13 @@
         "tag": "GeoLocation-!CN",
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "GeoLocation-CN",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-cn.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
       }

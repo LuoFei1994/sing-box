@@ -1,7 +1,7 @@
 {
   "log": {
     "disabled": false,
-    "level": "info",
+    "level": "error",
     "output": "",
     "timestamp": false
   },
@@ -24,7 +24,7 @@
       "cache_id": "",
       "store_fakeip": true,
       "store_rdrc": true,
-      "rdrc_timeout": "7d"
+      "rdrc_timeout": "6h"
     }
   },
   "inbounds": [
@@ -263,20 +263,29 @@
   ],
   "route": {
     "rules": [
-      {
-        "inbound": "in",
-        "action": "resolve",
-        "strategy": "prefer_ipv4"
-      },
+      
       {
         "inbound": "in",
         "action": "sniff",
+        "sniffer": [
+          "http",
+          "tls",
+          "quic",
+          "stun",
+          "dns",
+          "bittorrent",
+          "dtls",
+          "ssh",
+          "rdp",
+          "ntp"
+        ],
         "timeout": "1s"
       },
       {
         "action": "hijack-dns",
         "protocol": "dns"
       },
+      
       {
         "action": "route",
         "clash_mode": "direct",
@@ -299,6 +308,12 @@
           "Category-Ads"
         ]
       },
+      
+      {
+        "ip_is_private": true,
+        "outbound": "🎯 全球直连"
+      },
+      
       {
         "action": "route",
         "rule_set": [
@@ -398,7 +413,10 @@
     "final": "🐟 漏网之鱼",
     "default_domain_resolver": {
       "server": "Remote-DNS"
-    }
+    },
+    "default_network_strategy": "fallback",
+    "default_fallback_delay": "300ms"
+    
   },
   "dns": {
     "servers": [
@@ -433,6 +451,7 @@
       }
     ],
     "rules": [
+      
       {
         "action": "route",
         "clash_mode": "direct",

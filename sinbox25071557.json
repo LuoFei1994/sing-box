@@ -455,7 +455,7 @@
             "invert": true
           },
           {
-            "rule_set": "geoip-cn"
+            "rule_set": "GeoIP-CN"
           }
         ],
         "server": "Remote-DNS",

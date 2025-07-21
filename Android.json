@@ -1,0 +1,402 @@
+{
+  "log": {
+    "level": "info"
+  },
+  "dns": {
+    "servers": [
+      {
+        "type": "https",
+        "tag": "Local-DNS",
+        "domain_resolver": "Local-DNS-Resolver",
+        "server": "223.5.5.5",
+        "server_port": 443,
+        "path": "/dns-query"
+      },
+      {
+        "type": "udp",
+        "tag": "Local-DNS-Resolver",
+        "server": "223.5.5.5",
+        "server_port": 53
+      },
+      {
+        "type": "tls",
+        "tag": "Remote-DNS",
+        "detour": "🚀 节点选择",
+        "domain_resolver": "Remote-DNS-Resolver",
+        "server": "8.8.8.8",
+        "server_port": 853
+      },
+      {
+        "type": "udp",
+        "tag": "Remote-DNS-Resolver",
+        "detour": "🚀 节点选择",
+        "server": "8.8.8.8",
+        "server_port": 53
+      }
+    ],
+    "rules": [
+      {
+        "clash_mode": "direct",
+        "server": "Local-DNS"
+      },
+      {
+        "clash_mode": "global",
+        "server": "Remote-DNS"
+      },
+      {
+        "rule_set": "GeoSite-CN",
+        "server": "Local-DNS"
+      },
+      {
+        "rule_set": "GeoLocation-!CN",
+        "server": "Remote-DNS"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "GeoLocation-!CN",
+            "invert": true
+          },
+          {
+            "rule_set": "GeoIP-CN"
+          }
+        ],
+        "server": "Remote-DNS",
+        "client_subnet": "0.0.0.0/0"
+      }
+    ],
+    "final": "Remote-DNS",
+    "strategy": "ipv4_only",
+    "client_subnet": "0.0.0.0/0"
+  },
+  "inbounds": [
+    {
+      "type": "tun",
+      "mtu": 9000,
+      "address": [
+        "172.18.0.1/30",
+        "fdfe:dcba:9876::1/126"
+      ],
+      "auto_route": true,
+      "strict_route": true,
+      "stack": "gvisor",
+      "sniff": true,
+      "sniff_override_destination": true,
+      "domain_strategy": "prefer_ipv4"
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "selector",
+      "tag": "🚀 节点选择",
+      "outbounds": [
+        "🎈 自动选择",
+        "正常vless节点",
+        "后置代理的TOR节点",
+        "歇斯底里2",
+        "anytls-out"
+      ],
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "urltest",
+      "tag": "🎈 自动选择",
+      "outbounds": [
+        "正常vless节点",
+        "后置代理的TOR节点",
+        "歇斯底里2",
+        "anytls-out"
+      ],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "3m0s",
+      "tolerance": 150,
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "direct",
+      "tag": "🎯 全球直连"
+    },
+    {
+      "type": "selector",
+      "tag": "🐟 漏网之鱼",
+      "outbounds": [
+        "🚀 节点选择",
+        "🎯 全球直连"
+      ],
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "GLOBAL",
+      "outbounds": [
+        "🚀 节点选择",
+        "🎈 自动选择",
+        "🎯 全球直连",
+        "🐟 漏网之鱼"
+      ],
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "vless",
+      "tag": "正常vless节点",
+      "server": "38.182.101.246",
+      "server_port": 9090,
+      "uuid": "ae0bc13a-f72e-4a83-bc24-ebff7f55130c",
+      "flow": "xtls-rprx-vision",
+      "tls": {
+        "enabled": true,
+        "server_name": "apple.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "safari"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "kMYbcq4wmiXR6QinCazFTF0RSBicDqHXP77iVKF-Wgk",
+          "short_id": "ea"
+        }
+      },
+      "packet_encoding": "xudp"
+    },
+    {
+      "type": "vless",
+      "tag": "后置代理的TOR节点",
+      "server": "38.182.101.246",
+      "server_port": 9090,
+      "uuid": "4f8d465a-2ef2-4812-8ab0-f233524ccbec",
+      "tls": {
+        "enabled": true,
+        "server_name": "apple.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "safari"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "kMYbcq4wmiXR6QinCazFTF0RSBicDqHXP77iVKF-Wgk",
+          "short_id": "ea"
+        }
+      },
+      "packet_encoding": "xudp"
+    },
+    {
+      "type": "hysteria2",
+      "tag": "歇斯底里2",
+      "server": "38.182.101.246",
+      "server_port": 443,
+      "up_mbps": 5,
+      "down_mbps": 20,
+      "password": "123456",
+      "tls": {
+        "enabled": true,
+        "server_name": "bing.com",
+        "insecure": true
+      }
+    },
+    {
+      "type": "anytls",
+      "tag": "anytls-out",
+      "server": "38.182.101.246",
+      "server_port": 443,
+      "tls": {
+        "enabled": true,
+        "server_name": "yahoo.com",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "bu42wZfnddgQ8_KXbFzbadBN4LZ5fYhqQ2LmDigCZHg",
+          "short_id": "ea"
+        }
+      },
+      "password": "123456",
+      "idle_session_check_interval": "30s",
+      "idle_session_timeout": "30s",
+      "min_idle_session": 5
+    }
+  ],
+  "route": {
+    "rules": [
+      {
+        "inbound": "in",
+        "action": "sniff",
+        "sniffer": [
+          "http",
+          "tls",
+          "quic",
+          "stun",
+          "dns",
+          "bittorrent",
+          "dtls",
+          "ssh",
+          "rdp",
+          "ntp"
+        ],
+        "timeout": "1s"
+      },
+      {
+        "protocol": "dns",
+        "action": "hijack-dns"
+      },
+      {
+        "clash_mode": "direct",
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "clash_mode": "global",
+        "outbound": "GLOBAL"
+      },
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "port": 853
+          },
+          {
+            "network": "udp",
+            "port": 443
+          },
+          {
+            "protocol": "stun"
+          }
+        ],
+        "action": "reject"
+      },
+      {
+        "protocol": "quic",
+        "action": "reject"
+      },
+      {
+        "rule_set": "Category-Ads",
+        "action": "reject"
+      },
+      {
+        "ip_is_private": true,
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "rule_set": "GeoSite-Private",
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "rule_set": "GeoSite-CN",
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "rule_set": "GeoIP-Private",
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "rule_set": "GeoIP-CN",
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "rule_set": "GeoLocation-CN",
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "rule_set": "GeoLocation-CN",
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "GeoIP-CN"
+          },
+          {
+            "rule_set": "GeoLocation-!CN",
+            "invert": true
+          }
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "rule_set": "tiktok-geosite.srs",
+        "outbound": "🚀 节点选择"
+      }
+    ],
+    "rule_set": [
+      {
+        "type": "remote",
+        "tag": "tiktok-geosite.srs",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tiktok.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "type": "remote",
+        "tag": "Category-Ads",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ads-all.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "type": "remote",
+        "tag": "GeoIP-Private",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/private.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "type": "remote",
+        "tag": "GeoSite-Private",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/private.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "type": "remote",
+        "tag": "GeoIP-CN",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "type": "remote",
+        "tag": "GeoSite-CN",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "type": "remote",
+        "tag": "GeoLocation-!CN",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "type": "remote",
+        "tag": "GeoLocation-CN",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-cn.srs",
+        "download_detour": "🎯 全球直连"
+      }
+    ],
+    "final": "🐟 漏网之鱼",
+    "find_process": true,
+    "auto_detect_interface": true,
+    "default_domain_resolver": {
+      "server": "Local-DNS",
+      "rewrite_ttl": 60,
+      "client_subnet": "0.0.0.0/0"
+    },
+    "default_network_strategy": "fallback",
+    "default_fallback_delay": "300ms"
+  },
+  "experimental": {
+    "cache_file": {
+      "enabled": true,
+      "path": "cache.db",
+      "store_fakeip": true,
+      "store_rdrc": true,
+      "rdrc_timeout": "6h0m0s"
+    },
+    "clash_api": {
+      "external_controller": "127.0.0.1:20123",
+      "external_ui_download_detour": "🎯 全球直连",
+      "secret": "860a0ddf740573ec6fe46fa81fb1857e18f2ee8673c328cf33cac376ad295544",
+      "default_mode": "Enhanced",
+      "access_control_allow_origin": "*"
+    }
+  }
+}

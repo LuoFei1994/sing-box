@@ -44,17 +44,6 @@
       "strict_route":true,
       "endpoint_independent_nat": false,
       "type":"tun"
-    },
-  
-    {
-      "domain_strategy":"prefer_ipv4",
-      "listen":"127.0.0.1",
-      "listen_port":2334,
-      "sniff":true,
-      "sniff_override_destination":true,
-      "tag":"mixed-in",
-      "type":"mixed",
-      "users":[]
     }
   ],
   "outbounds": [

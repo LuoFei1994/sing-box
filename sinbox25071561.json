@@ -293,7 +293,7 @@
       },
       
       {
-        "rule_set": "geosite-geolocation-cn",
+        "rule_set": "GeoLocation-CN",
         "outbound": "🎯 全球直连"
       },
       

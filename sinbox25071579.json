@@ -161,7 +161,11 @@
       "tls": {
         "enabled": true,
         "server_name": "bing.com",
-        "insecure": true
+        "insecure": true,
+        
+        "fragment": true,  
+        "tls_fragment_fallback_delay": "500ms",  
+        "tls_record_fragment": true  
       }
     },
     {
@@ -375,7 +379,7 @@
         "type": "tls",
         "detour": "🚀 节点选择",
         "server_port": 853,
-        "server": "9.9.9.11"
+        "server": "9.9.9.9"
       }
     ],
     "rules": [

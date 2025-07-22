@@ -24,7 +24,7 @@
       "cache_id": "",
       "store_fakeip": true,
       "store_rdrc": true,
-      "rdrc_timeout": "6h"
+      "rdrc_timeout": "6h" 
     }
   },
   "inbounds": [

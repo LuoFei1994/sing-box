@@ -274,8 +274,7 @@
 
       {  
         "domain": ["blocked-domain.com"],  
-        "action": "route-options",  
-        "tls_fragment": true,  
+        "action": "route-options", 
         "tls_record_fragment": true,  
         "outbound": "🚀 节点选择"  
       },

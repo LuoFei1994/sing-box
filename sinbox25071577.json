@@ -46,8 +46,8 @@
         "http_proxy": {  
           "enabled": true,  
           "server": "127.0.0.1",  
-          "server_port": 8080,  
-          "bypass_domain": ["*.local", "*.lan", "*.internal"]  
+          "server_port": 20213,  
+          "bypass_domain": ["*.local", "*.lan", "*.internal", "*.corp", "*.home"]
         }  
       }  
     }
@@ -197,8 +197,8 @@
         "action": "sniff",
         "sniffer": [
           "http",
-          "tls",
-          "dns"
+          "tls"
+          //"dns"
         ],
         "timeout": "1s"
       },
@@ -228,6 +228,10 @@
           { "port": 853 },  
           { "port": 3478 },  
           { "port": 5349 },
+          { "port": 19302 },  
+          { "port": 19303 },  
+          { "port": 19304 },
+          { "port_range": "16384:32767", "network": "udp" },
           { "port_range": "49152:65535", "network": "udp" },
           { "network": "udp", "port": 443 }  
         ],  
@@ -266,6 +270,14 @@
           "GeoLocation-CN"
         ],
         "outbound": "🎯 全球直连"
+      },
+
+      {  
+        "domain": ["blocked-domain.com"],  
+        "action": "route-options",  
+        "tls_fragment": true,  
+        "tls_record_fragment": true,  
+        "outbound": "🚀 节点选择"  
       },
       
       
@@ -404,6 +416,8 @@
         "client_subnet": "1.1.1.1/32"  
       }  
     ],
+    "cache_capacity": 512,  
+    "reverse_mapping": false,
     "disable_cache": false,
     //"disable_expire": false,
     "independent_cache": true,

@@ -16,7 +16,7 @@
       "access_control_allow_origin": [
         "*"
       ],
-      "access_control_allow_private_network": false 
+      "access_control_allow_private_network": true 
     },
     "cache_file": {
       "enabled": true,
@@ -24,7 +24,8 @@
       "cache_id": "",
       "store_fakeip": true,
       "store_rdrc": true,
-      "rdrc_timeout": "6h"
+      "rdrc_timeout": "6h",
+      "cache_capacity": 1000 
     }
   },
   "inbounds": [
@@ -270,20 +271,7 @@
       {
         "action": "route",
         "rule_set": [
-          "GeoSite-Private"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "GeoSite-CN"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "rule_set": [
+          "GeoSite-Private",
           "GeoIP-Private"
         ],
         "outbound": "🎯 全球直连"
@@ -291,31 +279,13 @@
       {
         "action": "route",
         "rule_set": [
-          "GeoIP-CN"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "rule_set": [
+          "GeoSite-CN",
+           "GeoIP-CN",
           "GeoLocation-CN"
         ],
         "outbound": "🎯 全球直连"
       },
-      {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
-            "rule_set": "GeoIP-CN"
-          },
-          {
-            "rule_set": "GeoLocation-!CN",
-            "invert": true
-          }
-        ],
-        "outbound": "🎯 全球直连"
-      },
+      
       
       {
         "action": "route",
@@ -387,13 +357,15 @@
     "find_process": true,
     "final": "🐟 漏网之鱼",
     "default_domain_resolver": {
-      "server": "Local-DNS",
+      "server": "Remote-DNS",
+      "strategy": "prefer_ipv4",
       "rewrite_ttl": 60,
       "client_subnet": "0.0.0.0/0"
     },
-    "default_network_strategy": "fallback",
-    "default_fallback_delay": "300ms"
-    
+    "default_network_strategy": "fallback",  
+    "default_network_type": ["wifi"],  
+    "default_fallback_network_type": ["cellular"],  
+    "default_fallback_delay": "300ms"  
   },
   "dns": {
     "servers": [
@@ -453,28 +425,13 @@
           "GeoLocation-!CN"
         ],
         "server": "Remote-DNS"
-      },
-      {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
-            "rule_set": "GeoLocation-!CN",
-            "invert": true
-          },
-          {
-            "rule_set": "GeoIP-CN"
-          }
-        ],
-        "server": "Remote-DNS",
-        "client_subnet": "0.0.0.0/0"
       }
     ],
     "disable_cache": false,
     "disable_expire": false,
     "independent_cache": false,
     "final": "Remote-DNS",
-    "strategy": "ipv4_only",
+    "strategy": "prefer_ipv4",
     "client_subnet": "0.0.0.0/0"
   }
 }

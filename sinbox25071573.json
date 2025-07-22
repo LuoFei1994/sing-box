@@ -186,35 +186,18 @@
     "rules": [
       
       {
-        "inbound": "tun-in",
         "action": "sniff",
         "sniffer": [
           "http",
           "tls",
-          "quic",
-          "stun",
-          "dns",
-          "bittorrent",
-          "dtls",
-          "ssh",
-          "rdp",
-          "ntp"
+          "dns"
         ],
         "timeout": "1s"
       },
-      {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "port": 53
-          },
-          {
-            "protocol": "dns"
-          }
-          ],
-        "action": "hijack-dns"
-      },
+      {  
+        "protocol": "dns",  
+        "action": "hijack-dns"  
+      },  
       
       {
         "action": "route",
@@ -227,46 +210,27 @@
         "outbound": "GLOBAL"
       },
 
-      {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "port": 853
-          },
-          {
-            "network": "udp",
-            "port": 443
-          },
-          {
-            "protocol": "stun"
-          }
-        ],
-        "action": "reject"
-      },
       {  
         "type": "logical",  
         "mode": "or",  
         "rules": [  
           { "protocol": "stun" },  
+          { "protocol": "quic" },  
+          { "protocol": "dtls" },  
+          { "port": 853 },  
           { "port": 3478 },  
-          { "port": 5349 },  
-          { "port_range": "49152:65535", "network": "udp" }  
+          { "port": 5349 },
+          { "port_range": "49152:65535", "network": "udp" },
+          { "network": "udp", "port": 443 }  
         ],  
-        "action": "reject"  
-      },
+        "action": "reject",  
+        "method": "drop"  
+      },  
       
       {
         "action": "reject",
-        "protocol": [
-          "quic",
-          "dtls"
-        ]
-      },
-      {
-        "action": "reject",
-        "method": "default",  //default:对于 TCP 连接回复 RST，对于 UDP 包回复 ICMP 端口不可达。drop: 丢弃数据包。
-        "no_drop": false,      //如果未启用，则 30 秒内触发 50 次后，method 将被暂时覆盖为 drop。当 method 设为 drop 时不可用。
+        "method": "drop",  //default:对于 TCP 连接回复 RST，对于 UDP 包回复 ICMP 端口不可达。drop: 丢弃数据包。
+        //"no_drop": false,      //如果未启用，则 30 秒内触发 50 次后，method 将被暂时覆盖为 drop。当 method 设为 drop 时不可用。
         "rule_set": [
           "Category-Ads"
         ]
@@ -290,7 +254,7 @@
         "action": "route",
         "rule_set": [
           "GeoSite-CN",
-           "GeoIP-CN",
+          "GeoIP-CN",
           "GeoLocation-CN"
         ],
         "outbound": "🎯 全球直连"

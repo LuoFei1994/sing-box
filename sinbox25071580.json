@@ -163,9 +163,10 @@
         "server_name": "bing.com",
         "insecure": true,
         
-        "fragment": true,  
-        "tls_fragment_fallback_delay": "500ms",  
-        "tls_record_fragment": true  
+        "ech": {  
+          "enabled": true,  
+          "config_path": "/path/to/ech-config.pem"  
+        } 
       }
     },
     {

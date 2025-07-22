@@ -161,12 +161,7 @@
       "tls": {
         "enabled": true,
         "server_name": "bing.com",
-        "insecure": true,
-        
-        "ech": {  
-          "enabled": true,  
-          "config_path": "/path/to/ech-config.pem"  
-        } 
+        "insecure": true 
       }
     },
     {

@@ -7,7 +7,7 @@
   },
   "experimental": {
     "clash_api": {
-      "external_controller": "127.0.0.1:20123",
+      "external_controller": "127.0.0.1:20122",
       "external_ui": "",
       "external_ui_download_url": "",
       "external_ui_download_detour": "🎯 全球直连",
@@ -41,7 +41,15 @@
       "stack":"gvisor",
       "auto_route": true,
       "tag": "tun-in",
-      "type":"tun"  
+      "type":"tun",
+      "platform": {  
+        "http_proxy": {  
+          "enabled": true,  
+          "server": "127.0.0.1",  
+          "server_port": 20123,  
+          "bypass_domain": ["*.local", "*.lan", "*.internal"]  
+        }  
+      }  
     }
   ],
   "outbounds": [

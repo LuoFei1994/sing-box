@@ -435,12 +435,6 @@
       }
     ],
     "rules": [
-      {
-        "outbound": "any",
-        "action": "route",
-        "server": "Local-DNS",
-        "disable_cache": true
-      },
       
       {
         "action": "route",

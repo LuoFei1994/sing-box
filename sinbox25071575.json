@@ -44,10 +44,10 @@
       "type":"tun",
       "platform": {  
         "http_proxy": {  
-          "enabled": true,  
+          "enabled": false,  
           "server": "127.0.0.1",  
-          "server_port": 20123,  
-          "bypass_domain": ["*.local", "*.lan", "*.internal"]  
+          "server_port": 8080,  
+          //"bypass_domain": ["*.local", "*.lan", "*.internal"]  
         }  
       }  
     }

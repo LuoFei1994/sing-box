@@ -382,7 +382,6 @@
       {
         "tag": "Local-DNS",
         "type": "https",
-        "domain_resolver": "Local-DNS-Resolver",
         "server_port": 443,
         "server": "223.5.5.5",
         "path": "/dns-query"

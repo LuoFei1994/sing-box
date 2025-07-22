@@ -244,6 +244,17 @@
         ],
         "action": "reject"
       },
+      {  
+        "type": "logical",  
+        "mode": "or",  
+        "rules": [  
+          { "protocol": "stun" },  
+          { "port": 3478 },  
+          { "port": 5349 },  
+          { "port_range": "49152:65535", "network": "udp" }  
+        ],  
+        "action": "reject"  
+      },
       
       {
         "action": "reject",
@@ -359,7 +370,7 @@
       "server": "Remote-DNS",
       "strategy": "prefer_ipv4",
       "rewrite_ttl": 60,
-      "client_subnet": "0.0.0.0/0"
+      "client_subnet": "1.1.1.1/32"
     },
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi"],  
@@ -376,26 +387,13 @@
         "server": "223.5.5.5",
         "path": "/dns-query"
       },
-      {
-        "tag": "Local-DNS-Resolver",
-        "type": "udp",
-        "server_port": 53,
-        "server": "223.5.5.5"
-      },
+      
       {
         "tag": "Remote-DNS",
         "type": "tls",
         "detour": "🚀 节点选择",
-        "domain_resolver": "Remote-DNS-Resolver",
         "server_port": 853,
-        "server": "8.8.8.8"
-      },
-      {
-        "tag": "Remote-DNS-Resolver",
-        "type": "udp",
-        "detour": "🚀 节点选择",
-        "server_port": 53,
-        "server": "8.8.8.8"
+        "server": "9.9.9.11"
       }
     ],
     "rules": [
@@ -418,19 +416,28 @@
         ],
         "server": "Local-DNS"
       },
-      {
-        "action": "route",
-        "rule_set": [
-          "GeoLocation-!CN"
-        ],
-        "server": "Remote-DNS"
-      }
+      {  
+        "type": "logical",  
+        "mode": "and",  
+        "rules": [  
+          {  
+            "rule_set": "GeoSite-CN",  
+            "invert": true  
+          },  
+          {  
+            "rule_set": "GeoIP-CN"  
+          }  
+        ],  
+        "action": "route",  
+        "server": "Remote-DNS",  
+        "client_subnet": "1.1.1.1/32"  
+      }  
     ],
     "disable_cache": false,
-    "disable_expire": false,
-    "independent_cache": false,
+    //"disable_expire": false,
+    "independent_cache": true,
     "final": "Remote-DNS",
     "strategy": "prefer_ipv4",
-    "client_subnet": "0.0.0.0/0"
+    "client_subnet": "1.1.1.1/32"
   }
 }

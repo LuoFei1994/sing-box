@@ -205,8 +205,17 @@
         "timeout": "1s"
       },
       {
-        "action": "hijack-dns",
-        "protocol": "dns"
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "port": 53
+          },
+          {
+            "protocol": "dns"
+          }
+          ],
+        "action": "hijack-dns"
       },
       
       {
@@ -240,7 +249,10 @@
       
       {
         "action": "reject",
-        "protocol": "quic"
+        "protocol": [
+          "quic",
+          "dtls"
+        ]
       },
       {
         "action": "reject",
@@ -253,6 +265,7 @@
       
       {
         "ip_is_private": true,
+        "action": "route",
         "outbound": "🎯 全球直连"
       },
       
@@ -422,6 +435,12 @@
       }
     ],
     "rules": [
+      {
+        "outbound": "any",
+        "action": "route",
+        "server": "Local-DNS",
+        "disable_cache": true
+      },
       
       {
         "action": "route",

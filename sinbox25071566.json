@@ -40,8 +40,16 @@
       "sniff_override_destination":true,
       "stack":"gvisor",
       "auto_route": true,
-      "strict_route":true,
+      "tag": "tun-in",
       "type":"tun"
+      "platform": {  
+        "http_proxy": {  
+          "enabled": true,  
+          "server": "127.0.0.1",  
+          "server_port": 20123,  
+          "bypass_domain": ["*.local", "*.lan"]  
+    }  
+  }  
     }
   ],
   "outbounds": [
@@ -186,7 +194,7 @@
     "rules": [
       
       {
-        "inbound": "in",
+        "inbound": "tun-in",
         "action": "sniff",
         "sniffer": [
           "http",
@@ -300,11 +308,6 @@
         "rule_set": [
           "GeoLocation-CN"
         ],
-        "outbound": "🎯 全球直连"
-      },
-      
-      {
-        "rule_set": "GeoLocation-CN",
         "outbound": "🎯 全球直连"
       },
       {

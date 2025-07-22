@@ -29,7 +29,6 @@
   },
   "inbounds": [
     {
-      "auto_route":true,
       "domain_strategy":"prefer_ipv4",
       "endpoint_independent_nat":true,
       "address":[
@@ -42,7 +41,6 @@
       "stack":"gvisor",
       "auto_route": true,
       "strict_route":true,
-      "endpoint_independent_nat": false,
       "type":"tun"
     }
   ],

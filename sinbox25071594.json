@@ -186,9 +186,6 @@
                 "enabled": true,
                 "disable_sni": false,
                 "server_name": "yahoo.com",
-                "fragment": true,  
-                "fragment_fallback_delay": "500ms",  
-                "record_fragment": false,
                 "insecure": false,
                 "utls": {
                     "enabled": true,
@@ -259,6 +256,13 @@
           "Category-Ads"
         ]
       },
+      
+      {  
+        "domain_suffix": [".gov", ".mil"],  
+        "action": "route_options",  
+        "tls_fragment": true,  
+        "tls_fragment_fallback_delay": "500ms"  
+      }, 
       
       {
         "ip_is_private": true,

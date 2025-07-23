@@ -174,8 +174,8 @@
       }
     },
     {
-            "type": "anytls+reality",
-            "tag": "anytls-out",
+            "type": "anytls",
+            "tag": "anytls+reality",
             "server": "38.182.101.246",
             "server_port": 443,
             "password": "123456",

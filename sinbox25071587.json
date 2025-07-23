@@ -366,16 +366,28 @@
         "tag": "Local-DNS",
         "type": "https",
         "server_port": 443,
-        "server": "223.5.5.5",
-        "path": "/dns-query"
+        "server": "1.1.1.1",
+        "path": "/dns-query",
+        "headers": {  
+          "User-Agent": "sing-box"  
+        },  
+        "tls": {  
+          "enabled": true,  
+          "server_name": "cloudflare-dns.com"  
+        }  
       },
+      
       
       {
         "tag": "Remote-DNS",
         "type": "tls",
         "detour": "🚀 节点选择",
         "server_port": 853,
-        "server": "9.9.9.9"
+        "server": "1.1.1.1",
+        "tls": {  
+          "enabled": true,  
+          "server_name": "cloudflare-dns.com"  
+        }  
       }
     ],
     "rules": [

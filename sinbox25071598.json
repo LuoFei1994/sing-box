@@ -62,7 +62,8 @@
         "vless+vision+reality",
         "vless+vision+reality+TOR",
         "Hysteria2",
-        "anytls+reality"
+        "anytls+reality",
+        "proxy"
       ]
     },
     {
@@ -76,7 +77,8 @@
         "vless+vision+reality",
         "vless+vision+reality+TOR",
         "Hysteria2",
-        "anytls+reality"
+        "anytls+reality",
+        "proxy"
       ]
     },
     {
@@ -197,6 +199,35 @@
                     "short_id": "ea"
                 }
             }
+      },
+      {
+        "type": "vless",
+        "tag": "proxy",
+        "server": "38.182.101.246",
+        "server_port": 8888,
+        "uuid": "df946a9f-222b-42e7-80de-a0f4d5606998",
+        "flow": "",
+        "network": "tcp",
+        "tls": {
+          "enabled": true,
+          "server_name": "bing.com",
+          "utls": {
+            "enabled": true,
+            "fingerprint": "chrome"
+          }
+        },
+        "multiplex": {
+          "enabled": true,
+          "protocol": "smux",
+          "max_connections": 1,
+          "min_streams": 4,
+          "padding": false,
+          "brutal": {
+            "enabled": true,
+            "up_mbps": 100,
+            "down_mbps": 300
+          }
+        }
       }
   ],
   "route": {

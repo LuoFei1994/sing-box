@@ -47,7 +47,7 @@
           "enabled": true,  
           "server": "127.0.0.1",  
           "server_port": 20213,  
-          "bypass_domain": ["*.local", "*.lan", "*.internal", "*.corp", "*.home","*.jd.com","*.qianxun.com."]
+          "bypass_domain": ["*.local", "*.lan", "*.internal", "*.corp", "*.home"]
         }  
       }  
     }
@@ -347,7 +347,7 @@
       }
     ],
     "auto_detect_interface": true,
-    "find_process": true,
+    //"find_process": true,
     "final": "🐟 漏网之鱼",
     "default_domain_resolver": {
       "server": "Remote-DNS",

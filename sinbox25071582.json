@@ -24,7 +24,7 @@
       "cache_id": "",
       "store_fakeip": true,
       "store_rdrc": true,
-      "rdrc_timeout": "6h" 
+      "rdrc_timeout": "24h" 
     }
   },
   "inbounds": [
@@ -200,7 +200,7 @@
           "tls"
           //"dns"
         ],
-        "timeout": "1s"
+        "timeout": "300ms"
       },
       {  
         "protocol": "dns",  

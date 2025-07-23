@@ -383,10 +383,10 @@
         "type": "tls",
         "detour": "🚀 节点选择",
         "server_port": 853,
-        "server": "1.1.1.1",
+        "server": "9.9.9.11",
         "tls": {  
           "enabled": true,  
-          "server_name": "cloudflare-dns.com"  
+          "server_name": "dns11.quad9.net"  
         }  
       }
     ],

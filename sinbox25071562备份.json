@@ -7,7 +7,7 @@
   },
   "experimental": {
     "clash_api": {
-      "external_controller": "127.0.0.1:20123",
+      "external_controller": "127.0.0.1:20122",
       "external_ui": "",
       "external_ui_download_url": "",
       "external_ui_download_detour": "🎯 全球直连",
@@ -24,7 +24,7 @@
       "cache_id": "",
       "store_fakeip": true,
       "store_rdrc": true,
-      "rdrc_timeout": "6h" 
+      "rdrc_timeout": "24h" 
     }
   },
   "inbounds": [
@@ -41,7 +41,15 @@
       "stack":"gvisor",
       "auto_route": true,
       "tag": "tun-in",
-      "type":"tun"  
+      "type":"tun",
+      "platform": {  
+        "http_proxy": {  
+          "enabled": true,  
+          "server": "127.0.0.1",  
+          "server_port": 20213,  
+          "bypass_domain": ["*.local", "*.lan", "*.internal", "*.corp", "*.home"]
+        }  
+      }  
     }
   ],
   "outbounds": [
@@ -153,7 +161,7 @@
       "tls": {
         "enabled": true,
         "server_name": "bing.com",
-        "insecure": true
+        "insecure": true 
       }
     },
     {
@@ -186,35 +194,18 @@
     "rules": [
       
       {
-        "inbound": "tun-in",
         "action": "sniff",
         "sniffer": [
           "http",
-          "tls",
-          "quic",
-          "stun",
-          "dns",
-          "bittorrent",
-          "dtls",
-          "ssh",
-          "rdp",
-          "ntp"
+          "tls"
+          //"dns"
         ],
-        "timeout": "1s"
+        "timeout": "300ms"
       },
-      {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "port": 53
-          },
-          {
-            "protocol": "dns"
-          }
-          ],
-        "action": "hijack-dns"
-      },
+      {  
+        "protocol": "dns",  
+        "action": "hijack-dns"  
+      },  
       
       {
         "action": "route",
@@ -227,46 +218,31 @@
         "outbound": "GLOBAL"
       },
 
-      {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "port": 853
-          },
-          {
-            "network": "udp",
-            "port": 443
-          },
-          {
-            "protocol": "stun"
-          }
-        ],
-        "action": "reject"
-      },
       {  
         "type": "logical",  
         "mode": "or",  
         "rules": [  
           { "protocol": "stun" },  
+          { "protocol": "quic" },  
+          { "protocol": "dtls" },  
+          { "port": 853 },  
           { "port": 3478 },  
-          { "port": 5349 },  
-          { "port_range": "49152:65535", "network": "udp" }  
+          { "port": 5349 },
+          { "port": 19302 },  
+          { "port": 19303 },  
+          { "port": 19304 },
+          { "port_range": "16384:32767", "network": "udp" },
+          { "port_range": "49152:65535", "network": "udp" },
+          { "network": "udp", "port": 443 }  
         ],  
-        "action": "reject"  
-      },
+        "action": "reject",  
+        "method": "drop"  
+      },  
       
       {
         "action": "reject",
-        "protocol": [
-          "quic",
-          "dtls"
-        ]
-      },
-      {
-        "action": "reject",
-        "method": "default",  //default:对于 TCP 连接回复 RST，对于 UDP 包回复 ICMP 端口不可达。drop: 丢弃数据包。
-        "no_drop": false,      //如果未启用，则 30 秒内触发 50 次后，method 将被暂时覆盖为 drop。当 method 设为 drop 时不可用。
+        "method": "drop",  //default:对于 TCP 连接回复 RST，对于 UDP 包回复 ICMP 端口不可达。drop: 丢弃数据包。
+        //"no_drop": false,      //如果未启用，则 30 秒内触发 50 次后，method 将被暂时覆盖为 drop。当 method 设为 drop 时不可用。
         "rule_set": [
           "Category-Ads"
         ]
@@ -290,10 +266,17 @@
         "action": "route",
         "rule_set": [
           "GeoSite-CN",
-           "GeoIP-CN",
+          "GeoIP-CN",
           "GeoLocation-CN"
         ],
         "outbound": "🎯 全球直连"
+      },
+
+      {  
+        "domain": ["blocked-domain.com"],  
+        "action": "route-options", 
+        "tls_record_fragment": true,  
+        "outbound": "🚀 节点选择"  
       },
       
       
@@ -364,7 +347,7 @@
       }
     ],
     "auto_detect_interface": true,
-    "find_process": true,
+    //"find_process": true,
     "final": "🐟 漏网之鱼",
     "default_domain_resolver": {
       "server": "Remote-DNS",
@@ -392,7 +375,7 @@
         "type": "tls",
         "detour": "🚀 节点选择",
         "server_port": 853,
-        "server": "9.9.9.11"
+        "server": "9.9.9.9"
       }
     ],
     "rules": [
@@ -432,6 +415,8 @@
         "client_subnet": "1.1.1.1/32"  
       }  
     ],
+    "cache_capacity": 512,  
+    "reverse_mapping": false,
     "disable_cache": false,
     //"disable_expire": false,
     "independent_cache": true,

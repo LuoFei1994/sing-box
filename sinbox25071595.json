@@ -259,7 +259,7 @@
       
       {  
         "domain_suffix": [".gov", ".mil"],  
-        "action": "route_options",  
+        "action": "route-options",  
         "tls_fragment": true,  
         "tls_fragment_fallback_delay": "500ms"  
       }, 

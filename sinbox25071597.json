@@ -187,12 +187,6 @@
                 "disable_sni": false,
                 "server_name": "yahoo.com",
                 "insecure": false,
-                "ech": {
-                  "enabled": true,
-                  "pq_signature_schemes_enabled": true,
-                  "dynamic_record_sizing_disabled": false,
-                  "config": "-----BEGIN ECH CONFIGS-----\nAFf+DQBTAAAgACDa1r6fAL62YwtIq2GuHsD4KgwEy4RKJzBQlX44CSTccQAIAAEA\nAQABAAMAIFstLXBxLXNpZ25hdHVyZS1zY2hlbWVzLWVuYWJsZWRdAAA=\n-----END ECH CONFIGS-----\n"
-                },
                 "utls": {
                     "enabled": true,
                     "fingerprint": "chrome"

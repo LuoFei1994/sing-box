@@ -211,6 +211,7 @@
         "tls": {
           "enabled": true,
           "server_name": "",
+          "insecure": true,
           "utls": {
             "enabled": true,
             "fingerprint": "chrome"

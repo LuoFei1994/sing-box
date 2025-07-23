@@ -107,7 +107,7 @@
         
     {
       "type": "vless",
-      "tag": "正常vless节点",
+      "tag": "vless+vision+reality",
       "server": "38.182.101.246",
       "server_port": 9090,
       "uuid": "ae0bc13a-f72e-4a83-bc24-ebff7f55130c",
@@ -133,7 +133,7 @@
     },
     {
       "type": "vless",
-      "tag": "后置代理的TOR节点",
+      "tag": "vless+vision+reality+TOR",
       "server": "38.182.101.246",
       "server_port": 9090,
       "uuid": "4f8d465a-2ef2-4812-8ab0-f233524ccbec",
@@ -158,7 +158,7 @@
     },
     {
       "type": "hysteria2",
-      "tag": "歇斯底里2",
+      "tag": "Hysteria2",
       "server": "38.182.101.246",
       "server_port": 443,
       "up_mbps": 5,
@@ -174,7 +174,7 @@
       }
     },
     {
-            "type": "anytls",
+            "type": "anytls+reality",
             "tag": "anytls-out",
             "server": "38.182.101.246",
             "server_port": 443,

@@ -210,7 +210,7 @@
         "network": "tcp",
         "tls": {
           "enabled": true,
-          "server_name": "38-182-101-246.nip.io",
+          "server_name": "bing.com",
           "utls": {
             "enabled": true,
             "fingerprint": "chrome"

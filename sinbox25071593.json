@@ -59,10 +59,10 @@
       "interrupt_exist_connections": true,
       "outbounds": [
         "🎈 自动选择",
-        "正常vless节点",
-        "后置代理的TOR节点",
-        "歇斯底里2",
-        "anytls-out"
+        "vless+vision+reality",
+        "vless+vision+reality+TOR",
+        "Hysteria2",
+        "anytls+reality"
       ]
     },
     {
@@ -73,10 +73,10 @@
       "tolerance": 150,
       "interrupt_exist_connections": true,
       "outbounds": [
-        "正常vless节点",
-        "后置代理的TOR节点",
-        "歇斯底里2",
-        "anytls-out"
+        "vless+vision+reality",
+        "vless+vision+reality+TOR",
+        "Hysteria2",
+        "anytls+reality"
       ]
     },
     {

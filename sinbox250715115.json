@@ -56,12 +56,6 @@
     {
       "type": "wireguard",
       "tag": "wg-ep",
-      "system": true,
-      "name": "",
-      "mtu": 1408,
-      "address": [
-        "10.0.0.2/32"
-      ],
       "private_key": "qOK5GTJjGvo5/1alpwIl03CIomnMq4BXwS3KVg/AqHg=",
       "peers": [
         {
@@ -72,7 +66,7 @@
           "allowed_ips": [
             "0.0.0.0/0"
           ],
-          "persistent_keepalive_interval": 30,
+          "persistent_keepalive_interval": 25,
           "reserved": [0, 0, 0]
         }
       ]

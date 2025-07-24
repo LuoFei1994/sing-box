@@ -56,7 +56,6 @@
     {
       "type": "wireguard",
       "tag": "wg-ep",
-      "system": true,
       "mtu": 1408,
       "address": [
         "10.0.0.2/32"

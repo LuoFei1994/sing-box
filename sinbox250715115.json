@@ -52,31 +52,7 @@
       }  
     }
   ],
-  "endpoints": [
-    {
-      "type": "wireguard",
-      "tag": "wg-ep",
-      "mtu": 1408,
-      "address": [
-        "10.0.0.2/32"
-      ],
-      "private_key": "qFFTicB3b43IgwAwZTIxGwuxH6e6lsyUx+JvAqZIP24=",
-      "listen_port": 10000,
-      "peers": [
-        {
-          "address": "38.182.101.246",
-          "port": 10001,
-          "public_key": "7HfVRt0FPodydQaBQHzBl5RT3DIMxn3OUt5+pbyrTjo=",
-          "pre_shared_key": "OD4tV0kb53lI+Z4iyRRamuTZkjUpI1a1rxC3nbjI8kg=",
-          "allowed_ips": [
-            "0.0.0.0/0"
-          ],
-          "persistent_keepalive_interval": 25,
-          "reserved": [0, 0, 0]
-        }
-      ]
-    }
-  ],
+
   "outbounds": [
     {
       "type": "selector",
@@ -89,8 +65,7 @@
         "Hysteria2-1",
         "Hysteria2-2-singbox",
         "anytls+reality",
-        "vless+brutal算法",
-        "wg-ep"
+        "vless+brutal算法"
       ]
     },
     {
@@ -106,8 +81,7 @@
         "Hysteria2-1",
         "Hysteria2-2-singbox",
         "anytls+reality",
-        "vless+brutal算法",
-        "wg-ep"
+        "vless+brutal算法"
       ]
     },
     {

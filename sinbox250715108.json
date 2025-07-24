@@ -188,7 +188,7 @@
       "tls": {
           "enabled": true,
           "server_name": "bing.com",
-          "insecure": true 
+          "insecure": true,
           "alpn": [
               "h3"
           ]

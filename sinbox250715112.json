@@ -66,7 +66,7 @@
       "listen_port": 10000,
       "peers": [
         {
-          "address": "127.0.0.1",
+          "address": "38.182.101.246",
           "port": 10001,
           "public_key": "7HfVRt0FPodydQaBQHzBl5RT3DIMxn3OUt5+pbyrTjo=",
           "pre_shared_key": "OD4tV0kb53lI+Z4iyRRamuTZkjUpI1a1rxC3nbjI8kg=",

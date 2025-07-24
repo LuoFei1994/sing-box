@@ -210,8 +210,7 @@
         "network": "tcp",
         "tls": {
           "enabled": true,
-          "server_name": "",
-          "insecure": true,
+          "server_name": "aaa.luofeimm.dpdns.org",
           "utls": {
             "enabled": true,
             "fingerprint": "chrome"

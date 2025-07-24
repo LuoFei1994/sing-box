@@ -187,7 +187,8 @@
       "password": "654321",
       "tls": {
           "enabled": true,
-          "server_name": "",
+          "server_name": "bing.com",
+          "insecure": true 
           "alpn": [
               "h3"
           ]

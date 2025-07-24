@@ -55,9 +55,6 @@
   "endpoints": [
     {
       "type": "wireguard",
-      "system": true,
-      "name": "",
-      "mtu": 1420, 
       "address": [
         "10.7.0.2/24"
       ],

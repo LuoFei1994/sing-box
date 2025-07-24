@@ -62,9 +62,9 @@
         "vless+vision+reality",
         "vless+vision+reality+TOR",
         "Hysteria2-1",
-        "Hysteria2-2",
+        "Hysteria2-2-singbox",
         "anytls+reality",
-        "proxy"
+        "vless+brutal算法"
       ]
     },
     {
@@ -78,9 +78,9 @@
         "vless+vision+reality",
         "vless+vision+reality+TOR",
         "Hysteria2-1",
-        "Hysteria2-2",
+        "Hysteria2-2-singbox",
         "anytls+reality",
-        "proxy"
+        "vless+brutal算法"
       ]
     },
     {
@@ -178,7 +178,7 @@
       }
     },
     {
-      "tag": "Hysteria2-2",
+      "tag": "Hysteria2-2-singbox",
       "type": "hysteria2",
       "server": "38.182.101.246",
       "server_port": 8443,
@@ -221,7 +221,7 @@
       },
       {
         "type": "vless",
-        "tag": "proxy",
+        "tag": "vless+brutal算法",
         "server": "38.182.101.246",
         "server_port": 8888,
         "uuid": "df946a9f-222b-42e7-80de-a0f4d5606998",

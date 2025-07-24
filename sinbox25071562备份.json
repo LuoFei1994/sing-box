@@ -59,10 +59,12 @@
       "interrupt_exist_connections": true,
       "outbounds": [
         "🎈 自动选择",
-        "正常vless节点",
-        "后置代理的TOR节点",
-        "歇斯底里2",
-        "anytls-out"
+        "vless+vision+reality",
+        "vless+vision+reality+TOR",
+        "Hysteria2-1",
+        "Hysteria2-2",
+        "anytls+reality",
+        "proxy"
       ]
     },
     {
@@ -73,10 +75,12 @@
       "tolerance": 150,
       "interrupt_exist_connections": true,
       "outbounds": [
-        "正常vless节点",
-        "后置代理的TOR节点",
-        "歇斯底里2",
-        "anytls-out"
+        "vless+vision+reality",
+        "vless+vision+reality+TOR",
+        "Hysteria2-1",
+        "Hysteria2-2",
+        "anytls+reality",
+        "proxy"
       ]
     },
     {
@@ -107,7 +111,7 @@
         
     {
       "type": "vless",
-      "tag": "正常vless节点",
+      "tag": "vless+vision+reality",
       "server": "38.182.101.246",
       "server_port": 9090,
       "uuid": "ae0bc13a-f72e-4a83-bc24-ebff7f55130c",
@@ -117,6 +121,9 @@
         "enabled": true,
         "server_name": "apple.com",
         "insecure": false,
+        "fragment": true,  
+        "fragment_fallback_delay": "500ms",  
+        "record_fragment": false,  
         "utls": {
           "enabled": true,
           "fingerprint": "safari"
@@ -130,7 +137,7 @@
     },
     {
       "type": "vless",
-      "tag": "后置代理的TOR节点",
+      "tag": "vless+vision+reality+TOR",
       "server": "38.182.101.246",
       "server_port": 9090,
       "uuid": "4f8d465a-2ef2-4812-8ab0-f233524ccbec",
@@ -139,6 +146,9 @@
         "enabled": true,
         "server_name": "apple.com",
         "insecure": false,
+        "fragment": true,  
+        "fragment_fallback_delay": "500ms",  
+        "record_fragment": false,  
         "utls": {
           "enabled": true,
           "fingerprint": "safari"
@@ -152,21 +162,41 @@
     },
     {
       "type": "hysteria2",
-      "tag": "歇斯底里2",
+      "tag": "Hysteria2-1",
       "server": "38.182.101.246",
       "server_port": 443,
-      "up_mbps": 5,
-      "down_mbps": 20,
+      "up_mbps": 20,
+      "down_mbps": 100,
       "password": "123456",
       "tls": {
         "enabled": true,
         "server_name": "bing.com",
+        "fragment": true,  
+        "fragment_fallback_delay": "500ms",  
+        "record_fragment": false,
         "insecure": true 
       }
     },
     {
+      "tag": "Hysteria2-2",
+      "type": "hysteria2",
+      "server": "38.182.101.246",
+      "server_port": 8443,
+      "up_mbps": 20,
+      "down_mbps": 100,
+      "password": "654321",
+      "tls": {
+          "enabled": true,
+          "server_name": "aaa.luofeimm.dpdns.org",
+          "insecure": false,
+          "alpn": [
+              "h3"
+          ]
+       }
+    },
+    {
             "type": "anytls",
-            "tag": "anytls-out",
+            "tag": "anytls+reality",
             "server": "38.182.101.246",
             "server_port": 443,
             "password": "123456",
@@ -188,6 +218,35 @@
                     "short_id": "ea"
                 }
             }
+      },
+      {
+        "type": "vless",
+        "tag": "proxy",
+        "server": "38.182.101.246",
+        "server_port": 8888,
+        "uuid": "df946a9f-222b-42e7-80de-a0f4d5606998",
+        "flow": "",
+        "network": "tcp",
+        "tls": {
+          "enabled": true,
+          "server_name": "aaa.luofeimm.dpdns.org",
+          "utls": {
+            "enabled": true,
+            "fingerprint": "chrome"
+          }
+        },
+        "multiplex": {
+          "enabled": true,
+          "protocol": "smux",
+          "max_connections": 1,
+          "min_streams": 4,
+          "padding": false,
+          "brutal": {
+            "enabled": true,
+            "up_mbps": 100,
+            "down_mbps": 300
+          }
+        }
       }
   ],
   "route": {
@@ -247,6 +306,13 @@
           "Category-Ads"
         ]
       },
+      
+      {  
+        "domain_suffix": [".gov", ".mil"],  
+        "action": "route-options",  
+        "tls_fragment": true,  
+        "tls_fragment_fallback_delay": "500ms"  
+      }, 
       
       {
         "ip_is_private": true,
@@ -367,15 +433,27 @@
         "type": "https",
         "server_port": 443,
         "server": "223.5.5.5",
-        "path": "/dns-query"
+        "path": "/dns-query",
+        "headers": {  
+          "User-Agent": "sing-box"  
+        },  
+        "tls": {  
+          "enabled": true,  
+          "server_name": "dns.alidns.com"  
+        }  
       },
+      
       
       {
         "tag": "Remote-DNS",
         "type": "tls",
         "detour": "🚀 节点选择",
         "server_port": 853,
-        "server": "9.9.9.9"
+        "server": "9.9.9.11",
+        "tls": {  
+          "enabled": true,  
+          "server_name": "dns11.quad9.net"  
+        }  
       }
     ],
     "rules": [

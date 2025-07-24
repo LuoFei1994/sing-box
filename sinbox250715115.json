@@ -61,7 +61,7 @@
         {
           "address": "38.182.101.246",
           "port": 51820,
-          "public_key": "LVwhPcF0e8CeLf7D2MLumukptwdzjXL7MAHlP7D7qjE",
+          "public_key": "BX7oEgmOKsVTzRNGcQN9gP01M70zO+PsRMvPWlWnv3U=",
           "pre_shared_key": "45dv2mverwnJqHp0c/DRY+DpJV6ZLNmOUGby+Npba+U=",
           "allowed_ips": [
             "0.0.0.0/0"

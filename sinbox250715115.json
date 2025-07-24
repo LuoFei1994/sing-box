@@ -60,7 +60,7 @@
       "name": "vps",
       "mtu": 1420,
       "address": [
-        "10.7.0.2/24"
+        
       ],
       "private_key": "qOK5GTJjGvo5/1alpwIl03CIomnMq4BXwS3KVg/AqHg=",
       "listen_port": 59885,

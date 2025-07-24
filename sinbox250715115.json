@@ -55,7 +55,6 @@
   "endpoints": [
     {
       "type": "wireguard",
-      "tag": "wg-ep",
       "system": true,
       "name": "",
       "mtu": 1420, 

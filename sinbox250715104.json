@@ -163,16 +163,16 @@
       "tag": "Hysteria2",
       "server": "38.182.101.246",
       "server_port": 443,
-      "up_mbps": 5,
-      "down_mbps": 20,
-      "password": "123456",
+      "up_mbps": 20,
+      "down_mbps": 100,
+      "password": "test@sharklasers123456",
       "tls": {
         "enabled": true,
         "server_name": "bing.com",
         "fragment": true,  
         "fragment_fallback_delay": "500ms",  
         "record_fragment": false,
-        "insecure": true 
+        "insecure": false 
       }
     },
     {

@@ -61,7 +61,8 @@
         "🎈 自动选择",
         "vless+vision+reality",
         "vless+vision+reality+TOR",
-        "Hysteria2",
+        "Hysteria2-1",
+        "Hysteria2-2",
         "anytls+reality",
         "proxy"
       ]
@@ -76,7 +77,8 @@
       "outbounds": [
         "vless+vision+reality",
         "vless+vision+reality+TOR",
-        "Hysteria2",
+        "Hysteria2-1",
+        "Hysteria2-2",
         "anytls+reality",
         "proxy"
       ]
@@ -160,7 +162,7 @@
     },
     {
       "type": "hysteria2",
-      "tag": "Hysteria2",
+      "tag": "Hysteria2-1",
       "server": "38.182.101.246",
       "server_port": 443,
       "up_mbps": 20,
@@ -174,6 +176,22 @@
         "record_fragment": false,
         "insecure": true 
       }
+    },
+    {
+      "tag": "Hysteria2-2",
+      "type": "hysteria2",
+      "server": "38.182.101.246",
+      "server_port": 8443,
+      "up_mbps": 20,
+      "down_mbps": 100,
+      "password": "654321",
+      "tls": {
+          "enabled": true,
+          "server_name": "",
+          "alpn": [
+              "h3"
+          ]
+       }
     },
     {
             "type": "anytls",

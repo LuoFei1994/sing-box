@@ -58,14 +58,18 @@
       "tag": "wg-ep",
       "system": false,
       "mtu": 1384,
-      "address": ["10.18.0.2/24"],
-      "private_key": "YPdMtXi5ZweUgI1PhP1NFeiS3ZLA0QgySy21v+IE5UI=",
+      "address": ["10.7.0.3/24"],
+      "private_key": "CNiFY1tsGX5vHVa+QSysaV5IibWUpdbVTrUrmnLA62Y=",
       "peers": [
         {
           "address": "38.182.101.246",
-          "port": 51820,
-          "public_key": "p0ox3Djec0wSUpwkyLUQMIZ8hgqqC5mh3KqIerOJqk0=",
-          "allowed_ips": ["0.0.0.0/0"],
+          "port": 51821,
+          "public_key": "LVwhPcF0e8CeLf7D2MLumukptwdzjXL7MAHlP7D7qjE=",
+          "pre_shared_key": "IUOHZHXAMvupgqlaMMNMfRMP01g8ZaEmEehP/Tmerb0=",
+          "allowed_ips": [
+            "0.0.0.0/0",
+            "::/0"
+          ],
           "persistent_keepalive_interval": 25
         }
         ]

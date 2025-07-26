@@ -278,7 +278,7 @@
     "rules": [
       {
        "action": "route",
-       "ip_cidr": "10.18.0.0/24",
+       "ip_cidr": "10.7.0.3/24",
        "outbound": "wg-ep"
      },
      {
@@ -347,7 +347,12 @@
         "action": "route-options",  
         "tls_fragment": true,  
         "tls_fragment_fallback_delay": "500ms"  
-      }, 
+      },
+      {    
+        "domain_suffix": [".gov", ".mil"],    
+        "action": "route",  
+        "outbound": "🚀 节点选择"    
+      },
       
       {
         "ip_is_private": true,
@@ -378,6 +383,11 @@
         "action": "route-options", 
         "tls_record_fragment": true,  
         "outbound": "🚀 节点选择"  
+      },
+      {    
+        "domain": ["blocked-domain.com"],    
+        "action": "route",  
+        "outbound": "🚀 节点选择"    
       },
       
       
@@ -528,7 +538,7 @@
         "client_subnet": "1.1.1.1/32"  
       }  
     ],
-    "cache_capacity": 512,  
+    "cache_capacity": 1024,  
     "reverse_mapping": false,
     "disable_cache": false,
     //"disable_expire": false,

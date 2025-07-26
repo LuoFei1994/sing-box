@@ -57,7 +57,7 @@
       "type": "wireguard",
       "tag": "wg-ep",
       "system": false,
-      "mtu": 1384,
+      "mtu": 1408,
       "address": ["10.7.0.3/24"],
       "private_key": "CNiFY1tsGX5vHVa+QSysaV5IibWUpdbVTrUrmnLA62Y=",
       "peers": [

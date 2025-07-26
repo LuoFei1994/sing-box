@@ -461,7 +461,7 @@
     //"find_process": true,
     "final": "🐟 漏网之鱼",
     "default_domain_resolver": {
-      //"server": "Remote-DNS",
+      "server": "Local-DNS",
       "strategy": "prefer_ipv4",
       "rewrite_ttl": 60,
       "client_subnet": "1.1.1.1/32"

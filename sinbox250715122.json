@@ -461,7 +461,7 @@
     //"find_process": true,
     "final": "🐟 漏网之鱼",
     "default_domain_resolver": {
-      "server": "Remote-DNS",
+      //"server": "Remote-DNS",
       "strategy": "prefer_ipv4",
       "rewrite_ttl": 60,
       "client_subnet": "1.1.1.1/32"
@@ -495,7 +495,6 @@
         "detour": "🚀 节点选择",
         "server_port": 853,
         "server": "9.9.9.11",
-        "client_subnet": "1.1.1.1/32",
         "tls": {  
           "enabled": true,  
           "server_name": "dns11.quad9.net"  
@@ -555,6 +554,6 @@
     "independent_cache": true,
     "final": "Remote-DNS",
     "strategy": "prefer_ipv4",
-    //"client_subnet": "1.1.1.1/32"
+    "client_subnet": "1.1.1.1/32"
   }
 }

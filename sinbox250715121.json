@@ -529,8 +529,8 @@
         ],
         "server": "Remote-DNS",  
         "client_subnet": "1.1.1.1/32"  
-      },
-      /.{  
+      }
+      /*{  
         "type": "logical",  
         "mode": "and",  
         "rules": [  
@@ -545,7 +545,7 @@
         "action": "route",  
         "server": "Remote-DNS",  
         "client_subnet": "1.1.1.1/32"  
-      }./
+      }*/
     ],
     "find_process": true,
     "cache_capacity": 1024,  

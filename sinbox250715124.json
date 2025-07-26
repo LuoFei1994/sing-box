@@ -458,7 +458,7 @@
       }
     ],
     "auto_detect_interface": true,
-    //"find_process": true,
+    "find_process": true,
     "final": "🐟 漏网之鱼",
     "default_domain_resolver": {
       "server": "Local-DNS",
@@ -546,7 +546,6 @@
         "client_subnet": "1.1.1.1/32"  
       }*/
     ],
-    "find_process": true,
     "cache_capacity": 1024,  
     "reverse_mapping": false,
     "disable_cache": false,

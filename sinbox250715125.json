@@ -278,7 +278,7 @@
     "rules": [
       {
        "action": "route",
-       "ip_cidr": "10.7.0.3/24",
+       "ip_cidr": "10.18.0.0/24",
        "outbound": "wg-ep"
      },
      {

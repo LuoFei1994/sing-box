@@ -1,6 +1,6 @@
 {
   "log": {
-    "disabled": false,
+    "disabled": false, 
     "level": "info",
     "output": "",
     "timestamp": false
@@ -52,6 +52,29 @@
       }  
     }
   ],
+  "endpoints":[
+    {
+      "type": "wireguard",
+      "tag": "wg-ep",
+      "system": false,
+      "mtu": 1408,
+      "address": ["10.7.0.2/24"],
+      "private_key": "cC7Qv/O0CvqoX8Y3+6ajBUnmIaPuayZ4KjcXpTLqs3c=",
+      "peers": [
+        {
+          "address": "38.182.101.246",
+          "port": 5555,
+          "public_key": "MQ9Lik2sSH92GNoq0k7r5jU7fS8aQonQd5LgC74tX2U=",
+          "pre_shared_key": "QdmsTASsZHr7tUhhhODUEP6XUDaod1fWIPIkTfNmjwc=",
+          "allowed_ips": [
+            "0.0.0.0/0",
+            "::/0"
+          ],
+          "persistent_keepalive_interval": 25
+        }
+        ]
+      }
+  ],
   "outbounds": [
     {
       "type": "selector",
@@ -61,10 +84,11 @@
         "🎈 自动选择",
         "vless+vision+reality",
         "vless+vision+reality+TOR",
-        "Hysteria2-1",
-        "Hysteria2-2",
+        "vless+brutal算法",
+        "Hysteria2-2-singbox",
         "anytls+reality",
-        "proxy"
+        "wg-ep"
+
       ]
     },
     {
@@ -77,10 +101,10 @@
       "outbounds": [
         "vless+vision+reality",
         "vless+vision+reality+TOR",
-        "Hysteria2-1",
-        "Hysteria2-2",
+        "vless+brutal算法",
+        "Hysteria2-2-singbox",
         "anytls+reality",
-        "proxy"
+        "wg-ep"
       ]
     },
     {
@@ -114,24 +138,23 @@
       "tag": "vless+vision+reality",
       "server": "38.182.101.246",
       "server_port": 9090,
-      "uuid": "ae0bc13a-f72e-4a83-bc24-ebff7f55130c",
-      "flow": "xtls-rprx-vision",
+      "uuid": "39d928c7-735a-497a-bc3d-425a55743d80",
       "packet_encoding": "xudp",
       "tls": {
         "enabled": true,
-        "server_name": "apple.com",
-        "insecure": false,
+        "server_name": "yahoo.com",
         "fragment": true,  
         "fragment_fallback_delay": "500ms",  
-        "record_fragment": false,  
+        "record_fragment": false,
+        "insecure": false,
         "utls": {
           "enabled": true,
-          "fingerprint": "safari"
+          "fingerprint": "ios"
         },
         "reality": {
           "enabled": true,
-          "public_key": "kMYbcq4wmiXR6QinCazFTF0RSBicDqHXP77iVKF-Wgk",
-          "short_id": "ea"
+          "public_key": "JMcsaZOdXQ_iZygS8OxTo-bWnDeMVnngzZM_bcRe13s",
+          "short_id": "d416e01452"
         }
       }
     },
@@ -140,45 +163,29 @@
       "tag": "vless+vision+reality+TOR",
       "server": "38.182.101.246",
       "server_port": 9090,
-      "uuid": "4f8d465a-2ef2-4812-8ab0-f233524ccbec",
+      "uuid": "3424df7b-3e89-4e59-b23f-46992de92c32",
       "packet_encoding": "xudp",
       "tls": {
         "enabled": true,
-        "server_name": "apple.com",
-        "insecure": false,
-        "fragment": true,  
-        "fragment_fallback_delay": "500ms",  
-        "record_fragment": false,  
-        "utls": {
-          "enabled": true,
-          "fingerprint": "safari"
-        },
-        "reality": {
-          "enabled": true,
-          "public_key": "kMYbcq4wmiXR6QinCazFTF0RSBicDqHXP77iVKF-Wgk",
-          "short_id": "ea"
-        }
-      }
-    },
-    {
-      "type": "hysteria2",
-      "tag": "Hysteria2-1",
-      "server": "38.182.101.246",
-      "server_port": 443,
-      "up_mbps": 20,
-      "down_mbps": 100,
-      "password": "123456",
-      "tls": {
-        "enabled": true,
-        "server_name": "bing.com",
+        "server_name": "yahoo.com",
         "fragment": true,  
         "fragment_fallback_delay": "500ms",  
         "record_fragment": false,
-        "insecure": true 
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "ios"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "JMcsaZOdXQ_iZygS8OxTo-bWnDeMVnngzZM_bcRe13s",
+          "short_id": "d416e01452"
+        }
       }
     },
+    
     {
-      "tag": "Hysteria2-2",
+      "tag": "Hysteria2-2-singbox",
       "type": "hysteria2",
       "server": "38.182.101.246",
       "server_port": 8443,
@@ -214,14 +221,14 @@
                 },
                 "reality": {
                     "enabled": true,
-                    "public_key": "bu42wZfnddgQ8_KXbFzbadBN4LZ5fYhqQ2LmDigCZHg",
-                    "short_id": "ea"
+                    "public_key": "ZzE29FNipqOf7Y7dHlt4ps6eJiy-8xL7oENhEda25Hs",
+                    "short_id": "d416e01452"
                 }
             }
       },
-      {
+     {
         "type": "vless",
-        "tag": "proxy",
+        "tag": "vless+brutal算法",
         "server": "38.182.101.246",
         "server_port": 8888,
         "uuid": "df946a9f-222b-42e7-80de-a0f4d5606998",
@@ -232,7 +239,7 @@
           "server_name": "aaa.luofeimm.dpdns.org",
           "utls": {
             "enabled": true,
-            "fingerprint": "chrome"
+            "fingerprint": "ios"
           }
         },
         "multiplex": {
@@ -251,6 +258,16 @@
   ],
   "route": {
     "rules": [
+      {
+       "action": "route",
+       "ip_cidr": "10.18.0.0/24",
+       "outbound": "wg-ep"
+     },
+     {
+       "action": "route",
+       "ip_cidr": "192.168.0.0/24",
+       "outbound": "wg-ep"
+     },
       
       {
         "action": "sniff",
@@ -312,7 +329,12 @@
         "action": "route-options",  
         "tls_fragment": true,  
         "tls_fragment_fallback_delay": "500ms"  
-      }, 
+      },
+      {    
+        "domain_suffix": [".gov", ".mil"],    
+        "action": "route",  
+        "outbound": "🚀 节点选择"    
+      },
       
       {
         "ip_is_private": true,
@@ -343,6 +365,11 @@
         "action": "route-options", 
         "tls_record_fragment": true,  
         "outbound": "🚀 节点选择"  
+      },
+      {    
+        "domain": ["blocked-domain.com"],    
+        "action": "route",  
+        "outbound": "🚀 节点选择"    
       },
       
       
@@ -413,10 +440,10 @@
       }
     ],
     "auto_detect_interface": true,
-    //"find_process": true,
+    "find_process": true,
     "final": "🐟 漏网之鱼",
     "default_domain_resolver": {
-      "server": "Remote-DNS",
+      "server": "Local-DNS",
       "strategy": "prefer_ipv4",
       "rewrite_ttl": 60,
       "client_subnet": "1.1.1.1/32"
@@ -476,7 +503,15 @@
         ],
         "server": "Local-DNS"
       },
-      {  
+      {
+        "action": "route",
+        "rule_set": [
+          "GeoLocation-!CN"
+        ],
+        "server": "Remote-DNS",  
+        "client_subnet": "1.1.1.1/32"  
+      }
+      /*{  
         "type": "logical",  
         "mode": "and",  
         "rules": [  
@@ -491,12 +526,12 @@
         "action": "route",  
         "server": "Remote-DNS",  
         "client_subnet": "1.1.1.1/32"  
-      }  
+      }*/
     ],
-    "cache_capacity": 512,  
+    "cache_capacity": 1024,  
     "reverse_mapping": false,
     "disable_cache": false,
-    //"disable_expire": false,
+    "disable_expire": false,
     "independent_cache": true,
     "final": "Remote-DNS",
     "strategy": "prefer_ipv4",

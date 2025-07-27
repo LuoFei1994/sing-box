@@ -52,7 +52,7 @@
       }  
     }
   ],
-  /*"endpoints":[
+  "endpoints":[
     {
       "type": "wireguard",
       "tag": "wg-ep",
@@ -74,7 +74,7 @@
         }
         ]
       }
-  ],*/
+  ],
   "outbounds": [
     {
       "type": "selector",
@@ -102,7 +102,7 @@
         "vless+vision+reality+TOR",
         "vless+brutal算法",
         "Hysteria2-2-singbox",
-        "anytls+reality",
+        "anytls+reality"
       ]
     },
     {

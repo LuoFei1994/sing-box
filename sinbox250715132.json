@@ -84,7 +84,6 @@
         "🎈 自动选择",
         "vless+vision+reality",
         "vless+vision+reality+TOR",
-        "Hysteria2-1",
         "Hysteria2-2-singbox",
         "anytls+reality",
         "vless+brutal算法",
@@ -101,7 +100,6 @@
       "outbounds": [
         "vless+vision+reality",
         "vless+vision+reality+TOR",
-        "Hysteria2-1",
         "Hysteria2-2-singbox",
         "anytls+reality",
         "vless+brutal算法",
@@ -138,7 +136,7 @@
       "type": "vless",
       "tag": "vless+vision+reality",
       "server": "38.182.101.246",
-      "server_port": 443,
+      "server_port": 9090,
       "uuid": "39d928c7-735a-497a-bc3d-425a55743d80",
       "packet_encoding": "xudp",
       "tls": {
@@ -163,7 +161,7 @@
       "type": "vless",
       "tag": "vless+vision+reality+TOR",
       "server": "38.182.101.246",
-      "server_port": 443,
+      "server_port": 9090,
       "uuid": "3424df7b-3e89-4e59-b23f-46992de92c32",
       "packet_encoding": "xudp",
       "tls": {
@@ -184,23 +182,7 @@
         }
       }
     },
-    {
-      "type": "hysteria2",
-      "tag": "Hysteria2-1",
-      "server": "38.182.101.246",
-      "server_port": 443,
-      "up_mbps": 20,
-      "down_mbps": 100,
-      "password": "123456",
-      "tls": {
-        "enabled": true,
-        "server_name": "bing.com",
-        "fragment": true,  
-        "fragment_fallback_delay": "500ms",  
-        "record_fragment": false,
-        "insecure": true 
-      }
-    },
+    
     {
       "tag": "Hysteria2-2-singbox",
       "type": "hysteria2",
@@ -230,15 +212,15 @@
             "tls": {
                 "enabled": true,
                 "disable_sni": false,
-                "server_name": "yahoo.com",
+                "server_name": "apple.com",
                 "insecure": false,
                 "utls": {
                     "enabled": true,
-                    "fingerprint": "chrome"
+                    "fingerprint": "ios"
                 },
                 "reality": {
                     "enabled": true,
-                    "public_key": "bu42wZfnddgQ8_KXbFzbadBN4LZ5fYhqQ2LmDigCZHg",
+                    "public_key": "bJUrnXSYvpvLtbtwJbrRxB1ZR1iZZfWKr6emDy3JhGk",
                     "short_id": "ea"
                 }
             }
@@ -256,7 +238,7 @@
           "server_name": "aaa.luofeimm.dpdns.org",
           "utls": {
             "enabled": true,
-            "fingerprint": "chrome"
+            "fingerprint": "ios"
           }
         },
         "multiplex": {

@@ -144,6 +144,9 @@
       "tls": {
         "enabled": true,
         "server_name": "yahoo.com",
+        "fragment": true,  
+        "fragment_fallback_delay": "500ms",  
+        "record_fragment": false,
         "insecure": false,
         "utls": {
           "enabled": true,
@@ -166,6 +169,9 @@
       "tls": {
         "enabled": true,
         "server_name": "yahoo.com",
+        "fragment": true,  
+        "fragment_fallback_delay": "500ms",  
+        "record_fragment": false,
         "insecure": false,
         "utls": {
           "enabled": true,

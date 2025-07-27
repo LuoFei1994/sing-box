@@ -258,16 +258,16 @@
   ],
   "route": {
     "rules": [
-      /*{
+      {
        "action": "route",
-       "ip_cidr": "10.18.0.0/24",
+       "ip_cidr": "10.7.0.0/24",
        "outbound": "wg-ep"
      },
      {
        "action": "route",
        "ip_cidr": "192.168.0.0/24",
        "outbound": "wg-ep"
-     },*/
+     },
       
       {
         "action": "sniff",

@@ -180,7 +180,7 @@
       }
     },
     
-   /* {
+    {
       "tag": "Hysteria2-2-singbox",
       "type": "hysteria2",
       "server": "38.182.101.246",
@@ -196,7 +196,7 @@
               "h3"
           ]
        }
-    },*/
+    },
     {
             "type": "anytls",
             "tag": "anytls+reality",

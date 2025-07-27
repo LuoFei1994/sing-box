@@ -51,8 +51,8 @@
         }  
       }  
     }
-  ],
-  "endpoints":[
+  ]
+  /*"endpoints":[
     {
       "type": "wireguard",
       "tag": "wg-ep",
@@ -74,7 +74,7 @@
         }
         ]
       }
-  ],
+  ],*/
   "outbounds": [
     {
       "type": "selector",
@@ -183,7 +183,7 @@
       }
     },
     
-    {
+   /* {
       "tag": "Hysteria2-2-singbox",
       "type": "hysteria2",
       "server": "38.182.101.246",
@@ -199,7 +199,7 @@
               "h3"
           ]
        }
-    },
+    },*/
     {
             "type": "anytls",
             "tag": "anytls+reality",
@@ -212,20 +212,20 @@
             "tls": {
                 "enabled": true,
                 "disable_sni": false,
-                "server_name": "apple.com",
+                "server_name": "yahoo.com",
                 "insecure": false,
                 "utls": {
                     "enabled": true,
-                    "fingerprint": "ios"
+                    "fingerprint": "chrome"
                 },
                 "reality": {
                     "enabled": true,
-                    "public_key": "bJUrnXSYvpvLtbtwJbrRxB1ZR1iZZfWKr6emDy3JhGk",
-                    "short_id": "ea"
+                    "public_key": "ZzE29FNipqOf7Y7dHlt4ps6eJiy-8xL7oENhEda25Hs",
+                    "short_id": "d416e01452"
                 }
             }
-      },
-      {
+      }
+     /* {
         "type": "vless",
         "tag": "vless+brutal算法",
         "server": "38.182.101.246",
@@ -253,7 +253,7 @@
             "down_mbps": 300
           }
         }
-      }
+      }*/
   ],
   "route": {
     "rules": [

@@ -140,15 +140,11 @@
       "server": "38.182.101.246",
       "server_port": 443,
       "uuid": "39d928c7-735a-497a-bc3d-425a55743d80",
-      "flow": "xtls-rprx-vision",
       "packet_encoding": "xudp",
       "tls": {
         "enabled": true,
         "server_name": "yahoo.com",
         "insecure": false,
-        "fragment": true,  
-        "fragment_fallback_delay": "500ms",  
-        "record_fragment": false,  
         "utls": {
           "enabled": true,
           "fingerprint": "ios"
@@ -166,15 +162,11 @@
       "server": "38.182.101.246",
       "server_port": 443,
       "uuid": "3424df7b-3e89-4e59-b23f-46992de92c32",
-      "flow": "xtls-rprx-vision",
       "packet_encoding": "xudp",
       "tls": {
         "enabled": true,
         "server_name": "yahoo.com",
         "insecure": false,
-        "fragment": true,  
-        "fragment_fallback_delay": "500ms",  
-        "record_fragment": false,  
         "utls": {
           "enabled": true,
           "fingerprint": "ios"

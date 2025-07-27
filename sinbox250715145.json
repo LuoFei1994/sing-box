@@ -367,7 +367,8 @@
           "WeChat",
           "Alibaba",
           "AppStore",
-          "AppleID"
+          "AppleID",
+          "DouYin"
         ],
         "outbound": "🎯 全球直连"
       },
@@ -494,11 +495,20 @@
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/AppleID/AppleID.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
+      },
+
+      //抖音
+      {
+        "tag": "DouYin",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/DouYin/DouYin.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
       }
       
     ],
     "auto_detect_interface": true,
-    "find_process": true,
+    //"find_process": true,
     "final": "🐟 漏网之鱼",
     "default_domain_resolver": {
       "server": "Local-DNS",

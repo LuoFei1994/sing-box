@@ -139,16 +139,12 @@
       "tag": "vless+vision+reality",
       "server": "38.182.101.246",
       "server_port": 443,
-      "uuid": "9d928c7-735a-497a-bc3d-425a55743d80",
-      "flow": "xtls-rprx-vision",
+      "uuid": "39d928c7-735a-497a-bc3d-425a55743d80",
       "packet_encoding": "xudp",
       "tls": {
         "enabled": true,
         "server_name": "yahoo.com",
         "insecure": false,
-        "fragment": true,  
-        "fragment_fallback_delay": "500ms",  
-        "record_fragment": false,  
         "utls": {
           "enabled": true,
           "fingerprint": "ios"

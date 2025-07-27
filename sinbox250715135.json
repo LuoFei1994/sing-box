@@ -84,10 +84,9 @@
         "🎈 自动选择",
         "vless+vision+reality",
         "vless+vision+reality+TOR",
-        "Hysteria2-2-singbox",
-        "anytls+reality",
-        "vless+brutal算法",
-        "wg-ep"
+
+        "anytls+reality"
+
       ]
     },
     {
@@ -100,10 +99,8 @@
       "outbounds": [
         "vless+vision+reality",
         "vless+vision+reality+TOR",
-        "Hysteria2-2-singbox",
-        "anytls+reality",
-        "vless+brutal算法",
-        "wg-ep"
+
+        "anytls+reality"
       ]
     },
     {

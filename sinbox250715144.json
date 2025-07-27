@@ -367,7 +367,6 @@
           "WeChat",
           "Alibaba",
           "AppStore",
-          "AppleID",
           "AppleID"
         ],
         "outbound": "🎯 全球直连"
@@ -495,16 +494,7 @@
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/AppleID/AppleID.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
-      },
-
-      //苹果ID
-      {
-        "tag": "AppleID",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/AppleID/AppleID.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
+      }
       
     ],
     "auto_detect_interface": true,

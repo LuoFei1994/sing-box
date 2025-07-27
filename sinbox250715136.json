@@ -221,8 +221,8 @@
                     "short_id": "d416e01452"
                 }
             }
-      }
-     /* {
+      },
+     {
         "type": "vless",
         "tag": "vless+brutal算法",
         "server": "38.182.101.246",
@@ -250,7 +250,7 @@
             "down_mbps": 300
           }
         }
-      }*/
+      }
   ],
   "route": {
     "rules": [

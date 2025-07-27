@@ -138,25 +138,25 @@
       "type": "vless",
       "tag": "vless+vision+reality",
       "server": "38.182.101.246",
-      "server_port": 9090,
-      "uuid": "ae0bc13a-f72e-4a83-bc24-ebff7f55130c",
+      "server_port": 443,
+      "uuid": "9d928c7-735a-497a-bc3d-425a55743d80",
       "flow": "xtls-rprx-vision",
       "packet_encoding": "xudp",
       "tls": {
         "enabled": true,
-        "server_name": "apple.com",
+        "server_name": "yahoo.com",
         "insecure": false,
         "fragment": true,  
         "fragment_fallback_delay": "500ms",  
         "record_fragment": false,  
         "utls": {
           "enabled": true,
-          "fingerprint": "safari"
+          "fingerprint": "ios"
         },
         "reality": {
           "enabled": true,
-          "public_key": "kMYbcq4wmiXR6QinCazFTF0RSBicDqHXP77iVKF-Wgk",
-          "short_id": "ea"
+          "public_key": "JMcsaZOdXQ_iZygS8OxTo-bWnDeMVnngzZM_bcRe13s",
+          "short_id": "d416e01452"
         }
       }
     },

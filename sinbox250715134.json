@@ -51,7 +51,7 @@
         }  
       }  
     }
-  ]
+  ],
   /*"endpoints":[
     {
       "type": "wireguard",

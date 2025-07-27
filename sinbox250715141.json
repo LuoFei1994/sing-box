@@ -360,6 +360,19 @@
         "outbound": "🎯 全球直连"
       },
 
+      {
+        "action": "route",
+        "rule_set": [
+          "AliPay",
+          "WeChat",
+          "Alibaba",
+          "AppStore",
+          "AppleID",
+          "AppleID",
+        ],
+        "outbound": "🎯 全球直连"
+      },
+
       {  
         "domain": ["blocked-domain.com"],  
         "action": "route-options", 
@@ -437,7 +450,62 @@
         "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-cn.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
-      }
+      },
+
+      //支付宝
+      {
+        "tag": "AliPay",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/AliPay/AliPay.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+      
+      //微信
+      {
+        "tag": "WeChat",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/WeChat/WeChat.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      //阿里巴巴
+      {
+        "tag": "Alibaba",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Alibaba/Alibaba.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      //苹果商店
+      {
+        "tag": "AppStore",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/AppStore/AppStore.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      //苹果ID
+      {
+        "tag": "AppleID",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/AppleID/AppleID.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      //苹果ID
+      {
+        "tag": "AppleID",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/AppleID/AppleID.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+      
     ],
     "auto_detect_interface": true,
     "find_process": true,

@@ -368,7 +368,8 @@
           "Alibaba",
           "AppStore",
           "AppleID",
-          "DouYin"
+          "DouYin",
+          "Tencent"
         ],
         "outbound": "🎯 全球直连"
       },
@@ -502,6 +503,15 @@
         "tag": "DouYin",
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/DouYin/DouYin.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+      
+      //腾讯
+      {
+        "tag": "Tencent",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Tencent/Tencent.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
       }

@@ -270,18 +270,28 @@
      },*/
       
       {
-        "action": "sniff",
-        "sniffer": [
-          "http",
-          "tls",
-          "dns"
-        ],
-        "timeout": "300ms"
+        "action": "sniff"
       },
-      {  
-        "protocol": "dns",  
-        "action": "hijack-dns"  
-      },  
+      
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "protocol": "dns"
+          },
+          {
+            "port": 53
+          }
+        ],
+        "action": "hijack-dns"
+      },
+
+      {
+        "ip_is_private": true,
+        "action": "route",
+        "outbound": "🎯 全球直连"
+      },
       
       {
         "action": "route",
@@ -336,12 +346,7 @@
         "outbound": "🚀 节点选择"    
       },
       
-      {
-        "ip_is_private": true,
-        "action": "route",
-        "outbound": "🎯 全球直连"
-      },
-      
+
       {
         "action": "route",
         "rule_set": [
@@ -359,6 +364,21 @@
         ],
         "outbound": "🎯 全球直连"
       },
+      
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "geoip-cn"
+          },
+          {
+            "rule_set": "geosite-geolocation-!cn",
+            "invert": true
+          }
+        ],
+        "outbound": "🎯 全球直连"
+      },
 
       {
         "action": "route",
@@ -372,6 +392,14 @@
           "Tencent"
         ],
         "outbound": "🎯 全球直连"
+      },
+
+      {
+        "action": "route",
+        "rule_set": [
+          "geosite-geolocation-!cn"
+        ],
+        "outbound": "🚀 节点选择"
       },
 
       {  
@@ -518,14 +546,13 @@
       
     ],
     "auto_detect_interface": true,
-    /*"find_process": true,*/
     "final": "🐟 漏网之鱼",
-    "default_domain_resolver": {
+    /*"default_domain_resolver": {
       "server": "Local-DNS",
       "strategy": "prefer_ipv4",
       "rewrite_ttl": 60,
       "client_subnet": "0.0.0.0/0"
-    },
+    },*/
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi"],  
     "default_fallback_network_type": ["cellular"],  
@@ -540,7 +567,7 @@
         "server": "223.5.5.5",
         "path": "/dns-query",
         "headers": {  
-          "User-Agent": "sing-box"  
+          "User-Agent": "safari"  
         },  
         "tls": {  
           "enabled": true,  
@@ -577,7 +604,8 @@
       {
         "action": "route",
         "rule_set": [
-          "GeoSite-CN"
+          "GeoSite-CN",
+          "GeoLocation-CN"
         ],
         "server": "Local-DNS"
       },
@@ -588,13 +616,13 @@
         ],
         "server": "Remote-DNS",  
         "client_subnet": "0.0.0.0/0"  
-      }
-      /*{  
+      },
+      {  
         "type": "logical",  
         "mode": "and",  
         "rules": [  
           {  
-            "rule_set": "GeoSite-CN",  
+            "rule_set": "GeoLocation-!CN",  
             "invert": true  
           },  
           {  
@@ -603,8 +631,8 @@
         ],  
         "action": "route",  
         "server": "Remote-DNS",  
-        "client_subnet": "1.1.1.1/32"  
-      }*/
+        "client_subnet": "0.0.0.0/0"  
+      }
     ],
     "cache_capacity": 1024,  
     "reverse_mapping": false,

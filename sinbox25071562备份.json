@@ -258,23 +258,23 @@
   ],
   "route": {
     "rules": [
-      {
+      /*{
        "action": "route",
-       "ip_cidr": "10.18.0.0/24",
+       "ip_cidr": "10.7.0.0/24",
        "outbound": "wg-ep"
      },
      {
        "action": "route",
        "ip_cidr": "192.168.0.0/24",
        "outbound": "wg-ep"
-     },
+     },*/
       
       {
         "action": "sniff",
         "sniffer": [
           "http",
-          "tls"
-          //"dns"
+          "tls",
+          "dns"
         ],
         "timeout": "300ms"
       },
@@ -360,6 +360,20 @@
         "outbound": "🎯 全球直连"
       },
 
+      {
+        "action": "route",
+        "rule_set": [
+          "AliPay",
+          "WeChat",
+          "Alibaba",
+          "AppStore",
+          "AppleID",
+          "DouYin",
+          "Tencent"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+
       {  
         "domain": ["blocked-domain.com"],  
         "action": "route-options", 
@@ -437,16 +451,80 @@
         "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-cn.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
+      },
+
+      //支付宝
+      {
+        "tag": "AliPay",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/AliPay/AliPay.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+      
+      //微信
+      {
+        "tag": "WeChat",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/WeChat/WeChat.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      //阿里巴巴
+      {
+        "tag": "Alibaba",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Alibaba/Alibaba.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      //苹果商店
+      {
+        "tag": "AppStore",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/AppStore/AppStore.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      //苹果ID
+      {
+        "tag": "AppleID",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/AppleID/AppleID.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      //抖音
+      {
+        "tag": "DouYin",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/DouYin/DouYin.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+      
+      //腾讯
+      {
+        "tag": "Tencent",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Tencent/Tencent.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
       }
+      
     ],
     "auto_detect_interface": true,
-    "find_process": true,
+    /*"find_process": true,*/
     "final": "🐟 漏网之鱼",
     "default_domain_resolver": {
       "server": "Local-DNS",
       "strategy": "prefer_ipv4",
       "rewrite_ttl": 60,
-      "client_subnet": "1.1.1.1/32"
+      "client_subnet": "0.0.0.0/0"
     },
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi"],  
@@ -509,7 +587,7 @@
           "GeoLocation-!CN"
         ],
         "server": "Remote-DNS",  
-        "client_subnet": "1.1.1.1/32"  
+        "client_subnet": "0.0.0.0/0"  
       }
       /*{  
         "type": "logical",  
@@ -534,7 +612,7 @@
     "disable_expire": false,
     "independent_cache": true,
     "final": "Remote-DNS",
-    "strategy": "prefer_ipv4",
-    "client_subnet": "1.1.1.1/32"
+    "strategy": "prefer_ipv4"
+    //"client_subnet": "1.1.1.1/32"
   }
 }

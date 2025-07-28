@@ -32,8 +32,8 @@
       "domain_strategy":"prefer_ipv4",
       "endpoint_independent_nat":true,
       "address":[
-        "172.18.0.1/30",
-        "fdfe:dcba:9876::1/126"
+        "172.18.0.1/30"
+        //"fdfe:dcba:9876::1/126"
         ],
       "mtu":9000,
       "sniff":true,
@@ -366,21 +366,6 @@
       },
       
       {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
-            "rule_set": "GeoIP-CN"
-          },
-          {
-            "rule_set": "GeoLocation-!CN",
-            "invert": true
-          }
-        ],
-        "outbound": "🎯 全球直连"
-      },
-
-      {
         "action": "route",
         "rule_set": [
           "AliPay",
@@ -388,6 +373,7 @@
           "Alibaba",
           "AppStore",
           "AppleID",
+          "Apple Domain",
           "DouYin",
           "Tencent"
         ],
@@ -521,7 +507,16 @@
       {
         "tag": "AppleID",
         "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/AppleID/AppleID.srs",
+        "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geoip/apple.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+      
+       //苹果域名
+      {
+        "tag": "Apple Domain",
+        "type": "remote",
+        "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/apple.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
@@ -547,12 +542,12 @@
     ],
     "auto_detect_interface": true,
     "final": "🐟 漏网之鱼",
-    /*"default_domain_resolver": {
+    "default_domain_resolver": {
       "server": "Local-DNS",
       "strategy": "prefer_ipv4",
       "rewrite_ttl": 60,
-      "client_subnet": "0.0.0.0/0"
-    },*/
+      "client_subnet": "202.96.128.86"
+    },
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi"],  
     "default_fallback_network_type": ["cellular"],  
@@ -608,6 +603,7 @@
           "GeoLocation-CN"
         ],
         "server": "Local-DNS",
+        "disable_cache": true,
         "client_subnet": "202.96.128.86" 
       },
       {
@@ -616,22 +612,8 @@
           "GeoLocation-!CN"
         ],
         "server": "Remote-DNS",  
-        "client_subnet": "0.0.0.0/0"  
-      },
-      {  
-        "type": "logical",  
-        "mode": "and",  
-        "rules": [  
-          {  
-            "rule_set": "GeoLocation-!CN",  
-            "invert": true  
-          },  
-          {  
-            "rule_set": "GeoIP-CN"  
-          }  
-        ],  
-        "action": "route",  
-        "server": "Remote-DNS",  
+        "disable_cache": true,
+        "rewrite_ttl": 600,
         "client_subnet": "0.0.0.0/0"  
       }
     ],

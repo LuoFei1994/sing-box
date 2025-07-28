@@ -274,7 +274,7 @@
         "sniffer": [
           "http",
           "tls"
-          //"dns"
+          "dns"
         ],
         "timeout": "300ms"
       },
@@ -518,13 +518,13 @@
       
     ],
     "auto_detect_interface": true,
-    //"find_process": true,
+    /*"find_process": true,*/
     "final": "🐟 漏网之鱼",
     "default_domain_resolver": {
       "server": "Local-DNS",
       "strategy": "prefer_ipv4",
       "rewrite_ttl": 60,
-      "client_subnet": "1.1.1.1/32"
+      "client_subnet": "0.0.0.0/0"
     },
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi"],  
@@ -587,7 +587,7 @@
           "GeoLocation-!CN"
         ],
         "server": "Remote-DNS",  
-        "client_subnet": "1.1.1.1/32"  
+        "client_subnet": "0.0.0.0/0"  
       }
       /*{  
         "type": "logical",  
@@ -613,6 +613,6 @@
     "independent_cache": true,
     "final": "Remote-DNS",
     "strategy": "prefer_ipv4",
-    "client_subnet": "1.1.1.1/32"
+    //"client_subnet": "1.1.1.1/32"
   }
 }

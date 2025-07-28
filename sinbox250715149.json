@@ -273,7 +273,7 @@
         "action": "sniff",
         "sniffer": [
           "http",
-          "tls"
+          "tls",
           "dns"
         ],
         "timeout": "300ms"

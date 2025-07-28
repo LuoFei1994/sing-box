@@ -607,7 +607,8 @@
           "GeoSite-CN",
           "GeoLocation-CN"
         ],
-        "server": "Local-DNS"
+        "server": "Local-DNS",
+        "client_subnet": "202.96.128.86" 
       },
       {
         "action": "route",

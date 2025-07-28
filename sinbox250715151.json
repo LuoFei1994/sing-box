@@ -370,10 +370,10 @@
         "mode": "and",
         "rules": [
           {
-            "rule_set": "geoip-cn"
+            "rule_set": "GeoIP-CN"
           },
           {
-            "rule_set": "geosite-geolocation-!cn",
+            "rule_set": "GeoLocation-!CN",
             "invert": true
           }
         ],
@@ -397,7 +397,7 @@
       {
         "action": "route",
         "rule_set": [
-          "geosite-geolocation-!cn"
+          "GeoLocation-!CN"
         ],
         "outbound": "🚀 节点选择"
       },

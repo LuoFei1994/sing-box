@@ -32,8 +32,8 @@
       "domain_strategy":"prefer_ipv4",
       "endpoint_independent_nat":true,
       "address":[
-        "172.18.0.1/30"
-        //"fdfe:dcba:9876::1/126"
+        "172.18.0.1/30",
+        "fdfe:dcba:9876::1/126"
         ],
       "mtu":9000,
       "sniff":true,
@@ -143,9 +143,9 @@
       "tls": {
         "enabled": true,
         "server_name": "yahoo.com",
-        "fragment": true,  
+        /*"fragment": true,  
         "fragment_fallback_delay": "500ms",  
-        "record_fragment": false,
+        "record_fragment": false,*/
         "insecure": false,
         "utls": {
           "enabled": true,
@@ -168,9 +168,9 @@
       "tls": {
         "enabled": true,
         "server_name": "yahoo.com",
-        "fragment": true,  
+        /*"fragment": true,  
         "fragment_fallback_delay": "500ms",  
-        "record_fragment": false,
+        "record_fragment": false,*/
         "insecure": false,
         "utls": {
           "enabled": true,
@@ -325,45 +325,14 @@
         "method": "drop"  
       },  
       
-      {
+     /* {
         "action": "reject",
         "method": "drop",  //default:对于 TCP 连接回复 RST，对于 UDP 包回复 ICMP 端口不可达。drop: 丢弃数据包。
         //"no_drop": false,      //如果未启用，则 30 秒内触发 50 次后，method 将被暂时覆盖为 drop。当 method 设为 drop 时不可用。
         "rule_set": [
           "Category-Ads"
         ]
-      },
-      
-      {  
-        "domain_suffix": [".gov", ".mil"],  
-        "action": "route-options",  
-        "tls_fragment": true,  
-        "tls_fragment_fallback_delay": "500ms"  
-      },
-      {    
-        "domain_suffix": [".gov", ".mil"],    
-        "action": "route",  
-        "outbound": "🚀 节点选择"    
-      },
-      
-
-      {
-        "action": "route",
-        "rule_set": [
-          "GeoSite-Private",
-          "GeoIP-Private"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "GeoSite-CN",
-          "GeoIP-CN",
-          "GeoLocation-CN"
-        ],
-        "outbound": "🎯 全球直连"
-      },
+      },*/
       
       {
         "action": "route",
@@ -379,6 +348,15 @@
         ],
         "outbound": "🎯 全球直连"
       },
+      
+      {
+        "action": "route",
+        "rule_set": [
+          "GeoIP-CN",
+          "GeoLocation-CN"
+        ],
+        "outbound": "🎯 全球直连"
+      },
 
       {
         "action": "route",
@@ -386,37 +364,10 @@
           "GeoLocation-!CN"
         ],
         "outbound": "🚀 节点选择"
-      },
-
-      {  
-        "domain": ["blocked-domain.com"],  
-        "action": "route-options", 
-        "tls_record_fragment": true,  
-        "outbound": "🚀 节点选择"  
-      },
-      {    
-        "domain": ["blocked-domain.com"],    
-        "action": "route",  
-        "outbound": "🚀 节点选择"    
-      },
-      
-      
-      {
-        "action": "route",
-        "rule_set": [
-          "tiktok-geosite.srs"
-        ],
-        "outbound": "🚀 节点选择"
       }
+      
     ],
     "rule_set": [
-      {
-        "tag": "tiktok-geosite.srs",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tiktok.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
       {
         "tag": "Category-Ads",
         "type": "remote",
@@ -424,31 +375,11 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-      {
-        "tag": "GeoIP-Private",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/private.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
-      {
-        "tag": "GeoSite-Private",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/private.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
+      
       {
         "tag": "GeoIP-CN",
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
-      {
-        "tag": "GeoSite-CN",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
@@ -541,8 +472,8 @@
       
     ],
     "auto_detect_interface": true,
-    "final": "🐟 漏网之鱼",
-    "default_domain_resolver": {
+    "final": "🐟 漏网之鱼"
+    /*"default_domain_resolver": {
       "server": "Local-DNS",
       "strategy": "prefer_ipv4",
       "rewrite_ttl": 60,
@@ -551,7 +482,7 @@
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi"],  
     "default_fallback_network_type": ["cellular"],  
-    "default_fallback_delay": "300ms"  
+    "default_fallback_delay": "300ms"  */
   },
   "dns": {
     "servers": [
@@ -563,11 +494,11 @@
         "path": "/dns-query",
         "headers": {  
           "User-Agent": "safari"  
-        },  
-        "tls": {  
+        }
+        /*"tls": {  
           "enabled": true,  
           "server_name": "dns.alidns.com"  
-        }  
+        }*/
       },
       
       
@@ -576,11 +507,11 @@
         "type": "tls",
         "detour": "🚀 节点选择",
         "server_port": 853,
-        "server": "9.9.9.11",
-        "tls": {  
+        "server": "9.9.9.11"
+        /*"tls": {  
           "enabled": true,  
           "server_name": "dns11.quad9.net"  
-        }  
+        }*/
       }
     ],
     "rules": [
@@ -599,12 +530,11 @@
       {
         "action": "route",
         "rule_set": [
-          "GeoSite-CN",
           "GeoLocation-CN"
         ],
         "server": "Local-DNS",
-        "disable_cache": true,
-        "client_subnet": "202.96.128.86" 
+        "disable_cache": true
+        //"client_subnet": "202.96.128.86" 
       },
       {
         "action": "route",
@@ -614,7 +544,7 @@
         "server": "Remote-DNS",  
         "disable_cache": true,
         "rewrite_ttl": 600,
-        "client_subnet": "0.0.0.0/0"  
+        "client_subnet": "202.96.128.86"  
       }
     ],
     "cache_capacity": 1024,  

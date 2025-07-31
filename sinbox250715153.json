@@ -32,7 +32,7 @@
       "domain_strategy":"prefer_ipv4",
       "endpoint_independent_nat":true,
       "address":[
-        "172.18.0.1/30",
+        "172.18.0.1/30"
         //"fdfe:dcba:9876::1/126"
         ],
       "mtu":9000,

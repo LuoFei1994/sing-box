@@ -29,7 +29,7 @@
   },
   "inbounds": [
     {
-      "domain_strategy":"only_ipv4",
+      "domain_strategy":"ipv4_only",
       "endpoint_independent_nat":true,
       "address":[
         "172.18.0.1/30"
@@ -475,7 +475,7 @@
     "final": "🐟 漏网之鱼"
     /*"default_domain_resolver": {
       "server": "Local-DNS",
-      "strategy": "only_ipv4",
+      "strategy": "ipv4_only",
       "rewrite_ttl": 60,
       "client_subnet": "202.96.128.86"
     },
@@ -553,7 +553,7 @@
     "disable_expire": false,
     "independent_cache": true,
     "final": "Remote-DNS",
-    "strategy": "only_ipv4"
+    "strategy": "ipv4_only"
     //"client_subnet": "1.1.1.1/32"
   }
 }

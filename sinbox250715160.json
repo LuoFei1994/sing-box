@@ -362,7 +362,7 @@
       {
         "tag": "lyc8503-geoip-cn",
         "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/lyc8503/sing-box-rules@raw/refs/heads/rule-set-geoip/geoip-cn.srs",
+        "url": "https://cdn.jsdelivr.net/gh/lyc8503/sing-box-rules@refs/heads/rule-set-geoip/geoip-cn.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },

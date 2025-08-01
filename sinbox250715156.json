@@ -337,37 +337,53 @@
       {
         "action": "route",
         "rule_set": [
-          "AliPay",
-          "WeChat",
-          "Alibaba",
-          "AppStore",
-          "AppleID",
-          "Apple Domain",
-          "DouYin",
-          "Tencent"
+          "lyc8503-geoip-cn",
+          "lyc8503-geosite-apple",
+          "lyc8503-geosite-china-list"
         ],
         "outbound": "🎯 全球直连"
-      },
-      
-      {
-        "action": "route",
-        "rule_set": [
-          "GeoIP-CN",
-          "GeoLocation-CN"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-
-      {
-        "action": "route",
-        "rule_set": [
-          "GeoLocation-!CN"
-        ],
-        "outbound": "🚀 节点选择"
       }
+      
+      
+      /*{
+        "action": "route",
+        "rule_set": [
+          "lyc8503-geoip-cn",
+          "lyc8503-geosite-apple",
+          "lyc8503-geosite-china-list"
+        ],
+        "invert": true,
+        "outbound": "🚀 节点选择"
+      }*/
       
     ],
     "rule_set": [
+
+      {
+        "tag": "lyc8503-geoip-cn",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/lyc8503/sing-box-rules@raw/refs/heads/rule-set-geoip/geoip-cn.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      {
+        "tag": "lyc8503-geosite-apple",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/lyc8503/sing-box-rules@refs/heads/rule-set-geosite/geosite-apple.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      {
+        "tag": "lyc8503-geosite-china-list",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/lyc8503/sing-box-rules@refs/heads/rule-set-geosite/geosite-china-list.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      
       {
         "tag": "Category-Ads",
         "type": "remote",
@@ -494,11 +510,14 @@
         "path": "/dns-query",
         "headers": {  
           "User-Agent": "safari"  
-        }
-        /*"tls": {  
+        },
+        "tls": {  
           "enabled": true,  
-          "server_name": "dns.alidns.com"  
-        }*/
+          "server_name": "bing.com",
+          "utls": {
+            "enabled": true,
+            "fingerprint": "ios"
+        }
       },
       
       
@@ -507,11 +526,14 @@
         "type": "tls",
         "detour": "🚀 节点选择",
         "server_port": 853,
-        "server": "9.9.9.11"
-        /*"tls": {  
+        "server": "9.9.9.11",
+        "tls": {  
           "enabled": true,  
-          "server_name": "dns11.quad9.net"  
-        }*/
+          "server_name": "bing.com",
+          "utls": {
+            "enabled": true,
+            "fingerprint": "ios"
+        }
       }
     ],
     "rules": [
@@ -530,13 +552,14 @@
       {
         "action": "route",
         "rule_set": [
-          "GeoLocation-CN"
+          "lyc8503-geosite-apple",
+          "lyc8503-geosite-china-list"
         ],
         "server": "Local-DNS",
-        "disable_cache": true
-        //"client_subnet": "202.96.128.86" 
-      },
-      {
+        //"disable_cache": true
+        "client_subnet": "114.114.114.114/24" 
+      }
+      /*{
         "action": "route",
         "rule_set": [
           "GeoLocation-!CN"
@@ -544,8 +567,8 @@
         "server": "Remote-DNS",  
         "disable_cache": true,
         "rewrite_ttl": 600,
-        "client_subnet": "202.96.128.86"  
-      }
+        "client_subnet": "114.114.114.114/24"  
+      }*/
     ],
     "cache_capacity": 1024,  
     "reverse_mapping": false,

@@ -517,6 +517,7 @@
           "utls": {
             "enabled": true,
             "fingerprint": "ios"
+          }
         }
       },
       
@@ -533,6 +534,7 @@
           "utls": {
             "enabled": true,
             "fingerprint": "ios"
+          }
         }
       }
     ],

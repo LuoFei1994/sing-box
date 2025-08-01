@@ -513,7 +513,7 @@
         },
         "tls": {  
           "enabled": true,  
-          "server_name": "bing.com",
+          "server_name": "dns.alidns.com",  
           "utls": {
             "enabled": true,
             "fingerprint": "ios"
@@ -530,7 +530,7 @@
         "server": "9.9.9.11",
         "tls": {  
           "enabled": true,  
-          "server_name": "bing.com",
+          "server_name": "dns11.quad9.net",
           "utls": {
             "enabled": true,
             "fingerprint": "ios"

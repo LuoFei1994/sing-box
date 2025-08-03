@@ -38,7 +38,7 @@
       "mtu":9000,
       //"sniff":true,
       //"sniff_override_destination":true,
-      "stack":"system",
+      "stack":"gvisor",
       "auto_route": true,
       "tag": "tun-in",
       "type":"tun",
@@ -488,8 +488,8 @@
       
     ],
     "auto_detect_interface": true,
-    "final": "🐟 漏网之鱼"
-    /*"default_domain_resolver": {
+    "final": "🐟 漏网之鱼",
+    "default_domain_resolver": {
       "server": "Local-DNS",
       "strategy": "ipv4_only",
       "rewrite_ttl": 60,
@@ -498,7 +498,7 @@
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi"],  
     "default_fallback_network_type": ["cellular"],  
-    "default_fallback_delay": "300ms"  */
+    "default_fallback_delay": "300ms"  
   },
   "dns": {
     "servers": [
@@ -578,7 +578,7 @@
     "disable_expire": false,
     "independent_cache": true,
     "final": "Remote-DNS",
-    "strategy": "ipv4_only"
-    //"client_subnet": "1.1.1.1/32"
+    "strategy": "ipv4_only",
+    "client_subnet": "1.1.1.1/32"
   }
 }

@@ -558,10 +558,10 @@
           "lyc8503-geosite-china-list"
         ],
         "server": "Local-DNS",
-        "disable_cache": true
-        //"client_subnet": "114.114.114.114/24" 
-      }
-      /*{
+        "disable_cache": true,
+        "client_subnet": "114.114.114.114/24" 
+      },
+      {
         "action": "route",
         "rule_set": [
           "GeoLocation-!CN"
@@ -569,8 +569,8 @@
         "server": "Remote-DNS",  
         "disable_cache": true,
         "rewrite_ttl": 600,
-        "client_subnet": "114.114.114.114/24"  
-      }*/
+        "client_subnet": "0.0.0.0/0"  
+      }
     ],
     "cache_capacity": 1024,  
     "reverse_mapping": false,
@@ -578,7 +578,7 @@
     "disable_expire": false,
     "independent_cache": true,
     "final": "Remote-DNS",
-    "strategy": "ipv4_only",
-    "client_subnet": "1.1.1.1/32"
+    "strategy": "ipv4_only"
+    //"client_subnet": "1.1.1.1/32"
   }
 }

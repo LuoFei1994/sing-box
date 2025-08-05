@@ -559,7 +559,7 @@
         ],
         "server": "Local-DNS",
         "disable_cache": true,
-        "client_subnet": "114.114.114.114/24" 
+        "client_subnet": "202.101.172.35" 
       },
       {
         "action": "route",

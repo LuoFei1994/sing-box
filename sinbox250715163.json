@@ -345,16 +345,6 @@
       },
       
       {
-        "action": "route",
-        "rule_set": [
-          "lyc8503-geoip-cn",
-          "lyc8503-geosite-apple",
-          "lyc8503-geosite-china-list"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      
-      {
         "rule_set": "GeoLocation-CN",
         "outbound": "🎯 全球直连"
       },
@@ -362,6 +352,20 @@
       {
         "rule_set": "GeoLocation-!CN",
         "outbound": "🚀 节点选择"
+      },
+      
+      {
+        "action": "resolve"
+      },
+      
+      {
+        "action": "route",
+        "rule_set": [
+          "lyc8503-geoip-cn",
+          "lyc8503-geosite-apple",
+          "lyc8503-geosite-china-list"
+        ],
+        "outbound": "🎯 全球直连"
       }
     ],
     "rule_set": [
@@ -495,8 +499,10 @@
       
     ],
     "auto_detect_interface": true,
-    "final": "🐟 漏网之鱼"
-    /*"default_domain_resolver": {
+    "final": "🐟 漏网之鱼",
+    
+    //下面默认dns是给节点使用的
+    "default_domain_resolver": {
       "server": "Local-DNS",
       "strategy": "ipv4_only",
       "rewrite_ttl": 60,
@@ -505,7 +511,7 @@
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi"],  
     "default_fallback_network_type": ["cellular"],
-    "default_fallback_delay": "300ms"  */
+    "default_fallback_delay": "300ms"
   },
   "dns": {
     "servers": [

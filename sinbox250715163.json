@@ -264,17 +264,8 @@
       },
       
       {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "protocol": "dns"
-          },
-          {
-            "port": 53
-          }
-        ],
-        "action": "hijack-dns"
+        "action": "hijack-dns",
+        "protocol": "dns"
       },
 
       {
@@ -322,15 +313,7 @@
           "Category-Ads"
         ]
       },
-      {
-        "action": "route",
-        "rule_set": [
-          "lyc8503-geoip-cn",
-          "lyc8503-geosite-apple",
-          "lyc8503-geosite-china-list"
-        ],
-        "outbound": "🎯 全球直连"
-      },
+      
       {
         "action": "route",
         "rule_set": [
@@ -360,26 +343,26 @@
         "action": "reject",
         "method": "drop"
       },
+      
+      {
+        "action": "route",
+        "rule_set": [
+          "lyc8503-geoip-cn",
+          "lyc8503-geosite-apple",
+          "lyc8503-geosite-china-list"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      
       {
         "rule_set": "GeoLocation-CN",
         "outbound": "🎯 全球直连"
       },
+      
       {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
-            "rule_set": "GeoIP-CN"
-          },
-          {
-            "rule_set": "GeoLocation-!CN",
-            "invert": true
-          }
-        ],
-        "outbound": "🎯 全球直连"
+        "rule_set": "GeoLocation-!CN",
+        "outbound": "🚀 节点选择"
       }
-      
-      
     ],
     "rule_set": [
 
@@ -517,11 +500,11 @@
       "server": "Local-DNS",
       "strategy": "ipv4_only",
       "rewrite_ttl": 60,
-      "client_subnet": "202.96.128.86"
+      "client_subnet": "0.0.0.0/0"
     },
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi"],  
-    "default_fallback_network_type": ["cellular"],  
+    "default_fallback_network_type": ["cellular"],
     "default_fallback_delay": "300ms"  */
   },
   "dns": {
@@ -586,16 +569,9 @@
         "client_subnet": "0.0.0.0/0" 
       },
       {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
-            "rule_set": "GeoLocation-!CN",
-            "invert": true
-          },
-          {
-            "rule_set": "GeoIP-CN"
-          }
+        "action": "route",
+        "rule_set": [
+          "GeoLocation-!CN"
         ],
         "server": "Remote-DNS",
         "disable_cache": true,

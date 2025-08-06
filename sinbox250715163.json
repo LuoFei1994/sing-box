@@ -619,7 +619,7 @@
     "disable_expire": false,
     "independent_cache": true,
     "final": "Remote-DNS",
-    "strategy": "ipv4_only"
+    "strategy": "ipv4_only",
     "client_subnet": "0.0.0.0/0"
   }
 }

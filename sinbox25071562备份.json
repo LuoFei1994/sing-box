@@ -1,7 +1,7 @@
 {
   "log": {
     "disabled": false, 
-    "level": "info",
+    "level": "error",
     "output": "",
     "timestamp": false
   },
@@ -29,15 +29,15 @@
   },
   "inbounds": [
     {
-      "domain_strategy":"prefer_ipv4",
+      "domain_strategy":"ipv4_only",
       "endpoint_independent_nat":true,
       "address":[
-        "172.18.0.1/30",
-        "fdfe:dcba:9876::1/126"
+        "172.18.0.1/30"
+        //"fdfe:dcba:9876::1/126"
         ],
       "mtu":9000,
-      "sniff":true,
-      "sniff_override_destination":true,
+      //"sniff":true,
+      //"sniff_override_destination":true,
       "stack":"gvisor",
       "auto_route": true,
       "tag": "tun-in",
@@ -143,9 +143,9 @@
       "tls": {
         "enabled": true,
         "server_name": "yahoo.com",
-        "fragment": true,  
+        /*"fragment": true,  
         "fragment_fallback_delay": "500ms",  
-        "record_fragment": false,
+        "record_fragment": false,*/
         "insecure": false,
         "utls": {
           "enabled": true,
@@ -168,9 +168,9 @@
       "tls": {
         "enabled": true,
         "server_name": "yahoo.com",
-        "fragment": true,  
+        /*"fragment": true,  
         "fragment_fallback_delay": "500ms",  
-        "record_fragment": false,
+        "record_fragment": false,*/
         "insecure": false,
         "utls": {
           "enabled": true,
@@ -258,7 +258,7 @@
   ],
   "route": {
     "rules": [
-      /*{
+     {
        "action": "route",
        "ip_cidr": "10.7.0.0/24",
        "outbound": "wg-ep"
@@ -267,21 +267,31 @@
        "action": "route",
        "ip_cidr": "192.168.0.0/24",
        "outbound": "wg-ep"
-     },*/
+     },
       
       {
-        "action": "sniff",
-        "sniffer": [
-          "http",
-          "tls",
-          "dns"
-        ],
-        "timeout": "300ms"
+        "action": "sniff"
       },
-      {  
-        "protocol": "dns",  
-        "action": "hijack-dns"  
-      },  
+      
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "protocol": "dns"
+          },
+          {
+            "port": 53
+          }
+        ],
+        "action": "hijack-dns"
+      },
+
+      {
+        "ip_is_private": true,
+        "action": "route",
+        "outbound": "🎯 全球直连"
+      },
       
       {
         "action": "route",
@@ -294,7 +304,7 @@
         "outbound": "GLOBAL"
       },
 
-      {  
+      /*{  
         "type": "logical",  
         "mode": "or",  
         "rules": [  
@@ -313,8 +323,7 @@
         ],  
         "action": "reject",  
         "method": "drop"  
-      },  
-      
+      },
       {
         "action": "reject",
         "method": "drop",  //default:对于 TCP 连接回复 RST，对于 UDP 包回复 ICMP 端口不可达。drop: 丢弃数据包。
@@ -323,86 +332,92 @@
           "Category-Ads"
         ]
       },
-      
-      {  
-        "domain_suffix": [".gov", ".mil"],  
-        "action": "route-options",  
-        "tls_fragment": true,  
-        "tls_fragment_fallback_delay": "500ms"  
-      },
-      {    
-        "domain_suffix": [".gov", ".mil"],    
-        "action": "route",  
-        "outbound": "🚀 节点选择"    
-      },
-      
-      {
-        "ip_is_private": true,
-        "action": "route",
-        "outbound": "🎯 全球直连"
-      },
-      
       {
         "action": "route",
         "rule_set": [
-          "GeoSite-Private",
-          "GeoIP-Private"
+          "lyc8503-geoip-cn",
+          "lyc8503-geosite-apple",
+          "lyc8503-geosite-china-list"
         ],
         "outbound": "🎯 全球直连"
       },
       {
         "action": "route",
         "rule_set": [
-          "GeoSite-CN",
-          "GeoIP-CN",
-          "GeoLocation-CN"
+          "lyc8503-geoip-cn",
+          "lyc8503-geosite-apple",
+          "lyc8503-geosite-china-list"
         ],
-        "outbound": "🎯 全球直连"
-      },
-
-      {
-        "action": "route",
-        "rule_set": [
-          "AliPay",
-          "WeChat",
-          "Alibaba",
-          "AppStore",
-          "AppleID",
-          "DouYin",
-          "Tencent"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-
-      {  
-        "domain": ["blocked-domain.com"],  
-        "action": "route-options", 
-        "tls_record_fragment": true,  
-        "outbound": "🚀 节点选择"  
-      },
-      {    
-        "domain": ["blocked-domain.com"],    
-        "action": "route",  
-        "outbound": "🚀 节点选择"    
-      },
-      
-      
-      {
-        "action": "route",
-        "rule_set": [
-          "tiktok-geosite.srs"
-        ],
+        "invert": true,
         "outbound": "🚀 节点选择"
+      }*/
+
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "port": 853
+          },
+          {
+            "network": "udp",
+            "port": 443
+          },
+          {
+            "protocol": "stun"
+          }
+        ],
+        "action": "reject",
+        "method": "drop"
+      },
+      {
+        "rule_set": "GeoLocation-CN",
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "GeoIP-CN"
+          },
+          {
+            "rule_set": "GeoLocation-!CN",
+            "invert": true
+          }
+        ],
+        "outbound": "🎯 全球直连"
       }
+      
+      
     ],
     "rule_set": [
+
       {
-        "tag": "tiktok-geosite.srs",
+        "tag": "lyc8503-geoip-cn",
         "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tiktok.srs",
+        "url": "https://cdn.jsdelivr.net/gh/lyc8503/sing-box-rules@refs/heads/rule-set-geoip/geoip-cn.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
+
+      {
+        "tag": "lyc8503-geosite-apple",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/lyc8503/sing-box-rules@refs/heads/rule-set-geosite/geosite-apple.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      {
+        "tag": "lyc8503-geosite-china-list",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/lyc8503/sing-box-rules@refs/heads/rule-set-geosite/geosite-china-list.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+
+      
       {
         "tag": "Category-Ads",
         "type": "remote",
@@ -410,31 +425,11 @@
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
-      {
-        "tag": "GeoIP-Private",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/private.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
-      {
-        "tag": "GeoSite-Private",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/private.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
+      
       {
         "tag": "GeoIP-CN",
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
-      {
-        "tag": "GeoSite-CN",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
@@ -493,7 +488,16 @@
       {
         "tag": "AppleID",
         "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/AppleID/AppleID.srs",
+        "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geoip/apple.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+      
+       //苹果域名
+      {
+        "tag": "Apple Domain",
+        "type": "remote",
+        "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/apple.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
@@ -518,18 +522,17 @@
       
     ],
     "auto_detect_interface": true,
-    /*"find_process": true,*/
-    "final": "🐟 漏网之鱼",
-    "default_domain_resolver": {
+    "final": "🐟 漏网之鱼"
+    /*"default_domain_resolver": {
       "server": "Local-DNS",
-      "strategy": "prefer_ipv4",
+      "strategy": "ipv4_only",
       "rewrite_ttl": 60,
-      "client_subnet": "0.0.0.0/0"
+      "client_subnet": "202.96.128.86"
     },
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi"],  
     "default_fallback_network_type": ["cellular"],  
-    "default_fallback_delay": "300ms"  
+    "default_fallback_delay": "300ms"  */
   },
   "dns": {
     "servers": [
@@ -540,12 +543,16 @@
         "server": "223.5.5.5",
         "path": "/dns-query",
         "headers": {  
-          "User-Agent": "sing-box"  
-        },  
+          "User-Agent": "safari"  
+        },
         "tls": {  
           "enabled": true,  
-          "server_name": "dns.alidns.com"  
-        }  
+          "server_name": "dns.alidns.com",  
+          "utls": {
+            "enabled": true,
+            "fingerprint": "ios"
+          }
+        }
       },
       
       
@@ -557,8 +564,12 @@
         "server": "9.9.9.11",
         "tls": {  
           "enabled": true,  
-          "server_name": "dns11.quad9.net"  
-        }  
+          "server_name": "dns11.quad9.net",
+          "utls": {
+            "enabled": true,
+            "fingerprint": "ios"
+          }
+        }
       }
     ],
     "rules": [
@@ -577,34 +588,30 @@
       {
         "action": "route",
         "rule_set": [
-          "GeoSite-CN"
+          "lyc8503-geosite-apple",
+          "lyc8503-geosite-china-list"
         ],
-        "server": "Local-DNS"
+        "server": "Local-DNS",
+        "disable_cache": true,
+        "client_subnet": "0.0.0.0/0" 
       },
       {
-        "action": "route",
-        "rule_set": [
-          "GeoLocation-!CN"
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "GeoLocation-!CN",
+            "invert": true
+          },
+          {
+            "rule_set": "GeoIP-CN"
+          }
         ],
-        "server": "Remote-DNS",  
-        "client_subnet": "0.0.0.0/0"  
+        "server": "Remote-DNS",
+        "disable_cache": true,
+        "rewrite_ttl": 600,
+        "client_subnet": "0.0.0.0/0" // Any China client IP address
       }
-      /*{  
-        "type": "logical",  
-        "mode": "and",  
-        "rules": [  
-          {  
-            "rule_set": "GeoSite-CN",  
-            "invert": true  
-          },  
-          {  
-            "rule_set": "GeoIP-CN"  
-          }  
-        ],  
-        "action": "route",  
-        "server": "Remote-DNS",  
-        "client_subnet": "1.1.1.1/32"  
-      }*/
     ],
     "cache_capacity": 1024,  
     "reverse_mapping": false,
@@ -612,7 +619,7 @@
     "disable_expire": false,
     "independent_cache": true,
     "final": "Remote-DNS",
-    "strategy": "prefer_ipv4"
-    //"client_subnet": "1.1.1.1/32"
+    "strategy": "ipv4_only",
+    "client_subnet": "0.0.0.0/0"
   }
 }

@@ -258,7 +258,7 @@
   ],
   "route": {
     "rules": [
-      /*{
+     {
        "action": "route",
        "ip_cidr": "10.7.0.0/24",
        "outbound": "wg-ep"
@@ -267,7 +267,7 @@
        "action": "route",
        "ip_cidr": "192.168.0.0/24",
        "outbound": "wg-ep"
-     },*/
+     },
       
       {
         "action": "sniff"
@@ -323,17 +323,15 @@
         ],  
         "action": "reject",  
         "method": "drop"  
-      },*/
-      
-     /* {
+      },
+      {
         "action": "reject",
         "method": "drop",  //default:对于 TCP 连接回复 RST，对于 UDP 包回复 ICMP 端口不可达。drop: 丢弃数据包。
         //"no_drop": false,      //如果未启用，则 30 秒内触发 50 次后，method 将被暂时覆盖为 drop。当 method 设为 drop 时不可用。
         "rule_set": [
           "Category-Ads"
         ]
-      },*/
-      
+      },
       {
         "action": "route",
         "rule_set": [
@@ -342,10 +340,8 @@
           "lyc8503-geosite-china-list"
         ],
         "outbound": "🎯 全球直连"
-      }
-      
-      
-      /*{
+      },
+      {
         "action": "route",
         "rule_set": [
           "lyc8503-geoip-cn",
@@ -355,6 +351,44 @@
         "invert": true,
         "outbound": "🚀 节点选择"
       }*/
+
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "port": 853
+          },
+          {
+            "network": "udp",
+            "port": 443
+          },
+          {
+            "protocol": "stun"
+          }
+        ],
+        "action": "reject",
+        "method": "drop"
+      },
+      {
+        "rule_set": "GeoLocation-CN",
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "GeoIP-CN"
+          },
+          {
+            "rule_set": "GeoLocation-!CN",
+            "invert": true
+          }
+        ],
+        "outbound": "🎯 全球直连"
+      }
+      
       
     ],
     "rule_set": [
@@ -559,17 +593,24 @@
         ],
         "server": "Local-DNS",
         "disable_cache": true,
-        "client_subnet": "202.101.172.35" 
+        "client_subnet": "0.0.0.0/0" 
       },
       {
-        "action": "route",
-        "rule_set": [
-          "GeoLocation-!CN"
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "GeoLocation-!CN",
+            "invert": true
+          },
+          {
+            "rule_set": "GeoIP-CN"
+          }
         ],
-        "server": "Remote-DNS",  
+        "server": "Remote-DNS",
         "disable_cache": true,
         "rewrite_ttl": 600,
-        "client_subnet": "0.0.0.0/0"  
+        "client_subnet": "0.0.0.0/0" // Any China client IP address
       }
     ],
     "cache_capacity": 1024,  
@@ -579,6 +620,6 @@
     "independent_cache": true,
     "final": "Remote-DNS",
     "strategy": "ipv4_only"
-    //"client_subnet": "1.1.1.1/32"
+    "client_subnet": "0.0.0.0/0"
   }
 }

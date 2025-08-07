@@ -30,7 +30,7 @@
   "inbounds": [
     {
       "domain_strategy":"ipv4_only",
-      "endpoint_independent_nat":true,
+      "endpoint_independent_nat":false,
       "address":[
         "172.18.0.1/30"
         //"fdfe:dcba:9876::1/126"
@@ -38,23 +38,17 @@
       "mtu":9000,
       "stack":"gvisor",
       "auto_route": true,
+      "iproute2_table_index": 2022,
+      "iproute2_rule_index": 9000,
       "tag": "tun-in",
       "type":"tun",
-      "multiplex": {
-          "enabled": true,
-          "padding": false,
-          "brutal": {
-            "enabled": true,
-            "up_mbps": 100,
-            "down_mbps": 300
-          }
-      },
       "platform": {  
         "http_proxy": {  
           "enabled": true,  
           "server": "127.0.0.1",  
           "server_port": 20213,  
-          "bypass_domain": ["*.local", "*.lan", "*.internal", "*.corp", "*.home"]
+          "bypass_domain": [],
+          "match_domain": []
         }  
       }  
     }

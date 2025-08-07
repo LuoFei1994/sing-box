@@ -36,13 +36,22 @@
         //"fdfe:dcba:9876::1/126"
         ],
       "mtu":9000,
-      "tcp_multi_path": true,
-      "udp_fragment": true,
-      "udp_timeout": "5m",
       "stack":"gvisor",
       "auto_route": true,
       "tag": "tun-in",
       "type":"tun",
+      "multiplex": {
+          "enabled": true,
+          "protocol": "smux",
+          "max_connections": 1,
+          "min_streams": 4,
+          "padding": false,
+          "brutal": {
+            "enabled": true,
+            "up_mbps": 100,
+            "down_mbps": 300
+          }
+      },
       "platform": {  
         "http_proxy": {  
           "enabled": true,  

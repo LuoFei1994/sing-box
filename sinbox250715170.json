@@ -543,6 +543,11 @@
             "fingerprint": "ios"
           }
         },
+        "ech": {
+          "enabled": true,
+          "config": [],
+          "config_path": ""
+        },
         //"tcp_fast_open": true, 冲突
         "tcp_multi_path": true,
         "udp_fragment": false,
@@ -571,6 +576,11 @@
             "enabled": true,
             "fingerprint": "ios"
           }
+        },
+        "ech": {
+          "enabled": true,
+          "config": [],
+          "config_path": ""
         },
         "tcp_multi_path": true,
         "udp_fragment": false,

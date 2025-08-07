@@ -36,7 +36,6 @@
         //"fdfe:dcba:9876::1/126"
         ],
       "mtu":9000,
-      "tcp_fast_open": true,
       "tcp_multi_path": true,
       "udp_fragment": true,
       "udp_timeout": "5m",

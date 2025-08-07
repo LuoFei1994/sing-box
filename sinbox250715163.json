@@ -519,8 +519,8 @@
         "tag": "Local-DNS",
         "type": "https",
         "server_port": 443,
-        "server": "223.5.5.5",
-        "path": "/dns-query",
+        "server": "223.5.5.5"
+        /*"path": "/dns-query",
         "headers": {  
           "User-Agent": "safari"  
         },
@@ -531,7 +531,7 @@
             "enabled": true,
             "fingerprint": "ios"
           }
-        }
+        }*/
       },
       
       
@@ -540,15 +540,15 @@
         "type": "tls",
         "detour": "🚀 节点选择",
         "server_port": 853,
-        "server": "9.9.9.11",
-        "tls": {  
+        "server": "9.9.9.11"
+        /*"tls": {  
           "enabled": true,  
           "server_name": "dns11.quad9.net",
           "utls": {
             "enabled": true,
             "fingerprint": "ios"
           }
-        }
+        }*/
       }
     ],
     "rules": [

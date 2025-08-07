@@ -530,8 +530,20 @@
         "tag": "Local-DNS",
         "type": "https",
         "server_port": 443,
-        "server": "223.5.5.5"
-        /*"path": "/dns-query",
+        "server": "223.5.5.5",
+        "tcp_fast_open": true,
+        "tcp_multi_path": true,
+        "udp_fragment": false,
+        "network_strategy": "fallback",
+        "network_type": [
+          "wifi",
+          "cellular"
+        ],
+        "fallback_network_type": [
+          "cellular"
+        ],
+        "fallback_delay": "300ms",
+        "path": "/dns-query",
         "headers": {  
           "User-Agent": "safari"  
         },
@@ -542,7 +554,7 @@
             "enabled": true,
             "fingerprint": "ios"
           }
-        }*/
+        }
       },
       
       

@@ -87,7 +87,8 @@
         "vless+brutal算法",
         "Hysteria2-2-singbox",
         "anytls+reality",
-        "wg-ep"
+        "wg-ep",
+        "proxy"
 
       ]
     },
@@ -104,7 +105,8 @@
         "vless+brutal算法",
         "Hysteria2-2-singbox",
         "anytls+reality",
-        "wg-ep"
+        "wg-ep",
+        "proxy"
       ]
     },
     {
@@ -254,7 +256,16 @@
             "down_mbps": 300
           }
         }
-      }
+      },
+    {
+      "type": "vmess",
+      "tag": "proxy",
+      "server": "c29s801.portablesubmarines.com",
+      "server_port": 15055,
+      "uuid": "665f1607-fefd-47ac-94c8-b088dcaf6c08",
+      "security": "auto",
+      "alter_id": 0
+    }
   ],
   "route": {
     "rules": [

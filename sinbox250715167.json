@@ -531,7 +531,7 @@
         "type": "https",
         "server_port": 443,
         "server": "223.5.5.5",
-        "tcp_fast_open": true,
+        //"tcp_fast_open": true, 冲突
         "tcp_multi_path": true,
         "udp_fragment": false,
         "network_strategy": "fallback",

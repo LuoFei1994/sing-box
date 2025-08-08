@@ -30,16 +30,16 @@
   "inbounds": [
     {
       "domain_strategy":"ipv4_only",
-      "endpoint_independent_nat":true,
+      "endpoint_independent_nat":false,
       "address":[
         "172.18.0.1/30"
         //"fdfe:dcba:9876::1/126"
         ],
       "mtu":9000,
-      //"sniff":true,
-      //"sniff_override_destination":true,
       "stack":"gvisor",
       "auto_route": true,
+      "iproute2_table_index": 2022,
+      "iproute2_rule_index": 9000,
       "tag": "tun-in",
       "type":"tun",
       "platform": {  
@@ -47,7 +47,8 @@
           "enabled": true,  
           "server": "127.0.0.1",  
           "server_port": 20213,  
-          "bypass_domain": ["*.local", "*.lan", "*.internal", "*.corp", "*.home"]
+          "bypass_domain": [],
+          "match_domain": []
         }  
       }  
     }
@@ -87,7 +88,8 @@
         "vless+brutal算法",
         "Hysteria2-2-singbox",
         "anytls+reality",
-        "wg-ep"
+        "wg-ep",
+        "proxy"
 
       ]
     },
@@ -104,7 +106,8 @@
         "vless+brutal算法",
         "Hysteria2-2-singbox",
         "anytls+reality",
-        "wg-ep"
+        "wg-ep",
+        "proxy"
       ]
     },
     {
@@ -254,37 +257,27 @@
             "down_mbps": 300
           }
         }
-      }
+      },
+    {
+      "type": "vmess",
+      "tag": "proxy",
+      "server": "c29s801.portablesubmarines.com",
+      "server_port": 15055,
+      "uuid": "665f1607-fefd-47ac-94c8-b088dcaf6c08",
+      "security": "auto",
+      "alter_id": 0
+    }
   ],
   "route": {
     "rules": [
-     {
-       "action": "route",
-       "ip_cidr": "10.7.0.0/24",
-       "outbound": "wg-ep"
-     },
-     {
-       "action": "route",
-       "ip_cidr": "192.168.0.0/24",
-       "outbound": "wg-ep"
-     },
-      
+     
       {
         "action": "sniff"
       },
       
       {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "protocol": "dns"
-          },
-          {
-            "port": 53
-          }
-        ],
-        "action": "hijack-dns"
+        "action": "hijack-dns",
+        "protocol": "dns"
       },
 
       {
@@ -332,15 +325,7 @@
           "Category-Ads"
         ]
       },
-      {
-        "action": "route",
-        "rule_set": [
-          "lyc8503-geoip-cn",
-          "lyc8503-geosite-apple",
-          "lyc8503-geosite-china-list"
-        ],
-        "outbound": "🎯 全球直连"
-      },
+      
       {
         "action": "route",
         "rule_set": [
@@ -370,26 +355,30 @@
         "action": "reject",
         "method": "drop"
       },
+      
       {
         "rule_set": "GeoLocation-CN",
         "outbound": "🎯 全球直连"
       },
+      
       {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
-            "rule_set": "GeoIP-CN"
-          },
-          {
-            "rule_set": "GeoLocation-!CN",
-            "invert": true
-          }
+        "rule_set": "GeoLocation-!CN",
+        "outbound": "🚀 节点选择"
+      },
+      
+      {
+        "action": "resolve"
+      },
+      
+      {
+        "action": "route",
+        "rule_set": [
+          "lyc8503-geoip-cn",
+          "lyc8503-geosite-apple",
+          "lyc8503-geosite-china-list"
         ],
         "outbound": "🎯 全球直连"
       }
-      
-      
     ],
     "rule_set": [
 
@@ -522,17 +511,19 @@
       
     ],
     "auto_detect_interface": true,
-    "final": "🐟 漏网之鱼"
-    /*"default_domain_resolver": {
+    "final": "🐟 漏网之鱼",
+    
+    //下面默认dns是给节点使用的
+    "default_domain_resolver": {
       "server": "Local-DNS",
       "strategy": "ipv4_only",
       "rewrite_ttl": 60,
-      "client_subnet": "202.96.128.86"
+      "client_subnet": "0.0.0.0/24"
     },
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi"],  
-    "default_fallback_network_type": ["cellular"],  
-    "default_fallback_delay": "300ms"  */
+    "default_fallback_network_type": ["cellular"],
+    "default_fallback_delay": "300ms"
   },
   "dns": {
     "servers": [
@@ -552,7 +543,19 @@
             "enabled": true,
             "fingerprint": "ios"
           }
-        }
+        },
+        //"tcp_fast_open": true, 冲突
+        "tcp_multi_path": true,
+        "udp_fragment": false,
+        "network_strategy": "fallback",
+        "network_type": [
+          "wifi",
+          "cellular"
+        ],
+        "fallback_network_type": [
+          "cellular"
+        ],
+        "fallback_delay": "300ms"
       },
       
       
@@ -569,7 +572,18 @@
             "enabled": true,
             "fingerprint": "ios"
           }
-        }
+        },
+        "tcp_multi_path": true,
+        "udp_fragment": false,
+        "network_strategy": "fallback",
+        "network_type": [
+          "wifi",
+          "cellular"
+        ],
+        "fallback_network_type": [
+          "cellular"
+        ],
+        "fallback_delay": "300ms"
       }
     ],
     "rules": [
@@ -592,25 +606,16 @@
           "lyc8503-geosite-china-list"
         ],
         "server": "Local-DNS",
-        "disable_cache": true,
-        "client_subnet": "0.0.0.0/0" 
+        "client_subnet": "0.0.0.0/24" 
       },
       {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
-            "rule_set": "GeoLocation-!CN",
-            "invert": true
-          },
-          {
-            "rule_set": "GeoIP-CN"
-          }
+        "action": "route",
+        "rule_set": [
+          "GeoLocation-!CN"
         ],
         "server": "Remote-DNS",
-        "disable_cache": true,
         "rewrite_ttl": 600,
-        "client_subnet": "0.0.0.0/0" // Any China client IP address
+        "client_subnet": "0.0.0.0/24" // Any China client IP address
       }
     ],
     "cache_capacity": 1024,  
@@ -620,6 +625,6 @@
     "independent_cache": true,
     "final": "Remote-DNS",
     "strategy": "ipv4_only",
-    "client_subnet": "0.0.0.0/0"
+    "client_subnet": "0.0.0.0/24"
   }
 }

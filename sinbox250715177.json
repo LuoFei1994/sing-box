@@ -567,11 +567,11 @@
         "server": "dns.adguard-dns.com",
         "tls": {  
           "enabled": true,  
-          "server_name": "dns.adguard-dns.com",
-          "utls": {
+          "server_name": "dns.adguard-dns.com"
+          /*"utls": {
             "enabled": true,
             "fingerprint": "ios"
-          }
+          }*/
         },
         "tcp_multi_path": true,
         "udp_fragment": false,

@@ -533,7 +533,7 @@
         "server_port": 443,
         "server": "223.5.5.5",
         "path": "/dns-query",
-        "headers": {  
+        /*"headers": {  
           "User-Agent": "safari"  
         },
         "tls": {  
@@ -543,7 +543,7 @@
             "enabled": true,
             "fingerprint": "ios"
           }
-        },
+        },*/
         //"tcp_fast_open": true, 冲突
         "tcp_multi_path": true,
         "udp_fragment": false,
@@ -565,14 +565,14 @@
         "detour": "🚀 节点选择",
         "server_port": 853,
         "server": "dns.adguard-dns.com",
-        "tls": {  
+        /*"tls": {  
           "enabled": true,  
-          "server_name": "dns.adguard-dns.com"
-          /*"utls": {
+          "server_name": "dns.adguard-dns.com",
+          "utls": {
             "enabled": true,
             "fingerprint": "ios"
-          }*/
-        },
+          }
+        },*/
         "tcp_multi_path": true,
         "udp_fragment": false,
         "network_strategy": "fallback",

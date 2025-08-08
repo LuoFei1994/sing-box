@@ -561,13 +561,13 @@
       
       {
         "tag": "Remote-DNS",
-        "type": "tls",
+        "type": "quic",
         "detour": "🚀 节点选择",
         "server_port": 853,
-        "server": "9.9.9.11",
+        "server": "dns.adguard-dns.com",
         "tls": {  
           "enabled": true,  
-          "server_name": "dns11.quad9.net",
+          "server_name": "dns.adguard-dns.com",
           "utls": {
             "enabled": true,
             "fingerprint": "ios"

@@ -533,7 +533,7 @@
         "server_port": 443,
         "server": "223.5.5.5",
         "path": "/dns-query",
-        "detour": "direct",
+        "detour": "🎯 全球直连",
         /*"headers": {  
           "User-Agent": "safari"  
         },

@@ -533,7 +533,7 @@
         "server_port": 443,
         "server": "223.5.5.5",
         "path": "/dns-query",
-        /*"headers": {  
+        "headers": {  
           "User-Agent": "safari"  
         },
         "tls": {  
@@ -543,10 +543,10 @@
             "enabled": true,
             "fingerprint": "ios"
           }
-        },*/
+        },
         //"tcp_fast_open": true, 冲突
         "tcp_multi_path": true,
-        "udp_fragment": false,
+        "udp_fragment": true,
         "network_strategy": "fallback",
         "network_type": [
           "wifi",
@@ -561,20 +561,20 @@
       
       {
         "tag": "Remote-DNS",
-        "type": "quic",
+        "type": "tls",
         "detour": "🚀 节点选择",
         "server_port": 853,
-        "server": "dns.adguard-dns.com",
-        /*"tls": {  
+        "server": "9.9.9.11",
+        "tls": {  
           "enabled": true,  
-          "server_name": "dns.adguard-dns.com",
+          "server_name": "dns11.quad9.net",
           "utls": {
             "enabled": true,
             "fingerprint": "ios"
           }
-        },*/
+        },
         "tcp_multi_path": true,
-        "udp_fragment": false,
+        "udp_fragment": true,
         "network_strategy": "fallback",
         "network_type": [
           "wifi",
@@ -618,7 +618,7 @@
         "client_subnet": "0.0.0.0/24" // Any China client IP address
       }
     ],
-    "cache_capacity": 2048,  
+    "cache_capacity": 1024,  
     "reverse_mapping": false,
     "disable_cache": false,
     "disable_expire": false,

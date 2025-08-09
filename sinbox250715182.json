@@ -357,11 +357,13 @@
       },
       
       {
+        "action": "route",
         "rule_set": "GeoLocation-CN",
         "outbound": "🎯 全球直连"
       },
       
       {
+        "action": "route",
         "rule_set": "GeoLocation-!CN",
         "outbound": "🚀 节点选择"
       },
@@ -376,6 +378,15 @@
           "lyc8503-geoip-cn",
           "lyc8503-geosite-apple",
           "lyc8503-geosite-china-list"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "AliPay",
+          "WeChat",
+          "lyc8503-geosite-apple"
         ],
         "outbound": "🎯 全球直连"
       }

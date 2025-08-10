@@ -387,14 +387,16 @@
       },
       
       {
+        "action": "resolve"
+      },
+      
+      {
         "action": "route",
         "rule_set": "GeoLocation-!CN",
         "outbound": "🚀 节点选择"
       },
       
-      {
-        "action": "resolve"
-      },
+      
       
       {
         "action": "route",

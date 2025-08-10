@@ -567,6 +567,7 @@
       {
         "tag": "Local-DNS",
         "type": "https",
+        "domain_resolver": "Local-DNS-Resolver",
         "server_port": 443,
         "server": "223.5.5.5",
         "path": "/dns-query",
@@ -594,12 +595,20 @@
         ],
         "fallback_delay": "300ms"
       },
+    
+      {
+        "tag": "Local-DNS-Resolver",
+        "type": "udp",
+        "server_port": 53,
+        "server": "223.5.5.5"
+      },
       
       
       {
         "tag": "Remote-DNS",
         "type": "quic",
         "detour": "🚀 节点选择",
+        "domain_resolver": "Remote-DNS-Resolver",
         "server_port": 853,
         "server": "dns.adguard-dns.com",
         /*"tls": {  
@@ -621,6 +630,13 @@
           "cellular"
         ],
         "fallback_delay": "300ms"
+      },
+      {
+        "tag": "Remote-DNS-Resolver",
+        "type": "udp",
+        "detour": "🚀 节点选择",
+        "server_port": 53,
+        "server": "8.8.8.8"
       }
     ],
     "rules": [

@@ -636,7 +636,7 @@
         "type": "udp",
         "detour": "🚀 节点选择",
         "server_port": 53,
-        "server": "8.8.8.8"
+        "server": "94.140.14.14"
       }
     ],
     "rules": [

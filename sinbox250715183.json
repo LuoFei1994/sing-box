@@ -671,7 +671,7 @@
         "client_subnet": "0.0.0.0/24" // Any China client IP address
       }
     ],
-    "cache_capacity": 1024,  
+    "cache_capacity": 2048,  
     "reverse_mapping": false,
     "disable_cache": false,
     "disable_expire": false,

@@ -51,6 +51,30 @@
           "match_domain": []
         }  
       }  
+    },
+    {
+      "domain_strategy":"prefer_ipv4",
+      "listen":"127.0.0.1",
+      "listen_port":2333,
+      "tag":"socks-in",
+      "type":"socks",
+      "users":[]
+    },
+    {
+      "domain_strategy":"prefer_ipv4",
+      "listen":"127.0.0.1",
+      "listen_port":2334,
+      "tag":"mixed-in",
+      "type":"mixed",
+      "users":[]
+    },
+    {
+      "domain_strategy":"prefer_ipv4",
+      "listen":"127.0.0.1",
+      "listen_port":2335,
+      "tag":"http-in",
+      "type":"http",
+      "users":[]
     }
   ],
   "endpoints":[

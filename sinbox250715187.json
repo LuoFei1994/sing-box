@@ -566,12 +566,12 @@
     "servers": [
       {
         "tag": "Local-DNS",
-        "type": "tls",
-        //"domain_resolver": "Local-DNS-Resolver",
+        "type": "https",
+        "domain_resolver": "Local-DNS-Resolver",
         "server_port": 443,
         "server": "223.5.5.5",
-        /*"path": "/dns-query"
-        "headers": {  
+        "path": "/dns-query"
+        /*"headers": {  
           "User-Agent": "edge"  
         },
         "tls": {  

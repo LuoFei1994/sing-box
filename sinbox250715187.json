@@ -386,9 +386,9 @@
         "outbound": "🎯 全球直连"
       },
       
-      /*{
+      {
         "action": "resolve"
-      },*/
+      },
       
       {
         "action": "route",
@@ -566,12 +566,12 @@
     "servers": [
       {
         "tag": "Local-DNS",
-        "type": "https",
-        "domain_resolver": "Local-DNS-Resolver",
+        "type": "tls",
+        //"domain_resolver": "Local-DNS-Resolver",
         "server_port": 443,
         "server": "223.5.5.5",
-        "path": "/dns-query",
-        "headers": {  
+        "path": "/dns-query"
+        /*"headers": {  
           "User-Agent": "edge"  
         },
         "tls": {  
@@ -593,7 +593,7 @@
         "fallback_network_type": [
           "cellular"
         ],
-        "fallback_delay": "300ms"
+        "fallback_delay": "300ms"*/
       },
     
       {
@@ -608,10 +608,10 @@
         "tag": "Remote-DNS",
         "type": "tls",
         "detour": "🚀 节点选择",
-        "domain_resolver": "Remote-DNS-Resolver",
+        //"domain_resolver": "Remote-DNS-Resolver",
         "server_port": 853,
-        "server": "9.9.9.11",
-        "tls": {  
+        "server": "9.9.9.11"
+        /*"tls": {  
           "enabled": true,  
           "server_name": "dns11.quad9.net",
           "utls": {
@@ -629,7 +629,7 @@
         "fallback_network_type": [
           "cellular"
         ],
-        "fallback_delay": "300ms"
+        "fallback_delay": "300ms"*/
       },
       {
         "tag": "Remote-DNS-Resolver",

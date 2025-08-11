@@ -58,7 +58,6 @@
       "listen_port":2333,
       "tag":"socks-in",
       "type":"socks",
-      "timeout": 300,
       "users":[]
     },
     {
@@ -75,7 +74,6 @@
       "listen_port":2335,
       "tag":"http-in",
       "type":"http",
-      "timeout": 300,
       "users":[]
     }
   ],

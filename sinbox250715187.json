@@ -570,8 +570,8 @@
         "domain_resolver": "Local-DNS-Resolver",
         "server_port": 443,
         "server": "223.5.5.5",
-        "path": "/dns-query"
-        /*"headers": {  
+        "path": "/dns-query",
+        "headers": {  
           "User-Agent": "edge"  
         },
         "tls": {  
@@ -593,7 +593,7 @@
         "fallback_network_type": [
           "cellular"
         ],
-        "fallback_delay": "300ms"*/
+        "fallback_delay": "300ms"
       },
     
       {
@@ -610,10 +610,10 @@
         "detour": "🚀 节点选择",
         "domain_resolver": "Remote-DNS-Resolver",
         "server_port": 853,
-        "server": "8.8.8.8"
-        /*"tls": {  
+        "server": "9.9.9.11",
+        "tls": {  
           "enabled": true,  
-          "server_name": "dns.google",
+          "server_name": "dns11.quad9.net",
           "utls": {
             "enabled": true,
             "fingerprint": "ios"
@@ -629,14 +629,14 @@
         "fallback_network_type": [
           "cellular"
         ],
-        "fallback_delay": "300ms"*/
+        "fallback_delay": "300ms"
       },
       {
         "tag": "Remote-DNS-Resolver",
         "type": "udp",
         "detour": "🚀 节点选择",
         "server_port": 53,
-        "server": "8.8.8.8"
+        "server": "9.9.9.11"
       }
     ],
     "rules": [

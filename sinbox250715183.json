@@ -58,6 +58,7 @@
       "listen_port":2333,
       "tag":"socks-in",
       "type":"socks",
+      "timeout": 300,
       "users":[]
     },
     {
@@ -74,6 +75,7 @@
       "listen_port":2335,
       "tag":"http-in",
       "type":"http",
+      "timeout": 300,
       "users":[]
     }
   ],
@@ -606,19 +608,19 @@
       
       {
         "tag": "Remote-DNS",
-        "type": "quic",
+        "type": "tls",
         "detour": "🚀 节点选择",
         "domain_resolver": "Remote-DNS-Resolver",
         "server_port": 853,
-        "server": "dns.adguard-dns.com",
-        /*"tls": {  
+        "server": "9.9.9.11",
+        "tls": {  
           "enabled": true,  
           "server_name": "dns11.quad9.net",
           "utls": {
             "enabled": true,
             "fingerprint": "ios"
           }
-        },*/
+        },
         "tcp_multi_path": true,
         "udp_fragment": true,
         "network_strategy": "fallback",
@@ -636,7 +638,7 @@
         "type": "udp",
         "detour": "🚀 节点选择",
         "server_port": 53,
-        "server": "94.140.14.14"
+        "server": "9.9.9.9"
       }
     ],
     "rules": [

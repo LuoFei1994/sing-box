@@ -386,9 +386,9 @@
         "outbound": "🎯 全球直连"
       },
       
-      {
+      /*{
         "action": "resolve"
-      },
+      },*/
       
       {
         "action": "route",

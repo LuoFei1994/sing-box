@@ -610,10 +610,10 @@
         "detour": "🚀 节点选择",
         "domain_resolver": "Remote-DNS-Resolver",
         "server_port": 853,
-        "server": "9.9.9.11",
+        "server": "8.8.8.8",
         "tls": {  
           "enabled": true,  
-          "server_name": "dns11.quad9.net",
+          "server_name": "dns.google",
           "utls": {
             "enabled": true,
             "fingerprint": "ios"
@@ -636,7 +636,7 @@
         "type": "udp",
         "detour": "🚀 节点选择",
         "server_port": 53,
-        "server": "9.9.9.9"
+        "server": "8.8.8.8"
       }
     ],
     "rules": [

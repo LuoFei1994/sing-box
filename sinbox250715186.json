@@ -570,8 +570,8 @@
         "domain_resolver": "Local-DNS-Resolver",
         "server_port": 443,
         "server": "223.5.5.5",
-        "path": "/dns-query",
-        "headers": {  
+        "path": "/dns-query"
+        /*"headers": {  
           "User-Agent": "edge"  
         },
         "tls": {  
@@ -593,7 +593,7 @@
         "fallback_network_type": [
           "cellular"
         ],
-        "fallback_delay": "300ms"
+        "fallback_delay": "300ms"*/
       },
     
       {
@@ -610,8 +610,8 @@
         "detour": "🚀 节点选择",
         "domain_resolver": "Remote-DNS-Resolver",
         "server_port": 853,
-        "server": "8.8.8.8",
-        "tls": {  
+        "server": "8.8.8.8"
+        /*"tls": {  
           "enabled": true,  
           "server_name": "dns.google",
           "utls": {
@@ -629,7 +629,7 @@
         "fallback_network_type": [
           "cellular"
         ],
-        "fallback_delay": "300ms"
+        "fallback_delay": "300ms"*/
       },
       {
         "tag": "Remote-DNS-Resolver",

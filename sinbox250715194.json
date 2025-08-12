@@ -561,7 +561,7 @@
       "server": "Local-DNS",
       "strategy": "ipv4_only",
       "rewrite_ttl": 60,
-      "client_subnet": "114.114.114.114/24"
+      "client_subnet": "0.0.0.0/24"
     },
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi"],  
@@ -662,7 +662,7 @@
         ],
         "server": "Remote-DNS",
         //"rewrite_ttl": 600,
-        "client_subnet": "114.114.114.114/24" // Any China client IP address
+        "client_subnet": "0.0.0.0/24" // Any China client IP address
       }
     ],
     "cache_capacity": 2048,  
@@ -672,6 +672,6 @@
     "independent_cache": true,
     "final": "Remote-DNS",
     "strategy": "ipv4_only",
-    "client_subnet": "114.114.114.114/24"
+    "client_subnet": "0.0.0.0/24"
   }
 }

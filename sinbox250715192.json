@@ -560,8 +560,8 @@
     "default_domain_resolver": {
       "server": "Local-DNS",
       "strategy": "ipv4_only",
-      /*"rewrite_ttl": 60,
-      "client_subnet": "0.0.0.0/24"*/
+      "rewrite_ttl": 60,
+      "client_subnet": "114.114.114.114/24"
     },
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi"],  
@@ -573,7 +573,6 @@
       {
         "tag": "Local-DNS",
         "type": "https",
-        "domain_resolver": "Local-DNS-Resolver",
         "server_port": 443,
         "server": "223.5.5.5",
         "path": "/dns-query",
@@ -601,20 +600,12 @@
         ],
         "fallback_delay": "300ms"
       },
-    
-      {
-        "tag": "Local-DNS-Resolver",
-        "type": "udp",
-        "server_port": 53,
-        "server": "223.5.5.5"
-      },
       
       
       {
         "tag": "Remote-DNS",
         "type": "tls",
         "detour": "🚀 节点选择",
-        "domain_resolver": "Remote-DNS-Resolver",
         "server_port": 853,
         "server": "9.9.9.11",
         "tls": {  
@@ -636,13 +627,6 @@
           "cellular"
         ],
         "fallback_delay": "300ms"
-      },
-      {
-        "tag": "Remote-DNS-Resolver",
-        "type": "udp",
-        "detour": "🚀 节点选择",
-        "server_port": 53,
-        "server": "8.8.8.8"
       }
     ],
     "rules": [
@@ -688,6 +672,6 @@
     "independent_cache": true,
     "final": "Remote-DNS",
     "strategy": "ipv4_only",
-    "client_subnet": "0.0.0.0/24"
+    "client_subnet": "114.114.114.114/24"
   }
 }

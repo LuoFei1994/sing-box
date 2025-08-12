@@ -24,7 +24,7 @@
       "cache_id": "",
       "store_fakeip": true,
       "store_rdrc": true,
-      "rdrc_timeout": "24h" 
+      "rdrc_timeout": "7d" 
     }
   },
   "inbounds": [
@@ -300,8 +300,17 @@
       },
       
       {
-        "action": "hijack-dns",
-        "protocol": "dns"
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "protocol": "dns"
+          },
+          {
+            "port": 53
+          }
+        ],
+        "action": "hijack-dns"
       },
 
       {
@@ -341,14 +350,6 @@
         "action": "reject",  
         "method": "drop"  
       },
-      {
-        "action": "reject",
-        "method": "drop",  //default:对于 TCP 连接回复 RST，对于 UDP 包回复 ICMP 端口不可达。drop: 丢弃数据包。
-        //"no_drop": false,      //如果未启用，则 30 秒内触发 50 次后，method 将被暂时覆盖为 drop。当 method 设为 drop 时不可用。
-        "rule_set": [
-          "Category-Ads"
-        ]
-      },
       
       {
         "action": "route",
@@ -360,6 +361,15 @@
         "invert": true,
         "outbound": "🚀 节点选择"
       }*/
+
+      {
+        "action": "reject",
+        "method": "drop",  //default:对于 TCP 连接回复 RST，对于 UDP 包回复 ICMP 端口不可达。drop: 丢弃数据包。
+        //"no_drop": false,      //如果未启用，则 30 秒内触发 50 次后，method 将被暂时覆盖为 drop。当 method 设为 drop 时不可用。
+        "rule_set": [
+          "Category-Ads"
+        ]
+      },
 
       {
         "type": "logical",
@@ -387,26 +397,20 @@
       },
       
       {
-        "action": "resolve"
-      },
-      
-      {
-        "action": "route",
-        "rule_set": "GeoLocation-!CN",
-        "outbound": "🚀 节点选择"
-      },
-      
-      
-      
-      {
-        "action": "route",
-        "rule_set": [
-          "lyc8503-geoip-cn",
-          "lyc8503-geosite-apple",
-          "lyc8503-geosite-china-list"
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "GeoIP-CN"
+          },
+          {
+            "rule_set": "GeoLocation-!CN",
+            "invert": true
+          }
         ],
         "outbound": "🎯 全球直连"
       },
+
       {
         "action": "route",
         "rule_set": [
@@ -415,7 +419,9 @@
           "lyc8503-geosite-apple"
         ],
         "outbound": "🎯 全球直连"
-      }
+      },
+
+
     ],
     "rule_set": [
 
@@ -554,8 +560,8 @@
     "default_domain_resolver": {
       "server": "Local-DNS",
       "strategy": "ipv4_only",
-      "rewrite_ttl": 60,
-      "client_subnet": "0.0.0.0/24"
+      /*"rewrite_ttl": 60,
+      "client_subnet": "0.0.0.0/24"*/
     },
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi"],  
@@ -653,22 +659,26 @@
       },
 
       {
-        "action": "route",
         "rule_set": [
-          "lyc8503-geosite-apple",
-          "lyc8503-geosite-china-list"
+          "GeoSite-CN"
         ],
-        "server": "Local-DNS",
-        "client_subnet": "0.0.0.0/24" 
+        "server": "Local-DNS"
       },
       {
-        "action": "route",
-        "rule_set": [
-          "GeoLocation-!CN"
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "GeoLocation-!CN",
+            "invert": true
+          },
+          {
+            "rule_set": "GeoIP-CN"
+          }
         ],
         "server": "Remote-DNS",
-        "rewrite_ttl": 600,
-        "client_subnet": "0.0.0.0/24" // Any China client IP address
+        //"rewrite_ttl": 600,
+        "client_subnet": "114.114.114.114/24" // Any China client IP address
       }
     ],
     "cache_capacity": 2048,  

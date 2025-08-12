@@ -163,7 +163,6 @@
     {
       "type": "wireguard",
       "tag": "wg-ep",
-      "system": false,
       "mtu": 1408,
       "address": ["10.7.0.2/24"],
       "private_key": "cC7Qv/O0CvqoX8Y3+6ajBUnmIaPuayZ4KjcXpTLqs3c=",

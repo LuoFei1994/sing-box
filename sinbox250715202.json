@@ -173,11 +173,16 @@
           "port": 5555,
           "public_key": "MQ9Lik2sSH92GNoq0k7r5jU7fS8aQonQd5LgC74tX2U=",
           "pre_shared_key": "QdmsTASsZHr7tUhhhODUEP6XUDaod1fWIPIkTfNmjwc=",
-          "allowed_ips": ["0.0.0.0/0", "::/0"],
+          "allowed_ips": [
+            "0.0.0.0/0",
+            "::/0"
+          ],
           "persistent_keepalive_interval": 25
         }
-      ]
-    },
+        ]
+      },
+
+   
      
     {
       "type": "vless",

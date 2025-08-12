@@ -77,7 +77,7 @@
       "users":[]
     }
   ],
-  "endpoints":[
+  /*"endpoints":[
     {
       "type": "wireguard",
       "tag": "wg-ep",
@@ -99,7 +99,7 @@
         }
         ]
       }
-  ],
+  ],*/
   "outbounds": [
     {
       "type": "selector",

@@ -396,7 +396,7 @@
         "outbound": "🎯 全球直连"
       },
       
-      {
+      /*{
         "type": "logical",
         "mode": "and",
         "rules": [
@@ -409,7 +409,7 @@
           }
         ],
         "outbound": "🎯 全球直连"
-      },
+      },*/
 
       {
         "action": "route",
@@ -647,8 +647,8 @@
           "GeoSite-CN"
         ],
         "server": "Local-DNS"
-      },
-      {
+      }
+      /*{
         "type": "logical",
         "mode": "and",
         "rules": [
@@ -663,7 +663,7 @@
         "server": "Remote-DNS",
         //"rewrite_ttl": 600,
         "client_subnet": "0.0.0.0/24" // Any China client IP address
-      }
+      }*/
     ],
     "cache_capacity": 2048,  
     "reverse_mapping": false,

@@ -77,7 +77,7 @@
       "users":[]
     }
   ],
-  /*"endpoints":[
+  "endpoints":[
     {
       "type": "wireguard",
       "tag": "wg-ep",
@@ -99,7 +99,7 @@
         }
         ]
       }
-  ],*/
+  ],
   "outbounds": [
     {
       "type": "selector",
@@ -160,29 +160,6 @@
       ]
     },
 
-    {
-      "type": "wireguard",
-      "tag": "wg-ep",
-      "mtu": 1408,
-      "address": ["10.7.0.2/24"],
-      "private_key": "cC7Qv/O0CvqoX8Y3+6ajBUnmIaPuayZ4KjcXpTLqs3c=",
-      "peers": [
-        {
-          "address": "38.182.101.246",
-          "port": 5555,
-          "public_key": "MQ9Lik2sSH92GNoq0k7r5jU7fS8aQonQd5LgC74tX2U=",
-          "pre_shared_key": "QdmsTASsZHr7tUhhhODUEP6XUDaod1fWIPIkTfNmjwc=",
-          "allowed_ips": [
-            "0.0.0.0/0",
-            "::/0"
-          ],
-          "persistent_keepalive_interval": 25
-        }
-        ]
-      },
-
-   
-     
     {
       "type": "vless",
       "tag": "vless+vision+reality",

@@ -73,7 +73,6 @@
       "outbounds": [
         "🎈 自动选择",
         "wireguard-dsb",
-        "wireguard-dsb1",
         "proxy",
         "RN-tuic",
         "RN-vless",
@@ -92,7 +91,6 @@
       "interrupt_exist_connections": false,
       "outbounds": [
         "wireguard-dsb",
-        "wireguard-dsb1",
         "proxy",
         "RN-tuic",
         "RN-vless",
@@ -484,7 +482,7 @@
       "server": "Local-DNS",
       "strategy": "ipv4_only",
       "rewrite_ttl": 60
-      //"client_subnet": "117.25.0.0/16"
+      //"client_subnet": "117.16.0.0/12"
     },
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi"],  
@@ -553,7 +551,7 @@
           "GeoSite-CN"
         ],
         "server": "Local-DNS",
-        "client_subnet": "117.25.0.0/8" // Any China client IP address
+        "client_subnet": "117.16.0.0/12" // Any China client IP address
       },
       {
         "rule_set": [

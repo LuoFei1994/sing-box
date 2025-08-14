@@ -330,24 +330,13 @@
       
       {
         "action": "route",
-        "rule_set": "GeoLocation-CN",
-        "outbound": "🎯 全球直连"
-      },
-      
-      {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
-            "rule_set": "GeoIP-CN"
-          },
-          {
-            "rule_set": "GeoLocation-!CN",
-            "invert": true
-          }
+        "rule_set": [
+          "GeoLocation-CN",
+          "GeoIP-CN"
         ],
         "outbound": "🎯 全球直连"
       },
+      
 
       {
         "action": "route",
@@ -506,8 +495,8 @@
     "default_domain_resolver": {
       "server": "Local-DNS",
       "strategy": "ipv4_only",
-      "rewrite_ttl": 60,
-      "client_subnet": "117.25.131.179/24"
+      "rewrite_ttl": 60
+      //"client_subnet": "117.25.0.0/16"
     },
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi"],  
@@ -553,7 +542,7 @@
           "server_name": "dns11.quad9.net",
           "utls": {
             "enabled": true,
-            "fingerprint": "chrome"
+            "fingerprint": "safari"
           }
         }
       } 
@@ -575,10 +564,9 @@
         "rule_set": [
           "GeoSite-CN"
         ],
-        "server": "Local-DNS"
+        "server": "Local-DNS",
         "client_subnet": "117.25.0.0/16" // Any China client IP address
       },
-         "invert": true
       {
         "rule_set": [
           "GeoLocation-!CN"

@@ -24,7 +24,7 @@
       "cache_id": "",
       "store_fakeip": true,
       "store_rdrc": true,
-      "rdrc_timeout": "24h" 
+      "rdrc_timeout": "7d" 
     }
   },
   "inbounds": [
@@ -80,22 +80,22 @@
   "endpoints":[
     {
       "type": "wireguard",
-      "tag": "wg-ep",
+      "tag": "wireguard-dsb",
       "system": false,
       "mtu": 1408,
-      "address": ["10.7.0.2/24"],
-      "private_key": "cC7Qv/O0CvqoX8Y3+6ajBUnmIaPuayZ4KjcXpTLqs3c=",
+      "address": ["10.0.1.2/32"],
+      "private_key": "2L40EZMxfyvnSsN54ayzjwZfNNXNdhUUbckGpIt3BVQ=",
       "peers": [
         {
-          "address": "38.182.101.246",
-          "port": 5555,
-          "public_key": "MQ9Lik2sSH92GNoq0k7r5jU7fS8aQonQd5LgC74tX2U=",
+          "address": "107.150.27.18",
+          "port": 31645,
+          "public_key": "u2zxrMvDBSXhNaU6Jk/AZ8YfcvsYM7lAXLE8HdRw+nc=",
           "pre_shared_key": "QdmsTASsZHr7tUhhhODUEP6XUDaod1fWIPIkTfNmjwc=",
           "allowed_ips": [
             "0.0.0.0/0",
             "::/0"
           ],
-          "persistent_keepalive_interval": 25
+          "persistent_keepalive_interval": 30
         }
         ]
       }
@@ -107,13 +107,13 @@
       "interrupt_exist_connections": true,
       "outbounds": [
         "🎈 自动选择",
-        "vless+vision+reality",
-        "vless+vision+reality+TOR",
-        "vless+brutal算法",
-        "Hysteria2-2-singbox",
-        "anytls+reality",
-        "wg-ep",
-        "proxy"
+        "wireguard-dsb",
+        "proxy",
+        "RN-tuic",
+        "RN-vless",
+        "RN-tor-vless",
+        "RN-tor-tuic"
+        
 
       ]
     },
@@ -125,13 +125,12 @@
       "tolerance": 150,
       "interrupt_exist_connections": true,
       "outbounds": [
-        "vless+vision+reality",
-        "vless+vision+reality+TOR",
-        "vless+brutal算法",
-        "Hysteria2-2-singbox",
-        "anytls+reality",
-        "wg-ep",
-        "proxy"
+        "wireguard-dsb",
+        "proxy",
+        "RN-tuic",
+        "RN-vless",
+        "RN-tor-vless",
+        "RN-tor-tuic"
       ]
     },
     {
@@ -158,130 +157,90 @@
         "🐟 漏网之鱼"
       ]
     },
-    
-        
+    {
+      "type": "tuic",
+      "tag": "RN-tuic",
+      "server": "107.150.27.18",
+      "server_port": 443,
+      "uuid": "bb1a2607-2755-4344-e9fb-eaa792d35541",
+      "password": "SaCqA8IOGG",
+      "congestion_control": "bbr",
+      "tls": {
+        "enabled": true,
+        "server_name": "iosapps.itunes.apple.com",
+        "insecure": true,
+        "alpn": [
+          "h3",
+          "h2",
+          "http/1.1"
+        ]
+      }
+    },
     {
       "type": "vless",
-      "tag": "vless+vision+reality",
-      "server": "38.182.101.246",
-      "server_port": 9090,
-      "uuid": "39d928c7-735a-497a-bc3d-425a55743d80",
+      "tag": "RN-vless",
+      "server": "107.150.27.18",
+      "server_port": 443,
+      "uuid": "bb1a2607-2755-4344-e9fb-eaa792d35541",
+      "flow": "xtls-rprx-vision",
       "packet_encoding": "xudp",
       "tls": {
         "enabled": true,
-        "server_name": "yahoo.com",
-        /*"fragment": true,  
-        "fragment_fallback_delay": "500ms",  
-        "record_fragment": false,*/
+        "server_name": "iosapps.itunes.apple.com",
         "insecure": false,
         "utls": {
           "enabled": true,
-          "fingerprint": "ios"
+          "fingerprint": "safari"
         },
         "reality": {
           "enabled": true,
-          "public_key": "JMcsaZOdXQ_iZygS8OxTo-bWnDeMVnngzZM_bcRe13s",
-          "short_id": "d416e01452"
+          "public_key": "eugUhe5PLdoCryH8wv-proBfSDY30xKI-dPZtkVkTkk",
+          "short_id": "dd733b00"
         }
       }
     },
     {
       "type": "vless",
-      "tag": "vless+vision+reality+TOR",
-      "server": "38.182.101.246",
-      "server_port": 9090,
-      "uuid": "3424df7b-3e89-4e59-b23f-46992de92c32",
+      "tag": "RN-tor-vless",
+      "server": "107.150.27.18",
+      "server_port": 443,
+      "uuid": "27f1b15a-5f3e-42de-b0bd-fb6bf2ae81ed",
+      "flow": "xtls-rprx-vision",
       "packet_encoding": "xudp",
       "tls": {
         "enabled": true,
-        "server_name": "yahoo.com",
-        /*"fragment": true,  
-        "fragment_fallback_delay": "500ms",  
-        "record_fragment": false,*/
+        "server_name": "iosapps.itunes.apple.com",
         "insecure": false,
         "utls": {
           "enabled": true,
-          "fingerprint": "ios"
+          "fingerprint": "safari"
         },
         "reality": {
           "enabled": true,
-          "public_key": "JMcsaZOdXQ_iZygS8OxTo-bWnDeMVnngzZM_bcRe13s",
-          "short_id": "d416e01452"
+          "public_key": "eugUhe5PLdoCryH8wv-proBfSDY30xKI-dPZtkVkTkk",
+          "short_id": "4e07fb"
         }
       }
     },
-    
     {
-      "tag": "Hysteria2-2-singbox",
-      "type": "hysteria2",
-      "server": "38.182.101.246",
-      "server_port": 8443,
-      "up_mbps": 20,
-      "down_mbps": 100,
-      "password": "654321",
+      "type": "tuic",
+      "tag": "RN-tor-tuic",
+      "server": "107.150.27.18",
+      "server_port": 443,
+      "uuid": "27f1b15a-5f3e-42de-b0bd-fb6bf2ae81ed",
+      "password": "p640m0hoZU",
+      "congestion_control": "bbr",
       "tls": {
-          "enabled": true,
-          "server_name": "aaa.luofeimm.dpdns.org",
-          "insecure": false,
-          "alpn": [
-              "h3"
-          ]
-       }
+        "enabled": true,
+        "server_name": "iosapps.itunes.apple.com",
+        "insecure": true,
+        "alpn": [
+          "h3",
+          "h2",
+          "http/1.1"
+        ]
+      }
     },
-    {
-            "type": "anytls",
-            "tag": "anytls+reality",
-            "server": "38.182.101.246",
-            "server_port": 443,
-            "password": "123456",
-            "idle_session_check_interval": "30s",
-            "idle_session_timeout": "30s",
-            "min_idle_session": 5,
-            "tls": {
-                "enabled": true,
-                "disable_sni": false,
-                "server_name": "yahoo.com",
-                "insecure": false,
-                "utls": {
-                    "enabled": true,
-                    "fingerprint": "chrome"
-                },
-                "reality": {
-                    "enabled": true,
-                    "public_key": "ZzE29FNipqOf7Y7dHlt4ps6eJiy-8xL7oENhEda25Hs",
-                    "short_id": "d416e01452"
-                }
-            }
-      },
-     {
-        "type": "vless",
-        "tag": "vless+brutal算法",
-        "server": "38.182.101.246",
-        "server_port": 8888,
-        "uuid": "df946a9f-222b-42e7-80de-a0f4d5606998",
-        "flow": "",
-        "network": "tcp",
-        "tls": {
-          "enabled": true,
-          "server_name": "aaa.luofeimm.dpdns.org",
-          "utls": {
-            "enabled": true,
-            "fingerprint": "ios"
-          }
-        },
-        "multiplex": {
-          "enabled": true,
-          "protocol": "smux",
-          "max_connections": 1,
-          "min_streams": 4,
-          "padding": false,
-          "brutal": {
-            "enabled": true,
-            "up_mbps": 100,
-            "down_mbps": 300
-          }
-        }
-      },
     {
       "type": "vmess",
       "tag": "proxy",
@@ -300,8 +259,17 @@
       },
       
       {
-        "action": "hijack-dns",
-        "protocol": "dns"
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "protocol": "dns"
+          },
+          {
+            "port": 53
+          }
+        ],
+        "action": "hijack-dns"
       },
 
       {
@@ -341,14 +309,6 @@
         "action": "reject",  
         "method": "drop"  
       },
-      {
-        "action": "reject",
-        "method": "drop",  //default:对于 TCP 连接回复 RST，对于 UDP 包回复 ICMP 端口不可达。drop: 丢弃数据包。
-        //"no_drop": false,      //如果未启用，则 30 秒内触发 50 次后，method 将被暂时覆盖为 drop。当 method 设为 drop 时不可用。
-        "rule_set": [
-          "Category-Ads"
-        ]
-      },
       
       {
         "action": "route",
@@ -360,6 +320,15 @@
         "invert": true,
         "outbound": "🚀 节点选择"
       }*/
+
+      {
+        "action": "reject",
+        "method": "drop",  //default:对于 TCP 连接回复 RST，对于 UDP 包回复 ICMP 端口不可达。drop: 丢弃数据包。
+        //"no_drop": false,      //如果未启用，则 30 秒内触发 50 次后，method 将被暂时覆盖为 drop。当 method 设为 drop 时不可用。
+        "rule_set": [
+          "Category-Ads"
+        ]
+      },
 
       {
         "type": "logical",
@@ -387,26 +356,20 @@
       },
       
       {
-        "action": "resolve"
-      },
-      
-      {
-        "action": "route",
-        "rule_set": "GeoLocation-!CN",
-        "outbound": "🚀 节点选择"
-      },
-      
-      
-      
-      {
-        "action": "route",
-        "rule_set": [
-          "lyc8503-geoip-cn",
-          "lyc8503-geosite-apple",
-          "lyc8503-geosite-china-list"
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "GeoIP-CN"
+          },
+          {
+            "rule_set": "GeoLocation-!CN",
+            "invert": true
+          }
         ],
         "outbound": "🎯 全球直连"
       },
+
       {
         "action": "route",
         "rule_set": [
@@ -415,7 +378,9 @@
           "lyc8503-geosite-apple"
         ],
         "outbound": "🎯 全球直连"
-      }
+      },
+
+
     ],
     "rule_set": [
 
@@ -448,6 +413,14 @@
         "tag": "Category-Ads",
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ads-all.srs",
+        "format": "binary",
+        "download_detour": "🎯 全球直连"
+      },
+      
+      {
+        "tag": "GeoSite-CN",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
         "format": "binary",
         "download_detour": "🎯 全球直连"
       },
@@ -555,7 +528,7 @@
       "server": "Local-DNS",
       "strategy": "ipv4_only",
       "rewrite_ttl": 60,
-      "client_subnet": "0.0.0.0/24"
+      "client_subnet": "117.25.131.179/24"
     },
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi"],  
@@ -567,7 +540,6 @@
       {
         "tag": "Local-DNS",
         "type": "https",
-        "domain_resolver": "Local-DNS-Resolver",
         "server_port": 443,
         "server": "223.5.5.5",
         "path": "/dns-query",
@@ -595,20 +567,12 @@
         ],
         "fallback_delay": "300ms"
       },
-    
-      {
-        "tag": "Local-DNS-Resolver",
-        "type": "udp",
-        "server_port": 53,
-        "server": "223.5.5.5"
-      },
       
       
       {
         "tag": "Remote-DNS",
         "type": "tls",
         "detour": "🚀 节点选择",
-        "domain_resolver": "Remote-DNS-Resolver",
         "server_port": 853,
         "server": "9.9.9.11",
         "tls": {  
@@ -630,13 +594,6 @@
           "cellular"
         ],
         "fallback_delay": "300ms"
-      },
-      {
-        "tag": "Remote-DNS-Resolver",
-        "type": "udp",
-        "detour": "🚀 节点选择",
-        "server_port": 53,
-        "server": "8.8.8.8"
       }
     ],
     "rules": [
@@ -653,22 +610,26 @@
       },
 
       {
-        "action": "route",
         "rule_set": [
-          "lyc8503-geosite-apple",
-          "lyc8503-geosite-china-list"
+          "GeoSite-CN"
         ],
-        "server": "Local-DNS",
-        "client_subnet": "0.0.0.0/24" 
+        "server": "Local-DNS"
       },
       {
-        "action": "route",
-        "rule_set": [
-          "GeoLocation-!CN"
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "GeoLocation-!CN",
+            "invert": true
+          },
+          {
+            "rule_set": "GeoIP-CN"
+          }
         ],
         "server": "Remote-DNS",
-        "rewrite_ttl": 600,
-        "client_subnet": "0.0.0.0/24" // Any China client IP address
+        //"rewrite_ttl": 600,
+        "client_subnet": "117.25.131.179/24" // Any China client IP address
       }
     ],
     "cache_capacity": 2048,  
@@ -678,6 +639,6 @@
     "independent_cache": true,
     "final": "Remote-DNS",
     "strategy": "ipv4_only",
-    "client_subnet": "0.0.0.0/24"
+    "client_subnet": "117.25.131.179/24"
   }
 }

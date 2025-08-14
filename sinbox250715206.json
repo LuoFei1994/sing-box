@@ -107,11 +107,6 @@
       "interrupt_exist_connections": true,
       "outbounds": [
         "🎈 自动选择",
-        "vless+vision+reality",
-        "vless+vision+reality+TOR",
-        "vless+brutal算法",
-        "Hysteria2-2-singbox",
-        "anytls+reality",
         "wg-ep",
         "proxy",
         "RN-tuic",
@@ -130,11 +125,6 @@
       "tolerance": 150,
       "interrupt_exist_connections": true,
       "outbounds": [
-        "vless+vision+reality",
-        "vless+vision+reality+TOR",
-        "vless+brutal算法",
-        "Hysteria2-2-singbox",
-        "anytls+reality",
         "wg-ep",
         "proxy",
         "RN-tuic",
@@ -251,128 +241,6 @@
         ]
       }
     },
-    {
-      "type": "vless",
-      "tag": "vless+vision+reality",
-      "server": "38.182.101.246",
-      "server_port": 9090,
-      "uuid": "39d928c7-735a-497a-bc3d-425a55743d80",
-      "packet_encoding": "xudp",
-      "tls": {
-        "enabled": true,
-        "server_name": "yahoo.com",
-        /*"fragment": true,  
-        "fragment_fallback_delay": "500ms",  
-        "record_fragment": false,*/
-        "insecure": false,
-        "utls": {
-          "enabled": true,
-          "fingerprint": "ios"
-        },
-        "reality": {
-          "enabled": true,
-          "public_key": "JMcsaZOdXQ_iZygS8OxTo-bWnDeMVnngzZM_bcRe13s",
-          "short_id": "d416e01452"
-        }
-      }
-    },
-    {
-      "type": "vless",
-      "tag": "vless+vision+reality+TOR",
-      "server": "38.182.101.246",
-      "server_port": 9090,
-      "uuid": "3424df7b-3e89-4e59-b23f-46992de92c32",
-      "packet_encoding": "xudp",
-      "tls": {
-        "enabled": true,
-        "server_name": "yahoo.com",
-        /*"fragment": true,  
-        "fragment_fallback_delay": "500ms",  
-        "record_fragment": false,*/
-        "insecure": false,
-        "utls": {
-          "enabled": true,
-          "fingerprint": "ios"
-        },
-        "reality": {
-          "enabled": true,
-          "public_key": "JMcsaZOdXQ_iZygS8OxTo-bWnDeMVnngzZM_bcRe13s",
-          "short_id": "d416e01452"
-        }
-      }
-    },
-    
-    {
-      "tag": "Hysteria2-2-singbox",
-      "type": "hysteria2",
-      "server": "38.182.101.246",
-      "server_port": 8443,
-      "up_mbps": 20,
-      "down_mbps": 100,
-      "password": "654321",
-      "tls": {
-          "enabled": true,
-          "server_name": "aaa.luofeimm.dpdns.org",
-          "insecure": false,
-          "alpn": [
-              "h3"
-          ]
-       }
-    },
-    {
-            "type": "anytls",
-            "tag": "anytls+reality",
-            "server": "38.182.101.246",
-            "server_port": 443,
-            "password": "123456",
-            "idle_session_check_interval": "30s",
-            "idle_session_timeout": "30s",
-            "min_idle_session": 5,
-            "tls": {
-                "enabled": true,
-                "disable_sni": false,
-                "server_name": "yahoo.com",
-                "insecure": false,
-                "utls": {
-                    "enabled": true,
-                    "fingerprint": "chrome"
-                },
-                "reality": {
-                    "enabled": true,
-                    "public_key": "ZzE29FNipqOf7Y7dHlt4ps6eJiy-8xL7oENhEda25Hs",
-                    "short_id": "d416e01452"
-                }
-            }
-      },
-     {
-        "type": "vless",
-        "tag": "vless+brutal算法",
-        "server": "38.182.101.246",
-        "server_port": 8888,
-        "uuid": "df946a9f-222b-42e7-80de-a0f4d5606998",
-        "flow": "",
-        "network": "tcp",
-        "tls": {
-          "enabled": true,
-          "server_name": "aaa.luofeimm.dpdns.org",
-          "utls": {
-            "enabled": true,
-            "fingerprint": "ios"
-          }
-        },
-        "multiplex": {
-          "enabled": true,
-          "protocol": "smux",
-          "max_connections": 1,
-          "min_streams": 4,
-          "padding": false,
-          "brutal": {
-            "enabled": true,
-            "up_mbps": 100,
-            "down_mbps": 300
-          }
-        }
-      },
     {
       "type": "vmess",
       "tag": "proxy",

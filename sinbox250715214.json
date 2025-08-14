@@ -216,17 +216,6 @@
       "uuid": "665f1607-fefd-47ac-94c8-b088dcaf6c08",
       "security": "auto",
       "alter_id": 0
-    },
-    {
-      "type": "wireguard",
-      "tag": "wireguard-dsb1",
-      "server": "107.150.27.18",
-      "server_port": 31645,
-      "local_address": ["10.0.1.2/32"],
-      "private_key": "2L40EZMxfyvnSsN54ayzjwZfNNXNdhUUbckGpIt3BVQ=",
-      "peer_public_key": "u2zxrMvDBSXhNaU6Jk/AZ8YfcvsYM7lAXLE8HdRw+nc=",
-      "pre_shared_key": "QdmsTASsZHr7tUhhhODUEP6XUDaod1fWIPIkTfNmjwc=",
-      "mtu": 1420
     }
   ],
   "route": {

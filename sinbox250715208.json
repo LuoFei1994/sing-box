@@ -83,18 +83,19 @@
       "tag": "wireguard-dsb",
       "system": false,
       "mtu": 1408,
-      "address": ["10.0.0.78/32"],
+      "address": ["10.0.1.2/32"],
       "private_key": "2L40EZMxfyvnSsN54ayzjwZfNNXNdhUUbckGpIt3BVQ=",
       "peers": [
         {
           "address": "107.150.27.18",
           "port": 31645,
-          "public_key": "FH8E3YMTSA0pnoRvekIlojAyDvdUJgH/VWWe7eo7aRA=",
+          "public_key": "u2zxrMvDBSXhNaU6Jk/AZ8YfcvsYM7lAXLE8HdRw+nc=",
           "pre_shared_key": "QdmsTASsZHr7tUhhhODUEP6XUDaod1fWIPIkTfNmjwc=",
           "allowed_ips": [
-            "10.0.1.2/32"
+            "0.0.0.0/0",
+            "::/0"
           ],
-          "persistent_keepalive_interval": 25
+          "persistent_keepalive_interval": 30
         }
         ]
       }

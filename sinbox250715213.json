@@ -226,8 +226,7 @@
       "private_key": "2L40EZMxfyvnSsN54ayzjwZfNNXNdhUUbckGpIt3BVQ=",
       "peer_public_key": "u2zxrMvDBSXhNaU6Jk/AZ8YfcvsYM7lAXLE8HdRw+nc=",
       "pre_shared_key": "QdmsTASsZHr7tUhhhODUEP6XUDaod1fWIPIkTfNmjwc=",
-      "mtu": 1420,
-      "keepalive_interval": "30s"
+      "mtu": 1420
     }
   ],
   "route": {

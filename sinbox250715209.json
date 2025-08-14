@@ -1,7 +1,7 @@
 {
   "log": {
     "disabled": false, 
-    "level": "warn",
+    "level": "error",
     "output": "",
     "timestamp": false
   },
@@ -30,51 +30,16 @@
   "inbounds": [
     {
       "domain_strategy":"ipv4_only",
-      "endpoint_independent_nat":false,
+      "endpoint_independent_nat":true,
       "address":[
         "172.18.0.1/30"
         //"fdfe:dcba:9876::1/126"
         ],
-      "mtu":9000,
-      "stack":"gvisor",
+      "mtu":1500,
+      "stack":"mixed",
       "auto_route": true,
-      "iproute2_table_index": 2022,
-      "iproute2_rule_index": 9000,
       "tag": "tun-in",
-      "type":"tun",
-      "platform": {  
-        "http_proxy": {  
-          "enabled": true,  
-          "server": "127.0.0.1",  
-          "server_port": 20213,  
-          "bypass_domain": [],
-          "match_domain": []
-        }  
-      }  
-    },
-    {
-      "domain_strategy":"prefer_ipv4",
-      "listen":"127.0.0.1",
-      "listen_port":2333,
-      "tag":"socks-in",
-      "type":"socks",
-      "users":[]
-    },
-    {
-      "domain_strategy":"prefer_ipv4",
-      "listen":"127.0.0.1",
-      "listen_port":2334,
-      "tag":"mixed-in",
-      "type":"mixed",
-      "users":[]
-    },
-    {
-      "domain_strategy":"prefer_ipv4",
-      "listen":"127.0.0.1",
-      "listen_port":2335,
-      "tag":"http-in",
-      "type":"http",
-      "users":[]
+      "type":"tun"  
     }
   ],
   "endpoints":[
@@ -104,7 +69,7 @@
     {
       "type": "selector",
       "tag": "🚀 节点选择",
-      "interrupt_exist_connections": true,
+      "interrupt_exist_connections": false,
       "outbounds": [
         "🎈 自动选择",
         "wireguard-dsb",
@@ -123,7 +88,7 @@
       "url": "https://www.gstatic.com/generate_204",
       "interval": "3m",
       "tolerance": 150,
-      "interrupt_exist_connections": true,
+      "interrupt_exist_connections": false,
       "outbounds": [
         "wireguard-dsb",
         "proxy",
@@ -330,7 +295,7 @@
         ]
       },
 
-      {
+      /*{
         "type": "logical",
         "mode": "or",
         "rules": [
@@ -347,7 +312,7 @@
         ],
         "action": "reject",
         "method": "drop"
-      },
+      },*/
       
       {
         "action": "route",
@@ -543,9 +508,6 @@
         "server_port": 443,
         "server": "223.5.5.5",
         "path": "/dns-query",
-        "headers": {  
-          "User-Agent": "edge"  
-        },
         "tls": {  
           "enabled": true,  
           "server_name": "dns.alidns.com",  
@@ -554,9 +516,6 @@
             "fingerprint": "android"
           }
         },
-        //"tcp_fast_open": true, 冲突
-        "tcp_multi_path": true,
-        "udp_fragment": true,
         "network_strategy": "fallback",
         "network_type": [
           "wifi",
@@ -582,19 +541,7 @@
             "enabled": true,
             "fingerprint": "ios"
           }
-        },
-        "tcp_multi_path": true,
-        "udp_fragment": true,
-        "network_strategy": "fallback",
-        "network_type": [
-          "wifi",
-          "cellular"
-        ],
-        "fallback_network_type": [
-          "cellular"
-        ],
-        "fallback_delay": "300ms"
-      }
+        }
     ],
     "rules": [
       
@@ -637,7 +584,7 @@
     "disable_cache": false,
     "disable_expire": false,
     "independent_cache": true,
-    "final": "Remote-DNS",
+    "final": "Local-DNS",
     "strategy": "ipv4_only",
     "client_subnet": "117.25.131.179/24"
   }

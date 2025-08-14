@@ -86,8 +86,7 @@
     {
       "type": "urltest",
       "tag": "🎈 自动选择",
-      //"url": "https://www.gstatic.com/generate_204",
-      "url": "https://init.itunes.apple.com/bag.xml",
+      "url": "https://www.gstatic.com/generate_204",
       "interval": "5m",
       "tolerance": 150,
       "interrupt_exist_connections": false,

@@ -73,6 +73,7 @@
       "outbounds": [
         "🎈 自动选择",
         "wireguard-dsb",
+        "wireguard-dsb1",
         "proxy",
         "RN-tuic",
         "RN-vless",
@@ -86,11 +87,12 @@
       "type": "urltest",
       "tag": "🎈 自动选择",
       "url": "https://www.gstatic.com/generate_204",
-      "interval": "3m",
+      "interval": "5m",
       "tolerance": 150,
       "interrupt_exist_connections": false,
       "outbounds": [
         "wireguard-dsb",
+        "wireguard-dsb1",
         "proxy",
         "RN-tuic",
         "RN-vless",
@@ -214,6 +216,18 @@
       "uuid": "665f1607-fefd-47ac-94c8-b088dcaf6c08",
       "security": "auto",
       "alter_id": 0
+    },
+    {
+      "type": "wireguard",
+      "tag": "wireguard-dsb1",
+      "server": "107.150.27.18",
+      "server_port": 31645,
+      "local_address": ["10.0.1.2/32"],
+      "private_key": "2L40EZMxfyvnSsN54ayzjwZfNNXNdhUUbckGpIt3BVQ=",
+      "peer_public_key": "u2zxrMvDBSXhNaU6Jk/AZ8YfcvsYM7lAXLE8HdRw+nc=",
+      "pre_shared_key": "QdmsTASsZHr7tUhhhODUEP6XUDaod1fWIPIkTfNmjwc=",
+      "mtu": 1420,
+      "keepalive_interval": "30s"
     }
   ],
   "route": {
@@ -513,7 +527,7 @@
           "server_name": "dns.alidns.com",  
           "utls": {
             "enabled": true,
-            "fingerprint": "android"
+            "fingerprint": "chrome"
           }
         },
         "network_strategy": "fallback",
@@ -539,7 +553,7 @@
           "server_name": "dns11.quad9.net",
           "utls": {
             "enabled": true,
-            "fingerprint": "ios"
+            "fingerprint": "chrome"
           }
         }
       } 
@@ -562,22 +576,14 @@
           "GeoSite-CN"
         ],
         "server": "Local-DNS"
+        "client_subnet": "117.25.0.0/16" // Any China client IP address
       },
+         "invert": true
       {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
-            "rule_set": "GeoLocation-!CN",
-            "invert": true
-          },
-          {
-            "rule_set": "GeoIP-CN"
-          }
+        "rule_set": [
+          "GeoLocation-!CN"
         ],
-        "server": "Remote-DNS",
-        //"rewrite_ttl": 600,
-        "client_subnet": "117.25.131.179/24" // Any China client IP address
+        "server": "Remote-DNS"
       }
     ],
     "cache_capacity": 2048,  
@@ -585,8 +591,7 @@
     "disable_cache": false,
     "disable_expire": false,
     "independent_cache": true,
-    "final": "Local-DNS",
-    "strategy": "ipv4_only",
-    "client_subnet": "117.25.131.179/24"
+    "final": "Remote-DNS",
+    "strategy": "ipv4_only"
   }
 }

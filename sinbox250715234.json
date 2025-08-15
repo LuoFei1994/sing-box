@@ -24,7 +24,7 @@
       "cache_id": "",
       "store_fakeip": true,
       "store_rdrc": true,
-      "rdrc_timeout": "7d" 
+      "rdrc_timeout": "7d"
     }
   },
   "inbounds": [
@@ -38,6 +38,7 @@
       "mtu":1500,
       "stack":"mixed",
       "auto_route": true,
+      "strict_route": true,
       "tag": "tun-in",
       "type":"tun"  
     }
@@ -164,7 +165,7 @@
         "reality": {
           "enabled": true,
           "public_key": "eugUhe5PLdoCryH8wv-proBfSDY30xKI-dPZtkVkTkk",
-          "short_id": "dd733b00"
+          "short_id": ["dd733b00", "4e07fb"]
         }
       }
     },
@@ -244,6 +245,8 @@
         "action": "hijack-dns"
       },
 
+      
+
       {
         "ip_is_private": true,
         "action": "route",
@@ -281,17 +284,7 @@
         "action": "reject",  
         "method": "drop"  
       },
-
       {
-        "action": "reject",
-        "method": "drop",  //default:对于 TCP 连接回复 RST，对于 UDP 包回复 ICMP 端口不可达。drop: 丢弃数据包。
-        //"no_drop": false,      //如果未启用，则 30 秒内触发 50 次后，method 将被暂时覆盖为 drop。当 method 设为 drop 时不可用。
-        "rule_set": [
-          "Category-Ads"
-        ]
-      },
-
-      /*{
         "type": "logical",
         "mode": "or",
         "rules": [
@@ -309,13 +302,77 @@
         "action": "reject",
         "method": "drop"
       },*/
-      
 
+      
+      // ================== 启动批量预解析（配置加载即执行一次） ==================
+      // 🎯 国际关键服务：Apple / Google / GitHub / Cloudflare / Microsoft 等
+      {
+        "rule_set": [
+          "AppleID",
+          "Apple Domain",
+          "AppStore",
+          "Google",
+          "GitHub",
+          "Cloudflare",
+          "Microsoft"
+        ],
+        "action": "resolve",
+        "server": "Remote-DNS"      // 远程隐私优化 DNS（无 ECS）
+      },
+  
+      // 🇨🇳 国内常用域名：百度 / 腾讯 / 阿里 / 哔哩哔哩 等
+      {
+        "rule_set": [
+          "CN-Whitelist-Full",
+          "Baidu",
+          "Tencent",
+          "Alibaba",
+          "Bilibili"
+        ],
+        "action": "resolve",
+        "server": "Local-DNS"       // 本地可信 DNS
+      },
+  
+      // ================== 周期性预解析（刷新 DNS 缓存，防止过期） ==================
+      // 机制：每隔 30 分钟执行一次（可调节 interval）
+      {
+        "rule_set": [
+          "AppleID",
+          "Apple Domain",
+          "AppStore",
+          "Google",
+          "GitHub",
+          "Cloudflare",
+          "Microsoft",
+          "CN-Whitelist",
+          "Baidu",
+          "Tencent",
+          "Alibaba",
+          "Bilibili",
+          "CN-Whitelist-Full"
+        ],
+        "action": "resolve",
+        "server": "Remote-DNS",
+        "interval": "30m"           // 定时刷新周期
+      },
+      
+      {
+        "action": "reject",
+        "method": "drop",  //default:对于 TCP 连接回复 RST，对于 UDP 包回复 ICMP 端口不可达。drop: 丢弃数据包。
+        //"no_drop": false,      //如果未启用，则 30 秒内触发 50 次后，method 将被暂时覆盖为 drop。当 method 设为 drop 时不可用。
+        "rule_set": [
+          "Category-Ads"
+        ]
+      },
+      
+      // ================== 正式路由规则（解析完成后执行） ================== 
       {
         "action": "route",
         "rule_set": [
+          "CN-Whitelist-Full",
           "AliPay",
           "WeChat",
+          "Tencent",
           "GeoLocation-CN",
           "GeoIP-CN"
         ],
@@ -333,11 +390,17 @@
         "outbound": "🚀 节点选择"
       },
 
-      
-
-
     ],
     "rule_set": [
+      
+      //国内域名白名单 copilot的ai生成的
+      {
+        "tag": "CN-Whitelist-Full",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/LuoFei1994/sing-box@refs/heads/main/CN-Whitelist-Full.json",
+        "format": "source",
+        "download_detour": "🎯 全球直连"
+      },
 
       {
         "tag": "lyc8503-geoip-cn",

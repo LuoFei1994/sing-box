@@ -123,33 +123,6 @@
         "🐟 漏网之鱼"
       ]
     },
-    // 在 outbounds 里添加一个专用探测出口
-    {
-      "tag": "DNS-Keepalive-Tencent",
-      "type": "url-test",
-      "outbounds": ["🎯 全球直连"],
-      "url": "https://res.wx.qq.com/t/wx_fed/images/favicon.ico",
-      "interval": "30m", 
-      "tolerance": 500
-    },
-    {
-      "tag": "DNS-Keepalive-JDCDN",
-      "type": "url-test",
-      "outbounds": ["🎯 全球直连"],
-      "url": "https://static.360buyimg.com/favicon.ico",
-      "interval": "30m", 
-      "tolerance": 500
-    },
-    {
-      "tag": "DNS-Keepalive-Bilibili",
-      "type": "url-test",
-      "outbounds": ["🎯 全球直连"],
-      "url": "https://static.hdslb.com/favicon.ico",
-      "interval": "30m", 
-      "tolerance": 500
-    },
-
-
     
     {
       "type": "tuic",
@@ -333,33 +306,9 @@
       },*/
 
       
-      // ================== 启动批量预解析（配置加载即执行一次） ==================
-      // 🎯 国际关键服务：Apple / Google / GitHub / Cloudflare / Microsoft 等
+      
       {
-        "rule_set": [
-          "AppleID",
-          "Apple Domain",
-          "AppStore",
-          "Google",
-          "GitHub",
-          "Cloudflare",
-          "Microsoft"
-        ],
-        "action": "resolve",
-        "server": "Remote-DNS"      // 远程隐私优化 DNS（无 ECS）
-      },
-  
-      // 🇨🇳 国内常用域名：百度 / 腾讯 / 阿里 / 哔哩哔哩 等
-      {
-        "rule_set": [
-          "CN-Whitelist-Full",
-          "Baidu",
-          "Tencent",
-          "Alibaba",
-          "Bilibili"
-        ],
-        "action": "resolve",
-        "server": "Local-DNS"       // 本地可信 DNS
+        "action": "resolve"
       },
   
       {
@@ -371,7 +320,6 @@
         ]
       },
       
-      // ================== 正式路由规则（解析完成后执行） ================== 
       {
         "action": "route",
         "rule_set": [

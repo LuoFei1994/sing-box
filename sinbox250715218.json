@@ -60,7 +60,7 @@
             "0.0.0.0/0",
             "::/0"
           ],
-          "persistent_keepalive_interval": 30
+          "persistent_keepalive_interval": 60
         }
         ]
       }
@@ -85,7 +85,8 @@
     {
       "type": "urltest",
       "tag": "🎈 自动选择",
-      "url": "https://www.gstatic.com/generate_204",
+      //"url": "https://www.gstatic.com/generate_204",
+      "url": "https://init.itunes.apple.com/bag.xml",
       "interval": "5m",
       "tolerance": 150,
       "interrupt_exist_connections": false,
@@ -130,6 +131,11 @@
       "uuid": "bb1a2607-2755-4344-e9fb-eaa792d35541",
       "password": "SaCqA8IOGG",
       "congestion_control": "bbr",
+      "udp_relay_mode": "native",
+      "heartbeat_interval": "60s",        // 原来 30s
+      "max_open_streams": 64,             // 限制并发流
+      "reuse_addr": true,                 // 端口复用
+      "zero_rtt_handshake": false,        // 关闭 0-RTT
       "tls": {
         "enabled": true,
         "server_name": "iosapps.itunes.apple.com",
@@ -195,6 +201,10 @@
       "uuid": "27f1b15a-5f3e-42de-b0bd-fb6bf2ae81ed",
       "password": "p640m0hoZU",
       "congestion_control": "bbr",
+      "heartbeat_interval": "60s", // 修改
+      "max_open_streams": 64,      // 修改
+      "reuse_addr": true,          // 修改
+      "zero_rtt_handshake": false, // 修改
       "tls": {
         "enabled": true,
         "server_name": "iosapps.itunes.apple.com",
@@ -274,17 +284,6 @@
         "action": "reject",  
         "method": "drop"  
       },
-      
-      {
-        "action": "route",
-        "rule_set": [
-          "lyc8503-geoip-cn",
-          "lyc8503-geosite-apple",
-          "lyc8503-geosite-china-list"
-        ],
-        "invert": true,
-        "outbound": "🚀 节点选择"
-      }*/
 
       {
         "action": "reject",
@@ -314,25 +313,31 @@
         "method": "drop"
       },*/
       
-      {
-        "action": "route",
-        "rule_set": [
-          "GeoLocation-CN",
-          "GeoIP-CN"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      
 
       {
         "action": "route",
         "rule_set": [
           "AliPay",
           "WeChat",
-          "lyc8503-geosite-apple"
+          "lyc8503-geosite-apple",
+          "Apple Domain",
+          "AppleID",
+          "AppStore",
+          "GeoLocation-CN",
+          "GeoIP-CN"
         ],
         "outbound": "🎯 全球直连"
       },
+
+      {
+        "action": "route",
+        "rule_set": [
+          "GeoLocation-!CN"
+        ],
+        "outbound": "🚀 节点选择"
+      },
+
+      
 
 
     ],
@@ -504,16 +509,7 @@
             "enabled": true,
             "fingerprint": "chrome"
           }
-        },
-        "network_strategy": "fallback",
-        "network_type": [
-          "wifi",
-          "cellular"
-        ],
-        "fallback_network_type": [
-          "cellular"
-        ],
-        "fallback_delay": "300ms"
+        }
       },
       
       
@@ -551,7 +547,7 @@
           "GeoSite-CN"
         ],
         "server": "Local-DNS",
-        "client_subnet": "117.16.0.0/12" // Any China client IP address
+        "client_subnet": "117.16.0.0/12" // 修改: ECS 粗粒度
       },
       {
         "rule_set": [

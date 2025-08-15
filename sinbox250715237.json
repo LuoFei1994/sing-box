@@ -123,6 +123,34 @@
         "🐟 漏网之鱼"
       ]
     },
+    // 在 outbounds 里添加一个专用探测出口
+    {
+      "tag": "DNS-Keepalive-Tencent",
+      "type": "url-test",
+      "outbounds": ["🎯 全球直连"],
+      "url": "https://res.wx.qq.com/t/wx_fed/images/favicon.ico",
+      "interval": "30m", 
+      "tolerance": 500
+    },
+    {
+      "tag": "DNS-Keepalive-JDCDN",
+      "type": "url-test",
+      "outbounds": ["🎯 全球直连"],
+      "url": "https://static.360buyimg.com/favicon.ico",
+      "interval": "30m", 
+      "tolerance": 500
+    },
+    {
+      "tag": "DNS-Keepalive-Bilibili",
+      "type": "url-test",
+      "outbounds": ["🎯 全球直连"],
+      "url": "https://static.hdslb.com/favicon.ico",
+      "interval": "30m", 
+      "tolerance": 500
+    },
+
+
+    
     {
       "type": "tuic",
       "tag": "RN-tuic",
@@ -223,6 +251,7 @@
       "security": "auto",
       "alter_id": 0
     }
+    
   ],
   "route": {
     "rules": [
@@ -333,29 +362,6 @@
         "server": "Local-DNS"       // 本地可信 DNS
       },
   
-      // ================== 周期性预解析（刷新 DNS 缓存，防止过期） ==================
-      // 机制：每隔 30 分钟执行一次（可调节 interval）
-      {
-        "rule_set": [
-          "AppleID",
-          "Apple Domain",
-          "AppStore",
-          "Google",
-          "GitHub",
-          "Cloudflare",
-          "Microsoft",
-          "CN-Whitelist",
-          "Baidu",
-          "Tencent",
-          "Alibaba",
-          "Bilibili",
-          "CN-Whitelist-Full"
-        ],
-        "action": "resolve",
-        "server": "Remote-DNS",
-        "interval": "30m"           // 定时刷新周期
-      },
-      
       {
         "action": "reject",
         "method": "drop",  //default:对于 TCP 连接回复 RST，对于 UDP 包回复 ICMP 端口不可达。drop: 丢弃数据包。
@@ -586,7 +592,7 @@
             "fingerprint": "ios"
           }
         }
-      } 
+      }
     ],
     "rules": [
       

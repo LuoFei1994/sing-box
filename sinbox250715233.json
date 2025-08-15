@@ -512,7 +512,7 @@
       {
         "tag": "Remote-DNS",
         "type": "tls",
-        "detour": "🎈 自动选择",
+        "detour": "🚀 节点选择",
         "server_port": 853,
         "server": "9.9.9.11",
         "tls": {  
@@ -543,7 +543,7 @@
           "GeoSite-CN"
         ],
         "server": "Local-DNS",
-        "client_subnet": "0.0.0.0/0" // 修改: ECS 粗粒度
+        "client_subnet": "0.0.0.0/0" 
       },
 
       { 

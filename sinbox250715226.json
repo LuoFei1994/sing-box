@@ -106,7 +106,7 @@
     {
       "type": "selector",
       "tag": "🐟 漏网之鱼",
-      "interrupt_exist_connections": true,
+      "interrupt_exist_connections": false,
       "outbounds": [
         "🚀 节点选择",
         "🎯 全球直连"
@@ -115,7 +115,7 @@
     {
       "type": "selector",
       "tag": "GLOBAL",
-      "interrupt_exist_connections": true,
+      "interrupt_exist_connections": false,
       "outbounds": [
         "🚀 节点选择",
         "🎈 自动选择",
@@ -482,7 +482,7 @@
     
     //下面默认dns是给节点使用的
     "default_domain_resolver": {
-      "server": "Local-DNS",
+      "server": "Remote-DNS",
       "strategy": "ipv4_only",
       "rewrite_ttl": 60
       //"client_subnet": "202.16.0.0/12"
@@ -514,7 +514,7 @@
       {
         "tag": "Remote-DNS",
         "type": "tls",
-        "detour": "🚀 节点选择",
+        "detour": "🎈 自动选择",
         "server_port": 853,
         "server": "9.9.9.11",
         "tls": {  
@@ -547,6 +547,15 @@
         "server": "Local-DNS",
         "client_subnet": "202.16.0.0/12" // 修改: ECS 粗粒度
       },
+
+      { 
+        "domain_suffix": [
+          "dns11.quad9.net",
+          "cloudflare-dns.com"
+        ],
+        "server": "Local-DNS"
+      },
+      
       {
         "rule_set": [
           "GeoLocation-!CN"

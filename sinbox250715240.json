@@ -27,6 +27,13 @@
       "rdrc_timeout": "7d"
     }
   },
+  "ntp": {
+        "enabled": false,
+        "server": "time.apple.com",
+        "server_port": 123,
+        "interval": "30m",
+        "detour": "direct"
+    },
   "inbounds": [
     {
       "domain_strategy":"ipv4_only",
@@ -35,10 +42,20 @@
         "172.18.0.1/30"
         //"fdfe:dcba:9876::1/126"
         ],
+      "route_address": [
+        "0.0.0.0/1",
+        "128.0.0.0/1",
+        "::/1",
+        "8000::/1"
+        ],
+      "route_exclude_address": [
+        "224.0.0.0/4"
+        ],
       "mtu":1500,
-      "stack":"mixed",
+      "stack":"gvisor",
       "auto_route": true,
       "strict_route": true,
+      "auto_redirect": true,
       "tag": "tun-in",
       "type":"tun"  
     }
@@ -502,10 +519,15 @@
         "tag": "Local-DNS",
         "type": "https",
         "server_port": 443,
-        "server": "223.5.5.5",
+        "server": "dns.alidns.com",
+        "domain_resolver": "hosts"
         "path": "/dns-query",
+        "headers": {
+                    "Host": "dns.alidns.com"
+          },
         "tls": {  
-          "enabled": true,  
+          "enabled": true,
+          "disable_sni": false,
           "server_name": "dns.alidns.com",  
           "utls": {
             "enabled": true,
@@ -520,7 +542,8 @@
         "type": "tls",
         "detour": "🚀 节点选择",
         "server_port": 853,
-        "server": "9.9.9.11",
+        "server": "dns11.quad9.net",
+        "domain_resolver": "hosts",
         "tls": {  
           "enabled": true,  
           "server_name": "dns11.quad9.net",
@@ -529,7 +552,21 @@
             "fingerprint": "ios"
           }
         }
-      }
+      },
+      {
+         "tag": "hosts",
+         "type": "hosts",
+         "predefined": {
+           "dns.alidns.com": [
+             "223.5.5.5",
+             "223.6.6.6"
+             ],
+          "dns11.quad9.net": [
+            "9.9.9.11",
+            "149.112.112.11"
+            ]
+          }
+      },
     ],
     "rules": [
       

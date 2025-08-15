@@ -358,7 +358,7 @@
           "GeoLocation-!CN"
         ],
         "outbound": "🚀 节点选择"
-      },
+      }
 
     ],
     "rule_set": [
@@ -520,7 +520,7 @@
         "type": "https",
         "server_port": 443,
         "server": "dns.alidns.com",
-        "domain_resolver": "hosts"
+        "domain_resolver": "hosts",
         "path": "/dns-query",
         "headers": {
                     "Host": "dns.alidns.com"
@@ -566,7 +566,7 @@
             "149.112.112.11"
             ]
           }
-      },
+      }
     ],
     "rules": [
       

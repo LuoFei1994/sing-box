@@ -42,15 +42,6 @@
         "172.18.0.1/30"
         //"fdfe:dcba:9876::1/126"
         ],
-      "route_address": [
-        "0.0.0.0/1",
-        "128.0.0.0/1",
-        "::/1",
-        "8000::/1"
-        ],
-      "route_exclude_address": [
-        "224.0.0.0/4"
-        ],
       "mtu":1500,
       "stack":"gvisor",
       "auto_route": true,

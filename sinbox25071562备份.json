@@ -1,7 +1,7 @@
 {
   "log": {
     "disabled": false, 
-    "level": "warn",
+    "level": "error",
     "output": "",
     "timestamp": false
   },
@@ -30,51 +30,16 @@
   "inbounds": [
     {
       "domain_strategy":"ipv4_only",
-      "endpoint_independent_nat":false,
+      "endpoint_independent_nat":true,
       "address":[
         "172.18.0.1/30"
         //"fdfe:dcba:9876::1/126"
         ],
-      "mtu":9000,
-      "stack":"gvisor",
+      "mtu":1500,
+      "stack":"mixed",
       "auto_route": true,
-      "iproute2_table_index": 2022,
-      "iproute2_rule_index": 9000,
       "tag": "tun-in",
-      "type":"tun",
-      "platform": {  
-        "http_proxy": {  
-          "enabled": true,  
-          "server": "127.0.0.1",  
-          "server_port": 20213,  
-          "bypass_domain": [],
-          "match_domain": []
-        }  
-      }  
-    },
-    {
-      "domain_strategy":"prefer_ipv4",
-      "listen":"127.0.0.1",
-      "listen_port":2333,
-      "tag":"socks-in",
-      "type":"socks",
-      "users":[]
-    },
-    {
-      "domain_strategy":"prefer_ipv4",
-      "listen":"127.0.0.1",
-      "listen_port":2334,
-      "tag":"mixed-in",
-      "type":"mixed",
-      "users":[]
-    },
-    {
-      "domain_strategy":"prefer_ipv4",
-      "listen":"127.0.0.1",
-      "listen_port":2335,
-      "tag":"http-in",
-      "type":"http",
-      "users":[]
+      "type":"tun"  
     }
   ],
   "endpoints":[
@@ -95,7 +60,7 @@
             "0.0.0.0/0",
             "::/0"
           ],
-          "persistent_keepalive_interval": 30
+          "persistent_keepalive_interval": 60
         }
         ]
       }
@@ -104,7 +69,7 @@
     {
       "type": "selector",
       "tag": "🚀 节点选择",
-      "interrupt_exist_connections": true,
+      "interrupt_exist_connections": false,
       "outbounds": [
         "🎈 自动选择",
         "wireguard-dsb",
@@ -120,10 +85,11 @@
     {
       "type": "urltest",
       "tag": "🎈 自动选择",
-      "url": "https://www.gstatic.com/generate_204",
-      "interval": "3m",
+      //"url": "https://www.gstatic.com/generate_204",
+      "url": "https://init.itunes.apple.com/bag.xml",
+      "interval": "5m",
       "tolerance": 150,
-      "interrupt_exist_connections": true,
+      "interrupt_exist_connections": false,
       "outbounds": [
         "wireguard-dsb",
         "proxy",
@@ -165,6 +131,10 @@
       "uuid": "bb1a2607-2755-4344-e9fb-eaa792d35541",
       "password": "SaCqA8IOGG",
       "congestion_control": "bbr",
+      "udp_relay_mode": "native",
+      "heartbeat": "60s",        // 原来 30s
+      "reuse_addr": true,                 // 端口复用
+      "zero_rtt_handshake": false,        // 关闭 0-RTT
       "tls": {
         "enabled": true,
         "server_name": "iosapps.itunes.apple.com",
@@ -230,6 +200,9 @@
       "uuid": "27f1b15a-5f3e-42de-b0bd-fb6bf2ae81ed",
       "password": "p640m0hoZU",
       "congestion_control": "bbr",
+      "heartbeat": "60s", // 修改
+      "reuse_addr": true,          // 修改
+      "zero_rtt_handshake": false, // 修改
       "tls": {
         "enabled": true,
         "server_name": "iosapps.itunes.apple.com",
@@ -309,17 +282,6 @@
         "action": "reject",  
         "method": "drop"  
       },
-      
-      {
-        "action": "route",
-        "rule_set": [
-          "lyc8503-geoip-cn",
-          "lyc8503-geosite-apple",
-          "lyc8503-geosite-china-list"
-        ],
-        "invert": true,
-        "outbound": "🚀 节点选择"
-      }*/
 
       {
         "action": "reject",
@@ -330,7 +292,7 @@
         ]
       },
 
-      {
+      /*{
         "type": "logical",
         "mode": "or",
         "rules": [
@@ -347,25 +309,20 @@
         ],
         "action": "reject",
         "method": "drop"
-      },
+      },*/
       
+
       {
         "action": "route",
-        "rule_set": "GeoLocation-CN",
-        "outbound": "🎯 全球直连"
-      },
-      
-      {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
-            "rule_set": "GeoIP-CN"
-          },
-          {
-            "rule_set": "GeoLocation-!CN",
-            "invert": true
-          }
+        "rule_set": [
+          "AliPay",
+          "WeChat",
+          "lyc8503-geosite-apple",
+          "Apple Domain",
+          "AppleID",
+          "AppStore",
+          "GeoLocation-CN",
+          "GeoIP-CN"
         ],
         "outbound": "🎯 全球直连"
       },
@@ -373,12 +330,12 @@
       {
         "action": "route",
         "rule_set": [
-          "AliPay",
-          "WeChat",
-          "lyc8503-geosite-apple"
+          "GeoLocation-!CN"
         ],
-        "outbound": "🎯 全球直连"
+        "outbound": "🚀 节点选择"
       },
+
+      
 
 
     ],
@@ -527,8 +484,8 @@
     "default_domain_resolver": {
       "server": "Local-DNS",
       "strategy": "ipv4_only",
-      "rewrite_ttl": 60,
-      "client_subnet": "117.25.131.179/24"
+      "rewrite_ttl": 60
+      //"client_subnet": "202.16.0.0/12"
     },
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi"],  
@@ -543,29 +500,14 @@
         "server_port": 443,
         "server": "223.5.5.5",
         "path": "/dns-query",
-        "headers": {  
-          "User-Agent": "edge"  
-        },
         "tls": {  
           "enabled": true,  
           "server_name": "dns.alidns.com",  
           "utls": {
             "enabled": true,
-            "fingerprint": "android"
+            "fingerprint": "chrome"
           }
-        },
-        //"tcp_fast_open": true, 冲突
-        "tcp_multi_path": true,
-        "udp_fragment": true,
-        "network_strategy": "fallback",
-        "network_type": [
-          "wifi",
-          "cellular"
-        ],
-        "fallback_network_type": [
-          "cellular"
-        ],
-        "fallback_delay": "300ms"
+        }
       },
       
       
@@ -582,19 +524,8 @@
             "enabled": true,
             "fingerprint": "ios"
           }
-        },
-        "tcp_multi_path": true,
-        "udp_fragment": true,
-        "network_strategy": "fallback",
-        "network_type": [
-          "wifi",
-          "cellular"
-        ],
-        "fallback_network_type": [
-          "cellular"
-        ],
-        "fallback_delay": "300ms"
-      }
+        }
+      } 
     ],
     "rules": [
       
@@ -613,23 +544,14 @@
         "rule_set": [
           "GeoSite-CN"
         ],
-        "server": "Local-DNS"
+        "server": "Local-DNS",
+        "client_subnet": "202.16.0.0/12" // 修改: ECS 粗粒度
       },
       {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
-            "rule_set": "GeoLocation-!CN",
-            "invert": true
-          },
-          {
-            "rule_set": "GeoIP-CN"
-          }
+        "rule_set": [
+          "GeoLocation-!CN"
         ],
-        "server": "Remote-DNS",
-        //"rewrite_ttl": 600,
-        "client_subnet": "117.25.131.179/24" // Any China client IP address
+        "server": "Remote-DNS"
       }
     ],
     "cache_capacity": 2048,  
@@ -638,7 +560,6 @@
     "disable_expire": false,
     "independent_cache": true,
     "final": "Remote-DNS",
-    "strategy": "ipv4_only",
-    "client_subnet": "117.25.131.179/24"
+    "strategy": "ipv4_only"
   }
 }

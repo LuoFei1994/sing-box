@@ -323,7 +323,6 @@
       {
         "action": "route",
         "rule_set": [
-          "CN-Whitelist-Full",
           "AliPay",
           "WeChat",
           "Tencent",
@@ -346,16 +345,6 @@
 
     ],
     "rule_set": [
-      
-      //国内域名白名单 copilot的ai生成的
-      {
-        "tag": "CN-Whitelist-Full",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/LuoFei1994/sing-box@refs/heads/main/CN-Whitelist-Full.json",
-        "format": "source",
-        "download_detour": "🎯 全球直连"
-      },
-
       {
         "tag": "lyc8503-geoip-cn",
         "type": "remote",

@@ -482,10 +482,10 @@
     
     //下面默认dns是给节点使用的
     "default_domain_resolver": {
-      "server": "Remote-DNS",
+      "server": "Local-DNS",
       "strategy": "ipv4_only",
       "rewrite_ttl": 60
-      //"client_subnet": "202.16.0.0/12"
+      //"client_subnet": "117.16.0.0/12"
     },
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi"],  
@@ -545,7 +545,7 @@
           "GeoSite-CN"
         ],
         "server": "Local-DNS",
-        "client_subnet": "202.16.0.0/12" // 修改: ECS 粗粒度
+        "client_subnet": "117.16.0.0/12" // 修改: ECS 粗粒度
       },
 
       { 

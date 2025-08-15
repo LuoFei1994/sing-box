@@ -132,8 +132,8 @@
       "password": "SaCqA8IOGG",
       "congestion_control": "bbr",
       "udp_relay_mode": "native",
-      "heartbeat_interval": "60s",        // 原来 30s
-      "max_open_streams": 64,             // 限制并发流
+      "heartbeat": "60s",        // 原来 30s
+      "auth_timeout": 3s,             // 限制并发流
       "reuse_addr": true,                 // 端口复用
       "zero_rtt_handshake": false,        // 关闭 0-RTT
       "tls": {
@@ -201,8 +201,8 @@
       "uuid": "27f1b15a-5f3e-42de-b0bd-fb6bf2ae81ed",
       "password": "p640m0hoZU",
       "congestion_control": "bbr",
-      "heartbeat_interval": "60s", // 修改
-      "max_open_streams": 64,      // 修改
+      "heartbeat": "60s", // 修改
+      "auth_timeout": 3s,      // 修改
       "reuse_addr": true,          // 修改
       "zero_rtt_handshake": false, // 修改
       "tls": {

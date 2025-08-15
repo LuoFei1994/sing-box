@@ -318,9 +318,6 @@
           "AliPay",
           "WeChat",
           "lyc8503-geosite-apple",
-          "Apple Domain",
-          "AppleID",
-          "AppStore",
           "GeoLocation-CN",
           "GeoIP-CN"
         ],
@@ -330,6 +327,9 @@
       {
         "action": "route",
         "rule_set": [
+          "AppleID",
+          "Apple Domain",
+          "AppStore",
           "GeoLocation-!CN"
         ],
         "outbound": "🚀 节点选择"
@@ -346,7 +346,7 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/lyc8503/sing-box-rules@refs/heads/rule-set-geoip/geoip-cn.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎈 自动选择"
       },
 
       {
@@ -354,7 +354,7 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/lyc8503/sing-box-rules@refs/heads/rule-set-geosite/geosite-apple.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎈 自动选择"
       },
 
       {
@@ -362,7 +362,7 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/lyc8503/sing-box-rules@refs/heads/rule-set-geosite/geosite-china-list.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎈 自动选择"
       },
 
       
@@ -371,7 +371,7 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ads-all.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎈 自动选择"
       },
       
       {
@@ -379,7 +379,7 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎈 自动选择"
       },
       
       {
@@ -387,21 +387,21 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎈 自动选择"
       },
       {
         "tag": "GeoLocation-!CN",
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎈 自动选择"
       },
       {
         "tag": "GeoLocation-CN",
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-cn.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎈 自动选择"
       },
 
       //支付宝
@@ -410,7 +410,7 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/AliPay/AliPay.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎈 自动选择"
       },
       
       //微信
@@ -419,7 +419,7 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/WeChat/WeChat.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎈 自动选择"
       },
 
       //阿里巴巴
@@ -428,7 +428,7 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Alibaba/Alibaba.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎈 自动选择"
       },
 
       //苹果商店
@@ -437,7 +437,7 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/AppStore/AppStore.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎈 自动选择"
       },
 
       //苹果ID
@@ -446,7 +446,7 @@
         "type": "remote",
         "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geoip/apple.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎈 自动选择"
       },
       
        //苹果域名
@@ -455,7 +455,7 @@
         "type": "remote",
         "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/apple.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎈 自动选择"
       },
 
       //抖音
@@ -464,7 +464,7 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/DouYin/DouYin.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎈 自动选择"
       },
       
       //腾讯
@@ -473,7 +473,7 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Tencent/Tencent.srs",
         "format": "binary",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🎈 自动选择"
       }
       
     ],
@@ -555,7 +555,13 @@
         ],
         "server": "Local-DNS"
       },
-      
+      { "rule_set": [
+        "AppleID",
+        "Apple Domain",
+        "AppStore"
+      ],
+        "server": "Remote-DNS" 
+      },
       {
         "rule_set": [
           "GeoLocation-!CN"

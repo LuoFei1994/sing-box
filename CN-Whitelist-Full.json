@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "rules": [
+    // 🛠 基础服务商
+    { "domain_suffix": "aliyun.com", "type": "domain" },
+    { "domain_suffix": "aliyuncs.com", "type": "domain" },
+    { "domain_suffix": "alipay.com", "type": "domain" },
+    { "domain_suffix": "tenpay.com", "type": "domain" },
+    { "domain_suffix": "qq.com", "type": "domain" },
+    { "domain_suffix": "weixin.qq.com", "type": "domain" },
+    { "domain_suffix": "suning.com", "type": "domain" },
+    { "domain_suffix": "jd.com", "type": "domain" },
+    { "domain_suffix": "jdcloud.com", "type": "domain" },
+
+    // 📱 高频App
+    { "domain_suffix": "bilibili.com", "type": "domain" },
+    { "domain_suffix": "hdslb.com", "type": "domain" },
+    { "domain_suffix": "xiaohongshu.com", "type": "domain" },
+    { "domain_suffix": "meituan.com", "type": "domain" },
+    { "domain_suffix": "meituan.net", "type": "domain" },
+    { "domain_suffix": "dianping.com", "type": "domain" },
+    { "domain_suffix": "ctrip.com", "type": "domain" },
+    { "domain_suffix": "ctrip.cn", "type": "domain" },
+    { "domain_suffix": "qunar.com", "type": "domain" },
+    { "domain_suffix": "hunliji.com", "type": "domain" },
+
+    // 🎵 音乐视频
+    { "domain_suffix": "kugou.com", "type": "domain" },
+    { "domain_suffix": "kuwo.cn", "type": "domain" },
+    { "domain_suffix": "qianqian.com", "type": "domain" },
+    { "domain_suffix": "netease.com", "type": "domain" },
+    { "domain_suffix": "music.163.com", "type": "domain" },
+    { "domain_suffix": "iqiyi.com", "type": "domain" },
+    { "domain_suffix": "iqiyipic.com", "type": "domain" },
+    { "domain_suffix": "youku.com", "type": "domain" },
+    { "domain_suffix": "tudou.com", "type": "domain" },
+    { "domain_suffix": "mgtv.com", "type": "domain" },
+
+    // 📦 电商物流
+    { "domain_suffix": "taobao.com", "type": "domain" },
+    { "domain_suffix": "tmall.com", "type": "domain" },
+    { "domain_suffix": "alicdn.com", "type": "domain" },
+    { "domain_suffix": "aliexpress.com", "type": "domain" },
+    { "domain_suffix": "vip.com", "type": "domain" },
+    { "domain_suffix": "jd.com", "type": "domain" },
+    { "domain_suffix": "yhd.com", "type": "domain" },
+    { "domain_suffix": "kaola.com", "type": "domain" },
+    { "domain_suffix": "zto.com", "type": "domain" },
+    { "domain_suffix": "sto.cn", "type": "domain" },
+    { "domain_suffix": "sf-express.com", "type": "domain" },
+
+    // 📰 新闻资讯
+    { "domain_suffix": "xinhuanet.com", "type": "domain" },
+    { "domain_suffix": "people.com.cn", "type": "domain" },
+    { "domain_suffix": "cctv.com", "type": "domain" },
+    { "domain_suffix": "cntv.cn", "type": "domain" },
+    { "domain_suffix": "ifeng.com", "type": "domain" },
+    { "domain_suffix": "huanqiu.com", "type": "domain" },
+
+    // ☁️ 云与CDN
+    { "domain_suffix": "baidupcs.com", "type": "domain" },
+    { "domain_suffix": "baidupcsdn.com", "type": "domain" },
+    { "domain_suffix": "ksyuncs.com", "type": "domain" },
+    { "domain_suffix": "myqcloud.com", "type": "domain" },
+    { "domain_suffix": "qhimg.com", "type": "domain" },
+    { "domain_suffix": "qhimgs.com", "type": "domain" },
+    { "domain_suffix": "cdn.chinacache.net", "type": "domain" },
+
+    // 🛰 本地优化（福建常见域）
+    { "domain_suffix": "fj.chinamobile.com", "type": "domain" },
+    { "domain_suffix": "fjtelecom.com", "type": "domain" },
+    { "domain_suffix": "fjcathay.com", "type": "domain" }
+  ]
+}

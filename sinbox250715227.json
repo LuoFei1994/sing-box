@@ -498,11 +498,11 @@
         "tag": "Local-DNS",
         "type": "https",
         "server_port": 443,
-        "server": "114.114.114.114",
+        "server": "223.5.5.5",
         "path": "/dns-query",
         "tls": {  
           "enabled": true,  
-          "server_name": "doh.114dns.com",  
+          "server_name": "dns.alidns.com",  
           "utls": {
             "enabled": true,
             "fingerprint": "chrome"

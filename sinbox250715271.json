@@ -161,6 +161,9 @@
         "enabled": true,
         "server_name": "iosapps.itunes.apple.com",
         "insecure": true,
+        "fragment": true,  
+        "fragment_fallback_delay": "500ms",  
+        "record_fragment": true,
         "alpn": [
           "h3",
           "h2",
@@ -179,6 +182,9 @@
       "tls": {
         "enabled": true,
         "server_name": "iosapps.itunes.apple.com",
+        "fragment": true,  
+        "fragment_fallback_delay": "500ms",  
+        "record_fragment": true,
         "insecure": false,
         "utls": {
           "enabled": true,
@@ -202,6 +208,9 @@
       "tls": {
         "enabled": true,
         "server_name": "iosapps.itunes.apple.com",
+        "fragment": true,  
+        "fragment_fallback_delay": "500ms",  
+        "record_fragment": true,
         "insecure": false,
         "utls": {
           "enabled": true,
@@ -228,6 +237,9 @@
       "tls": {
         "enabled": true,
         "server_name": "iosapps.itunes.apple.com",
+        "fragment": true,  
+        "fragment_fallback_delay": "500ms",  
+        "record_fragment": true,
         "insecure": true,
         "alpn": [
           "h3",

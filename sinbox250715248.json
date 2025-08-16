@@ -25,11 +25,6 @@
       "store_fakeip": true,
       "store_rdrc": true,
       "rdrc_timeout": "7d"
-    },
-    "urltest": {
-      "interval": "15m",
-      "tolerance": 150
-      /* 原因：拉长间隔，避免频繁测速引发 NAT/UDP 抖动。*/
     }
   },
   "ntp": {

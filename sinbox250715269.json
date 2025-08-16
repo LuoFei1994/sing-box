@@ -336,7 +336,7 @@
         ],
         "tls": {
           "enabled": true,
-          //"fragment": true,
+          "fragment": true,
           "fragment_fallback_delay": "500ms",
           "record_fragment": true,
           "utls": {

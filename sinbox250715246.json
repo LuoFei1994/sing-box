@@ -516,7 +516,7 @@
       "strategy": "ipv4_only",
       "rewrite_ttl": 60
       //"client_subnet": "0.0.0.0/0"
-    }
+    },
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi"],  
     "default_fallback_network_type": ["cellular"],

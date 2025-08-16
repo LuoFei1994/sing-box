@@ -25,6 +25,11 @@
       "store_fakeip": true,
       "store_rdrc": true,
       "rdrc_timeout": "7d"
+    },
+    "urltest": {
+      "interval": "15m",
+      "tolerance": 150
+      /* 原因：拉长间隔，避免频繁测速引发 NAT/UDP 抖动。*/
     }
   },
   "ntp": {
@@ -42,8 +47,8 @@
         "172.18.0.1/30"
         //"fdfe:dcba:9876::1/126"
         ],
-      "mtu":1500,
-      "stack":"gvisor",
+      "mtu":1480,
+      "stack":"mixed",
       "auto_route": true,
       "strict_route": true,
       "tag": "tun-in",
@@ -106,6 +111,20 @@
         "RN-tor-tuic"
       ]
     },
+    
+    {
+      "type": "urltest",
+      "tag": "TCP节点DNS专用",
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "5m",
+      "tolerance": 150,
+      "interrupt_exist_connections": false,
+      "outbounds": [
+        "proxy",
+        "RN-vless",
+        "RN-tor-vless"
+      ]
+    },
     {
       "type": "direct",
       "tag": "🎯 全球直连"
@@ -140,7 +159,7 @@
       "password": "SaCqA8IOGG",
       "congestion_control": "bbr",
       "udp_relay_mode": "native",
-      "heartbeat": "60s",        // 原来 30s
+      "heartbeat": "20s",        // 原来 30s
       "reuse_addr": true,                 // 端口复用
       "zero_rtt_handshake": false,        // 关闭 0-RTT
       "tls": {
@@ -208,7 +227,7 @@
       "uuid": "27f1b15a-5f3e-42de-b0bd-fb6bf2ae81ed",
       "password": "p640m0hoZU",
       "congestion_control": "bbr",
-      "heartbeat": "60s", // 修改
+      "heartbeat": "20s", // 修改
       "reuse_addr": true,          // 修改
       "zero_rtt_handshake": false, // 修改
       "tls": {
@@ -493,15 +512,15 @@
     
     //下面默认dns是给节点使用的
     "default_domain_resolver": {
-      "server": "Local-DNS",
+      "server": "Local-Plain",
       "strategy": "ipv4_only",
       "rewrite_ttl": 60
       //"client_subnet": "0.0.0.0/0"
     }
-    /*"default_network_strategy": "fallback",  
+    "default_network_strategy": "fallback",  
     "default_network_type": ["wifi"],  
     "default_fallback_network_type": ["cellular"],
-    "default_fallback_delay": "100ms"*/
+    "default_fallback_delay": "100ms"
   },
   "dns": {
     "servers": [
@@ -530,7 +549,7 @@
       {
         "tag": "Remote-DNS",
         "type": "tls",
-        "detour": "RN-vless",
+        "detour": "TCP节点DNS专用",
         "server_port": 853,
         "server": "dns11.quad9.net",
         "domain_resolver": "hosts",
@@ -542,12 +561,6 @@
             "fingerprint": "ios"
           }
         }
-      },
-      {
-        "tag": "Local-Plain",
-        "type": "tcp",                   
-        "server": "223.5.5.5",
-        "server_port": 53
       },
       {
          "tag": "hosts",
@@ -562,6 +575,27 @@
             "149.112.112.11"
             ]
           }
+      },
+      {
+        "tag": "Local-Plain",
+        "type": "tcp",                   
+        "server": "223.5.5.5",
+        "server_port": 53
+      },
+      {
+        "tag": "Remote-GoogleDNS",
+        "type": "tls",
+        "detour": "🚀 节点选择",
+        "domain_resolver": "Remote-DNS-Resolver",
+        "server_port": 853,
+        "server": "8.8.8.8"
+      },
+      {
+        "tag": "Remote-GoogleDNS-Resolver",
+        "type": "udp",
+        "detour": "🚀 节点选择",
+        "server_port": 53,
+        "server": "8.8.8.8"
       }
     ],
     "rules": [
@@ -575,6 +609,12 @@
         "action": "route",
         "clash_mode": "global",
         "server": "Remote-DNS"
+      },
+
+      {
+        "query_type": ["HTTPS", "SVCB"],
+        "server": "Local-DNS"
+        /*原因：HTTPS/SVCB 交给本地，减少 bad rdata。*/
       },
 
       {
@@ -611,7 +651,7 @@
     "disable_cache": false,
     "disable_expire": false,
     "independent_cache": true,
-    "final": "Remote-DNS",
+    "final": "Remote-GoogleDNS",
     "strategy": "ipv4_only"
   }
 }

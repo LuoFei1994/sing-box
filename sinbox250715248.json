@@ -525,7 +525,7 @@
         "server_port": 853,
         "server": "dns.alidns.com",
         "domain_resolver": "hosts",
-        "path": "/dns-query",
+        /*"path": "/dns-query",*/
         "headers": {
           "Host": "dns.alidns.com",
           "User-Agent": "Apple"

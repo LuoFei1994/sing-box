@@ -326,11 +326,28 @@
         "method": "drop"
       },*/
 
-      
-      
       {
         "action": "resolve"
+        "rule_set": [
+          "AliPay",
+          "WeChat",
+          "Tencent",
+          "GeoLocation-CN",
+          "GeoIP-CN"
+        ],
+        "outbound": "🎯 全球直连"
       },
+      {
+        "action": "resolve"
+        "rule_set": [
+          "AppleID",
+          "Apple Domain",
+          "AppStore",
+          "GeoLocation-!CN"
+        ],
+        "outbound": "🚀 节点选择"
+      }
+      
   
       {
         "action": "reject",
@@ -619,7 +636,8 @@
         "server": "Local-DNS",
         "client_subnet": "0.0.0.0/0" 
       },
-
+      
+      // 远端 DNS 自举域名 → 本地解析，避免死锁（按你实际使用的远端 DNS 域名补充）
       { 
         "domain_suffix": [
           "dns11.quad9.net",

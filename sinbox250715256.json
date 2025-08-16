@@ -341,7 +341,7 @@
       
       /*预解析*/
       {
-        "action": "resolve"
+        "action": "resolve",
         "rule_set": [
           "AliPay",
           "WeChat",
@@ -352,7 +352,7 @@
         "outbound": "🎯 全球直连"
       },
       {
-        "action": "resolve"
+        "action": "resolve",
         "rule_set": [
           "AppleID",
           "Apple Domain",
@@ -360,7 +360,7 @@
           "GeoLocation-!CN"
         ],
         "outbound": "🚀 节点选择"
-      }
+      },
       
   
       {

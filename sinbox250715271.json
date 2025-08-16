@@ -36,6 +36,15 @@
     },
   "inbounds": [
     {
+            "type": "mixed",
+            "tag": "mixed-in",
+            "listen": "127.0.0.1",
+            "listen_port": 20122,
+            "tcp_fast_open": false,
+            "tcp_multi_path": false,
+            "udp_fragment": false
+    },
+    {
       "domain_strategy":"ipv4_only",
       "endpoint_independent_nat":true,
       "address":[
@@ -49,22 +58,12 @@
       "tag": "tun-in",
       "type":"tun",
       "platform": {
-                //http代理
-                "http_proxy": {
-                    "enabled": true,
-                    "server": "127.0.0.1",
-                    "server_port": 20122
-                }
-            }
-    },
-    {
-            "type": "mixed",
-            "tag": "mixed-in",
-            "listen": "127.0.0.1",
-            "listen_port": 20122,
-            "tcp_fast_open": false,
-            "tcp_multi_path": false,
-            "udp_fragment": false
+        "http_proxy": {
+          "enabled": true,
+          "server": "127.0.0.1",
+          "server_port": 20122
+          }
+        }
     }
   ],
   "endpoints":[

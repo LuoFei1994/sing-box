@@ -325,7 +325,21 @@
         "action": "reject",
         "method": "drop"
       },*/
-
+      
+      /* Apple 专用 TLS 片段化修饰器（ClientHello 和 record 层分片）*/
+      {
+        "action": "route-options",
+        "rule_set": [
+          "AppleID",
+          "Apple Domain",
+          "AppStore"
+        ],
+        "tls_fragment": true,
+        "tls_fragment_fallback_delay": "500ms",
+        "tls_record_fragment": true
+      },
+      
+      /*预解析*/
       {
         "action": "resolve"
         "rule_set": [

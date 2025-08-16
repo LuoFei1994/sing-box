@@ -581,7 +581,7 @@
         "tag": "Remote-GoogleDNS",
         "type": "tls",
         "detour": "🚀 节点选择",
-        "domain_resolver": "Remote-DNS-Resolver",
+        "domain_resolver": "Remote-GoogleDNS-Resolver",
         "server_port": 853,
         "server": "8.8.8.8"
       },

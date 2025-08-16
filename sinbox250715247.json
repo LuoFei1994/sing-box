@@ -532,7 +532,8 @@
         "domain_resolver": "hosts",
         "path": "/dns-query",
         "headers": {
-          "dns.alidns.com"
+          "Host": "dns.alidns.com",
+          "User-Agent": "Apple"
           },
         "tls": {  
           "enabled": true,

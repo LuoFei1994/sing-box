@@ -334,8 +334,16 @@
           "Apple Domain",
           "AppStore"
         ],
-        "fragment_fallback_delay": "500ms",  
-        "record_fragment": true 
+        "tls": {
+          "enabled": true,
+          //"fragment": true,
+          "fragment_fallback_delay": "500ms",
+          "record_fragment": true,
+          "utls": {
+            "enabled": true,
+            "fingerprint": "safari"
+          }
+        }
       },
       
       /*预解析*/

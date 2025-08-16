@@ -154,9 +154,9 @@
       "password": "SaCqA8IOGG",
       "congestion_control": "bbr",
       "udp_relay_mode": "native",
-      "heartbeat": "20s", 
-      "reuse_addr": true,
-      "zero_rtt_handshake": false,
+      "heartbeat": "20s",        // 原来 30s
+      "reuse_addr": true,                 // 端口复用
+      "zero_rtt_handshake": false,        // 关闭 0-RTT
       "tls": {
         "enabled": true,
         "server_name": "iosapps.itunes.apple.com",
@@ -222,9 +222,9 @@
       "uuid": "27f1b15a-5f3e-42de-b0bd-fb6bf2ae81ed",
       "password": "p640m0hoZU",
       "congestion_control": "bbr",
-      "heartbeat": "20s",
-      "reuse_addr": true,
-      "zero_rtt_handshake": false,
+      "heartbeat": "20s", // 修改
+      "reuse_addr": true,          // 修改
+      "zero_rtt_handshake": false, // 修改
       "tls": {
         "enabled": true,
         "server_name": "iosapps.itunes.apple.com",
@@ -287,16 +287,66 @@
         "outbound": "GLOBAL"
       },
 
-    
-      
+      /*{  
+        "type": "logical",  
+        "mode": "or",  
+        "rules": [  
+          { "protocol": "stun" },  
+          { "protocol": "quic" },  
+          { "protocol": "dtls" },  
+          { "port": 853 },  
+          { "port": 3478 },  
+          { "port": 5349 },
+          { "port": 19302 },  
+          { "port": 19303 },  
+          { "port": 19304 },
+          { "port_range": "16384:32767", "network": "udp" },
+          { "port_range": "49152:65535", "network": "udp" },
+          { "network": "udp", "port": 443 }  
+        ],  
+        "action": "reject",  
+        "method": "drop"  
+      },
       {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "port": 853
+          },
+          {
+            "network": "udp",
+            "port": 443
+          },
+          {
+            "protocol": "stun"
+          }
+        ],
         "action": "reject",
-        "method": "drop",
+        "method": "drop"
+      },*/
+      
+      /* Apple 专用 TLS 片段化修饰器（ClientHello 和 record 层分片）*/
+      {
+        "action": "route-options",
         "rule_set": [
-          "Category-Ads"
-        ]
+          "AppleID",
+          "Apple Domain",
+          "AppStore"
+        ],
+        "tls": {
+            "enabled": true,
+            //"fragment": true,
+            "fragment_fallback_delay": "500ms",
+            "record_fragment": true,
+            "utls": {
+                "enabled": true,
+                "fingerprint": "safari"
+            }
+        }
       },
       
+      /*预解析*/
       {
         "action": "resolve",
         "rule_set": [
@@ -305,8 +355,7 @@
           "Tencent",
           "GeoLocation-CN",
           "GeoIP-CN"
-        ],
-        "outbound": "🎯 全球直连"
+        ]
       },
       {
         "action": "resolve",
@@ -315,8 +364,17 @@
           "Apple Domain",
           "AppStore",
           "GeoLocation-!CN"
-        ],
-        "outbound": "🚀 节点选择"
+        ]
+      }
+      
+  
+      {
+        "action": "reject",
+        "method": "drop",  //default:对于 TCP 连接回复 RST，对于 UDP 包回复 ICMP 端口不可达。drop: 丢弃数据包。
+        //"no_drop": false,      //如果未启用，则 30 秒内触发 50 次后，method 将被暂时覆盖为 drop。当 method 设为 drop 时不可用。
+        "rule_set": [
+          "Category-Ads"
+        ]
       },
       
       {
@@ -598,7 +656,7 @@
         "client_subnet": "0.0.0.0/0" 
       },
       
-      /* 远端 DNS 自举域名 → 本地解析，避免死锁（按你实际使用的远端 DNS 域名补充）*/
+      // 远端 DNS 自举域名 → 本地解析，避免死锁（按你实际使用的远端 DNS 域名补充）
       { 
         "domain_suffix": [
           "dns11.quad9.net",

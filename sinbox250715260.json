@@ -329,11 +329,6 @@
       /* Apple 专用 TLS 片段化修饰器（ClientHello 和 record 层分片）*/
       {
         "action": "route-options",
-        "rule_set": [
-          "AppleID",
-          "Apple Domain",
-          "AppStore"
-        ],
         "tls": {
           "enabled": true,
           //"fragment": true,

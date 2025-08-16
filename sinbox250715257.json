@@ -334,7 +334,7 @@
           "Apple Domain",
           "AppStore"
         ],
-        "tls_fragment": true,
+        //"tls_fragment": true,
         "tls_fragment_fallback_delay": "500ms",
         "tls_record_fragment": true
       },

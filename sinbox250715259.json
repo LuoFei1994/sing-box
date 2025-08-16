@@ -329,9 +329,21 @@
       /* Apple 专用 TLS 片段化修饰器（ClientHello 和 record 层分片）*/
       {
         "action": "route-options",
-        //"tls_fragment": true,
-        "tls_fragment_fallback_delay": "500ms",
-        "tls_record_fragment": true
+        "rule_set": [
+          "AppleID",
+          "Apple Domain",
+          "AppStore"
+        ],
+        "tls": {
+          "enabled": true,
+          //"fragment": true,
+          "fragment_fallback_delay": "500ms",
+          "record_fragment": true,
+          "utls": {
+            "enabled": true,
+            "fingerprint": "safari"
+          }
+        }
       },
       
       /*预解析*/

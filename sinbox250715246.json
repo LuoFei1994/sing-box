@@ -532,7 +532,7 @@
         "domain_resolver": "hosts",
         "path": "/dns-query",
         "headers": {
-                    "Host": "dns.alidns.com"
+          "dns.alidns.com"
           },
         "tls": {  
           "enabled": true,

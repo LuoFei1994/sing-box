@@ -53,17 +53,16 @@
   "endpoints":[
     {
       "type": "wireguard",
-      "tag": "wireguard-dsb",
+      "tag": "wireguard-ios",
       "system": false,
       "mtu": 1408,
-      "address": ["10.0.1.2/32"],
-      "private_key": "2L40EZMxfyvnSsN54ayzjwZfNNXNdhUUbckGpIt3BVQ=",
+      "address": ["10.0.0.89/32"],
+      "private_key": "sEX0RB7oLmfjM1c18i5b/3aEfERZIZktkDfWlJ0VinM=",
       "peers": [
         {
           "address": "107.150.27.18",
-          "port": 31645,
-          "public_key": "u2zxrMvDBSXhNaU6Jk/AZ8YfcvsYM7lAXLE8HdRw+nc=",
-          "pre_shared_key": "QdmsTASsZHr7tUhhhODUEP6XUDaod1fWIPIkTfNmjwc=",
+          "port": 59534,
+          "public_key": "lT+Mx/yQbkKckclytBTE0uOkhDfEpJtbE0A+Lh5L9TA=",
           "allowed_ips": [
             "0.0.0.0/0",
             "::/0"

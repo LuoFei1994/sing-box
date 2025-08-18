@@ -80,7 +80,7 @@
       "interrupt_exist_connections": false,
       "outbounds": [
         "🎈 自动选择",
-        "wireguard-dsb",
+        "wireguard-ios",
         "proxy",
         "RN-tuic",
         "RN-vless",
@@ -98,7 +98,7 @@
       "tolerance": 150,
       "interrupt_exist_connections": false,
       "outbounds": [
-        "wireguard-dsb",
+        "wireguard-ios",
         "proxy",
         "RN-tuic",
         "RN-vless",

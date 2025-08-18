@@ -368,7 +368,7 @@
           "GeoLocation-CN",
           "GeoIP-CN"
         ],
-        "outbound": "🎯 全球直连"
+        "server": ""Local-DNS"
       },
       {
         "action": "resolve",
@@ -378,7 +378,7 @@
           "AppStore",
           "GeoLocation-!CN"
         ],
-        "outbound": "🚀 节点选择"
+        "server": "Remote-DNS"
       },
       
   

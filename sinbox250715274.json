@@ -27,13 +27,13 @@
       "rdrc_timeout": "7d"
     }
   },
-  /*"ntp": {
+  "ntp": {
         "enabled": false,
         "server": "time.apple.com",
         "server_port": 123,
         "interval": "30m",
         "detour": "direct"
-    },*/
+    },
   "inbounds": [
     {
       "domain_strategy":"ipv4_only",
@@ -50,19 +50,20 @@
       "type":"tun"
     }
   ],
-  /*"endpoints":[
+  "endpoints":[
     {
       "type": "wireguard",
       "tag": "wireguard-ios",
       "system": false,
       "mtu": 1408,
-      "address": ["10.0.0.89/32"],
+      "address": ["10.0.1.2/32"],
       "private_key": "sEX0RB7oLmfjM1c18i5b/3aEfERZIZktkDfWlJ0VinM=",
       "peers": [
         {
           "address": "107.150.27.18",
           "port": 59534,
-          "public_key": "lT+Mx/yQbkKckclytBTE0uOkhDfEpJtbE0A+Lh5L9TA=",
+          "public_key": "bNyom8ri8igiKLtnzloxy3lujlj8NEqjn84vRk8cgBI=",
+          "pre_shared_key": "QdmsTASsZHr7tUhhhODUEP6XUDaod1fWIPIkTfNmjwc=",
           "allowed_ips": [
             "0.0.0.0/0",
             "::/0"
@@ -71,7 +72,7 @@
         }
         ]
       }
-  ],*/
+  ],
   "outbounds": [
     {
       "type": "selector",

@@ -358,18 +358,23 @@
       },*/
       
       
-      /*预解析*/
+      // 高频国内服务：微信、支付宝、腾讯、抖音等，优先本地解析
       {
         "action": "resolve",
         "rule_set": [
-          "AliPay",
           "WeChat",
+          "AliPay",
           "Tencent",
+          "DouYin",
           "GeoLocation-CN",
           "GeoIP-CN"
         ],
-        "server": "Local-DNS"
+        "server": "Local-DNS",
+        "strategy": "ipv4_only",
+        "rewrite_ttl": 120
       },
+      
+      // Apple 生态：AppStore、AppleID、系统服务，走远程 DNS，避免 Reality 死锁
       {
         "action": "resolve",
         "rule_set": [
@@ -378,7 +383,35 @@
           "AppStore",
           "GeoLocation-!CN"
         ],
-        "server": "Remote-DNS"
+        "server": "Remote-DNS",
+        "strategy": "ipv4_only",
+        "rewrite_ttl": 120
+      },
+      
+      // CDN 与远程 DNS 自举域名，提前解析避免首次连接失败
+      {
+        "action": "resolve",
+        "domain_suffix": [
+          "cloudflare-dns.com",
+          "dns11.quad9.net",
+          "fallback.apple.com",
+          "mesu.apple.com",
+          "cl3.apple.com"
+        ],
+        "server": "Fallback-DNS",
+        "strategy": "ipv4_only",
+        "rewrite_ttl": 120
+      },
+      
+      // 低频服务或实验性规则集，可按需启用
+      {
+        "action": "resolve",
+        "rule_set": [
+          "Alibaba"
+        ],
+        "server": "Local-DNS",
+        "strategy": "ipv4_only",
+        "rewrite_ttl": 120
       },
       
   

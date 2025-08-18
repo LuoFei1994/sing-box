@@ -85,9 +85,8 @@
         "RN-tuic",
         "RN-vless",
         "RN-tor-vless",
-        "RN-tor-tuic"
-        
-
+        "RN-tor-tuic",
+        "RN-vless-brutal"
       ]
     },
     {
@@ -103,7 +102,8 @@
         "RN-tuic",
         "RN-vless",
         "RN-tor-vless",
-        "RN-tor-tuic"
+        "RN-tor-tuic",
+        "RN-vless-brutal"
       ]
     },
     
@@ -117,7 +117,8 @@
       "outbounds": [
         "proxy",
         "RN-vless",
-        "RN-tor-vless"
+        "RN-tor-vless",
+        "RN-vless-brutal"
       ]
     },
     {
@@ -144,7 +145,37 @@
         "🐟 漏网之鱼"
       ]
     },
-    
+    {
+      "type": "vless",
+      "tag": "RN-vless-brutal",
+      "server": "107.150.27.18",
+      "server_port": 11779,
+      "uuid": "bb1a2607-2755-4344-e9fb-eaa792d35541",
+      "flow": "xtls-rprx-vision",
+      "packet_encoding": "xudp",
+      "tls": {
+        "enabled": true,
+        "server_name": "iosapps.itunes.apple.com",
+        "insecure": true,
+        "alpn": [
+          "h3",
+          "h2",
+          "http/1.1"
+        ]
+      },
+      "multiplex": {
+        "enabled": true,
+        "protocol": "smux",
+        "max_connections": 1,
+        "min_streams": 4,
+        "padding": false,
+        "brutal": {
+          "enabled": true,
+          "up_mbps": 100,
+          "down_mbps": 300
+        }
+      }
+    },
     {
       "type": "tuic",
       "tag": "RN-tuic",

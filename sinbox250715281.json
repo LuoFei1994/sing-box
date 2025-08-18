@@ -368,7 +368,7 @@
           "GeoLocation-CN",
           "GeoIP-CN"
         ],
-        "server": ""Local-DNS"
+        "server": "Local-DNS"
       },
       {
         "action": "resolve",

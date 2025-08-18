@@ -27,13 +27,13 @@
       "rdrc_timeout": "7d"
     }
   },
-  "ntp": {
+  /*"ntp": {
         "enabled": false,
         "server": "time.apple.com",
         "server_port": 123,
         "interval": "30m",
         "detour": "direct"
-    },
+    },*/
   "inbounds": [
     {
       "domain_strategy":"ipv4_only",
@@ -50,7 +50,7 @@
       "type":"tun"
     }
   ],
-  "endpoints":[
+  /*"endpoints":[
     {
       "type": "wireguard",
       "tag": "wireguard-ios",
@@ -71,7 +71,7 @@
         }
         ]
       }
-  ],
+  ],*/
   "outbounds": [
     {
       "type": "selector",

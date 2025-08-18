@@ -367,7 +367,8 @@
           "Tencent",
           "GeoLocation-CN",
           "GeoIP-CN"
-        ]
+        ],
+        "outbound": "🎯 全球直连"
       },
       {
         "action": "resolve",
@@ -376,7 +377,8 @@
           "Apple Domain",
           "AppStore",
           "GeoLocation-!CN"
-        ]
+        ],
+        "outbound": "🚀 节点选择"
       },
       
   
@@ -561,9 +563,9 @@
       //"client_subnet": "0.0.0.0/0"
     },
     "default_network_strategy": "fallback",  
-    "default_network_type": ["wifi"],  
-    "default_fallback_network_type": ["cellular"],
-    "default_fallback_delay": "100ms"
+    "default_network_type": ["wifi", "cellular"],  
+    "default_fallback_network_type": ["wifi", "cellular"],
+    "default_fallback_delay": "300ms"
   },
   "dns": {
     "servers": [
@@ -639,6 +641,15 @@
         "detour": "🚀 节点选择",
         "server_port": 53,
         "server": "8.8.8.8"
+      },
+      {
+      "tag": "Fallback-DNS",
+      "type": "tls",
+      "server": "1.1.1.1",
+      "server_port": 853,
+      "tls": {
+        "enabled": true,
+        "server_name": "cloudflare-dns.com"
       }
     ],
     "rules": [
@@ -688,6 +699,14 @@
           "GeoLocation-!CN"
         ],
         "server": "Remote-DNS"
+      },
+      {
+        "domain_suffix": [
+          "fallback.apple.com",
+          "mesu.apple.com",
+          "cl3.apple.com"
+        ],
+        "server": "Fallback-DNS"
       }
     ],
     "cache_capacity": 2048,  

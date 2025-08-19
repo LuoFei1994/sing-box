@@ -668,7 +668,6 @@
         "tag": "Remote-GoogleDNS",
         "type": "tls",
         "detour": "TCP节点DNS专用",
-        "address_strategy": "ipv4_only",
         "domain_resolver": "hosts",
         "server_port": 853,
         "server": "dns.google",

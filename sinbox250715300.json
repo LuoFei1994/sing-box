@@ -666,7 +666,14 @@
         "detour": "🚀 节点选择",
         "domain_resolver": "Remote-GoogleDNS-Resolver",
         "server_port": 853,
-        "server": "8.8.8.8"
+        "server": "8.8.8.8",
+        "tls": {
+          "enabled": true,
+          "server_name": "cloudflare-dns.com",
+          "utls": {
+            "enabled": true,
+            "fingerprint": "Android"
+          }
       },
       {
         "tag": "Remote-GoogleDNS-Resolver",
@@ -686,8 +693,9 @@
           "utls": {
             "enabled": true,
             "fingerprint": "Android"
+          }
         }
-      }
+       }
     ],
     "rules": [
       

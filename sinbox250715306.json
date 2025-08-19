@@ -676,8 +676,7 @@
           "server_name": "dns.google",
           "insecure": false,
           "utls": {
-            "enabled": true,
-            "fingerprint": "ios"
+            "enabled": true
           }
         }
       },

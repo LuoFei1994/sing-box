@@ -651,6 +651,10 @@
           "dns11.quad9.net": [
             "9.9.9.11",
             "149.112.112.11"
+            ],
+           "dns.google": [
+            "8.8.8.8",
+            "8.8.4.4"
             ]
           }
       },
@@ -663,25 +667,28 @@
       {
         "tag": "Remote-GoogleDNS",
         "type": "tls",
-        "detour": "🚀 节点选择",
-        "domain_resolver": "Remote-GoogleDNS-Resolver",
+        "detour": "TCP节点DNS专用",
+        "address_strategy": "ipv4_only",
+        "domain_resolver": "hosts",
         "server_port": 853,
-        "server": "8.8.8.8",
+        "server": "dns.google",
         "tls": {
           "enabled": true,
-          "server_name": "cloudflare-dns.com",
+          "server_name": "dns.google",
+          "insecure": false
           "utls": {
             "enabled": true,
-            "fingerprint": "Android"
+            "fingerprint": "Firefox"
           }
+        }
       },
-      {
+      /*{
         "tag": "Remote-GoogleDNS-Resolver",
         "type": "udp",
         "detour": "🚀 节点选择",
         "server_port": 53,
         "server": "8.8.8.8"
-      },
+      },*/
       {
         "tag": "Fallback-DNS",
         "type": "tls",
@@ -693,9 +700,9 @@
           "utls": {
             "enabled": true,
             "fingerprint": "Android"
-          }
+          } 
         }
-       }
+      }
     ],
     "rules": [
       
@@ -756,7 +763,7 @@
     ],
     "cache_capacity": 2048,  
     "reverse_mapping": false,
-    "disable_cache": false,
+    "disable_cache": true,
     "disable_expire": false,
     "independent_cache": true,
     "final": "Remote-GoogleDNS",

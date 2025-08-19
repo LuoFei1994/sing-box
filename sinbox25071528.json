@@ -22,7 +22,7 @@
       "enabled": true,
       "path": "cache.db",
       "cache_id": "",
-      "store_fakeip": true,
+      "store_fakeip": false,
       "store_rdrc": true,
       "rdrc_timeout": "7d"
     }
@@ -590,7 +590,7 @@
     
     //下面默认dns是给节点使用的
     "default_domain_resolver": {
-      "server": "Local-Plain",
+      "server": "Local-DNS",
       "strategy": "ipv4_only",
       "rewrite_ttl": 60
       //"client_subnet": "0.0.0.0/0"
@@ -605,6 +605,7 @@
       {
         "tag": "Local-DNS",
         "type": "tls",
+        "detour": "🎯 全球直连",
         "server_port": 853,
         "server": "dns.alidns.com",
         "domain_resolver": "hosts",
@@ -627,7 +628,8 @@
       {
         "tag": "Remote-DNS",
         "type": "tls",
-        "detour": "TCP节点DNS专用",
+        //"detour": "TCP节点DNS专用",
+        "detour": "🎯 全球直连",
         "server_port": 853,
         "server": "dns11.quad9.net",
         "domain_resolver": "hosts",
@@ -679,6 +681,7 @@
         "tag": "Fallback-DNS",
         "type": "tls",
         "server": "1.1.1.1",
+        "detour": "🎯 全球直连",
         "server_port": 853,
         "tls": {
           "enabled": true,
@@ -748,7 +751,7 @@
     "disable_cache": false,
     "disable_expire": false,
     "independent_cache": true,
-    "final": "Remote-GoogleDNS",
+    "final": "Fallback-DNS",
     "strategy": "ipv4_only"
   }
 }

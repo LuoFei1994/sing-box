@@ -682,7 +682,7 @@
         "server_port": 853,
         "tls": {
           "enabled": true,
-          "server_name": "cloudflare-dns.com"
+          "server_name": "cloudflare-dns.com",
           "utls": {
             "enabled": true,
             "fingerprint": "Android"

@@ -22,7 +22,7 @@
       "enabled": true,
       "path": "cache.db",
       "cache_id": "",
-      "store_fakeip": true,
+      "store_fakeip": false,
       "store_rdrc": true,
       "rdrc_timeout": "7d"
     }
@@ -590,7 +590,7 @@
     
     //下面默认dns是给节点使用的
     "default_domain_resolver": {
-      "server": "Local-Plain",
+      "server": "Local-DNS",
       "strategy": "ipv4_only",
       "rewrite_ttl": 60
       //"client_subnet": "0.0.0.0/0"
@@ -659,12 +659,6 @@
           }
       },
       {
-        "tag": "Local-Plain",
-        "type": "tcp",                   
-        "server": "223.5.5.5",
-        "server_port": 53
-      },
-      {
         "tag": "Remote-GoogleDNS",
         "type": "tls",
         "detour": "TCP节点DNS专用",
@@ -691,6 +685,7 @@
       {
         "tag": "Fallback-DNS",
         "type": "tls",
+        "detour": "TCP节点DNS专用",
         "server": "1.1.1.1",
         "server_port": 853,
         "tls": {
@@ -718,8 +713,9 @@
 
       {
         "query_type": ["HTTPS", "SVCB"],
-        "server": "Local-DNS"
+        "server": "Local-DNS",
         /*原因：HTTPS/SVCB 交给本地，减少 bad rdata。*/
+        "client_subnet": "0.0.0.0/0" 
       },
 
       {
@@ -736,7 +732,8 @@
           "dns11.quad9.net",
           "cloudflare-dns.com"
         ],
-        "server": "Local-DNS"
+        "server": "Local-DNS",
+        "client_subnet": "0.0.0.0/0" 
       },
       { "rule_set": [
         "AppleID",
@@ -762,7 +759,7 @@
     ],
     "cache_capacity": 2048,  
     "reverse_mapping": false,
-    "disable_cache": true,
+    "disable_cache": false,
     "disable_expire": false,
     "independent_cache": true,
     "final": "Remote-GoogleDNS",

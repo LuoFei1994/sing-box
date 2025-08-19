@@ -676,7 +676,8 @@
           "server_name": "dns.google",
           "insecure": false,
           "utls": {
-            "enabled": true
+            "enabled": true,
+            "fingerprint": "randomized"
           }
         }
       },
@@ -697,7 +698,7 @@
           "server_name": "cloudflare-dns.com",
           "utls": {
             "enabled": true,
-            "fingerprint": "Android"
+            "fingerprint": "chrome"
           } 
         }
       }

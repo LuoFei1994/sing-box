@@ -590,7 +590,7 @@
     
     //下面默认dns是给节点使用的
     "default_domain_resolver": {
-      "server": "Local-DNS",
+      "server": "Local-Plain",
       "strategy": "ipv4_only",
       "rewrite_ttl": 60
       //"client_subnet": "0.0.0.0/0"
@@ -628,8 +628,7 @@
       {
         "tag": "Remote-DNS",
         "type": "tls",
-        //"detour": "TCP节点DNS专用",
-        "detour": "🎯 全球直连",
+        "detour": "TCP节点DNS专用",
         "server_port": 853,
         "server": "dns11.quad9.net",
         "domain_resolver": "hosts",
@@ -656,19 +655,36 @@
             ]
           }
       },
-      
+      {
+        "tag": "Local-Plain",
+        "type": "tcp",                   
+        "server": "223.5.5.5",
+        "server_port": 53
+      },
+      {
+        "tag": "Remote-GoogleDNS",
+        "type": "tls",
+        "detour": "🚀 节点选择",
+        "domain_resolver": "Remote-GoogleDNS-Resolver",
+        "server_port": 853,
+        "server": "8.8.8.8"
+      },
+      {
+        "tag": "Remote-GoogleDNS-Resolver",
+        "type": "udp",
+        "detour": "🚀 节点选择",
+        "server_port": 53,
+        "server": "8.8.8.8"
+      },
       {
         "tag": "Fallback-DNS",
         "type": "tls",
         "server": "1.1.1.1",
+        "detour": "🎯 全球直连",
         "server_port": 853,
         "tls": {
           "enabled": true,
-          "server_name": "cloudflare-dns.com",
-          "utls": {
-            "enabled": true,
-            "fingerprint": "ios"
-          }
+          "server_name": "cloudflare-dns.com"
         }
       }
     ],
@@ -734,7 +750,7 @@
     "disable_cache": false,
     "disable_expire": false,
     "independent_cache": true,
-    "final": "Fallback-DNS",
+    "final": "Remote-GoogleDNS",
     "strategy": "ipv4_only"
   }
 }

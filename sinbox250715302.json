@@ -675,7 +675,7 @@
         "tls": {
           "enabled": true,
           "server_name": "dns.google",
-          "insecure": false
+          "insecure": false,
           "utls": {
             "enabled": true,
             "fingerprint": "Firefox"

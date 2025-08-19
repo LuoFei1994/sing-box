@@ -677,7 +677,7 @@
           "insecure": false,
           "utls": {
             "enabled": true,
-            "fingerprint": "Android"
+            "fingerprint": "ios"
           }
         }
       },

@@ -613,11 +613,11 @@
           },
         "tls": {  
           "enabled": true,
-          "server_name": "dns.alidns.com",  
-          "utls": {
+          "server_name": "dns.alidns.com"
+          /*"utls": {
             "enabled": true,
             "fingerprint": "chrome"
-          }
+          }*/
         }
       },
       {
@@ -645,7 +645,7 @@
       
       {
         "tag": "Remote-DNS",
-        "type": "h3",
+        "type": "https",
         "detour": "TCP节点DNS专用",
         "server_port": 443,
         "server": "dns11.quad9.net",
@@ -688,7 +688,7 @@
       },
       {
         "tag": "Remote-GoogleDNS",
-        "type": "h3",
+        "type": "https",
         "detour": "TCP节点DNS专用",
         "domain_resolver": "hosts",
         "server_port": 443,
@@ -713,7 +713,7 @@
       },*/
       {
         "tag": "Fallback-DNS",
-        "type": "h3",
+        "type": "https",
         "detour": "TCP节点DNS专用",
         "server": "cloudflare-dns.com",
         "server_port": 443,

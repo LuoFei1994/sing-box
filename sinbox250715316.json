@@ -607,15 +607,6 @@
         "server": "dns.alidns.com",
         "domain_resolver": "hosts",
         "path": "/dns-query",
-        "ecs": {
-          // IPv4 保留 24 位前缀（相当于 /24），IPv6 可按需调整
-          "policy": "manual",
-          "ipv4_prefix": 24,
-          "ipv6_prefix": 48
-        },
-        "padding": {
-          "enabled": false
-        },
         "headers": {
           "Host": "dns.alidns.com",
           "User-Agent": "Apple"

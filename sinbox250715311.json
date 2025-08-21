@@ -592,7 +592,7 @@
     "default_domain_resolver": {
       "server": "Local-Plain",
       "strategy": "ipv4_only",
-      "rewrite_ttl": 60
+      "rewrite_ttl": 60,
       "client_subnet": "0.0.0.0/0"
     },
     "default_network_strategy": "fallback",  

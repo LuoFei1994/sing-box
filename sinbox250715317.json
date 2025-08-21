@@ -300,12 +300,6 @@
       },
 
       {
-        "ip_is_private": true,
-        "action": "route",
-        "outbound": "🎯 全球直连"
-      },
-      
-      {
         "action": "route",
         "clash_mode": "direct",
         "outbound": "🎯 全球直连"
@@ -443,6 +437,12 @@
           "GeoLocation-!CN"
         ],
         "outbound": "🚀 节点选择"
+      },
+
+      {
+        "ip_is_private": true,
+        "action": "route",
+        "outbound": "🎯 全球直连"
       }
 
     ],
@@ -590,7 +590,7 @@
     "default_domain_resolver": {
       "server": "Local-Plain",
       "strategy": "ipv4_only",
-      "rewrite_ttl": 60,
+      "rewrite_ttl": 120,
       "client_subnet": "0.0.0.0/0"
     },
     "default_network_strategy": "fallback",  

@@ -43,7 +43,7 @@
         //"fdfe:dcba:9876::1/126"
         ],
       "mtu":1480,
-      "stack":"mixed",
+      "stack":"system",
       "auto_route": true,
       "strict_route": true,
       "tag": "tun-in",
@@ -590,15 +590,15 @@
     
     //下面默认dns是给节点使用的
     "default_domain_resolver": {
-      "server": "Local-DNS",
+      "server": "Local-Plain",
       "strategy": "ipv4_only",
       "rewrite_ttl": 60
-      //"client_subnet": "0.0.0.0/0"
+      "client_subnet": "0.0.0.0/0"
     },
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi", "cellular"],  
     "default_fallback_network_type": ["wifi", "cellular"],
-    "default_fallback_delay": "300ms"
+    "default_fallback_delay": "500ms"
   },
   "dns": {
     "servers": [
@@ -622,7 +622,12 @@
           }
         }
       },
-      
+      {
+        "tag": "Local-Plain",
+        "type": "tcp",                   
+        "server": "223.5.5.5",
+        "server_port": 53
+      },
       
       {
         "tag": "Remote-DNS",

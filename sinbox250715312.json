@@ -299,8 +299,6 @@
         "action": "hijack-dns"
       },
 
-      
-
       {
         "ip_is_private": true,
         "action": "route",
@@ -604,18 +602,34 @@
     "servers": [
       {
         "tag": "Local-DNS",
-        "type": "tls",
-        "server_port": 853,
+        "type": "h3",
+        "server_port": 443,
         "server": "dns.alidns.com",
         "domain_resolver": "hosts",
-        /*"path": "/dns-query",
+        "path": "/dns-query",
         "headers": {
           "Host": "dns.alidns.com",
           "User-Agent": "Apple"
-          },*/
+          },
         "tls": {  
           "enabled": true,
           "server_name": "dns.alidns.com",  
+          "utls": {
+            "enabled": true,
+            "fingerprint": "chrome"
+          }
+        }
+      },
+      {
+        "tag": "Local-DNS-TLS",
+        "type": "tls",
+        "server": "dns.alidns.com",
+        "server_port": 853,
+        "domain_resolver": "hosts",
+        "tls": {
+          "enabled": true,
+          "server_name": "dns.alidns.com",
+          "insecure": false,
           "utls": {
             "enabled": true,
             "fingerprint": "chrome"
@@ -631,10 +645,15 @@
       
       {
         "tag": "Remote-DNS",
-        "type": "tls",
+        "type": "h3",
         "detour": "TCP节点DNS专用",
-        "server_port": 853,
+        "server_port": 443,
         "server": "dns11.quad9.net",
+        "path": "/dns-query",
+        "headers": {
+          "Host": "dns11.quad9.net",
+          "User-Agent": "Apple"
+        },
         "domain_resolver": "hosts",
         "tls": {  
           "enabled": true,  
@@ -660,16 +679,21 @@
            "dns.google": [
             "8.8.8.8",
             "8.8.4.4"
-            ]
+            ],
+          "cloudflare-dns.com": [
+            "1.1.1.1",
+            "1.0.0.1"
+            ],
           }
       },
       {
         "tag": "Remote-GoogleDNS",
-        "type": "tls",
+        "type": "h3",
         "detour": "TCP节点DNS专用",
         "domain_resolver": "hosts",
-        "server_port": 853,
+        "server_port": 443,
         "server": "dns.google",
+        "path": "/dns-query",
         "tls": {
           "enabled": true,
           "server_name": "dns.google",
@@ -689,10 +713,11 @@
       },*/
       {
         "tag": "Fallback-DNS",
-        "type": "tls",
+        "type": "h3",
         "detour": "TCP节点DNS专用",
-        "server": "1.1.1.1",
-        "server_port": 853,
+        "server": "cloudflare-dns.com",
+        "server_port": 443,
+        "path": "/dns-query",
         "tls": {
           "enabled": true,
           "server_name": "cloudflare-dns.com",
@@ -717,9 +742,27 @@
       },
 
       {
-        "query_type": ["HTTPS", "SVCB"],
+        "query_type": ["SVCB"],
         "server": "Local-DNS",
-        /*原因：HTTPS/SVCB 交给本地，减少 bad rdata。*/
+        /*原因：HTTPS/SVCB 交给本地，减少 bad rdata。"HTTPS",*/
+        "client_subnet": "0.0.0.0/0" 
+      },
+      {
+        "domain_suffix": [
+          "apple.com", "icloud.com", "push.apple.com", "ess.apple.com",
+          "weixin.qq.com", "tenpay.com", "cmbchina.com"
+        ],
+        "server": "Local-DNS-TLS",
+        "client_subnet": "0.0.0.0/0" 
+      },
+      
+      // 远端 DNS 自举域名 → 本地解析，避免死锁（按你实际使用的远端 DNS 域名补充）
+      { 
+        "domain_suffix": [
+          "dns11.quad9.net",
+          "cloudflare-dns.com"
+        ],
+        "server": "Local-DNS-TLS",
         "client_subnet": "0.0.0.0/0" 
       },
 
@@ -731,15 +774,6 @@
         "client_subnet": "0.0.0.0/0" 
       },
       
-      // 远端 DNS 自举域名 → 本地解析，避免死锁（按你实际使用的远端 DNS 域名补充）
-      { 
-        "domain_suffix": [
-          "dns11.quad9.net",
-          "cloudflare-dns.com"
-        ],
-        "server": "Local-DNS",
-        "client_subnet": "0.0.0.0/0" 
-      },
       { "rule_set": [
         "AppleID",
         "Apple Domain",

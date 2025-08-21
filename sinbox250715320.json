@@ -42,7 +42,7 @@
         "172.18.0.1/30"
         //"fdfe:dcba:9876::1/126"
         ],
-      "mtu":1480,
+      "mtu":1400,
       "stack":"system",
       "auto_route": true,
       "strict_route": true,
@@ -55,7 +55,7 @@
       "type": "wireguard",
       "tag": "wireguard-ios",
       "system": false,
-      "mtu": 1408,
+      "mtu": 1400,
       "address": ["10.0.1.2/32"],
       "private_key": "sEX0RB7oLmfjM1c18i5b/3aEfERZIZktkDfWlJ0VinM=",
       "peers": [
@@ -802,7 +802,7 @@
     "disable_cache": false,
     "disable_expire": false,
     "independent_cache": true,
-    "final": "Remote-GoogleDNS",
+    "final": "Fallback-DNS",
     "strategy": "prefer_ipv4"
   }
 }

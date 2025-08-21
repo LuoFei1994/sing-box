@@ -635,15 +635,6 @@
         "server": "dns.alidns.com",
         "server_port": 853,
         "domain_resolver": "hosts",
-        "ecs": {
-          // IPv4 保留 24 位前缀（相当于 /24），IPv6 可按需调整
-          "policy": "manual",
-          "ipv4_prefix": 24,
-          "ipv6_prefix": 48
-        },
-        "padding": {
-          "enabled": false
-        },
         "tls": {
           "enabled": true,
           "server_name": "dns.alidns.com",
@@ -668,19 +659,10 @@
         "server_port": 443,
         "server": "dns11.quad9.net",
         "path": "/dns-query",
+        "domain_resolver": "hosts",
         "headers": {
           "Host": "dns11.quad9.net",
           "User-Agent": "Apple"
-        },
-        "domain_resolver": "hosts",
-        "ecs": {
-          // 0 表示完全不附带客户端子网信息，最大化隐私
-          "policy": "disable"
-        },
-        "padding": {
-          "enabled": true,
-          // 填充到常见长度，防止基于包长的流量指纹分析
-          "target_length": 128
         },
         "tls": {  
           "enabled": true,  
@@ -718,15 +700,6 @@
         "type": "https",
         "detour": "TCP节点DNS专用",
         "domain_resolver": "hosts",
-        "ecs": {
-          // 0 表示完全不附带客户端子网信息，最大化隐私
-          "policy": "disable"
-        },
-        "padding": {
-          "enabled": true,
-          // 填充到常见长度，防止基于包长的流量指纹分析
-          "target_length": 128
-        },
         "server_port": 443,
         "server": "dns.google",
         "path": "/dns-query",
@@ -755,15 +728,6 @@
         "server": "cloudflare-dns.com",
         "server_port": 443,
         "path": "/dns-query",
-        "ecs": {
-          // 0 表示完全不附带客户端子网信息，最大化隐私
-          "policy": "disable"
-        },
-        "padding": {
-          "enabled": true,
-          // 填充到常见长度，防止基于包长的流量指纹分析
-          "target_length": 128
-        },
         "tls": {
           "enabled": true,
           "server_name": "cloudflare-dns.com",

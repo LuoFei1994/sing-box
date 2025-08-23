@@ -595,10 +595,10 @@
     
     //下面默认dns是给节点使用的
     "default_domain_resolver": {
-      "server": "Local-Plain",
-      "strategy": "ipv4_only",
-      "rewrite_ttl": 120,
-      "client_subnet": "0.0.0.0/0"
+      "server": "Local-Plain"
+      /*"strategy": "ipv4_only",
+      "rewrite_ttl": 120
+      "client_subnet": "0.0.0.0/0"*/
     },
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi", "cellular"],  
@@ -751,18 +751,15 @@
 
       {
         "query_type": ["HTTPS","SVCB"],
-        "action": "reject"
-        /*"server": "Local-DNS",
+        "server": "Local-DNS"
         //原因：HTTPS/SVCB 交给本地，减少 bad rdata。
-        "client_subnet": "0.0.0.0/0"*/
       },
       {
         "domain_suffix": [
           "apple.com", "icloud.com", "push.apple.com", "ess.apple.com",
           "weixin.qq.com", "tenpay.com", "cmbchina.com"
         ],
-        "server": "Local-DNS-TLS",
-        "client_subnet": "0.0.0.0/0" 
+        "server": "Local-DNS-TLS"
       },
       
       // 远端 DNS 自举域名 → 本地解析，避免死锁（按你实际使用的远端 DNS 域名补充）
@@ -771,16 +768,14 @@
           "dns11.quad9.net",
           "cloudflare-dns.com"
         ],
-        "server": "Local-DNS-TLS",
-        "client_subnet": "0.0.0.0/0" 
+        "server": "Local-DNS-TLS"
       },
 
       {
         "rule_set": [
           "GeoSite-CN"
         ],
-        "server": "Local-DNS",
-        "client_subnet": "0.0.0.0/0" 
+        "server": "Local-DNS"
       },
       
       { "rule_set": [
@@ -788,13 +783,15 @@
         "Apple Domain",
         "AppStore"
       ],
-        "server": "Remote-DNS" 
+        "server": "Remote-DNS",
+        "client_subnet": "36.0.0.0/8" 
       },
       {
         "rule_set": [
           "GeoLocation-!CN"
         ],
-        "server": "Remote-DNS"
+        "server": "Remote-DNS",
+        "client_subnet": "36.0.0.0/8" 
       },
       {
         "domain_suffix": [
@@ -802,7 +799,8 @@
           "mesu.apple.com",
           "cl3.apple.com"
         ],
-        "server": "Fallback-DNS"
+        "server": "Fallback-DNS",
+        "client_subnet": "36.0.0.0/8" 
       }
     ],
     "cache_capacity": 2048,  

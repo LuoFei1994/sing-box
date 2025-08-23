@@ -290,6 +290,11 @@
         "sniffer": ["dns"],
         "action": "sniff"
       },
+      {
+        "action": "sniff",
+        "sniffer": ["dns"],
+        "action": "hijack-dns"
+      },
 
       {
         "action": "route",

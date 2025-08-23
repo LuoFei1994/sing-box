@@ -282,8 +282,8 @@
     "rules": [
      
       {  
-        "action": "sniff",  
-        "sniffer": ["tls","http","quic"]
+        "action": "sniff"
+        //"sniffer": ["tls","http","quic"]
       },
       {
         "port": 53,

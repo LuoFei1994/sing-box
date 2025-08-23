@@ -281,21 +281,18 @@
   "route": {
     "rules": [
      
-      {
-        "action": "sniff"
+      {  
+        "action": "sniff",  
+        "sniffer": ["tls", "http","quic"]
       },
-      
       {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "protocol": "dns"
-          },
-          {
-            "port": 53
-          }
-        ],
+        "port": 53,
+        "action": "sniff",
+        "sniffer": "dns"
+      },
+      {
+        "action": "sniff",
+        "sniffer": "dns",
         "action": "hijack-dns"
       },
 
@@ -743,10 +740,11 @@
       },
 
       {
-        "query_type": ["SVCB"],
-        "server": "Local-DNS",
-        /*原因：HTTPS/SVCB 交给本地，减少 bad rdata。"HTTPS",*/
-        "client_subnet": "0.0.0.0/0" 
+        "query_type": ["HTTPS","SVCB"],
+        "action": "reject"
+        /*"server": "Local-DNS",
+        原因：HTTPS/SVCB 交给本地，减少 bad rdata。
+        "client_subnet": "0.0.0.0/0"*/
       },
       {
         "domain_suffix": [
@@ -798,7 +796,7 @@
       }
     ],
     "cache_capacity": 2048,  
-    "reverse_mapping": false,
+    "reverse_mapping": true,
     "disable_cache": false,
     "disable_expire": false,
     "independent_cache": true,

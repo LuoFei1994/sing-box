@@ -281,14 +281,30 @@
   "route": {
     "rules": [
      
-      {  
-        "action": "sniff"
-        //"sniffer": ["tls","http","quic"]
-      },
       {
-        "port": 53,
-        "sniffer": ["dns"],
         "action": "sniff"
+      },
+      
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "protocol": "dns"
+          },
+          {
+            "port": 53
+          }
+        ],
+        "action": "hijack-dns"
+      },
+
+      
+
+      {
+        "ip_is_private": true,
+        "action": "route",
+        "outbound": "🎯 全球直连"
       },
     
 
@@ -430,14 +446,8 @@
           "GeoLocation-!CN"
         ],
         "outbound": "🚀 节点选择"
-      },
-
-      {
-        "ip_is_private": true,
-        "action": "route",
-        "outbound": "🎯 全球直连"
       }
-
+      
     ],
     "rule_set": [
       {
@@ -676,7 +686,7 @@
           "cloudflare-dns.com": [
             "1.1.1.1",
             "1.0.0.1"
-            ],
+            ]
           }
       },
       {

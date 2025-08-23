@@ -283,11 +283,12 @@
      
       {  
         "action": "sniff",  
-        "sniffer": ["tls","http","quic","dns"]
+        "sniffer": ["tls","http","quic"]
       },
       {
         "port": 53,
-        "action": "hijack-dns"
+        "sniffer": ["dns"],
+        "action": "sniff"
       },
 
       {

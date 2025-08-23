@@ -745,7 +745,14 @@
       },
 
       {
-        "query_type": ["HTTPS","SVCB"],
+        "query_type": [
+          "HTTPS",
+          "SVCB",
+          "TXT",
+          "MX",
+          "CNAME",
+          "SRV"
+        ],
         "server": "Local-DNS"
         //原因：HTTPS/SVCB 交给本地，减少 bad rdata。
       },

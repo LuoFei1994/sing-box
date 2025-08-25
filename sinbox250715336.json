@@ -77,7 +77,7 @@
     {
       "type": "selector",
       "tag": "🚀 节点选择",
-      "interrupt_exist_connections": false,
+      "interrupt_exist_connections": true,
       "outbounds": [
         "🎈 自动选择",
         "wireguard-ios",
@@ -95,7 +95,7 @@
       "url": "https://www.gstatic.com/generate_204",
       "interval": "5m",
       "tolerance": 150,
-      "interrupt_exist_connections": false,
+      "interrupt_exist_connections": true,
       "outbounds": [
         "wireguard-ios",
         "proxy",
@@ -113,7 +113,7 @@
       "url": "https://www.gstatic.com/generate_204",
       "interval": "5m",
       "tolerance": 150,
-      "interrupt_exist_connections": false,
+      "interrupt_exist_connections": true,
       "outbounds": [
         "proxy",
         "RN-vless",
@@ -128,7 +128,7 @@
     {
       "type": "selector",
       "tag": "🐟 漏网之鱼",
-      "interrupt_exist_connections": false,
+      "interrupt_exist_connections": true,
       "outbounds": [
         "🚀 节点选择",
         "🎯 全球直连"
@@ -137,7 +137,7 @@
     {
       "type": "selector",
       "tag": "GLOBAL",
-      "interrupt_exist_connections": false,
+      "interrupt_exist_connections": true,
       "outbounds": [
         "🚀 节点选择",
         "🎈 自动选择",
@@ -805,7 +805,7 @@
         "client_subnet": "36.0.0.0/8" 
       }
     ],
-    "cache_capacity": 2048,  
+    "cache_capacity": 4096,  
     "reverse_mapping": true,
     "disable_cache": false,
     "disable_expire": false,

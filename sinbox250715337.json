@@ -32,15 +32,15 @@
         "server": "time.apple.com",
         "server_port": 123,
         "interval": "30m",
-        "detour": "direct"
+        "detour": "🎯 全球直连"
     },
   "inbounds": [
     {
       "domain_strategy":"ipv4_only",
       "endpoint_independent_nat":true,
       "address":[
-        "172.18.0.1/30"
-        //"fdfe:dcba:9876::1/126"
+        "172.18.0.1/30",
+        "fdfe:dcba:9876::1/126"
         ],
       "mtu":1400,
       "stack":"system",
@@ -604,6 +604,23 @@
     "servers": [
       {
         "tag": "Local-DNS",
+        "type": "https",
+        "server": "dns.alidns.com",
+        "server_port": 443,
+        "path": "/dns-query",
+        "domain_resolver": "hosts",
+        "tls": {
+          "enabled": true,
+          "server_name": "dns.alidns.com",
+          "alpn": ["h2"],
+          "utls": {
+            "enabled": true,
+            "fingerprint": "chrome"
+          }
+        }
+      },
+      {
+        "tag": "Local-DNS-H3",
         "type": "h3",
         "server_port": 443,
         "server": "dns.alidns.com",
@@ -616,10 +633,6 @@
         "tls": {  
           "enabled": true,
           "server_name": "dns.alidns.com"
-          /*"utls": {
-            "enabled": true,
-            "fingerprint": "chrome"
-          }*/
         }
       },
       {
@@ -631,7 +644,6 @@
         "tls": {
           "enabled": true,
           "server_name": "dns.alidns.com",
-          "insecure": false,
           "utls": {
             "enabled": true,
             "fingerprint": "chrome"
@@ -660,10 +672,49 @@
         "tls": {  
           "enabled": true,  
           "server_name": "dns11.quad9.net",
+          "alpn": ["h2"],
           "utls": {
             "enabled": true,
             "fingerprint": "chrome"
           }
+        }
+      },
+      
+      {
+        "tag": "Remote-GoogleDNS",
+        "type": "https",
+        "detour": "TCP节点DNS专用",
+        "domain_resolver": "hosts",
+        "server_port": 443,
+        "server": "dns.google",
+        "path": "/dns-query",
+        "tls": {
+          "enabled": true,
+          "server_name": "dns.google",
+          "alpn": ["h2"],
+          "utls": {
+            "enabled": true,
+            "fingerprint": "randomized"
+          }
+        }
+      },
+    
+      {
+        "tag": "Fallback-DNS",
+        "type": "https",
+        "detour": "TCP节点DNS专用",
+        "domain_resolver": "hosts",
+        "server": "cloudflare-dns.com",
+        "server_port": 443,
+        "path": "/dns-query",
+        "tls": {
+          "enabled": true,
+          "server_name": "cloudflare-dns.com",
+          "alpn": ["h2"],
+          "utls": {
+            "enabled": true,
+            "fingerprint": "chrome"
+          } 
         }
       },
       {
@@ -687,48 +738,6 @@
             "1.0.0.1"
             ]
           }
-      },
-      {
-        "tag": "Remote-GoogleDNS",
-        "type": "https",
-        "detour": "TCP节点DNS专用",
-        "domain_resolver": "hosts",
-        "server_port": 443,
-        "server": "dns.google",
-        "path": "/dns-query",
-        "tls": {
-          "enabled": true,
-          "server_name": "dns.google",
-          "insecure": false,
-          "utls": {
-            "enabled": true,
-            "fingerprint": "randomized"
-          }
-        }
-      },
-      /*{
-        "tag": "Remote-GoogleDNS-Resolver",
-        "type": "udp",
-        "detour": "🚀 节点选择",
-        "server_port": 53,
-        "server": "8.8.8.8"
-      },*/
-      {
-        "tag": "Fallback-DNS",
-        "type": "https",
-        "detour": "TCP节点DNS专用",
-        "domain_resolver": "hosts",
-        "server": "cloudflare-dns.com",
-        "server_port": 443,
-        "path": "/dns-query",
-        "tls": {
-          "enabled": true,
-          "server_name": "cloudflare-dns.com",
-          "utls": {
-            "enabled": true,
-            "fingerprint": "chrome"
-          } 
-        }
       }
     ],
     "rules": [

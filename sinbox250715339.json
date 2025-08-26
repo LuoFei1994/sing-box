@@ -173,7 +173,7 @@
       "password": "SaCqA8IOGG",
       "congestion_control": "bbr",
       "udp_relay_mode": "native",
-      "heartbeat": "20s",        // 原来 30s
+      "heartbeat": "18s",        // 原来 30s
       "reuse_addr": true,                 // 端口复用
       "zero_rtt_handshake": false,        // 关闭 0-RTT
       "tls": {
@@ -250,7 +250,7 @@
       "uuid": "27f1b15a-5f3e-42de-b0bd-fb6bf2ae81ed",
       "password": "p640m0hoZU",
       "congestion_control": "bbr",
-      "heartbeat": "20s", // 修改
+      "heartbeat": "18s", // 修改
       "reuse_addr": true,          // 修改
       "zero_rtt_handshake": false, // 修改
       "tls": {
@@ -371,7 +371,7 @@
         ],
         "server": "Local-DNS",
         "strategy": "ipv4_only",
-        "rewrite_ttl": 120
+        "rewrite_ttl": 300
       },
       
       // Apple 生态：AppStore、AppleID、系统服务，走远程 DNS，避免 Reality 死锁
@@ -385,7 +385,7 @@
         ],
         "server": "Remote-DNS",
         "strategy": "ipv4_only",
-        "rewrite_ttl": 120
+        "rewrite_ttl": 300
       },
       
       // CDN 与远程 DNS 自举域名，提前解析避免首次连接失败
@@ -758,7 +758,7 @@
           "CNAME",
           "SRV"
         ],
-        "server": "Local-DNS"
+        "server": "Local-DNS-TLS"
         //原因：HTTPS/SVCB 交给本地，减少 bad rdata。
       },
       {
@@ -810,7 +810,7 @@
         "client_subnet": "36.0.0.0/8" 
       }
     ],
-    "cache_capacity": 4096,  
+    "cache_capacity": 8192,  
     "reverse_mapping": true,
     "disable_cache": false,
     "disable_expire": false,

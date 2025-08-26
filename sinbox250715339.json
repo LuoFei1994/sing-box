@@ -27,13 +27,13 @@
       "rdrc_timeout": "7d"
     }
   },
-  "ntp": {
+  /*"ntp": {
         "enabled": false,
         "server": "time.apple.com",
         "server_port": 123,
         "interval": "30m",
         "detour": "🎯 全球直连"
-    },
+    },*/
   "inbounds": [
     {
       "domain_strategy":"ipv4_only",
@@ -776,6 +776,13 @@
           "cloudflare-dns.com"
         ],
         "server": "Local-DNS-TLS"
+      },
+      {
+        "action": "resolve",
+        "domain_suffix": ["apple.com", "icloud.com"],
+        "server": "Local-DNS-TLS", // 避免 Reality 死锁
+        "strategy": "ipv4_only",
+        "rewrite_ttl": 300
       },
 
       {

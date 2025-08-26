@@ -773,14 +773,11 @@
       { 
         "domain_suffix": [
           "dns11.quad9.net",
-          "cloudflare-dns.com"
+          "cloudflare-dns.com",
+          "apple.com", 
+          "icloud.com"
         ],
-        "server": "Local-DNS-TLS"
-      },
-      {
-        "action": "resolve",
-        "domain_suffix": ["apple.com", "icloud.com"],
-        "server": "Local-DNS-TLS", // 避免 Reality 死锁
+        "server": "Local-DNS-TLS",
         "strategy": "ipv4_only",
         "rewrite_ttl": 300
       },

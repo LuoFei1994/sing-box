@@ -612,7 +612,6 @@
         "tls": {
           "enabled": true,
           "server_name": "dns.alidns.com",
-          "alpn": ["h2"],
           "utls": {
             "enabled": true,
             "fingerprint": "chrome"
@@ -672,7 +671,6 @@
         "tls": {  
           "enabled": true,  
           "server_name": "dns11.quad9.net",
-          "alpn": ["h2"],
           "utls": {
             "enabled": true,
             "fingerprint": "chrome"
@@ -691,7 +689,6 @@
         "tls": {
           "enabled": true,
           "server_name": "dns.google",
-          "alpn": ["h2"],
           "utls": {
             "enabled": true,
             "fingerprint": "randomized"
@@ -710,7 +707,6 @@
         "tls": {
           "enabled": true,
           "server_name": "cloudflare-dns.com",
-          "alpn": ["h2"],
           "utls": {
             "enabled": true,
             "fingerprint": "chrome"

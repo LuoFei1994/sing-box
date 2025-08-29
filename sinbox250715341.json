@@ -27,13 +27,6 @@
       "rdrc_timeout": "7d"
     }
   },
-  /*"ntp": {
-        "enabled": false,
-        "server": "time.apple.com",
-        "server_port": 123,
-        "interval": "30m",
-        "detour": "🎯 全球直连"
-    },*/
   "inbounds": [
     {
       "domain_strategy":"ipv4_only",
@@ -106,21 +99,7 @@
         "RN-vless-brutal"
       ]
     },
-    
-    {
-      "type": "urltest",
-      "tag": "TCP节点DNS专用",
-      "url": "https://www.gstatic.com/generate_204",
-      "interval": "5m",
-      "tolerance": 150,
-      "interrupt_exist_connections": true,
-      "outbounds": [
-        "proxy",
-        "RN-vless",
-        "RN-tor-vless",
-        "RN-vless-brutal"
-      ]
-    },
+
     {
       "type": "direct",
       "tag": "🎯 全球直连"
@@ -590,10 +569,10 @@
     
     //下面默认dns是给节点使用的
     "default_domain_resolver": {
-      "server": "Local-Plain"
-      /*"strategy": "ipv4_only",
+      "server": "Local-DNS-TLS"
+      "strategy": "ipv4_only",
       "rewrite_ttl": 120
-      "client_subnet": "0.0.0.0/0"*/
+      "client_subnet": "0.0.0.0/0"
     },
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi", "cellular"],  
@@ -649,17 +628,11 @@
           }
         }
       },
-      {
-        "tag": "Local-Plain",
-        "type": "tcp",                   
-        "server": "223.5.5.5",
-        "server_port": 53
-      },
       
       {
         "tag": "Remote-DNS",
         "type": "https",
-        "detour": "TCP节点DNS专用",
+        "detour": "🚀 节点选择",
         "server_port": 443,
         "server": "dns11.quad9.net",
         "path": "/dns-query",
@@ -681,7 +654,7 @@
       {
         "tag": "Remote-GoogleDNS",
         "type": "https",
-        "detour": "TCP节点DNS专用",
+        "detour": "🚀 节点选择",
         "domain_resolver": "hosts",
         "server_port": 443,
         "server": "dns.google",
@@ -699,7 +672,7 @@
       {
         "tag": "Fallback-DNS",
         "type": "https",
-        "detour": "TCP节点DNS专用",
+        "detour": "🚀 节点选择",
         "domain_resolver": "hosts",
         "server": "cloudflare-dns.com",
         "server_port": 443,
@@ -770,7 +743,7 @@
       },
       
       // 远端 DNS 自举域名 → 本地解析，避免死锁（按你实际使用的远端 DNS 域名补充）
-      { 
+      /*{ 
         "domain_suffix": [
           "dns11.quad9.net",
           "cloudflare-dns.com",
@@ -780,7 +753,7 @@
         "server": "Local-DNS-TLS",
         "strategy": "ipv4_only",
         "rewrite_ttl": 300
-      },
+      },*/
 
       {
         "rule_set": [

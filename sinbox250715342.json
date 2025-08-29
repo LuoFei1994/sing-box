@@ -571,7 +571,7 @@
     "default_domain_resolver": {
       "server": "Local-DNS-TLS"
       "strategy": "ipv4_only",
-      "rewrite_ttl": 120
+      "rewrite_ttl": 120,
       "client_subnet": "0.0.0.0/0"
     },
     "default_network_strategy": "fallback",  

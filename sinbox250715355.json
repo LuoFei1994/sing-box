@@ -324,7 +324,10 @@
       },
       
       {
-        "rule_set": "private",
+        "rule_set": [
+          "private",
+          "tencent"
+        ],
         "action": "route",
         "outbound": "🎯 全球直连"
       },
@@ -347,16 +350,6 @@
       },
 
       {
-        "rule_set": [
-          "tencent",
-          "cn"
-          
-        ],
-        "action": "route",
-        "outbound": "🎯 全球直连"
-      },
-
-      {
         "action": "resolve"
       },
       
@@ -374,21 +367,24 @@
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/cn.srs",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🚀 节点选择",
+        "update_interval": "1d"
       },
       {
         "tag": "cn_ip",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/cnip.srs",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🚀 节点选择",
+        "update_interval": "1d"
       },
       {
         "tag": "private",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-private.srs",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🚀 节点选择",
+        "update_interval": "1d"
       },
 
       {
@@ -396,84 +392,96 @@
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-telegram.srs",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🚀 节点选择",
+        "update_interval": "1d"
       },
       {
         "tag": "github",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-github.srs",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🚀 节点选择",
+        "update_interval": "1d"
       },
       {
         "tag": "twitter",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-twitter.srs",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🚀 节点选择",
+        "update_interval": "1d"
       },
       {
         "tag": "youtube",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-youtube.srs",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🚀 节点选择",
+        "update_interval": "1d"
       },
       {
         "tag": "google",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-google.srs",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🚀 节点选择",
+        "update_interval": "1d"
       },
       {
         "tag": "facebook",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-facebook.srs",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🚀 节点选择",
+        "update_interval": "1d"
       },
       {
         "tag": "instagram",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-instagram.srs",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🚀 节点选择",
+        "update_interval": "1d"
       },
       {
         "tag": "tiktok",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-tiktok.srs",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🚀 节点选择",
+        "update_interval": "1d"
       },
        {
         "tag": "whatsapp",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-whatsapp.srs",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🚀 节点选择",
+        "update_interval": "1d"
       },
       {
         "tag": "tencent",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-tencent.srs",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🚀 节点选择",
+        "update_interval": "1d"
       },
       {
         "tag": "gfw",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/gfw.srs",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🚀 节点选择",
+        "update_interval": "1d"
       },
       {
         "tag": "AWAvenue-Ads",
         "type": "remote",
         "format": "source",
         "url": "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Singbox.json",
-        "download_detour": "🚀 节点选择"
+        "download_detour": "🚀 节点选择",
+        "update_interval": "1d"
       }
     
     ],

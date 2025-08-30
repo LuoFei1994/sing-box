@@ -350,7 +350,6 @@
       {
         "rule_set": [
           "tencent",
-          "games-cn",
           "cn"
           
         ],
@@ -484,15 +483,8 @@
         "format": "source",
         "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/trackerslist.srs",
         "download_detour": "🚀 节点选择"
-      },
-      //国内游戏
-      {
-        "tag": "games-cn",
-        "type": "remote",
-        "format": "source",
-        "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/games-cn.srs",
-        "download_detour": "🚀 节点选择"
       }
+    
     ],
     "auto_detect_interface": true,
     "final": "🐟 漏网之鱼",

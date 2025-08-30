@@ -274,7 +274,13 @@
     "rules": [
      
       {
-        "action": "sniff"
+        "action": "sniff",
+        "sniffer": [
+          "http",
+          "tls",
+          "quic",
+          "dns"
+        ]
       },
       
       {
@@ -291,14 +297,6 @@
         "action": "hijack-dns"
       },
 
-
-      {
-        "ip_is_private": true,
-        "action": "route",
-        "outbound": "🎯 全球直连"
-      },
-    
-
       {
         "action": "route",
         "clash_mode": "direct",
@@ -310,133 +308,53 @@
         "outbound": "GLOBAL"
       },
 
-      /*{  
-        "type": "logical",  
-        "mode": "or",  
-        "rules": [  
-          { "protocol": "stun" },  
-          { "protocol": "quic" },  
-          { "protocol": "dtls" },  
-          { "port": 853 },  
-          { "port": 3478 },  
-          { "port": 5349 },
-          { "port": 19302 },  
-          { "port": 19303 },  
-          { "port": 19304 },
-          { "port_range": "16384:32767", "network": "udp" },
-          { "port_range": "49152:65535", "network": "udp" },
-          { "network": "udp", "port": 443 }  
-        ],  
-        "action": "reject",  
-        "method": "drop"  
-      },
-      {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "port": 853
-          },
-          {
-            "network": "udp",
-            "port": 443
-          },
-          {
-            "protocol": "stun"
-          }
-        ],
-        "action": "reject",
-        "method": "drop"
-      },*/
-      
-      
-      // 高频国内服务：微信、支付宝、腾讯、抖音等，优先本地解析
-      {
-        "action": "resolve",
-        "rule_set": [
-          "WeChat",
-          "AliPay",
-          "Tencent",
-          "DouYin",
-          "GeoLocation-CN",
-          "GeoIP-CN"
-        ],
-        "server": "Local-DNS",
-        "strategy": "ipv4_only",
-        "rewrite_ttl": 300
-      },
-      
-      // Apple 生态：AppStore、AppleID、系统服务，走远程 DNS，避免 Reality 死锁
-      {
-        "action": "resolve",
-        "rule_set": [
-          "AppleID",
-          "Apple Domain",
-          "AppStore",
-          "GeoLocation-!CN"
-        ],
-        "server": "Remote-DNS",
-        "strategy": "ipv4_only",
-        "rewrite_ttl": 300
-      },
-      
-      // CDN 与远程 DNS 自举域名，提前解析避免首次连接失败
-      {
-        "action": "resolve",
-        "domain_suffix": [
-          "cloudflare-dns.com",
-          "dns11.quad9.net",
-          "fallback.apple.com",
-          "mesu.apple.com",
-          "cl3.apple.com"
-        ],
-        "server": "Fallback-DNS",
-        "strategy": "ipv4_only",
-        "rewrite_ttl": 120
-      },
-      
-      // 低频服务或实验性规则集，可按需启用
-      {
-        "action": "resolve",
-        "rule_set": [
-          "Alibaba"
-        ],
-        "server": "Local-DNS",
-        "strategy": "ipv4_only",
-        "rewrite_ttl": 120
-      },
-      
-  
       {
         "action": "reject",
         "method": "drop",  //default:对于 TCP 连接回复 RST，对于 UDP 包回复 ICMP 端口不可达。drop: 丢弃数据包。
         //"no_drop": false,      //如果未启用，则 30 秒内触发 50 次后，method 将被暂时覆盖为 drop。当 method 设为 drop 时不可用。
         "rule_set": [
-          "Category-Ads"
+          "AWAvenue-Ads"
         ]
+      },
+
+      {
+        "ip_is_private": true,
+        "action": "route",
+        "outbound": "🎯 全球直连"
       },
       
       {
+        "rule_set": "private",
         "action": "route",
-        "rule_set": [
-          "AliPay",
-          "WeChat",
-          "Tencent",
-          "GeoLocation-CN",
-          "GeoIP-CN"
-        ],
         "outbound": "🎯 全球直连"
       },
-
+      
       {
         "action": "route",
         "rule_set": [
           "AppleID",
           "Apple Domain",
           "AppStore",
-          "GeoLocation-!CN"
+          "GeoLocation-!CN",
+          "telegram",
+          "github",
+          "twitter",
+          "youtube",
+          "google",
+          "gfw"
         ],
         "outbound": "🚀 节点选择"
+      },
+
+      {
+        "action": "resolve",
+        "match_only": true
+      },
+      
+      {
+        "rule_set": "cn_ip",
+        "action": "route",
+        "outbound": "🎯 全球直连"
       }
       
     ],
@@ -454,8 +372,67 @@
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/cnip.srs",
-        "download_detour": "proxy"
+        "download_detour": "🚀 节点选择"
       },
+      {
+        "tag": "private",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-private.srs",
+        "download_detour": "🚀 节点选择"
+      },
+
+      {
+        "tag": "telegram",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-telegram.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "github",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-github.srs",
+        "download_detour": "🚀 节点选择""
+      },
+      {
+        "tag": "twitter",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-twitter.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "youtube",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-youtube.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "google",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-google.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "gfw",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/gfw.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "AWAvenue-Ads",
+        "type": "remote",
+        "format": "source",
+        "url": "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Singbox.json",
+        "download_detour": "🚀 节点选择"
+      },
+
+      
       {
         "tag": "Category-Ads",
         "type": "remote",
@@ -573,7 +550,7 @@
     //下面默认dns是给节点使用的
     "default_domain_resolver": {
       "server": "Local-DNS",
-      "strategy": "ipv4_only",
+      "strategy": "prefer_ipv4",
       "rewrite_ttl": 120,
       "client_subnet": "36.0.0.0/8"
     },

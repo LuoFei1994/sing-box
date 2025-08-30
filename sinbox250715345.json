@@ -1,7 +1,7 @@
 {
   "log": {
     "disabled": false, 
-    "level": "error",
+    "level": "warn",
     "output": "",
     "timestamp": false
   },
@@ -22,14 +22,13 @@
       "enabled": true,
       "path": "cache.db",
       "cache_id": "",
-      "store_fakeip": false,
+      "store_fakeip": true,
       "store_rdrc": true,
       "rdrc_timeout": "7d"
     }
   },
   "inbounds": [
     {
-      "domain_strategy":"ipv4_only",
       "endpoint_independent_nat":true,
       "address":[
         "172.18.0.1/30",
@@ -443,7 +442,20 @@
     ],
     "rule_set": [
       
-
+      {
+        "tag": "cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/cn.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "cn_ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/cnip.srs",
+        "download_detour": "proxy"
+      },
       {
         "tag": "Category-Ads",
         "type": "remote",
@@ -560,10 +572,10 @@
     
     //下面默认dns是给节点使用的
     "default_domain_resolver": {
-      "server": "Local-DNS-TLS",
+      "server": "Local-DNS",
       "strategy": "ipv4_only",
       "rewrite_ttl": 120,
-      "client_subnet": "0.0.0.0/0"
+      "client_subnet": "36.0.0.0/8"
     },
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi", "cellular"],  
@@ -683,7 +695,9 @@
          "predefined": {
            "dns.alidns.com": [
              "223.5.5.5",
-             "223.6.6.6"
+             "223.6.6.6",
+             "2400:3200::1",
+             "2400:3200:baba::1"
              ],
           "dns11.quad9.net": [
             "9.9.9.11",
@@ -698,6 +712,12 @@
             "1.0.0.1"
             ]
           }
+      },
+      {
+        "tag": "fake-ip-dns-server",
+        "type": "fakeip",
+        "inet4_range": "198.18.0.0/15",
+        "inet6_range": "fc00::/18"
       }
     ],
     "rules": [
@@ -715,67 +735,24 @@
 
       {
         "query_type": [
-          "HTTPS",
-          "SVCB",
-          "TXT",
-          "MX",
-          "CNAME",
-          "SRV"
+          "HTTPS"
         ],
-        "server": "Local-DNS-TLS"
-        //原因：HTTPS/SVCB 交给本地，减少 bad rdata。
+        "action": "reject"
       },
-      {
-        "domain_suffix": [
-          "apple.com", "icloud.com", "push.apple.com", "ess.apple.com",
-          "weixin.qq.com", "tenpay.com", "cmbchina.com"
-        ],
-        "server": "Local-DNS-TLS"
-      },
-      
-      // 远端 DNS 自举域名 → 本地解析，避免死锁（按你实际使用的远端 DNS 域名补充）
-      /*{ 
-        "domain_suffix": [
-          "dns11.quad9.net",
-          "cloudflare-dns.com",
-          "apple.com", 
-          "icloud.com"
-        ],
-        "server": "Local-DNS-TLS",
-        "strategy": "ipv4_only",
-        "rewrite_ttl": 300
-      },*/
 
       {
-        "rule_set": [
-          "GeoSite-CN"
+        "query_type": [
+          "A",
+          "AAAA"
         ],
+        "action": "route",
+        "server": "fake-ip-dns-server",
+        "rewrite_ttl": 1
+      },
+      {
+        "rule_set": "cn",
+        "action": "route",
         "server": "Local-DNS"
-      },
-      
-      { "rule_set": [
-        "AppleID",
-        "Apple Domain",
-        "AppStore"
-      ],
-        "server": "Remote-DNS",
-        "client_subnet": "36.0.0.0/8" 
-      },
-      {
-        "rule_set": [
-          "GeoLocation-!CN"
-        ],
-        "server": "Remote-DNS",
-        "client_subnet": "36.0.0.0/8" 
-      },
-      {
-        "domain_suffix": [
-          "fallback.apple.com",
-          "mesu.apple.com",
-          "cl3.apple.com"
-        ],
-        "server": "Fallback-DNS",
-        "client_subnet": "36.0.0.0/8" 
       }
     ],
     "cache_capacity": 8192,  
@@ -783,7 +760,7 @@
     "disable_cache": false,
     "disable_expire": false,
     "independent_cache": true,
-    "final": "Fallback-DNS",
+    "final": "Remote-GoogleDNS",
     "strategy": "prefer_ipv4"
   }
 }

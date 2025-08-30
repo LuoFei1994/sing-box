@@ -40,7 +40,21 @@
       "auto_route": true,
       "strict_route": true,
       "tag": "tun-in",
-      "type":"tun"
+      "type":"tun",
+      "platform": {
+        "http_proxy": {
+          "enabled": true,
+          "server": "127.0.0.1",
+          "server_port": 7890
+        }
+      }
+    },
+    {
+      "tag": "mixed-in",
+      "type": "mixed",
+      "listen": "127.0.0.1",
+      "listen_port": 7890,
+      "set_system_proxy": false
     }
   ],
   "endpoints":[
@@ -428,31 +442,8 @@
       
     ],
     "rule_set": [
-      {
-        "tag": "lyc8503-geoip-cn",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/lyc8503/sing-box-rules@refs/heads/rule-set-geoip/geoip-cn.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
-
-      {
-        "tag": "lyc8503-geosite-apple",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/lyc8503/sing-box-rules@refs/heads/rule-set-geosite/geosite-apple.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
-
-      {
-        "tag": "lyc8503-geosite-china-list",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/lyc8503/sing-box-rules@refs/heads/rule-set-geosite/geosite-china-list.srs",
-        "format": "binary",
-        "download_detour": "🎯 全球直连"
-      },
-
       
+
       {
         "tag": "Category-Ads",
         "type": "remote",

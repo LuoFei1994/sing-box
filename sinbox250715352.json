@@ -313,7 +313,8 @@
         "method": "drop",  //default:对于 TCP 连接回复 RST，对于 UDP 包回复 ICMP 端口不可达。drop: 丢弃数据包。
         //"no_drop": false,      //如果未启用，则 30 秒内触发 50 次后，method 将被暂时覆盖为 drop。当 method 设为 drop 时不可用。
         "rule_set": [
-          "AWAvenue-Ads"
+          "AWAvenue-Ads",
+          "trackerslist"
         ]
       },
 
@@ -337,9 +338,24 @@
           "twitter",
           "youtube",
           "google",
+          "facebook",
+          "instagram",
+          "tiktok",
+          "whatsapp",
           "gfw"
         ],
         "outbound": "🚀 节点选择"
+      },
+
+      {
+        "rule_set": [
+          "tencent",
+          "games-cn",
+          "cn"
+          
+        ],
+        "action": "route",
+        "outbound": "🎯 全球直连"
       },
 
       {
@@ -413,6 +429,41 @@
         "download_detour": "🚀 节点选择"
       },
       {
+        "tag": "facebook",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-facebook.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "instagram",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-instagram.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "tiktok",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-tiktok.srs",
+        "download_detour": "🚀 节点选择"
+      },
+       {
+        "tag": "whatsapp",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-whatsapp.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "tencent",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-tencent.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
         "tag": "gfw",
         "type": "remote",
         "format": "binary",
@@ -424,6 +475,22 @@
         "type": "remote",
         "format": "source",
         "url": "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Singbox.json",
+        "download_detour": "🚀 节点选择"
+      },
+      //跟踪
+      {
+        "tag": "trackerslist",
+        "type": "remote",
+        "format": "source",
+        "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/trackerslist.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      //国内游戏
+      {
+        "tag": "games-cn",
+        "type": "remote",
+        "format": "source",
+        "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/games-cn.srs",
         "download_detour": "🚀 节点选择"
       }
     ],

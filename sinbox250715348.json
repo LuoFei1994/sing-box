@@ -347,8 +347,7 @@
       },
 
       {
-        "action": "resolve",
-        "match_only": true
+        "action": "resolve"
       },
       
       {

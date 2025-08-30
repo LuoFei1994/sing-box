@@ -332,10 +332,6 @@
       {
         "action": "route",
         "rule_set": [
-          "AppleID",
-          "Apple Domain",
-          "AppStore",
-          "GeoLocation-!CN",
           "telegram",
           "github",
           "twitter",

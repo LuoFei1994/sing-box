@@ -390,9 +390,7 @@
       },
 
       {
-        "action": "resolve",
-        "match_only": true,
-        "strategy": "prefer_ipv4"
+        "action": "resolve"
       },
       {
         "action": "route",

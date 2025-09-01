@@ -383,6 +383,7 @@
           "AppleID",
           "Apple Domain",
           "AppStore",
+          "gfw",
           "GeoLocation-!CN"
         ],
         "outbound": "🚀 节点选择"
@@ -390,11 +391,13 @@
 
       {
         "action": "resolve",
+        "match_only": true,
         "strategy": "prefer_ipv4"
       },
       {
         "action": "route",
         "rule_set": [
+          "cn_ip",
           "GeoIP-CN"
         ],
         "outbound": "🎯 全球直连"
@@ -403,10 +406,55 @@
     ],
     "rule_set": [
       {
+        "tag": "AWAvenue-Ads",
+        "type": "remote",
+        "format": "source",
+        "url": "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Singbox.json",
+        "update_interval": "24h",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "private",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-private.srs",
+        "update_interval": "24h",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "gfw",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/gfw.srs",
+        "update_interval": "24h",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/cn.srs",
+        "update_interval": "24h",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "cn_ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/cnip.srs",
+        "update_interval": "24h",
+        "download_detour": "🚀 节点选择"
+      },
+
+
+
+      
+      {
         "tag": "lyc8503-geoip-cn",
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/lyc8503/sing-box-rules@refs/heads/rule-set-geoip/geoip-cn.srs",
         "format": "binary",
+        "update_interval": "24h",
         "download_detour": "🎯 全球直连"
       },
 
@@ -415,6 +463,7 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/lyc8503/sing-box-rules@refs/heads/rule-set-geosite/geosite-apple.srs",
         "format": "binary",
+        "update_interval": "24h",
         "download_detour": "🎯 全球直连"
       },
 
@@ -423,6 +472,7 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/lyc8503/sing-box-rules@refs/heads/rule-set-geosite/geosite-china-list.srs",
         "format": "binary",
+        "update_interval": "24h",
         "download_detour": "🎯 全球直连"
       },
 
@@ -432,6 +482,7 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ads-all.srs",
         "format": "binary",
+        "update_interval": "24h",
         "download_detour": "🎯 全球直连"
       },
       
@@ -440,6 +491,7 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
         "format": "binary",
+        "update_interval": "24h",
         "download_detour": "🎯 全球直连"
       },
       
@@ -448,6 +500,7 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
         "format": "binary",
+        "update_interval": "24h",
         "download_detour": "🎯 全球直连"
       },
       {
@@ -462,6 +515,7 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-cn.srs",
         "format": "binary",
+        "update_interval": "24h",
         "download_detour": "🎯 全球直连"
       },
 
@@ -471,6 +525,7 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/AliPay/AliPay.srs",
         "format": "binary",
+        "update_interval": "24h",
         "download_detour": "🎯 全球直连"
       },
       
@@ -480,6 +535,7 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/WeChat/WeChat.srs",
         "format": "binary",
+        "update_interval": "24h",
         "download_detour": "🎯 全球直连"
       },
 
@@ -489,6 +545,7 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Alibaba/Alibaba.srs",
         "format": "binary",
+        "update_interval": "24h",
         "download_detour": "🎯 全球直连"
       },
 
@@ -498,6 +555,7 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/AppStore/AppStore.srs",
         "format": "binary",
+        "update_interval": "24h",
         "download_detour": "🎯 全球直连"
       },
 
@@ -507,6 +565,7 @@
         "type": "remote",
         "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geoip/apple.srs",
         "format": "binary",
+        "update_interval": "24h",
         "download_detour": "🎯 全球直连"
       },
       
@@ -516,6 +575,7 @@
         "type": "remote",
         "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/apple.srs",
         "format": "binary",
+        "update_interval": "24h",
         "download_detour": "🎯 全球直连"
       },
 
@@ -525,6 +585,7 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/DouYin/DouYin.srs",
         "format": "binary",
+        "update_interval": "24h",
         "download_detour": "🎯 全球直连"
       },
       
@@ -534,6 +595,7 @@
         "type": "remote",
         "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Tencent/Tencent.srs",
         "format": "binary",
+        "update_interval": "24h",
         "download_detour": "🎯 全球直连"
       }
       

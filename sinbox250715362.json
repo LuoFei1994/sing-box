@@ -837,7 +837,7 @@
     "disable_expire": false,
     "independent_cache": true,
     "final": "Remote-GoogleDNS",
-    "strategy": "prefer_ipv4"
+    "strategy": "prefer_ipv4",
     "client_subnet": "0.0.0.0/0" 
   }
 }

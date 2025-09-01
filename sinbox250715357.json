@@ -357,64 +357,6 @@
         "method": "drop"
       },*/
       
-      
-      // 高频国内服务：微信、支付宝、腾讯、抖音等，优先本地解析
-      {
-        "action": "resolve",
-        "rule_set": [
-          "WeChat",
-          "AliPay",
-          "Tencent",
-          "DouYin",
-          "GeoLocation-CN",
-          "GeoIP-CN"
-        ],
-        "server": "Local-DNS",
-        "strategy": "ipv4_only",
-        "rewrite_ttl": 300
-      },
-      
-      // Apple 生态：AppStore、AppleID、系统服务，走远程 DNS，避免 Reality 死锁
-      {
-        "action": "resolve",
-        "rule_set": [
-          "AppleID",
-          "Apple Domain",
-          "AppStore",
-          "GeoLocation-!CN"
-        ],
-        "server": "Remote-DNS",
-        "strategy": "ipv4_only",
-        "rewrite_ttl": 300
-      },
-      
-      // CDN 与远程 DNS 自举域名，提前解析避免首次连接失败
-      {
-        "action": "resolve",
-        "domain_suffix": [
-          "cloudflare-dns.com",
-          "dns11.quad9.net",
-          "fallback.apple.com",
-          "mesu.apple.com",
-          "cl3.apple.com"
-        ],
-        "server": "Fallback-DNS",
-        "strategy": "ipv4_only",
-        "rewrite_ttl": 120
-      },
-      
-      // 低频服务或实验性规则集，可按需启用
-      {
-        "action": "resolve",
-        "rule_set": [
-          "Alibaba"
-        ],
-        "server": "Local-DNS",
-        "strategy": "ipv4_only",
-        "rewrite_ttl": 120
-      },
-      
-  
       {
         "action": "reject",
         "method": "drop",  //default:对于 TCP 连接回复 RST，对于 UDP 包回复 ICMP 端口不可达。drop: 丢弃数据包。
@@ -430,8 +372,7 @@
           "AliPay",
           "WeChat",
           "Tencent",
-          "GeoLocation-CN",
-          "GeoIP-CN"
+          "GeoLocation-CN"
         ],
         "outbound": "🎯 全球直连"
       },
@@ -445,6 +386,18 @@
           "GeoLocation-!CN"
         ],
         "outbound": "🚀 节点选择"
+      },
+
+      {
+        "action": "resolve",
+        "strategy": "prefer_ipv4"
+      },
+      {
+        "action": "route",
+        "rule_set": [
+          "GeoIP-CN"
+        ],
+        "outbound": "🎯 全球直连"
       }
       
     ],
@@ -591,9 +544,9 @@
     //下面默认dns是给节点使用的
     "default_domain_resolver": {
       "server": "Local-Plain"
-      /*"strategy": "ipv4_only",
-      "rewrite_ttl": 120
-      "client_subnet": "0.0.0.0/0"*/
+      "strategy": "prefer_ipv4",
+      "rewrite_ttl": 120,
+      "client_subnet": "36.0.0.0/8"
     },
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi", "cellular"],  

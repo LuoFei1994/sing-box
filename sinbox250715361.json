@@ -603,7 +603,7 @@
     
     //下面默认dns是给节点使用的
     "default_domain_resolver": {
-      "server": "Local-Plain",
+      "server": "Local-DNS",
       "strategy": "prefer_ipv4",
       "rewrite_ttl": 120,
       "client_subnet": "36.0.0.0/8"
@@ -771,7 +771,8 @@
           "CNAME",
           "SRV"
         ],
-        "server": "Local-DNS-TLS"
+        "server": "Local-DNS-TLS",
+        "client_subnet": "0.0.0.0/0" 
         //原因：HTTPS/SVCB 交给本地，减少 bad rdata。
       },
       {
@@ -779,7 +780,8 @@
           "apple.com", "icloud.com", "push.apple.com", "ess.apple.com",
           "weixin.qq.com", "tenpay.com", "cmbchina.com"
         ],
-        "server": "Local-DNS-TLS"
+        "server": "Local-DNS-TLS",
+        "client_subnet": "0.0.0.0/0" 
       },
       
       // 远端 DNS 自举域名 → 本地解析，避免死锁（按你实际使用的远端 DNS 域名补充）
@@ -792,14 +794,16 @@
         ],
         "server": "Local-DNS-TLS",
         "strategy": "ipv4_only",
-        "rewrite_ttl": 300
+        "rewrite_ttl": 300,
+        "client_subnet": "0.0.0.0/0" 
       },
 
       {
         "rule_set": [
           "GeoSite-CN"
         ],
-        "server": "Local-DNS"
+        "server": "Local-DNS",
+        "client_subnet": "0.0.0.0/0" 
       },
       
       { "rule_set": [
@@ -807,14 +811,14 @@
         "Apple Domain",
         "AppStore"
       ],
-        "server": "Remote-DNS",
+        "server": "Remote-GoogleDNS",
         "client_subnet": "36.0.0.0/8" 
       },
       {
         "rule_set": [
           "GeoLocation-!CN"
         ],
-        "server": "Remote-DNS",
+        "server": "Remote-GoogleDNS",
         "client_subnet": "36.0.0.0/8" 
       },
       {
@@ -832,7 +836,8 @@
     "disable_cache": false,
     "disable_expire": false,
     "independent_cache": true,
-    "final": "Fallback-DNS",
+    "final": "Remote-GoogleDNS",
     "strategy": "prefer_ipv4"
+    "client_subnet": "0.0.0.0/0" 
   }
 }

@@ -543,7 +543,7 @@
     
     //下面默认dns是给节点使用的
     "default_domain_resolver": {
-      "server": "Local-Plain"
+      "server": "Local-Plain",
       "strategy": "prefer_ipv4",
       "rewrite_ttl": 120,
       "client_subnet": "36.0.0.0/8"

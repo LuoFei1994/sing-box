@@ -39,10 +39,10 @@
       "domain_strategy":"ipv4_only",
       "endpoint_independent_nat":true,
       "address":[
-        "172.18.0.1/30",
-        "fdfe:dcba:9876::1/126"
+        "172.18.0.1/30"
+        //"fdfe:dcba:9876::1/126"
         ],
-      "mtu":4086,
+      "mtu":4064,
       "stack":"system",
       "auto_route": true,
       "strict_route": true,

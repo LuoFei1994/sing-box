@@ -185,7 +185,7 @@
     ],
     "final": "节点",
     "default_domain_resolver": "ali",
-    "default_domain_match_strategy": "prefer_fqdn",
+    //"default_domain_match_strategy": "prefer_fqdn",
     "auto_detect_interface": true,
     "rule_set": [
       {

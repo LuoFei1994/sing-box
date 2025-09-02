@@ -108,20 +108,6 @@
     },
     
     {
-      "type": "urltest",
-      "tag": "TCP节点DNS专用",
-      "url": "https://www.gstatic.com/generate_204",
-      "interval": "5m",
-      "tolerance": 150,
-      "interrupt_exist_connections": true,
-      "outbounds": [
-        "proxy",
-        "RN-vless",
-        "RN-tor-vless",
-        "RN-vless-brutal"
-      ]
-    },
-    {
       "type": "direct",
       "tag": "🎯 全球直连"
     },
@@ -282,13 +268,7 @@
     "rules": [
      
       {
-        "action": "sniff",
-        "sniffer": [
-          "http",
-          "tls",
-          "quic",
-          "dns"
-        ]
+        "action": "sniff"
       },
       
       {
@@ -567,14 +547,14 @@
         "server_port": 443,
         "path": "/dns-query",
         "domain_resolver": "hosts",
-        /*"tls": {
+        "tls": {
           "enabled": true,
           "server_name": "dns.alidns.com",
           "utls": {
             "enabled": true,
             "fingerprint": "chrome"
           }
-        }*/
+        }
       },
       {
         "tag": "Local-DNS-H3",
@@ -617,7 +597,7 @@
       {
         "tag": "Remote-DNS",
         "type": "https",
-        "detour": "TCP节点DNS专用",
+        "detour": "🚀 节点选择",
         "server_port": 443,
         "server": "dns11.quad9.net",
         "path": "/dns-query",
@@ -639,7 +619,7 @@
       {
         "tag": "Remote-GoogleDNS",
         "type": "https",
-        "detour": "TCP节点DNS专用",
+        "detour": "🚀 节点选择",
         "domain_resolver": "hosts",
         "server_port": 443,
         "server": "dns.google",
@@ -657,7 +637,7 @@
       {
         "tag": "Fallback-DNS",
         "type": "https",
-        "detour": "TCP节点DNS专用",
+        "detour": "🚀 节点选择",
         "domain_resolver": "hosts",
         "server": "cloudflare-dns.com",
         "server_port": 443,
@@ -717,12 +697,7 @@
 
       {
         "query_type": [
-          "HTTPS",
-          "SVCB",
-          "TXT",
-          "MX",
-          "CNAME",
-          "SRV"
+          "HTTPS"
         ],
         "action": "reject"
         /*"server": "Local-DNS-TLS",

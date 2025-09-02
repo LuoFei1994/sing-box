@@ -528,7 +528,7 @@
     
     //下面默认dns是给节点使用的
     "default_domain_resolver": {
-      "server": "Remote-GoogleDNS",
+      "server": "Local-DNS",
       "strategy": "ipv4_only",
       "rewrite_ttl": 120
       //"client_subnet": "36.0.0.0/8"
@@ -676,7 +676,7 @@
           }
       },
       {
-        "tag": "fake-ip-dns-server",
+        "tag": "Fakeip",
         "type": "fakeip",
         "inet4_range": "198.18.0.0/15",
         "inet6_range": "fc00::/18"
@@ -699,10 +699,10 @@
         "query_type": [
           "HTTPS"
         ],
-        "action": "reject"
-        /*"server": "Local-DNS-TLS",
+        //"action": "reject"
+        "server": "Local-DNS-TLS",
         "client_subnet": "0.0.0.0/0" 
-        //原因：HTTPS/SVCB 交给本地，减少 bad rdata。*/
+        //原因：HTTPS/SVCB 交给本地，减少 bad rdata。
       },
       /*{
         "domain_suffix": [
@@ -758,7 +758,7 @@
           "AAAA"
         ],
         "action": "route",
-        "server": "fake-ip-dns-server",
+        "server": "Fakeip",
         "rewrite_ttl": 1
       },
       {

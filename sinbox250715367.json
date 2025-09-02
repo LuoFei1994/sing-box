@@ -22,7 +22,7 @@
       "enabled": true,
       "path": "cache.db",
       "cache_id": "",
-      "store_fakeip": false,
+      "store_fakeip": true,
       "store_rdrc": true,
       "rdrc_timeout": "7d"
     }
@@ -282,7 +282,13 @@
     "rules": [
      
       {
-        "action": "sniff"
+        "action": "sniff",
+        "sniffer": [
+          "http",
+          "tls",
+          "quic",
+          "dns"
+        ]
       },
       
       {
@@ -299,14 +305,6 @@
         "action": "hijack-dns"
       },
 
-
-      {
-        "ip_is_private": true,
-        "action": "route",
-        "outbound": "🎯 全球直连"
-      },
-    
-
       {
         "action": "route",
         "clash_mode": "direct",
@@ -318,45 +316,6 @@
         "outbound": "GLOBAL"
       },
 
-      /*{  
-        "type": "logical",  
-        "mode": "or",  
-        "rules": [  
-          { "protocol": "stun" },  
-          { "protocol": "quic" },  
-          { "protocol": "dtls" },  
-          { "port": 853 },  
-          { "port": 3478 },  
-          { "port": 5349 },
-          { "port": 19302 },  
-          { "port": 19303 },  
-          { "port": 19304 },
-          { "port_range": "16384:32767", "network": "udp" },
-          { "port_range": "49152:65535", "network": "udp" },
-          { "network": "udp", "port": 443 }  
-        ],  
-        "action": "reject",  
-        "method": "drop"  
-      },
-      {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "port": 853
-          },
-          {
-            "network": "udp",
-            "port": 443
-          },
-          {
-            "protocol": "stun"
-          }
-        ],
-        "action": "reject",
-        "method": "drop"
-      },*/
-      
       {
         "action": "reject",
         "method": "drop",  //default:对于 TCP 连接回复 RST，对于 UDP 包回复 ICMP 端口不可达。drop: 丢弃数据包。
@@ -365,6 +324,12 @@
           "Category-Ads"
         ]
       },
+
+      {
+        "ip_is_private": true,
+        "action": "route",
+        "outbound": "🎯 全球直连"
+      },
       
       {
         "action": "route",
@@ -372,6 +337,8 @@
           "AliPay",
           "WeChat",
           "Tencent",
+          "binance",
+          "private",
           "GeoLocation-CN"
         ],
         "outbound": "🎯 全球直连"
@@ -443,38 +410,16 @@
         "update_interval": "24h",
         "download_detour": "🚀 节点选择"
       },
-
-
-
-      
       {
-        "tag": "lyc8503-geoip-cn",
+        "tag": "binance",
         "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/lyc8503/sing-box-rules@refs/heads/rule-set-geoip/geoip-cn.srs",
         "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/binance.srs",
         "update_interval": "24h",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🚀 节点选择"
       },
 
-      {
-        "tag": "lyc8503-geosite-apple",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/lyc8503/sing-box-rules@refs/heads/rule-set-geosite/geosite-apple.srs",
-        "format": "binary",
-        "update_interval": "24h",
-        "download_detour": "🎯 全球直连"
-      },
 
-      {
-        "tag": "lyc8503-geosite-china-list",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/lyc8503/sing-box-rules@refs/heads/rule-set-geosite/geosite-china-list.srs",
-        "format": "binary",
-        "update_interval": "24h",
-        "download_detour": "🎯 全球直连"
-      },
-
-      
       {
         "tag": "Category-Ads",
         "type": "remote",

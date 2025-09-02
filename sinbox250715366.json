@@ -732,7 +732,9 @@
          "predefined": {
            "dns.alidns.com": [
              "223.5.5.5",
-             "223.6.6.6"
+             "223.6.6.6",
+             "2400:3200::1",
+             "2400:3200:baba::1"
              ],
           "dns11.quad9.net": [
             "9.9.9.11",
@@ -747,6 +749,12 @@
             "1.0.0.1"
             ]
           }
+      },
+      {
+        "tag": "fake-ip-dns-server",
+        "type": "fakeip",
+        "inet4_range": "198.18.0.0/15",
+        "inet6_range": "fc00::/18"
       }
     ],
     "rules": [
@@ -771,16 +779,17 @@
           "CNAME",
           "SRV"
         ],
-        "server": "Local-DNS-TLS",
+        "action": "reject"
+        /*"server": "Local-DNS-TLS",
         "client_subnet": "0.0.0.0/0" 
-        //原因：HTTPS/SVCB 交给本地，减少 bad rdata。
+        //原因：HTTPS/SVCB 交给本地，减少 bad rdata。*/
       },
       {
         "domain_suffix": [
           "apple.com", "icloud.com", "push.apple.com", "ess.apple.com",
           "weixin.qq.com", "tenpay.com", "cmbchina.com"
         ],
-        "server": "Local-DNS-TLS",
+        "server": "Local-DNS",
         "client_subnet": "0.0.0.0/0" 
       },
       
@@ -792,20 +801,13 @@
           "apple.com", 
           "icloud.com"
         ],
-        "server": "Local-DNS-TLS",
+        "server": "Local-DNS",
         "strategy": "ipv4_only",
         "rewrite_ttl": 300,
         "client_subnet": "0.0.0.0/0" 
       },
 
-      {
-        "rule_set": [
-          "GeoSite-CN"
-        ],
-        "server": "Local-DNS",
-        "client_subnet": "0.0.0.0/0" 
-      },
-      
+
       { "rule_set": [
         "AppleID",
         "Apple Domain",
@@ -829,6 +831,20 @@
         ],
         "server": "Fallback-DNS",
         "client_subnet": "36.0.0.0/8" 
+      },
+      {
+        "query_type": [
+          "A",
+          "AAAA"
+        ],
+        "action": "route",
+        "server": "fake-ip-dns-server",
+        "rewrite_ttl": 1
+      },
+      {
+        "rule_set": "cn",
+        "action": "route",
+        "server": "Local-DNS"
       }
     ],
     "cache_capacity": 2048,  

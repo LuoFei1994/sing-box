@@ -567,14 +567,14 @@
         "server_port": 443,
         "path": "/dns-query",
         "domain_resolver": "hosts",
-        "tls": {
+        /*"tls": {
           "enabled": true,
           "server_name": "dns.alidns.com",
           "utls": {
             "enabled": true,
             "fingerprint": "chrome"
           }
-        }
+        }*/
       },
       {
         "tag": "Local-DNS-H3",

@@ -174,8 +174,8 @@
         "outbound": "节点"
       },
       {
-        "action": "resolve",
-        "match_only": true
+        "action": "resolve"
+        //"match_only": true
       },
       {
         "rule_set": "cn_ip",

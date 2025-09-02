@@ -448,7 +448,7 @@
   "log": {
     "disabled": false,
     "timestamp": true,
-    "level": "warn",
+    "level": "error",
     "output": ""
   },
   "experimental": {
@@ -462,7 +462,7 @@
       "external_ui": "ui",
       "external_ui_download_url": "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip",
       "external_ui_download_detour": "节点",
-      "external_ui_update_interval": "1d",
+      //"external_ui_update_interval": "1d",
       "access_control_allow_origin": [
         "https://metacubexd.pages.dev",
         "https://d.metacubex.one",

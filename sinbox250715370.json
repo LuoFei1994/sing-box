@@ -548,7 +548,7 @@
     
     //下面默认dns是给节点使用的
     "default_domain_resolver": {
-      "server": "Local-DNS",
+      "server": "Remote-GoogleDNS",
       "strategy": "ipv4_only",
       "rewrite_ttl": 120
       //"client_subnet": "36.0.0.0/8"
@@ -729,7 +729,7 @@
         "client_subnet": "0.0.0.0/0" 
         //原因：HTTPS/SVCB 交给本地，减少 bad rdata。*/
       },
-      {
+      /*{
         "domain_suffix": [
           "apple.com", "icloud.com", "push.apple.com", "ess.apple.com",
           "weixin.qq.com", "tenpay.com", "cmbchina.com"
@@ -741,6 +741,8 @@
       { 
         "domain_suffix": [
           "dns11.quad9.net",
+          "cloudflare-dns.com",
+          "dns.google",
           "cloudflare-dns.com",
           "apple.com", 
           "icloud.com"
@@ -774,7 +776,7 @@
         ],
         "server": "Fallback-DNS",
         "client_subnet": "0.0.0.0/0" 
-      },
+      },*/
       {
         "query_type": [
           "A",

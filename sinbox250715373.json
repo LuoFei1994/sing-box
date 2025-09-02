@@ -699,12 +699,12 @@
         "query_type": [
           "HTTPS"
         ],
-        //"action": "reject"
-        "server": "Local-DNS-TLS",
+        "action": "reject"
+        /*"server": "Local-DNS",
         "client_subnet": "0.0.0.0/0" 
-        //原因：HTTPS/SVCB 交给本地，减少 bad rdata。
+        //原因：HTTPS/SVCB 交给本地，减少 bad rdata。*/
       },
-      /*{
+      {
         "domain_suffix": [
           "apple.com", "icloud.com", "push.apple.com", "ess.apple.com",
           "weixin.qq.com", "tenpay.com", "cmbchina.com"
@@ -751,7 +751,7 @@
         ],
         "server": "Fallback-DNS",
         "client_subnet": "0.0.0.0/0" 
-      },*/
+      },
       {
         "query_type": [
           "A",

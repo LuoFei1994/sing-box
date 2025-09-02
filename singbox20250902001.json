@@ -12,7 +12,7 @@
         "type": "https",
         "server": "dns.google",
         "domain_resolver": "hosts",
-        "detour": "proxy"
+        "detour": "节点"
       },
       {
         "tag": "local",
@@ -111,7 +111,7 @@
       {
         "clash_mode": "Global",
         "action": "route",
-        "outbound": "proxy"
+        "outbound": "节点"
       },
       {
         "rule_set": "AWAvenue-Ads",
@@ -162,11 +162,6 @@
         ]
       },
       {
-        "rule_set": "ai",
-        "action": "route",
-        "outbound": "ai"
-      },
-      {
         "rule_set": [
           "telegram",
           "github",
@@ -176,7 +171,7 @@
           "gfw"
         ],
         "action": "route",
-        "outbound": "proxy"
+        "outbound": "节点"
       },
       {
         "action": "resolve",
@@ -188,7 +183,7 @@
         "outbound": "direct"
       }
     ],
-    "final": "proxy",
+    "final": "节点",
     "default_domain_resolver": "ali",
     "default_domain_match_strategy": "prefer_fqdn",
     "auto_detect_interface": true,
@@ -198,167 +193,231 @@
         "type": "remote",
         "format": "source",
         "url": "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Singbox.json",
-        "download_detour": "proxy"
+        "download_detour": "节点"
       },
       {
         "tag": "private",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-private.srs",
-        "download_detour": "proxy"
+        "download_detour": "节点"
       },
       {
         "tag": "ai",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/ai.srs",
-        "download_detour": "proxy"
+        "download_detour": "节点"
       },
       {
         "tag": "telegram",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-telegram.srs",
-        "download_detour": "proxy"
+        "download_detour": "节点"
       },
       {
         "tag": "github",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-github.srs",
-        "download_detour": "proxy"
+        "download_detour": "节点"
       },
       {
         "tag": "twitter",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-twitter.srs",
-        "download_detour": "proxy"
+        "download_detour": "节点"
       },
       {
         "tag": "youtube",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-youtube.srs",
-        "download_detour": "proxy"
+        "download_detour": "节点"
       },
       {
         "tag": "google",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-google.srs",
-        "download_detour": "proxy"
+        "download_detour": "节点"
       },
       {
         "tag": "gfw",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/gfw.srs",
-        "download_detour": "proxy"
+        "download_detour": "节点"
       },
       {
         "tag": "cn",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/cn.srs",
-        "download_detour": "proxy"
+        "download_detour": "节点"
       },
       {
         "tag": "cn_ip",
         "type": "remote",
         "format": "binary",
         "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/cnip.srs",
-        "download_detour": "proxy"
+        "download_detour": "节点"
       }
     ]
   },
   "outbounds": [
     {
-      "tag": "proxy",
+      "tag": "节点",
       "type": "selector",
       "outbounds": [
-        "hk",
-        "sg",
-        "jp",
-        "us",
-        "other"
+        "proxy123",
+        "RN-tor-tuic",
+        "RN-tor-vless",
+        "RN-vless",
+        "RN-tuic",
+        "RN-vless-brutal"
       ],
-      "default": "jp"
+      "default": "proxy123"
     },
-    {
-      "tag": "ai",
-      "type": "selector",
-      "outbounds": [
-        "hk",
-        "sg",
-        "jp",
-        "us",
-        "other"
-      ],
-      "default": "us"
-    },
-    {
-      "tag": "tg-sg",
-      "type": "selector",
-      "outbounds": [
-        "sg",
-        "proxy"
-      ],
-      "default": "sg"
-    },
-    {
-      "tag": "tg-us",
-      "type": "selector",
-      "outbounds": [
-        "us",
-        "proxy"
-      ],
-      "default": "us"
-    },
-    {
-      "tag": "tg-eu",
-      "type": "selector",
-      "outbounds": [
-        "eu",
-        "proxy"
-      ],
-      "default": "eu"
-    },
-    {
-      "tag": "hk",
-      "type": "selector",
-      "outbounds": []
-    },
-    {
-      "tag": "sg",
-      "type": "selector",
-      "outbounds": []
-    },
-    {
-      "tag": "jp",
-      "type": "selector",
-      "outbounds": []
-    },
-    {
-      "tag": "us",
-      "type": "selector",
-      "outbounds": []
-    },
-    {
-      "tag": "eu",
-      "type": "selector",
-      "outbounds": []
-    },
-    {
-      "tag": "other",
-      "type": "selector",
-      "outbounds": []
-    },
+    
     {
       "tag": "direct",
       "type": "direct",
       "domain_resolver": "local"
     },
+    {
+      "type": "vless",
+      "tag": "RN-vless-brutal",
+      "server": "107.150.27.18",
+      "server_port": 11779,
+      "uuid": "bb1a2607-2755-4344-e9fb-eaa792d35541",
+      "flow": "xtls-rprx-vision",
+      "packet_encoding": "xudp",
+      "tls": {
+        "enabled": true,
+        "server_name": "iosapps.itunes.apple.com",
+        "insecure": true,
+        "alpn": [
+          "h3",
+          "h2",
+          "http/1.1"
+        ]
+      }
+    },
+    {
+      "type": "tuic",
+      "tag": "RN-tuic",
+      "server": "107.150.27.18",
+      "server_port": 443,
+      "uuid": "bb1a2607-2755-4344-e9fb-eaa792d35541",
+      "password": "SaCqA8IOGG",
+      "congestion_control": "bbr",
+      "udp_relay_mode": "native",
+      "heartbeat": "18s",        // 原来 30s
+      "reuse_addr": true,                 // 端口复用
+      "zero_rtt_handshake": false,        // 关闭 0-RTT
+      "tls": {
+        "enabled": true,
+        "server_name": "iosapps.itunes.apple.com",
+        "insecure": true,
+        "fragment": true,  
+        "fragment_fallback_delay": "500ms",  
+        "record_fragment": true,
+        "alpn": [
+          "h3",
+          "h2",
+          "http/1.1"
+        ]
+      }
+    },
+    {
+      "type": "vless",
+      "tag": "RN-vless",
+      "server": "107.150.27.18",
+      "server_port": 443,
+      "uuid": "bb1a2607-2755-4344-e9fb-eaa792d35541",
+      "flow": "xtls-rprx-vision",
+      "packet_encoding": "xudp",
+      "tls": {
+        "enabled": true,
+        "server_name": "iosapps.itunes.apple.com",
+        "fragment": true,  
+        "fragment_fallback_delay": "500ms",  
+        "record_fragment": true,
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "safari"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "eugUhe5PLdoCryH8wv-proBfSDY30xKI-dPZtkVkTkk",
+          "short_id": "dd733b00"
+        }
+      }
+    },
+    {
+      "type": "vless",
+      "tag": "RN-tor-vless",
+      "server": "107.150.27.18",
+      "server_port": 443,
+      "uuid": "27f1b15a-5f3e-42de-b0bd-fb6bf2ae81ed",
+      "flow": "xtls-rprx-vision",
+      "packet_encoding": "xudp",
+      "tls": {
+        "enabled": true,
+        "server_name": "iosapps.itunes.apple.com",
+        "fragment": true,  
+        "fragment_fallback_delay": "500ms",  
+        "record_fragment": true,
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "safari"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "eugUhe5PLdoCryH8wv-proBfSDY30xKI-dPZtkVkTkk",
+          "short_id": "4e07fb"
+        }
+      }
+    },
+    {
+      "type": "tuic",
+      "tag": "RN-tor-tuic",
+      "server": "107.150.27.18",
+      "server_port": 443,
+      "uuid": "27f1b15a-5f3e-42de-b0bd-fb6bf2ae81ed",
+      "password": "p640m0hoZU",
+      "congestion_control": "bbr",
+      "heartbeat": "18s", // 修改
+      "reuse_addr": true,          // 修改
+      "zero_rtt_handshake": false, // 修改
+      "tls": {
+        "enabled": true,
+        "server_name": "iosapps.itunes.apple.com",
+        "fragment": true,  
+        "fragment_fallback_delay": "500ms",  
+        "record_fragment": true,
+        "insecure": true,
+        "alpn": [
+          "h3",
+          "h2",
+          "http/1.1"
+        ]
+      }
+    },
+    {
+      "type": "vmess",
+      "tag": "proxy123",
+      "server": "c29s801.portablesubmarines.com",
+      "server_port": 15055,
+      "uuid": "665f1607-fefd-47ac-94c8-b088dcaf6c08",
+      "security": "auto",
+      "alter_id": 0
+    }
   ],
   "inbounds": [
     {
@@ -402,7 +461,7 @@
       "external_controller": "127.0.0.1:9090",
       "external_ui": "ui",
       "external_ui_download_url": "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip",
-      "external_ui_download_detour": "proxy",
+      "external_ui_download_detour": "节点",
       "external_ui_update_interval": "1d",
       "access_control_allow_origin": [
         "https://metacubexd.pages.dev",

@@ -1,7 +1,7 @@
 {
   "log": {
     "disabled": false, 
-    "level": "error",
+    "level": "debug",
     "output": "",
     "timestamp": false
   },
@@ -42,7 +42,7 @@
         "172.18.0.1/30",
         "fdfe:dcba:9876::1/126"
         ],
-      "mtu":9000,
+      "mtu":4086,
       "stack":"system",
       "auto_route": true,
       "strict_route": true,
@@ -604,7 +604,7 @@
     //下面默认dns是给节点使用的
     "default_domain_resolver": {
       "server": "Local-DNS",
-      "strategy": "prefer_ipv4",
+      "strategy": "ipv4_only",
       "rewrite_ttl": 120,
       "client_subnet": "36.0.0.0/8"
     },
@@ -704,7 +704,7 @@
           "server_name": "dns.google",
           "utls": {
             "enabled": true,
-            "fingerprint": "randomized"
+            "fingerprint": "chrome"
           }
         }
       },
@@ -837,7 +837,7 @@
     "disable_expire": false,
     "independent_cache": true,
     "final": "Remote-GoogleDNS",
-    "strategy": "prefer_ipv4",
+    "strategy": "ipv4_only",
     "client_subnet": "0.0.0.0/0" 
   }
 }

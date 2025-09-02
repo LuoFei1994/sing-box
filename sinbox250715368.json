@@ -550,8 +550,8 @@
     "default_domain_resolver": {
       "server": "Local-DNS",
       "strategy": "ipv4_only",
-      "rewrite_ttl": 120,
-      "client_subnet": "36.0.0.0/8"
+      "rewrite_ttl": 120
+      //"client_subnet": "36.0.0.0/8"
     },
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi", "cellular"],  
@@ -734,8 +734,7 @@
           "apple.com", "icloud.com", "push.apple.com", "ess.apple.com",
           "weixin.qq.com", "tenpay.com", "cmbchina.com"
         ],
-        "server": "Local-DNS",
-        "client_subnet": "0.0.0.0/0" 
+        "server": "Local-DNS"
       },
       
       // 远端 DNS 自举域名 → 本地解析，避免死锁（按你实际使用的远端 DNS 域名补充）
@@ -748,8 +747,7 @@
         ],
         "server": "Local-DNS",
         "strategy": "ipv4_only",
-        "rewrite_ttl": 300,
-        "client_subnet": "0.0.0.0/0" 
+        "rewrite_ttl": 300
       },
 
 
@@ -759,14 +757,14 @@
         "AppStore"
       ],
         "server": "Remote-GoogleDNS",
-        "client_subnet": "36.0.0.0/8" 
+        "client_subnet": "0.0.0.0/0" 
       },
       {
         "rule_set": [
           "GeoLocation-!CN"
         ],
         "server": "Remote-GoogleDNS",
-        "client_subnet": "36.0.0.0/8" 
+        "client_subnet": "0.0.0.0/0" 
       },
       {
         "domain_suffix": [
@@ -775,7 +773,7 @@
           "cl3.apple.com"
         ],
         "server": "Fallback-DNS",
-        "client_subnet": "36.0.0.0/8" 
+        "client_subnet": "0.0.0.0/0" 
       },
       {
         "query_type": [
@@ -798,7 +796,6 @@
     "disable_expire": false,
     "independent_cache": true,
     "final": "Remote-GoogleDNS",
-    "strategy": "ipv4_only",
-    "client_subnet": "0.0.0.0/0" 
+    "strategy": "ipv4_only"
   }
 }

@@ -27,13 +27,7 @@
       "rdrc_timeout": "7d"
     }
   },
-  /*"ntp": {
-        "enabled": false,
-        "server": "time.apple.com",
-        "server_port": 123,
-        "interval": "30m",
-        "detour": "🎯 全球直连"
-    },*/
+
   "inbounds": [
     {
       "domain_strategy":"ipv4_only",
@@ -657,9 +651,7 @@
          "predefined": {
            "dns.alidns.com": [
              "223.5.5.5",
-             "223.6.6.6",
-             "2400:3200::1",
-             "2400:3200:baba::1"
+             "223.6.6.6"
              ],
           "dns11.quad9.net": [
             "9.9.9.11",
@@ -697,7 +689,12 @@
 
       {
         "query_type": [
-          "HTTPS"
+          "HTTPS",
+          "SVCB",
+          "TXT",
+          "MX",
+          "CNAME",
+          "SRV"
         ],
         "action": "reject"
         /*"server": "Local-DNS",
@@ -727,29 +724,13 @@
         "rewrite_ttl": 300
       },
 
-
-      { "rule_set": [
-        "AppleID",
-        "Apple Domain",
-        "AppStore"
-      ],
-        "server": "Remote-GoogleDNS",
-        "client_subnet": "0.0.0.0/0" 
-      },
-      {
-        "rule_set": [
-          "GeoLocation-!CN"
-        ],
-        "server": "Remote-GoogleDNS",
-        "client_subnet": "0.0.0.0/0" 
-      },
       {
         "domain_suffix": [
           "fallback.apple.com",
           "mesu.apple.com",
           "cl3.apple.com"
         ],
-        "server": "Fallback-DNS",
+        "server": "Remote-GoogleDNS",
         "client_subnet": "0.0.0.0/0" 
       },
       {

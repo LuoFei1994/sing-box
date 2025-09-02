@@ -31,8 +31,8 @@
           "dns.alidns.com": [
             "223.5.5.5",
             "223.6.6.6",
-            "2400:3200::1",
-            "2400:3200:baba::1"
+            /*"2400:3200::1",
+            "2400:3200:baba::1"*/
           ],
           "dns.google": [
             "8.8.8.8",
@@ -123,12 +123,15 @@
         "outbound": "direct"
       },
       {
-        "rule_set": "private",
+        "rule_set": [
+          "private",
+          "binance"
+        ],
         "action": "route",
         "outbound": "direct"
       },
       {
-        "outbound": "tg-sg",
+        "outbound": "节点",
         "ip_cidr": [
           "91.108.16.0/21",
           "91.108.56.0/23",
@@ -138,7 +141,7 @@
         ]
       },
       {
-        "outbound": "tg-us",
+        "outbound": "节点",
         "ip_cidr": [
           "91.108.12.0/22",
           "149.154.172.0/22",
@@ -146,7 +149,7 @@
         ]
       },
       {
-        "outbound": "tg-eu",
+        "outbound": "节点",
         "ip_cidr": [
           "5.28.192.0/18",
           "91.105.192.0/23",
@@ -188,6 +191,14 @@
     //"default_domain_match_strategy": "prefer_fqdn",
     "auto_detect_interface": true,
     "rule_set": [
+      
+      {
+        "tag": "binance",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/binance.srs",
+        "download_detour": "节点"
+      },
       {
         "tag": "AWAvenue-Ads",
         "type": "remote",

@@ -22,7 +22,7 @@
       "enabled": true,
       "path": "cache.db",
       "cache_id": "",
-      "store_fakeip": true,
+      "store_fakeip": false,
       "store_rdrc": true,
       "rdrc_timeout": "7d"
     }
@@ -666,13 +666,8 @@
             "1.0.0.1"
             ]
           }
-      },
-      {
-        "tag": "Fakeip",
-        "type": "fakeip",
-        "inet4_range": "198.18.0.0/15",
-        "inet6_range": "fc00::/18"
       }
+  
     ],
     "rules": [
       
@@ -696,10 +691,9 @@
           "CNAME",
           "SRV"
         ],
-        "action": "reject"
-        /*"server": "Local-DNS",
+        "server": "Local-DNS",
         "client_subnet": "0.0.0.0/0" 
-        //原因：HTTPS/SVCB 交给本地，减少 bad rdata。*/
+        //原因：HTTPS/SVCB 交给本地，减少 bad rdata。
       },
       {
         "domain_suffix": [
@@ -732,16 +726,7 @@
         ],
         "server": "Remote-GoogleDNS",
         "client_subnet": "0.0.0.0/0" 
-      },
-      {
-        "query_type": [
-          "A",
-          "AAAA"
-        ],
-        "action": "route",
-        "server": "Fakeip",
-        "rewrite_ttl": 1
-      },
+      }
       {
         "rule_set": "cn",
         "action": "route",

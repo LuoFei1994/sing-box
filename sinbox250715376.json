@@ -726,7 +726,7 @@
         ],
         "server": "Remote-GoogleDNS",
         "client_subnet": "0.0.0.0/0" 
-      }
+      },
       {
         "rule_set": "cn",
         "action": "route",

@@ -531,7 +531,7 @@
       {
         "tag": "Local-DNS",
         "type": "https",
-        "detour": "🚀 节点选择",
+        "detour": "🎯 全球直连",
         "server": "dns.alidns.com",
         "server_port": 443,
         "path": "/dns-query",

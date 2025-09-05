@@ -6,7 +6,7 @@
     "timestamp": false
   },
   "experimental": {
-    "clash_api": {
+    "clash_api": { 
       "external_controller": "127.0.0.1:20122",
       "external_ui": "",
       "external_ui_download_url": "",

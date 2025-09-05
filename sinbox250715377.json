@@ -267,14 +267,10 @@
       
       {
         "type": "logical",
-        "mode": "or",
+        "mode": "and",
         "rules": [
-          {
-            "protocol": "dns"
-          },
-          {
-            "port": 53
-          }
+          { "network": "udp" },
+          { "port": 53 }
         ],
         "action": "hijack-dns"
       },
@@ -683,18 +679,10 @@
       },
 
       {
-        "query_type": [
-          "HTTPS",
-          "SVCB",
-          "TXT",
-          "MX",
-          "CNAME",
-          "SRV"
-        ],
-        "server": "Local-DNS",
-        "client_subnet": "0.0.0.0/0" 
-        //原因：HTTPS/SVCB 交给本地，减少 bad rdata。
+        "query_type": ["HTTPS", "SVCB", "ANY", "NAPTR", "SOA", "NS", "CAA", "OPT"],
+        "server": "Local-DNS"
       },
+      
       {
         "domain_suffix": [
           "apple.com", "icloud.com", "push.apple.com", "ess.apple.com",
@@ -717,7 +705,13 @@
         "strategy": "ipv4_only",
         "rewrite_ttl": 300
       },
-
+      
+      {
+        "rule_set": "cn",
+        "action": "route",
+        "server": "Local-DNS"
+      },
+      
       {
         "domain_suffix": [
           "fallback.apple.com",
@@ -727,10 +721,10 @@
         "server": "Remote-GoogleDNS",
         "client_subnet": "0.0.0.0/0" 
       },
+
       {
-        "rule_set": "cn",
-        "action": "route",
-        "server": "Local-DNS"
+        "query_type": ["A", "AAAA", "CNAME", "TXT", "MX", "SRV"],
+        "server": "Remote-GoogleDNS"
       }
     ],
     "cache_capacity": 2048,  

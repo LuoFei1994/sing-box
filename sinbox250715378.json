@@ -534,7 +534,7 @@
         "server": "dns.alidns.com",
         "server_port": 443,
         "path": "/dns-query",
-        "detour": "🎯 全球直连",
+        "detour": "direct",
         "domain_resolver": "hosts",
         "tls": {
           "enabled": true,

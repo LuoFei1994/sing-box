@@ -1,7 +1,7 @@
 {
   "log": {
     "disabled": false, 
-    "level": "warn",
+    "level": "debug",
     "output": "",
     "timestamp": false
   },
@@ -534,6 +534,7 @@
         "server": "dns.alidns.com",
         "server_port": 443,
         "path": "/dns-query",
+        "detour": "🎯 全球直连",
         "domain_resolver": "hosts",
         "tls": {
           "enabled": true,

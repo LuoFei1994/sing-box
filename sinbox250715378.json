@@ -44,7 +44,7 @@
       "type":"tun"
     }
   ],
-  "endpoints":[
+  /*"endpoints":[
     {
       "type": "wireguard",
       "tag": "wireguard-ios",
@@ -66,7 +66,7 @@
         }
         ]
       }
-  ],
+  ],*/
   "outbounds": [
     {
       "type": "selector",
@@ -74,7 +74,6 @@
       "interrupt_exist_connections": true,
       "outbounds": [
         "🎈 自动选择",
-        "wireguard-ios",
         "proxy",
         "RN-tuic",
         "RN-vless",
@@ -91,7 +90,6 @@
       "tolerance": 150,
       "interrupt_exist_connections": true,
       "outbounds": [
-        "wireguard-ios",
         "proxy",
         "RN-tuic",
         "RN-vless",
@@ -680,7 +678,7 @@
 
       {
         "query_type": ["HTTPS", "SVCB", "ANY", "NAPTR", "SOA", "NS", "CAA", "OPT"],
-        "server": "Local-DNS"
+        "action": "reject"
       },
       
       {

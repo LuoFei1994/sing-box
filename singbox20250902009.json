@@ -96,14 +96,10 @@
       },
       {
         "type": "logical",
-        "mode": "or",
+        "mode": "and",
         "rules": [
-          {
-            "port": 53
-          },
-          {
-            "protocol": "dns"
-          }
+          { "network": "udp" },
+          { "port": 53 }
         ],
         "action": "hijack-dns"
       },
@@ -201,7 +197,7 @@
         "outbound": "direct"
       }
     ],
-    "final": "节点",
+    "final": "direct",
     "default_domain_resolver": "ali",
     //"default_domain_match_strategy": "prefer_fqdn",
     "auto_detect_interface": true,

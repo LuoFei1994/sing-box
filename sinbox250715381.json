@@ -756,6 +756,7 @@
       {
         "rule_set": [
           "binance"
+        ].
         "action": "route",
         "server": "本地"
       },
@@ -763,6 +764,7 @@
       {
         "rule_set": [
           "cn"
+        ],
         "action": "route",
         "server": "Local-DNS"
       },

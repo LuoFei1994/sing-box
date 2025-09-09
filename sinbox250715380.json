@@ -543,7 +543,7 @@
     
     //下面默认dns是给节点使用的
     "default_domain_resolver": {
-      "server": "Local-DNS",
+      "server": "本地",
       "strategy": "ipv4_only",
       "rewrite_ttl": 120
       //"client_subnet": "36.0.0.0/8"
@@ -607,6 +607,11 @@
         "type": "tcp",                   
         "server": "223.5.5.5",
         "server_port": 53
+      },
+
+      {
+        "tag": "本地",
+        "type": "local"
       },
       
       {
@@ -748,10 +753,15 @@
         "strategy": "ipv4_only",
         "rewrite_ttl": 300
       },
-      
       {
         "rule_set": [
-          "binance",
+          "binance"
+        "action": "route",
+        "server": "本地"
+      },
+
+      {
+        "rule_set": [
           "cn"
         "action": "route",
         "server": "Local-DNS"

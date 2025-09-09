@@ -756,7 +756,7 @@
       {
         "rule_set": [
           "binance"
-        ].
+          ],
         "action": "route",
         "server": "本地"
       },

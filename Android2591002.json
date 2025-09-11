@@ -369,49 +369,49 @@
         "tag": "AWAvenue-Ads",
         "type": "remote",
         "format": "source",
-        "url": "https://cdn.jsdelivr.net/gh/TG-Twilight/AWAvenue-Ads-Rule@main/Filters/AWAvenue-Ads-Rule-Singbox.json",
+        "url": "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Singbox.json",
         "update_interval": "24h",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🚀 节点选择"
       },
       {
         "tag": "private",
         "type": "remote",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-private.srs",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-private.srs",
         "update_interval": "24h",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🚀 节点选择"
       },
       {
         "tag": "gfw",
         "type": "remote",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/gfw.srs",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/gfw.srs",
         "update_interval": "24h",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🚀 节点选择"
       },
       {
         "tag": "cn",
         "type": "remote",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/DustinWin/ruleset_geodata@releases/download/sing-box-ruleset/cn.srs",
+        "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/cn.srs",
         "update_interval": "24h",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🚀 节点选择"
       },
       {
         "tag": "cn_ip",
         "type": "remote",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/DustinWin/ruleset_geodata@releases/download/sing-box-ruleset/cnip.srs",
+        "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/cnip.srs",
         "update_interval": "24h",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🚀 节点选择"
       },
       {
         "tag": "binance",
         "type": "remote",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@refs/heads/sing/geo/geosite/binance.srs",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/binance.srs",
         "update_interval": "24h",
-        "download_detour": "🎯 全球直连"
+        "download_detour": "🚀 节点选择"
       },
 
 

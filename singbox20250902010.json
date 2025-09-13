@@ -4,15 +4,15 @@
       {
         "tag": "ali",
         "type": "https",
-        "server": "223.5.5.5"
-        /*"domain_resolver": "hosts",
-        "detour": "direct"*/
+        "server": "dns.alidns.com"
+        "domain_resolver": "hosts"
+        //"detour": "direct"
       },
       {
         "tag": "google",
         "type": "https",
         "server": "8.8.8.8",
-        //"domain_resolver": "hosts",
+        "domain_resolver": "hosts",
         "detour": "节点"
       },
       {
@@ -64,6 +64,13 @@
           "HTTPS"
         ],
         "rcode": "NOTIMP"
+      },
+      {
+        "rule_set": [
+          "binance"
+        ],
+        "action": "route",
+        "server": "local"
       },
       {
         "query_type": [

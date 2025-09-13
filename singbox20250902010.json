@@ -4,7 +4,7 @@
       {
         "tag": "ali",
         "type": "https",
-        "server": "dns.alidns.com"
+        "server": "dns.alidns.com",
         "domain_resolver": "hosts"
         //"detour": "direct"
       },

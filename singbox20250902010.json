@@ -84,7 +84,7 @@
       {
         "rule_set": "cn",
         "action": "route",
-        "server": "local"
+        "server": "ali"
       }
     ],
     "final": "google",

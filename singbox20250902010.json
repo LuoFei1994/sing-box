@@ -173,8 +173,14 @@
         "outbound": "direct"
       }
     ],
+    //下面默认dns是给节点使用的
+    "default_domain_resolver": {
+      "server": "ali",
+      "strategy": "ipv4_only",
+      "rewrite_ttl": 120
+      //"client_subnet": "36.0.0.0/8"
+    },
     "final": "节点",
-    "default_domain_resolver": "ali",
     //"default_domain_match_strategy": "prefer_fqdn",
     "auto_detect_interface": true,
     "rule_set": [

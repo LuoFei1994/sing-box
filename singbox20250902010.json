@@ -4,15 +4,15 @@
       {
         "tag": "ali",
         "type": "https",
-        "server": "dns.alidns.com",
-        "domain_resolver": "hosts"
+        "server": "223.5.5.5",
+        //"domain_resolver": "hosts"
         //"detour": "direct"
       },
       {
         "tag": "google",
         "type": "https",
         "server": "8.8.8.8",
-        "domain_resolver": "hosts",
+        //"domain_resolver": "hosts",
         "detour": "节点"
       },
       {

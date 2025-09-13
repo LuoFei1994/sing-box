@@ -434,7 +434,10 @@
       "mtu":4064,
       "stack":"system",
       "auto_route": true,
-      "auto_redirect": false,
+      //"auto_redirect": false,
+      "strict_route": true,
+      "domain_strategy":"ipv4_only",
+      "endpoint_independent_nat":true,
       "platform": {
         "http_proxy": {
           "enabled": true,

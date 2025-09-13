@@ -70,7 +70,7 @@
           "binance"
         ],
         "action": "route",
-        "server": "local"
+        "server": "ali"
       },
       {
         "query_type": [

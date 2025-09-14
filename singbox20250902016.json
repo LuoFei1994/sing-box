@@ -35,6 +35,11 @@
         "server": "google"
       },
       
+      {
+        "query_type": ["HTTPS", "SVCB", "ANY", "NAPTR", "SOA", "NS", "CAA", "OPT"],
+        "action": "reject"
+      },
+      
       /*{
         "action": "reject",
         "query_type": [
@@ -63,9 +68,18 @@
         "server": "fake-ip-dns-server",
         "rewrite_ttl": 1
       }
+      {
+        "query_type": ["A", "AAAA", "CNAME", "TXT", "MX", "SRV"],
+        "server": "Remote-GoogleDNS"
+      }
     ],
+    "cache_capacity": 2048,  
+    "reverse_mapping": true,
+    "disable_cache": false,
+    "disable_expire": false,
+    "independent_cache": true,
     "final": "google",
-    "independent_cache": true
+    "strategy": "ipv4_only"
   },
   "route": {
     "rules": [

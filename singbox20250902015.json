@@ -78,8 +78,7 @@
         ],
         "action": "route",
         "server": "fake-ip-dns-server",
-        "rewrite_ttl": 1,
-        "match_only": true
+        "rewrite_ttl": 1
       },
       {
         "rule_set": "cn",
@@ -102,6 +101,12 @@
         ],
         "timeout": "500ms"
       },
+
+      {
+        "ip_cidr": ["198.18.0.0/15", "fc00::/7"],
+        "action": "resolve"
+      },
+      
       {
         "type": "logical",
         "mode": "and",
@@ -162,7 +167,12 @@
         "ip_cidr": ["198.18.0.0/15", "fc00::/7"],
         "action": "reject"
       },
-      
+      {
+        "ip_cidr": ["0.0.0.0/32", "::/128"],
+        "action": "reject"
+      },
+
+
       {
         "ip_cidr": [
           "122.248.193.92/32",

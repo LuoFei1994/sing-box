@@ -5,14 +5,14 @@
         "tag": "ali",
         "type": "https",
         "server": "dns.alidns.com",
-        "domain_resolver": "dns"
+        "domain_resolver": "hosts"
         //"detour": "direct"
       },
       {
         "tag": "google",
         "type": "https",
         "server": "dns.google",
-        "domain_resolver": "dns",
+        "domain_resolver": "hosts",
         "detour": "节点"
       },
       {
@@ -59,11 +59,10 @@
         "rcode": "NXDOMAIN"
       },*/
       {
-        "action": "predefined",
+        "action": "reject",
         "query_type": [
           "HTTPS"
-        ],
-        "rcode": "NOTIMP"
+        ]
       },
       {
         "rule_set": [
@@ -125,6 +124,8 @@
         "rule_set": "AWAvenue-Ads",
         "action": "reject"
       },*/
+
+    
       {
         "ip_is_private": true,
         "action": "route",
@@ -154,6 +155,11 @@
       {
         "action": "resolve"
         //"match_only": true
+      },
+
+      {
+        "ip_cidr": ["198.18.0.0/15", "fc00::/7"],
+        "action": "reject"
       },
       
       {

@@ -5,14 +5,11 @@
         "tag": "ali",
         "type": "https",
         "server": "223.5.5.5"
-        //"domain_resolver": "hosts"
-        //"detour": "direct"
       },
       {
         "tag": "google",
         "type": "https",
         "server": "8.8.8.8",
-        //"domain_resolver": "hosts",
         "detour": "节点"
       },
       {
@@ -24,22 +21,6 @@
         "type": "fakeip",
         "inet4_range": "198.18.0.0/15",
         "inet6_range": "fc00::/18"
-      },
-      {
-        "tag": "hosts",
-        "type": "hosts",
-        "predefined": {
-          "dns.alidns.com": [
-            "223.5.5.5",
-            "223.6.6.6",
-            "2400:3200::1",
-            "2400:3200:baba::1"
-          ],
-          "dns.google": [
-            "8.8.8.8",
-            "8.8.4.4"
-          ]
-        }
       }
     ],
     "rules": [
@@ -51,25 +32,27 @@
       {
         "clash_mode": "Global",
         "action": "route",
-        "server": "fake-ip-dns-server"
+        "server": "google"
       },
+      
       /*{
-        "rule_set": "AWAvenue-Ads",
-        "action": "reject",
-        "rcode": "NXDOMAIN"
-      },*/
-      {
         "action": "reject",
         "query_type": [
           "HTTPS"
         ]
-      },
+      },*/
+      
       {
         "rule_set": [
           "binance"
         ],
         "action": "route",
         "server": "local"
+      },
+      {
+        "rule_set": "cn",
+        "action": "route",
+        "server": "ali"
       },
       {
         "query_type": [
@@ -79,11 +62,6 @@
         "action": "route",
         "server": "fake-ip-dns-server",
         "rewrite_ttl": 1
-      },
-      {
-        "rule_set": "cn",
-        "action": "route",
-        "server": "ali"
       }
     ],
     "final": "google",
@@ -91,22 +69,14 @@
   },
   "route": {
     "rules": [
+      // 🧠 ① 嗅探流量协议，恢复域名（用于后续 resolve 和分流）
       {
         "action": "sniff",
-        "sniffer": [
-          "http",
-          "tls",
-          "quic",
-          "dns"
-        ],
+        "sniffer": ["http", "tls", "quic", "dns"],
         "timeout": "500ms"
       },
 
-      {
-        "ip_cidr": ["198.18.0.0/15", "fc00::/7"],
-        "action": "resolve"
-      },
-      
+      // 🧠 ② 劫持系统 DNS 请求（UDP/53），确保走 sing-box DNS 模块
       {
         "type": "logical",
         "mode": "and",
@@ -116,36 +86,33 @@
         ],
         "action": "hijack-dns"
       },
+  
+      // 🧠 ③ fake-ip 网段触发二次解析（避免直接连接虚假 IP）
+      {
+        "ip_cidr": ["198.18.0.0/15", "fc00::/7"],
+        "action": "resolve"
+      },
+  
+      // 🧠 ④ 通用 resolve（用于 sniff 后恢复域名再分流）
+      {
+        "action": "resolve"
+      },
+      
+      // 🧠 ⑤ clash_mode: Direct 模式的流量走直连
       {
         "clash_mode": "Direct",
         "action": "route",
         "outbound": "direct"
       },
+
+      // 🧠 ⑥ clash_mode: Proxy 模式的流量走代理
       {
         "clash_mode": "Global",
         "action": "route",
         "outbound": "节点"
       },
-      /*{
-        "rule_set": "AWAvenue-Ads",
-        "action": "reject"
-      },*/
 
-    
-      {
-        "ip_is_private": true,
-        "action": "route",
-        "outbound": "direct"
-      },
-      {
-        "rule_set": [
-          "private",
-          "binance"
-        ],
-        "action": "route",
-        "outbound": "direct"
-      },
-      
+      // ✅ ⑦ 精准 rule_set 分流到代理（优先于 geosite）
       {
         "rule_set": [
           "telegram",
@@ -158,21 +125,8 @@
         "action": "route",
         "outbound": "节点"
       },
-      {
-        "action": "resolve"
-        //"match_only": true
-      },
-
-      {
-        "ip_cidr": ["198.18.0.0/15", "fc00::/7"],
-        "action": "reject"
-      },
-      {
-        "ip_cidr": ["0.0.0.0/32", "::/128"],
-        "action": "reject"
-      },
-
-
+  
+      // ✅ ⑧ 精准 IP 走直连（如 Binance 或 AWS）
       {
         "ip_cidr": [
           "122.248.193.92/32",
@@ -184,11 +138,57 @@
         ],
         "outbound": "direct"
       },
+  
+      // ✅ ⑨ 国内 IP 网段走直连（cn_ip）
       {
         "rule_set": "cn_ip",
         "action": "route",
         "outbound": "direct"
+      },
+
+      // 🧠 ⑦ 国内域名（geosite-cn）走直连
+      {
+        "rule_set": [
+          "cn",
+          "private"
+        ],
+        "action": "route",
+        "outbound": "direct"
+      },
+
+      // 🧠 ⑧ Binance 等敏感域名走直连（避免被代理干扰）
+      {
+        "rule_set": [
+          "binance"
+          ],
+        "outbound": "direct"
+      },
+
+      // 🧠 ⑨ 广告域名直接拦截（拒绝连接）
+      {
+        "rule_set": "AWAvenue-Ads",
+        "action": "reject"
+      },
+
+      // 🧠 ⑩ 私有 IP 地址走直连（如内网、路由器）
+      {
+        "ip_is_private": true,
+        "action": "route",
+        "outbound": "direct"
+      },
+      
+      // 🧠 ⑪ fake-ip 网段兜底拒绝连接（防止 i/o timeout）
+      {
+        "ip_cidr": ["198.18.0.0/15", "fc00::/7"],
+        "action": "reject"
+      },
+  
+      // 🧠 ⑫ 拒绝连接到无效地址（如 0.0.0.0:0）
+      {
+        "ip_cidr": ["0.0.0.0/32", "::/128"],
+        "action": "reject"
       }
+
     ],
     //下面默认dns是给节点使用的
     "default_domain_resolver": {

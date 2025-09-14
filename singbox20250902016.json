@@ -67,10 +67,15 @@
         "action": "route",
         "server": "fake-ip-dns-server",
         "rewrite_ttl": 1
-      }
+      },
       {
-        "query_type": ["A", "AAAA", "CNAME", "TXT", "MX", "SRV"],
-        "server": "Remote-GoogleDNS"
+        "query_type": [
+          "tCNAME", 
+          "TXT", 
+          "MX", 
+          "SRV"
+        ],
+        "server": "google"
       }
     ],
     "cache_capacity": 2048,  

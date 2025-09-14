@@ -78,7 +78,8 @@
         ],
         "action": "route",
         "server": "fake-ip-dns-server",
-        "rewrite_ttl": 1
+        "rewrite_ttl": 1,
+        "match_only": true
       },
       {
         "rule_set": "cn",

@@ -47,7 +47,7 @@
           "binance"
         ],
         "action": "route",
-        "server": "local"
+        "server": "ali"
       },
       {
         "rule_set": "cn",

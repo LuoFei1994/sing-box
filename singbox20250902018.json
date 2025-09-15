@@ -15,7 +15,7 @@
       {
         "tag": "local",
         "type": "local",
-        "prefer_go": true
+        //"prefer_go": true
       },
       {
         "tag": "fake-ip-dns-server",
@@ -53,7 +53,7 @@
           "binance"
         ],
         "action": "route",
-        "server": "local"
+        "server": "ali"
       },
       {
         "rule_set": "cn",

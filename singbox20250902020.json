@@ -74,8 +74,8 @@
     ],
     "cache_capacity": 2048,  
     "reverse_mapping": true,
-    "disable_cache": true,
-    "disable_expire": true,
+    "disable_cache": false,
+    "disable_expire": false,
     "independent_cache": true,
     "final": "google",
     "strategy": "ipv4_only"
@@ -206,7 +206,6 @@
       //"client_subnet": "36.0.0.0/8"
     },
     "final": "节点",
-    //"default_domain_match_strategy": "prefer_fqdn",
     "auto_detect_interface": true,
     "rule_set": [
       
@@ -351,9 +350,6 @@
         "enabled": true,
         "server_name": "iosapps.itunes.apple.com",
         "insecure": true,
-        "fragment": true,  
-        "fragment_fallback_delay": "500ms",  
-        "record_fragment": true,
         "alpn": [
           "h3",
           "h2",
@@ -372,9 +368,6 @@
       "tls": {
         "enabled": true,
         "server_name": "iosapps.itunes.apple.com",
-        "fragment": true,  
-        "fragment_fallback_delay": "500ms",  
-        "record_fragment": true,
         "insecure": false,
         "utls": {
           "enabled": true,
@@ -398,9 +391,6 @@
       "tls": {
         "enabled": true,
         "server_name": "iosapps.itunes.apple.com",
-        "fragment": true,  
-        "fragment_fallback_delay": "500ms",  
-        "record_fragment": true,
         "insecure": false,
         "utls": {
           "enabled": true,
@@ -427,9 +417,6 @@
       "tls": {
         "enabled": true,
         "server_name": "iosapps.itunes.apple.com",
-        "fragment": true,  
-        "fragment_fallback_delay": "500ms",  
-        "record_fragment": true,
         "insecure": true,
         "alpn": [
           "h3",
@@ -493,10 +480,6 @@
     },
     "clash_api": {
       "external_controller": "127.0.0.1:9090",
-      "external_ui": "",
-      "external_ui_download_url": "",
-      "external_ui_download_detour": "节点",
-      //"external_ui_update_interval": "1d",
       "access_control_allow_origin": [
         "*"
       ],

@@ -1,29 +1,47 @@
 {
   "dns": {
     "servers": [
-      {
-        "tag": "local",
-        "type": "local",
-        //"prefer_go": true
-      },
       
       {
         "tag": "ali",
         "type": "https",
-        "server": "223.5.5.5"
+        "server": "223.5.5.5",
+        "domain_resolver": "hosts"
+        //"detour": "direct"
       },
       {
         "tag": "google",
         "type": "https",
         "server": "8.8.8.8",
+        "domain_resolver": "hosts",
         "detour": "节点"
       },
-      
+      {
+        "tag": "local",
+        "type": "local"
+        //"prefer_go": true
+      },
       {
         "tag": "fake-ip-dns-server",
         "type": "fakeip",
         "inet4_range": "198.18.0.0/15",
         "inet6_range": "fc00::/18"
+      },
+      {
+        "tag": "hosts",
+        "type": "hosts",
+        "predefined": {
+          "dns.alidns.com": [
+            "223.5.5.5",
+            "223.6.6.6",
+            "2400:3200::1",
+            "2400:3200:baba::1"
+          ],
+          "dns.google": [
+            "8.8.8.8",
+            "8.8.4.4"
+          ]
+        }
       }
     ],
     "rules": [
@@ -86,7 +104,7 @@
       {
         "action": "sniff",
         "sniffer": ["http", "tls", "quic", "dns"],
-        "timeout": "500ms"
+        "timeout": "1000ms"
       },
 
       // 🧠 ② 劫持系统 DNS 请求（UDP/53），确保走 sing-box DNS 模块
@@ -100,16 +118,18 @@
         "action": "hijack-dns"
       },
   
+      // 🧠 ④ 通用 resolve（用于 sniff 后恢复域名再分流）
+      {
+        "action": "resolve"
+      },
+  
       // 🧠 ③ fake-ip 网段触发二次解析（避免直接连接虚假 IP）
       {
         "ip_cidr": ["198.18.0.0/15", "fc00::/7"],
         "action": "resolve"
       },
   
-      // 🧠 ④ 通用 resolve（用于 sniff 后恢复域名再分流）
-      {
-        "action": "resolve"
-      },
+      
       
       // 🧠 ⑤ clash_mode: Direct 模式的流量走直连
       {
@@ -174,7 +194,10 @@
 
       // 🧠 ⑨ 广告域名直接拦截（拒绝连接）
       {
-        "rule_set": "AWAvenue-Ads",
+        "rule_set": [
+          "AWAvenue-Ads",
+          "tracker"
+        ],
         "action": "reject"
       },
 
@@ -216,6 +239,17 @@
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/binance.srs",
         "download_detour": "节点"
       },
+
+      {
+        "tag": "tracker",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/tracker.srs",
+        "download_detour": "节点"
+      },
+
+
+      
       {
         "tag": "AWAvenue-Ads",
         "type": "remote",

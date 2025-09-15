@@ -74,8 +74,8 @@
     ],
     "cache_capacity": 2048,  
     "reverse_mapping": true,
-    "disable_cache": false,
-    "disable_expire": false,
+    "disable_cache": true,
+    "disable_expire": true,
     "independent_cache": true,
     "final": "google",
     "strategy": "ipv4_only"

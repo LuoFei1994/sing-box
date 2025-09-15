@@ -14,7 +14,8 @@
       },
       {
         "tag": "local",
-        "type": "local"
+        "type": "local",
+        "prefer_go": true
       },
       {
         "tag": "fake-ip-dns-server",
@@ -36,7 +37,7 @@
       },
       
       {
-        "query_type": ["HTTPS", "SVCB", "ANY", "NAPTR", "SOA", "NS", "CAA", "OPT"],
+        "query_type": ["ANY","HTTPS", "SVCB", "NAPTR", "SOA", "NS", "CAA", "OPT"],
         "action": "reject"
       },
       
@@ -52,7 +53,7 @@
           "binance"
         ],
         "action": "route",
-        "server": "ali"
+        "server": "local"
       },
       {
         "rule_set": "cn",
@@ -493,7 +494,7 @@
   "log": {
     "disabled": false,
     "timestamp": false,
-    "level": "error",
+    "level": "warn",
     "output": ""
   },
   "experimental": {

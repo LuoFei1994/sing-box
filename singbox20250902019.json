@@ -2,6 +2,12 @@
   "dns": {
     "servers": [
       {
+        "tag": "local",
+        "type": "local",
+        //"prefer_go": true
+      },
+      
+      {
         "tag": "ali",
         "type": "https",
         "server": "223.5.5.5"
@@ -12,11 +18,7 @@
         "server": "8.8.8.8",
         "detour": "节点"
       },
-      {
-        "tag": "local",
-        "type": "local",
-        //"prefer_go": true
-      },
+      
       {
         "tag": "fake-ip-dns-server",
         "type": "fakeip",
@@ -25,6 +27,12 @@
       }
     ],
     "rules": [
+
+      {
+        "query_type": ["ANY","HTTPS", "SVCB", "NAPTR", "SOA", "NS", "CAA", "OPT"],
+        "action": "reject"
+      },
+      
       {
         "clash_mode": "Direct",
         "action": "route",
@@ -37,29 +45,14 @@
       },
       
       {
-        "query_type": ["ANY","HTTPS", "SVCB", "NAPTR", "SOA", "NS", "CAA", "OPT"],
-        "action": "reject"
-      },
-      
-      /*{
-        "action": "reject",
-        "query_type": [
-          "HTTPS"
-        ]
-      },*/
-      
-      {
         "rule_set": [
-          "binance"
+          "binance",
+          "cn"
         ],
         "action": "route",
         "server": "ali"
       },
-      {
-        "rule_set": "cn",
-        "action": "route",
-        "server": "ali"
-      },
+      
       {
         "query_type": [
           "A",
@@ -132,6 +125,17 @@
         "outbound": "节点"
       },
 
+      // 🧠 ⑦ 国内域名（geosite-cn）走直连
+      {
+        "rule_set": [
+          "binance",
+          "cn",
+          "private"
+        ],
+        "action": "route",
+        "outbound": "direct"
+      },
+
       // ✅ ⑦ 精准 rule_set 分流到代理（优先于 geosite）
       {
         "rule_set": [
@@ -145,6 +149,8 @@
         "action": "route",
         "outbound": "节点"
       },
+
+      
   
       // ✅ ⑧ 精准 IP 走直连（如 Binance 或 AWS）
       {
@@ -163,24 +169,6 @@
       {
         "rule_set": "cn_ip",
         "action": "route",
-        "outbound": "direct"
-      },
-
-      // 🧠 ⑦ 国内域名（geosite-cn）走直连
-      {
-        "rule_set": [
-          "cn",
-          "private"
-        ],
-        "action": "route",
-        "outbound": "direct"
-      },
-
-      // 🧠 ⑧ Binance 等敏感域名走直连（避免被代理干扰）
-      {
-        "rule_set": [
-          "binance"
-          ],
         "outbound": "direct"
       },
 

@@ -560,7 +560,6 @@
       {
         "action": "route",
         "rule_set": [
-          "AppleID",
           "Apple Domain",
           "AppStore",
           "gfw",
@@ -588,6 +587,7 @@
       {
         "action": "route",
         "rule_set": [
+          "AppleIP",
           "cn_ip",
           "GeoIP-CN"
         ],

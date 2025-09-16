@@ -7,14 +7,14 @@
   },
   "experimental": {
     "clash_api": { 
-      "external_controller": "127.0.0.1:20122",
+      "external_controller": "127.0.0.1:9090",
       "external_ui": "",
       "external_ui_download_url": "",
       "external_ui_download_detour": "🎯 全球直连",
-      "secret": "860a0ddf740573ec6fe46fa81fb1857e18f2ee8673c328cf33cac376ad295544",
+      "secret": "",
       "default_mode": "Enhanced",
       "access_control_allow_origin": [
-        "*"
+        "http://localhost"
       ],
       "access_control_allow_private_network": true 
     },
@@ -26,6 +26,246 @@
       "store_rdrc": true,
       "rdrc_timeout": "7d"
     }
+  },
+  "dns": {
+    "servers": [
+      {
+        "tag": "Local-DNS",
+        "type": "https",
+        "server": "dns.alidns.com",
+        "server_port": 443,
+        "path": "/dns-query",
+        "domain_resolver": "hosts",
+        "tls": {
+          "enabled": true,
+          "server_name": "dns.alidns.com",
+          "utls": {
+            "enabled": true,
+            "fingerprint": "chrome"
+          }
+        }
+      },
+      {
+        "tag": "Local-DNS-H3",
+        "type": "h3",
+        "server_port": 443,
+        "server": "dns.alidns.com",
+        "domain_resolver": "hosts",
+        "path": "/dns-query",
+        "headers": {
+          "Host": "dns.alidns.com",
+          "User-Agent": "Apple"
+          },
+        "tls": {  
+          "enabled": true,
+          "server_name": "dns.alidns.com"
+        }
+      },
+      {
+        "tag": "Local-DNS-TLS",
+        "type": "tls",
+        "server": "dns.alidns.com",
+        "server_port": 853,
+        "domain_resolver": "hosts",
+        "tls": {
+          "enabled": true,
+          "server_name": "dns.alidns.com",
+          "utls": {
+            "enabled": true,
+            "fingerprint": "chrome"
+          }
+        }
+      },
+      {
+        "tag": "Local-Plain",
+        "type": "tcp",                   
+        "server": "223.5.5.5",
+        "server_port": 53
+      },
+
+      {
+        "tag": "本地",
+        "type": "local"
+      },
+      
+      {
+        "tag": "Remote-DNS",
+        "type": "https",
+        "detour": "🚀 节点选择",
+        "server_port": 443,
+        "server": "dns11.quad9.net",
+        "path": "/dns-query",
+        "domain_resolver": "hosts",
+        "headers": {
+          "Host": "dns11.quad9.net",
+          "User-Agent": "Apple"
+        },
+        "tls": {  
+          "enabled": true,  
+          "server_name": "dns11.quad9.net",
+          "utls": {
+            "enabled": true,
+            "fingerprint": "chrome"
+          }
+        }
+      },
+      
+      {
+        "tag": "Remote-GoogleDNS",
+        "type": "https",
+        "detour": "🚀 节点选择",
+        "domain_resolver": "hosts",
+        "server_port": 443,
+        "server": "dns.google",
+        "path": "/dns-query",
+        "tls": {
+          "enabled": true,
+          "server_name": "dns.google",
+          "utls": {
+            "enabled": true,
+            "fingerprint": "chrome"
+          }
+        }
+      },
+    
+      {
+        "tag": "Fallback-DNS",
+        "type": "https",
+        "detour": "🚀 节点选择",
+        "domain_resolver": "hosts",
+        "server": "cloudflare-dns.com",
+        "server_port": 443,
+        "path": "/dns-query",
+        "tls": {
+          "enabled": true,
+          "server_name": "cloudflare-dns.com",
+          "utls": {
+            "enabled": true,
+            "fingerprint": "chrome"
+          } 
+        }
+      },
+      {
+         "tag": "hosts",
+         "type": "hosts",
+         "predefined": {
+           "dns.alidns.com": [
+             "223.5.5.5",
+             "223.6.6.6"
+             ],
+          "dns11.quad9.net": [
+            "9.9.9.11",
+            "149.112.112.11"
+            ],
+           "dns.google": [
+            "8.8.8.8",
+            "8.8.4.4"
+            ],
+          "cloudflare-dns.com": [
+            "1.1.1.1",
+            "1.0.0.1"
+            ]
+          }
+      }
+  
+    ],
+    "rules": [
+      
+      {
+        "action": "route",
+        "clash_mode": "direct",
+        "server": "Local-DNS"
+      },
+      {
+        "action": "route",
+        "clash_mode": "global",
+        "server": "Remote-DNS"
+      },
+
+      {
+        "query_type": ["HTTPS", "SVCB", "ANY", "NAPTR", "SOA", "NS", "CAA", "OPT"],
+        "action": "reject"
+      },
+
+      {
+        "domain_suffix": [
+          "binance.com",
+          "binance.me",
+          "binance.info",
+          "binance.us",
+          "binancezh.com",
+          "binancecdn.com",
+          "bncstaging.com"
+        ],
+        "server": "Local-DNS"
+      },
+      
+      {
+        "domain_suffix": [
+          "apple.com",
+          "icloud.com",
+          "push.apple.com",
+          "ess.apple.com",
+          "weixin.qq.com",
+          "tenpay.com",
+          "cmbchina.com"
+        ],
+        "server": "Local-DNS"
+      },
+      
+      // 远端 DNS 自举域名 → 本地解析，避免死锁（按你实际使用的远端 DNS 域名补充）
+      { 
+        "domain_suffix": [
+          "dns11.quad9.net",
+          "cloudflare-dns.com",
+          "dns.google",
+          "cloudflare-dns.com",
+          "apple.com", 
+          "icloud.com"
+        ],
+        "server": "Local-DNS",
+        "strategy": "ipv4_only",
+        "rewrite_ttl": 300
+      },
+      {
+        "rule_set": [
+          "binance"
+          ],
+        "action": "route",
+        "server": "本地"
+      },
+
+      {
+        "rule_set": [
+          "cn"
+        ],
+        "action": "route",
+        "server": "Local-DNS"
+      },
+    
+      
+      {
+        "domain_suffix": [
+          "fallback.apple.com",
+          "mesu.apple.com",
+          "cl3.apple.com"
+        ],
+        "server": "Remote-GoogleDNS",
+        "client_subnet": "0.0.0.0/0" 
+      },
+
+      {
+        "query_type": ["A", "AAAA", "CNAME", "TXT", "MX", "SRV"],
+        "server": "Remote-GoogleDNS"
+      }
+    ],
+    "cache_capacity": 2048,  
+    "reverse_mapping": true,
+    "disable_cache": false,
+    "disable_expire": false,
+    "independent_cache": true,
+    "final": "Remote-GoogleDNS",
+    "strategy": "ipv4_only"
   },
 
   "inbounds": [
@@ -158,9 +398,6 @@
         "enabled": true,
         "server_name": "iosapps.itunes.apple.com",
         "insecure": true,
-        "fragment": true,  
-        "fragment_fallback_delay": "500ms",  
-        "record_fragment": true,
         "alpn": [
           "h3",
           "h2",
@@ -179,9 +416,6 @@
       "tls": {
         "enabled": true,
         "server_name": "iosapps.itunes.apple.com",
-        "fragment": true,  
-        "fragment_fallback_delay": "500ms",  
-        "record_fragment": true,
         "insecure": false,
         "utls": {
           "enabled": true,
@@ -205,9 +439,6 @@
       "tls": {
         "enabled": true,
         "server_name": "iosapps.itunes.apple.com",
-        "fragment": true,  
-        "fragment_fallback_delay": "500ms",  
-        "record_fragment": true,
         "insecure": false,
         "utls": {
           "enabled": true,
@@ -234,9 +465,6 @@
       "tls": {
         "enabled": true,
         "server_name": "iosapps.itunes.apple.com",
-        "fragment": true,  
-        "fragment_fallback_delay": "500ms",  
-        "record_fragment": true,
         "insecure": true,
         "alpn": [
           "h3",
@@ -552,245 +780,5 @@
     "default_network_type": ["wifi", "cellular"],  
     "default_fallback_network_type": ["wifi", "cellular"],
     "default_fallback_delay": "500ms"
-  },
-  "dns": {
-    "servers": [
-      {
-        "tag": "Local-DNS",
-        "type": "https",
-        "server": "dns.alidns.com",
-        "server_port": 443,
-        "path": "/dns-query",
-        "domain_resolver": "hosts",
-        "tls": {
-          "enabled": true,
-          "server_name": "dns.alidns.com",
-          "utls": {
-            "enabled": true,
-            "fingerprint": "chrome"
-          }
-        }
-      },
-      {
-        "tag": "Local-DNS-H3",
-        "type": "h3",
-        "server_port": 443,
-        "server": "dns.alidns.com",
-        "domain_resolver": "hosts",
-        "path": "/dns-query",
-        "headers": {
-          "Host": "dns.alidns.com",
-          "User-Agent": "Apple"
-          },
-        "tls": {  
-          "enabled": true,
-          "server_name": "dns.alidns.com"
-        }
-      },
-      {
-        "tag": "Local-DNS-TLS",
-        "type": "tls",
-        "server": "dns.alidns.com",
-        "server_port": 853,
-        "domain_resolver": "hosts",
-        "tls": {
-          "enabled": true,
-          "server_name": "dns.alidns.com",
-          "utls": {
-            "enabled": true,
-            "fingerprint": "chrome"
-          }
-        }
-      },
-      {
-        "tag": "Local-Plain",
-        "type": "tcp",                   
-        "server": "223.5.5.5",
-        "server_port": 53
-      },
-
-      {
-        "tag": "本地",
-        "type": "local"
-      },
-      
-      {
-        "tag": "Remote-DNS",
-        "type": "https",
-        "detour": "🚀 节点选择",
-        "server_port": 443,
-        "server": "dns11.quad9.net",
-        "path": "/dns-query",
-        "domain_resolver": "hosts",
-        "headers": {
-          "Host": "dns11.quad9.net",
-          "User-Agent": "Apple"
-        },
-        "tls": {  
-          "enabled": true,  
-          "server_name": "dns11.quad9.net",
-          "utls": {
-            "enabled": true,
-            "fingerprint": "chrome"
-          }
-        }
-      },
-      
-      {
-        "tag": "Remote-GoogleDNS",
-        "type": "https",
-        "detour": "🚀 节点选择",
-        "domain_resolver": "hosts",
-        "server_port": 443,
-        "server": "dns.google",
-        "path": "/dns-query",
-        "tls": {
-          "enabled": true,
-          "server_name": "dns.google",
-          "utls": {
-            "enabled": true,
-            "fingerprint": "chrome"
-          }
-        }
-      },
-    
-      {
-        "tag": "Fallback-DNS",
-        "type": "https",
-        "detour": "🚀 节点选择",
-        "domain_resolver": "hosts",
-        "server": "cloudflare-dns.com",
-        "server_port": 443,
-        "path": "/dns-query",
-        "tls": {
-          "enabled": true,
-          "server_name": "cloudflare-dns.com",
-          "utls": {
-            "enabled": true,
-            "fingerprint": "chrome"
-          } 
-        }
-      },
-      {
-         "tag": "hosts",
-         "type": "hosts",
-         "predefined": {
-           "dns.alidns.com": [
-             "223.5.5.5",
-             "223.6.6.6"
-             ],
-          "dns11.quad9.net": [
-            "9.9.9.11",
-            "149.112.112.11"
-            ],
-           "dns.google": [
-            "8.8.8.8",
-            "8.8.4.4"
-            ],
-          "cloudflare-dns.com": [
-            "1.1.1.1",
-            "1.0.0.1"
-            ]
-          }
-      }
-  
-    ],
-    "rules": [
-      
-      {
-        "action": "route",
-        "clash_mode": "direct",
-        "server": "Local-DNS"
-      },
-      {
-        "action": "route",
-        "clash_mode": "global",
-        "server": "Remote-DNS"
-      },
-
-      {
-        "query_type": ["HTTPS", "SVCB", "ANY", "NAPTR", "SOA", "NS", "CAA", "OPT"],
-        "action": "reject"
-      },
-
-      {
-        "domain_suffix": [
-          "binance.com",
-          "binance.me",
-          "binance.info",
-          "binance.us",
-          "binancezh.com",
-          "binancecdn.com",
-          "bncstaging.com"
-        ],
-        "server": "Local-DNS"
-      },
-      
-      {
-        "domain_suffix": [
-          "apple.com",
-          "icloud.com",
-          "push.apple.com",
-          "ess.apple.com",
-          "weixin.qq.com",
-          "tenpay.com",
-          "cmbchina.com"
-        ],
-        "server": "Local-DNS"
-      },
-      
-      // 远端 DNS 自举域名 → 本地解析，避免死锁（按你实际使用的远端 DNS 域名补充）
-      { 
-        "domain_suffix": [
-          "dns11.quad9.net",
-          "cloudflare-dns.com",
-          "dns.google",
-          "cloudflare-dns.com",
-          "apple.com", 
-          "icloud.com"
-        ],
-        "server": "Local-DNS",
-        "strategy": "ipv4_only",
-        "rewrite_ttl": 300
-      },
-      {
-        "rule_set": [
-          "binance"
-          ],
-        "action": "route",
-        "server": "本地"
-      },
-
-      {
-        "rule_set": [
-          "cn"
-        ],
-        "action": "route",
-        "server": "Local-DNS"
-      },
-    
-      
-      {
-        "domain_suffix": [
-          "fallback.apple.com",
-          "mesu.apple.com",
-          "cl3.apple.com"
-        ],
-        "server": "Remote-GoogleDNS",
-        "client_subnet": "0.0.0.0/0" 
-      },
-
-      {
-        "query_type": ["A", "AAAA", "CNAME", "TXT", "MX", "SRV"],
-        "server": "Remote-GoogleDNS"
-      }
-    ],
-    "cache_capacity": 2048,  
-    "reverse_mapping": true,
-    "disable_cache": false,
-    "disable_expire": false,
-    "independent_cache": true,
-    "final": "Remote-GoogleDNS",
-    "strategy": "ipv4_only"
   }
 }

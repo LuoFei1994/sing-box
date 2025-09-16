@@ -47,11 +47,6 @@
     "rules": [
 
       {
-        "query_type": ["ANY","HTTPS", "SVCB", "NAPTR", "SOA", "NS", "CAA", "OPT"],
-        "action": "reject"
-      },
-      
-      {
         "clash_mode": "Direct",
         "action": "route",
         "server": "local"
@@ -61,14 +56,10 @@
         "action": "route",
         "server": "google"
       },
-      
+
       {
-        "rule_set": [
-          "binance",
-          "cn"
-        ],
-        "action": "route",
-        "server": "ali"
+        "query_type": ["ANY","HTTPS", "SVCB", "NAPTR", "SOA", "NS", "CAA", "OPT"],
+        "action": "reject"
       },
       
       {
@@ -118,18 +109,19 @@
         "action": "hijack-dns"
       },
   
-      // 🧠 ④ 通用 resolve（用于 sniff 后恢复域名再分流）
-      {
-        "action": "resolve"
-      },
+      
   
       // 🧠 ③ fake-ip 网段触发二次解析（避免直接连接虚假 IP）
       {
         "ip_cidr": ["198.18.0.0/15", "fc00::/7"],
         "action": "resolve"
       },
+
+      // 🧠 ④ 通用 resolve（用于 sniff 后恢复域名再分流）
+      {
+        "action": "resolve"
+      },
   
-      
       
       // 🧠 ⑤ clash_mode: Direct 模式的流量走直连
       {
@@ -143,6 +135,42 @@
         "clash_mode": "Global",
         "action": "route",
         "outbound": "节点"
+      },
+
+      // 🧠 ⑨ 广告域名直接拦截（拒绝连接）
+      {
+        "rule_set": [
+          "AWAvenue-Ads",
+          "tracker"
+        ],
+        "action": "reject"
+      },
+
+      // 🧠 ⑩ 私有 IP 地址走直连（如内网、路由器）
+      {
+        "ip_is_private": true,
+        "action": "route",
+        "outbound": "direct"
+      },
+
+      // ✅ ⑧ 精准 IP 走直连（如 Binance 或 AWS）
+      {
+        "ip_cidr": [
+          "122.248.193.92/32",
+          "18.140.160.130/32",
+          "13.228.58.214/32",
+          "18.136.221.104/32",
+          "13.214.82.8/32",
+          "13.228.179.43/32"
+        ],
+        "outbound": "direct"
+      },
+  
+      // ✅ ⑨ 国内 IP 网段走直连（cn_ip）
+      {
+        "rule_set": "cn_ip",
+        "action": "route",
+        "outbound": "direct"
       },
 
       // 🧠 ⑦ 国内域名（geosite-cn）走直连
@@ -170,43 +198,6 @@
         "outbound": "节点"
       },
 
-      
-  
-      // ✅ ⑧ 精准 IP 走直连（如 Binance 或 AWS）
-      {
-        "ip_cidr": [
-          "122.248.193.92/32",
-          "18.140.160.130/32",
-          "13.228.58.214/32",
-          "18.136.221.104/32",
-          "13.214.82.8/32",
-          "13.228.179.43/32"
-        ],
-        "outbound": "direct"
-      },
-  
-      // ✅ ⑨ 国内 IP 网段走直连（cn_ip）
-      {
-        "rule_set": "cn_ip",
-        "action": "route",
-        "outbound": "direct"
-      },
-
-      // 🧠 ⑨ 广告域名直接拦截（拒绝连接）
-      {
-        "rule_set": [
-          "AWAvenue-Ads",
-          "tracker"
-        ],
-        "action": "reject"
-      },
-
-      // 🧠 ⑩ 私有 IP 地址走直连（如内网、路由器）
-      {
-        "ip_is_private": true,
-        "action": "route",
-        "outbound": "direct"
-      },
       
       // 🧠 ⑪ fake-ip 网段兜底拒绝连接（防止 i/o timeout）
       {

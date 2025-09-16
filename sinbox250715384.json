@@ -24,7 +24,7 @@
       "cache_id": "",
       "store_fakeip": false,
       "store_rdrc": true,
-      "rdrc_timeout": "7d"
+      "rdrc_timeout": "1d"
     }
   },
   "dns": {
@@ -517,7 +517,8 @@
         "method": "drop",  //default:对于 TCP 连接回复 RST，对于 UDP 包回复 ICMP 端口不可达。drop: 丢弃数据包。
         //"no_drop": false,      //如果未启用，则 30 秒内触发 50 次后，method 将被暂时覆盖为 drop。当 method 设为 drop 时不可用。
         "rule_set": [
-          "Category-Ads"
+          "Category-Ads",
+          "category-public-tracker"
         ]
       },
 
@@ -549,6 +550,8 @@
           "Tencent",
           "binance",
           "private",
+          "category-ntp-cn",
+          "category-securities-cn",
           "GeoLocation-CN"
         ],
         "outbound": "🎯 全球直连"
@@ -642,6 +645,34 @@
         "download_detour": "🚀 节点选择"
       },
 
+      {
+        "tag": "category-ntp-cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/category-ntp-cn.srs",
+        "update_interval": "24h",
+        "download_detour": "🚀 节点选择"
+      },
+
+      {
+        "tag": "category-securities-cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/category-securities-cn.srs",
+        "update_interval": "24h",
+        "download_detour": "🚀 节点选择"
+      },
+
+      {
+        "tag": "category-public-tracker",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/category-public-tracker.srs",
+        "update_interval": "24h",
+        "download_detour": "🚀 节点选择"
+      },
+
+
 
       {
         "tag": "Category-Ads",
@@ -684,6 +715,27 @@
         "update_interval": "24h",
         "download_detour": "🎯 全球直连"
       },
+      //苹果ID
+      {
+        "tag": "Apple IP",
+        "type": "remote",
+        "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geoip/apple.srs",
+        "format": "binary",
+        "update_interval": "24h",
+        "download_detour": "🎯 全球直连"
+      },
+      
+       //苹果域名
+      {
+        "tag": "Apple Domain",
+        "type": "remote",
+        "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/apple.srs",
+        "format": "binary",
+        "update_interval": "24h",
+        "download_detour": "🎯 全球直连"
+      },
+
+      
 
       //支付宝
       {
@@ -725,25 +777,7 @@
         "download_detour": "🎯 全球直连"
       },
 
-      //苹果ID
-      {
-        "tag": "AppleID",
-        "type": "remote",
-        "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geoip/apple.srs",
-        "format": "binary",
-        "update_interval": "24h",
-        "download_detour": "🎯 全球直连"
-      },
       
-       //苹果域名
-      {
-        "tag": "Apple Domain",
-        "type": "remote",
-        "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/apple.srs",
-        "format": "binary",
-        "update_interval": "24h",
-        "download_detour": "🎯 全球直连"
-      },
 
       //抖音
       {

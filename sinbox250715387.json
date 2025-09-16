@@ -188,6 +188,14 @@
       },
 
       {
+        "action": "reject",
+        "rule_set": [
+          "Category-Ads",
+          "category-public-tracker"
+        ]
+      },
+
+      {
         "domain_suffix": [
           "binance.com",
           "binance.me",
@@ -241,6 +249,32 @@
         ],
         "action": "route",
         "server": "Local-DNS"
+      },
+
+      {
+        "action": "route",
+        "rule_set": [
+          "AliPay",
+          "WeChat",
+          "Tencent",
+          "binance",
+          "private",
+          "category-ntp-cn",
+          "category-securities-cn",
+          "GeoLocation-CN"
+        ],
+        "server": "Local-DNS"
+      },
+
+      {
+        "action": "route",
+        "rule_set": [
+          "Apple Domain",
+          "AppStore",
+          "gfw",
+          "GeoLocation-!CN"
+        ],
+        "server": "Remote-GoogleDNS"
       },
     
       
@@ -512,66 +546,17 @@
         "outbound": "GLOBAL"
       },
 
+      
       {
-        "action": "reject",
-        "method": "drop",  //default:对于 TCP 连接回复 RST，对于 UDP 包回复 ICMP 端口不可达。drop: 丢弃数据包。
-        //"no_drop": false,      //如果未启用，则 30 秒内触发 50 次后，method 将被暂时覆盖为 drop。当 method 设为 drop 时不可用。
-        "rule_set": [
-          "Category-Ads",
-          "category-public-tracker"
-        ]
+        "action": "resolve"
       },
-
+      
       {
         "ip_is_private": true,
         "action": "route",
         "outbound": "🎯 全球直连"
       },
 
-      
-      {
-        "domain_suffix": [
-          "binance.com",
-          "binance.me",
-          "binance.info",
-          "binance.us",
-          "binancezh.com",
-          "binancecdn.com",
-          "bncstaging.com"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-      
-      {
-        "action": "route",
-        "rule_set": [
-          "AliPay",
-          "WeChat",
-          "Tencent",
-          "binance",
-          "private",
-          "category-ntp-cn",
-          "category-securities-cn",
-          "GeoLocation-CN"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-
-      {
-        "action": "route",
-        "rule_set": [
-          "Apple Domain",
-          "AppStore",
-          "gfw",
-          "GeoLocation-!CN"
-        ],
-        "outbound": "🚀 节点选择"
-      },
-
-      {
-        "action": "resolve"
-      },
-      
       {
         "ip_cidr": [
           "122.248.193.92/32",

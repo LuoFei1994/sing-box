@@ -7,14 +7,14 @@
         "type": "https",
         "server": "dns.alidns.com",
         "domain_resolver": "hosts"
-        //"detour": "direct"
+        //"detour": "🎯 全球直连"
       },
       {
         "tag": "google",
         "type": "https",
         "server": "dns.google",
         "domain_resolver": "hosts",
-        "detour": "节点"
+        "detour": "🚀 节点选择"
       },
       {
         "tag": "local",
@@ -135,14 +135,14 @@
       {
         "clash_mode": "Direct",
         "action": "route",
-        "outbound": "direct"
+        "outbound": "🎯 全球直连"
       },
 
       // 🧠 ⑥ clash_mode: Proxy 模式的流量走代理
       {
         "clash_mode": "Global",
         "action": "route",
-        "outbound": "节点"
+        "outbound": "🚀 节点选择"
       },
 
       // 🧠 ⑨ 广告域名直接拦截（拒绝连接）
@@ -165,7 +165,7 @@
           "gfw"
         ],
         "action": "route",
-        "outbound": "节点"
+        "outbound": "🚀 节点选择"
       },
 
       // ✅ ⑧ 精准 IP 走直连（如 Binance 或 AWS）
@@ -179,14 +179,14 @@
           "13.228.179.43/32"
         ],
         "action": "route",
-        "outbound": "direct"
+        "outbound": "🎯 全球直连"
       },
 
       // ✅ ⑨ 国内 IP 网段走直连（cn_ip）
       {
         "rule_set": "cn_ip",
         "action": "route",
-        "outbound": "direct"
+        "outbound": "🎯 全球直连"
       },
 
       // 🧠 ⑦ 国内域名（geosite-cn）走直连
@@ -197,14 +197,14 @@
           "private"
         ],
         "action": "route",
-        "outbound": "direct"
+        "outbound": "🎯 全球直连"
       },
 
       // 🧠 ⑩ 私有 IP 地址走直连（如内网、路由器）
       {
         "ip_is_private": true,
         "action": "route",
-        "outbound": "direct"
+        "outbound": "🎯 全球直连"
       },
       
       // 🧠 ⑪ fake-ip 网段兜底拒绝连接（防止 i/o timeout）
@@ -220,7 +220,7 @@
       }
 
     ],
-    "final": "节点",
+    "final": "🐟 漏网之鱼",
     "default_domain_resolver": {
       "server": "ali",
       "domain_resolver": "hosts",
@@ -236,7 +236,7 @@
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/binance.srs",
-        "download_detour": "节点"
+        "download_detour": "🚀 节点选择"
       },
 
       {
@@ -244,7 +244,7 @@
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/tracker.srs",
-        "download_detour": "节点"
+        "download_detour": "🚀 节点选择"
       },
 
 
@@ -254,14 +254,14 @@
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/category-ads-all.srs",
-        "download_detour": "节点"
+        "download_detour": "🚀 节点选择"
       },
       {
         "tag": "private",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-private.srs",
-        "download_detour": "节点"
+        "download_detour": "🚀 节点选择"
       },
      
       {
@@ -269,77 +269,78 @@
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-telegram.srs",
-        "download_detour": "节点"
+        "download_detour": "🚀 节点选择"
       },
       {
         "tag": "github",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-github.srs",
-        "download_detour": "节点"
+        "download_detour": "🚀 节点选择"
       },
       {
         "tag": "twitter",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-twitter.srs",
-        "download_detour": "节点"
+        "download_detour": "🚀 节点选择"
       },
       {
         "tag": "youtube",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-youtube.srs",
-        "download_detour": "节点"
+        "download_detour": "🚀 节点选择"
       },
       {
         "tag": "google",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-google.srs",
-        "download_detour": "节点"
+        "download_detour": "🚀 节点选择"
       },
       {
         "tag": "gfw",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/gfw.srs",
-        "download_detour": "节点"
+        "download_detour": "🚀 节点选择"
       },
       {
         "tag": "cn",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs",
-        "download_detour": "节点"
+        "download_detour": "🚀 节点选择"
       },
       {
         "tag": "cn_ip",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs",
-        "download_detour": "节点"
+        "download_detour": "🚀 节点选择"
       },
       {
         "tag": "国内银行",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-bank-cn.srs",
-        "download_detour": "节点"
+        "download_detour": "🚀 节点选择"
       },
       {
         "tag": "中国大陆 NTP（网络时间协议）服务器域名",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ntp-cn.srs",
-        "download_detour": "节点"
+        "download_detour": "🚀 节点选择"
       }
     ]
   },
   "outbounds": [
     {
-      "tag": "节点",
       "type": "selector",
+      "tag": "🚀 节点选择",
+      "interrupt_exist_connections": true,
       "outbounds": [
         "proxy123",
         "RN-tor-tuic",
@@ -350,11 +351,46 @@
       ],
       "default": "proxy123"
     },
+    {
+      "type": "urltest",
+      "tag": "🎈 自动选择",
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "5m",
+      "tolerance": 150,
+      "interrupt_exist_connections": true,
+      "outbounds": [
+        "proxy123",
+        "RN-vless",
+        "RN-tuic",
+        "RN-vless-brutal"
+      ]
+    },
     
     {
-      "tag": "direct",
-      "type": "direct"
-      //"domain_resolver": "local"
+      "type": "direct",
+      "tag": "🎯 全球直连"
+    },
+    {
+      "type": "selector",
+      "tag": "🐟 漏网之鱼",
+      "interrupt_exist_connections": true,
+      "outbounds": [
+        "🚀 节点选择",
+        "🎈 自动选择",
+        "🧄 TOR隐私",
+        "🎯 全球直连"
+      ],
+      "default": "🎈 自动选择"
+    },
+    {
+      "type": "selector",
+      "tag": "🧄 TOR隐私",
+      "interrupt_exist_connections": true,
+      "outbounds": [
+        "RN-tor-tuic",
+        "RN-tor-vless"
+      ],
+      "default": "RN-tor-tuic"
     },
     {
       "type": "vless",

@@ -94,7 +94,7 @@
     "disable_cache": false,
     "disable_expire": false,
     "independent_cache": true,
-    "final": "fake-ip-dns-server",
+    "final": "google",
     "strategy": "ipv4_only"
   },
   "route": {

@@ -335,6 +335,85 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ntp-cn.srs",
         "download_detour": "🚀 节点选择"
+      },
+       //支付宝
+      {
+        "tag": "AliPay",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/AliPay/AliPay.srs",
+        "format": "binary",
+        "update_interval": "24h",
+        "download_detour": "🎯 全球直连"
+      },
+      
+      //微信
+      {
+        "tag": "WeChat",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/WeChat/WeChat.srs",
+        "format": "binary",
+        "update_interval": "24h",
+        "download_detour": "🎯 全球直连"
+      },
+
+      //阿里巴巴
+      {
+        "tag": "Alibaba",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Alibaba/Alibaba.srs",
+        "format": "binary",
+        "update_interval": "24h",
+        "download_detour": "🎯 全球直连"
+      },
+
+      //苹果商店
+      {
+        "tag": "AppStore",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/AppStore/AppStore.srs",
+        "format": "binary",
+        "update_interval": "24h",
+        "download_detour": "🎯 全球直连"
+      },
+
+      //苹果ID
+      {
+        "tag": "AppleID",
+        "type": "remote",
+        "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geoip/apple.srs",
+        "format": "binary",
+        "update_interval": "24h",
+        "download_detour": "🎯 全球直连"
+      },
+      
+       //苹果域名
+      {
+        "tag": "Apple Domain",
+        "type": "remote",
+        "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/apple.srs",
+        "format": "binary",
+        "update_interval": "24h",
+        "download_detour": "🎯 全球直连"
+      },
+
+      //抖音
+      {
+        "tag": "DouYin",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/DouYin/DouYin.srs",
+        "format": "binary",
+        "update_interval": "24h",
+        "download_detour": "🎯 全球直连"
+      },
+      
+      //腾讯
+      {
+        "tag": "Tencent",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Tencent/Tencent.srs",
+        "format": "binary",
+        "update_interval": "24h",
+        "download_detour": "🎯 全球直连"
       }
     ]
   },

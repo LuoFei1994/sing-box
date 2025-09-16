@@ -587,7 +587,7 @@
       {
         "action": "route",
         "rule_set": [
-          "AppleIP",
+          "Apple IP",
           "cn_ip",
           "GeoIP-CN"
         ],

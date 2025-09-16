@@ -154,6 +154,14 @@
         "action": "reject"
       },
 
+      {
+          "rule_set": [
+            "Tiktok"
+          ],
+          "action": "route",
+          "outbound": "🧄 TOR隐私"
+      },
+
       // ✅ ⑦ 精准 rule_set 分流到代理（优先于 geosite）
       {
         "rule_set": [
@@ -162,6 +170,9 @@
           "twitter",
           "youtube",
           "google",
+          "facebook",
+          "Tiktok",
+          "whatsapp",
           "中国大陆防火墙"
         ],
         "action": "route",
@@ -192,11 +203,18 @@
       // 🧠 ⑦ 国内域名（geosite-cn）走直连
       {
         "rule_set": [
+          "AliPay",
+          "WeChat",
+          "Tencent",
+          "京东",
+          "迅雷",
           "币安",
           "中国域名",
           "私有网络地址段",
           "国内银行",
-          "中国大陆 NTP（网络时间协议）服务器域名"
+          "中国大陆 NTP（网络时间协议）服务器域名",
+          "Apple IP",
+          "Apple 域名"
         ],
         "action": "route",
         "outbound": "🎯 全球直连"
@@ -256,6 +274,41 @@
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/category-ads-all.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "facebook",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/facebook.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "whatsapp",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/whatsapp.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "京东",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/jd.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "迅雷",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/xunlei.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "Tiktok",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/tiktok.srs",
         "download_detour": "🚀 节点选择"
       },
       {
@@ -336,6 +389,7 @@
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ntp-cn.srs",
         "download_detour": "🚀 节点选择"
       },
+      
        //支付宝
       {
         "tag": "AliPay",
@@ -366,19 +420,10 @@
         "download_detour": "🎯 全球直连"
       },
 
-      //苹果商店
-      {
-        "tag": "AppStore",
-        "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/AppStore/AppStore.srs",
-        "format": "binary",
-        "update_interval": "24h",
-        "download_detour": "🎯 全球直连"
-      },
-
+     
       //苹果ID
       {
-        "tag": "AppleID",
+        "tag": "Apple IP",
         "type": "remote",
         "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geoip/apple.srs",
         "format": "binary",
@@ -388,7 +433,7 @@
       
        //苹果域名
       {
-        "tag": "Apple Domain",
+        "tag": "Apple 域名",
         "type": "remote",
         "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/apple.srs",
         "format": "binary",
@@ -410,7 +455,7 @@
       {
         "tag": "Tencent",
         "type": "remote",
-        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Tencent/Tencent.srs",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/tencent.srs",
         "format": "binary",
         "update_interval": "24h",
         "download_detour": "🎯 全球直连"
@@ -483,7 +528,10 @@
       "interrupt_exist_connections": true,
       "outbounds": [
         "RN-tor-tuic",
-        "RN-tor-vless"
+        "RN-tor-vless",
+        "🚀 节点选择",
+        "🎈 自动选择",
+        "🎯 全球直连"
       ],
       "default": "RN-tor-tuic"
     },

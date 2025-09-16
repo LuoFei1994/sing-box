@@ -69,7 +69,7 @@
         ],
         "action": "route",
         "server": "fake-ip-dns-server",
-        "rewrite_ttl": 1
+        "rewrite_ttl": 5
       },
       {
         "query_type": [
@@ -78,15 +78,23 @@
           "MX", 
           "SRV"
         ],
+        "action": "route",
         "server": "google"
+      },
+      { 
+        "rule_set": [
+          "AWAvenue-Ads", 
+          "tracker"
+        ], 
+        "action": "reject" 
       }
     ],
-    "cache_capacity": 2048,  
+    "cache_capacity": 4096,  
     "reverse_mapping": true,
     "disable_cache": false,
     "disable_expire": false,
     "independent_cache": true,
-    "final": "google",
+    "final": "fake-ip-dns-server",
     "strategy": "ipv4_only"
   },
   "route": {
@@ -146,11 +154,18 @@
         "action": "reject"
       },
 
-      // 🧠 ⑩ 私有 IP 地址走直连（如内网、路由器）
+      // ✅ ⑦ 精准 rule_set 分流到代理（优先于 geosite）
       {
-        "ip_is_private": true,
+        "rule_set": [
+          "telegram",
+          "github",
+          "twitter",
+          "youtube",
+          "google",
+          "gfw"
+        ],
         "action": "route",
-        "outbound": "direct"
+        "outbound": "节点"
       },
 
       // ✅ ⑧ 精准 IP 走直连（如 Binance 或 AWS）
@@ -163,9 +178,10 @@
           "13.214.82.8/32",
           "13.228.179.43/32"
         ],
+        "action": "route",
         "outbound": "direct"
       },
-  
+
       // ✅ ⑨ 国内 IP 网段走直连（cn_ip）
       {
         "rule_set": "cn_ip",
@@ -184,20 +200,12 @@
         "outbound": "direct"
       },
 
-      // ✅ ⑦ 精准 rule_set 分流到代理（优先于 geosite）
+      // 🧠 ⑩ 私有 IP 地址走直连（如内网、路由器）
       {
-        "rule_set": [
-          "telegram",
-          "github",
-          "twitter",
-          "youtube",
-          "google",
-          "gfw"
-        ],
+        "ip_is_private": true,
         "action": "route",
-        "outbound": "节点"
+        "outbound": "direct"
       },
-
       
       // 🧠 ⑪ fake-ip 网段兜底拒绝连接（防止 i/o timeout）
       {
@@ -212,17 +220,17 @@
       }
 
     ],
-    //下面默认dns是给节点使用的
+    "final": "节点",
     "default_domain_resolver": {
       "server": "ali",
+      domain_resolver: hosts,
       "strategy": "ipv4_only",
       "rewrite_ttl": 120
       //"client_subnet": "36.0.0.0/8"
     },
-    "final": "节点",
     "auto_detect_interface": true,
+
     "rule_set": [
-      
       {
         "tag": "binance",
         "type": "remote",

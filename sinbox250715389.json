@@ -563,28 +563,13 @@
       {
         "action": "route",
         "rule_set": [
-          "苹果-ASN",
-          "京东-ASN",
-          "淘宝-ASN",
-          "抖音-ASN",
           "微信-ASN",
           "支付宝-ASN",
           "币安-ASN"
         ],
         "outbound": "🎯 全球直连"
-      },
-      {
-        "action": "route",
-        "rule_set": [
-          "Twitter-ASN",
-          "Facebook-ASN",
-          "WhatsApp-ASN",
-          "Instagram-ASN",
-          "Telegram-ASN",
-          "TikTok-ASN"
-        ],
-        "outbound": "🚀 节点选择"
       }
+      
     ],
     "rule_set": [
       {
@@ -816,101 +801,9 @@
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/asn/AS45090.srs",
         "update_interval": "24h",
         "download_detour": "🚀 节点选择"
-      },
-
-      {
-        "tag": "抖音-ASN",  
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/asn/AS138699.srs",
-        "update_interval": "24h",
-        "download_detour": "🚀 节点选择"
-      },
-
-      {
-        "tag": "淘宝-ASN",  
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/asn/AS24429.srs",
-        "update_interval": "24h",
-        "download_detour": "🚀 节点选择"
-      },
-
-      {
-        "tag": "京东-ASN",  
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/asn/AS136907.srs",
-        "update_interval": "24h",
-        "download_detour": "🚀 节点选择"
-      },
-
-      {
-        "tag": "苹果-ASN",  
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/asn/AS714.srs",
-        "update_interval": "24h",
-        "download_detour": "🚀 节点选择"
-      },
-
-      {
-        "tag": "TikTok-ASN",  
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/asn/AS138699.srs",
-        "update_interval": "24h",
-        "download_detour": "🚀 节点选择"
-      },
-
-      {
-        "tag": "Facebook-ASN",  
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/asn/AS32934.srs",
-        "update_interval": "24h",
-        "download_detour": "🚀 节点选择"
-      },
-
-      {
-        "tag": "Telegram-ASN",  
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/asn/AS62041.srs",
-        "update_interval": "24h",
-        "download_detour": "🚀 节点选择"
-      },
-
-      {
-        "tag": "Instagram-ASN",  
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/asn/AS32934.srs",
-        "update_interval": "24h",
-        "download_detour": "🚀 节点选择"
-      },
-
-      {
-        "tag": "WhatsApp-ASN",  
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/asn/AS11917.srs",
-        "update_interval": "24h",
-        "download_detour": "🚀 节点选择"
-      },
-
-      {
-        "tag": "Twitter-ASN",  
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/asn/AS13414.srs",
-        "update_interval": "24h",
-        "download_detour": "🚀 节点选择"
       }
 
 
-
-      
     ],
     "auto_detect_interface": true,
     "final": "🐟 漏网之鱼",

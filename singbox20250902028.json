@@ -142,7 +142,7 @@
       {
         "clash_mode": "Global",
         "action": "route",
-        "outbound": "🚀 节点选择"
+        "outbound": "🌏 全球"
       },
 
       // 🧠 ⑨ 广告域名直接拦截（拒绝连接）
@@ -162,7 +162,7 @@
           "twitter",
           "youtube",
           "google",
-          "gfw"
+          "中国大陆防火墙"
         ],
         "action": "route",
         "outbound": "🚀 节点选择"
@@ -184,7 +184,7 @@
 
       // ✅ ⑨ 国内 IP 网段走直连（cn_ip）
       {
-        "rule_set": "cn_ip",
+        "rule_set": "中国IP",
         "action": "route",
         "outbound": "🎯 全球直连"
       },
@@ -192,9 +192,11 @@
       // 🧠 ⑦ 国内域名（geosite-cn）走直连
       {
         "rule_set": [
-          "binance",
-          "cn",
-          "private"
+          "币安",
+          "中国域名",
+          "私有网络地址段",
+          "国内银行",
+          "中国大陆 NTP（网络时间协议）服务器域名"
         ],
         "action": "route",
         "outbound": "🎯 全球直连"
@@ -232,7 +234,7 @@
 
     "rule_set": [
       {
-        "tag": "binance",
+        "tag": "币安",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/binance.srs",
@@ -257,7 +259,7 @@
         "download_detour": "🚀 节点选择"
       },
       {
-        "tag": "private",
+        "tag": "私有网络地址段",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-private.srs",
@@ -300,21 +302,21 @@
         "download_detour": "🚀 节点选择"
       },
       {
-        "tag": "gfw",
+        "tag": "中国大陆防火墙",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/gfw.srs",
         "download_detour": "🚀 节点选择"
       },
       {
-        "tag": "cn",
+        "tag": "中国域名",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs",
         "download_detour": "🚀 节点选择"
       },
       {
-        "tag": "cn_ip",
+        "tag": "中国IP",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs",
@@ -370,6 +372,20 @@
       "type": "direct",
       "tag": "🎯 全球直连"
     },
+    
+    {
+      "type": "selector",
+      "tag": "🌏 全球",
+      "interrupt_exist_connections": true,
+      "outbounds": [
+        "🚀 节点选择",
+        "🎈 自动选择",
+        "🎯 全球直连",
+        "🧄 TOR隐私",
+        "🐟 漏网之鱼"
+      ]
+    },
+    
     {
       "type": "selector",
       "tag": "🐟 漏网之鱼",

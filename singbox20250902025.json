@@ -223,7 +223,7 @@
     "final": "节点",
     "default_domain_resolver": {
       "server": "ali",
-      domain_resolver: hosts,
+      "domain_resolver": "hosts",
       "strategy": "ipv4_only",
       "rewrite_ttl": 120
       //"client_subnet": "36.0.0.0/8"

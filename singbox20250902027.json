@@ -83,7 +83,7 @@
       },
       { 
         "rule_set": [
-          "AWAvenue-Ads", 
+          "category-ads-all", 
           "tracker"
         ], 
         "action": "reject" 
@@ -148,7 +148,7 @@
       // 🧠 ⑨ 广告域名直接拦截（拒绝连接）
       {
         "rule_set": [
-          "AWAvenue-Ads",
+          "category-ads-all",
           "tracker"
         ],
         "action": "reject"
@@ -250,10 +250,10 @@
 
       
       {
-        "tag": "AWAvenue-Ads",
+        "tag": "category-ads-all",
         "type": "remote",
-        "format": "source",
-        "url": "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Singbox.json",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/category-ads-all.srs",
         "download_detour": "节点"
       },
       {
@@ -263,13 +263,7 @@
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-private.srs",
         "download_detour": "节点"
       },
-      {
-        "tag": "ai",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/ai.srs",
-        "download_detour": "节点"
-      },
+     
       {
         "tag": "telegram",
         "type": "remote",
@@ -316,14 +310,28 @@
         "tag": "cn",
         "type": "remote",
         "format": "binary",
-        "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/cn.srs",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs",
         "download_detour": "节点"
       },
       {
         "tag": "cn_ip",
         "type": "remote",
         "format": "binary",
-        "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/cnip.srs",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs",
+        "download_detour": "节点"
+      },
+      {
+        "tag": "国内银行",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-bank-cn.srs",
+        "download_detour": "节点"
+      },
+      {
+        "tag": "中国大陆 NTP（网络时间协议）服务器域名",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ntp-cn.srs",
         "download_detour": "节点"
       }
     ]

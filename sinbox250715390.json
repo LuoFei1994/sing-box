@@ -2,7 +2,7 @@
   "log": {
     "disabled": false, 
     "level": "debug",
-    "output": "",
+    "output": "/var/mobile/singbox.log",
     "timestamp": true
   },
   "experimental": {

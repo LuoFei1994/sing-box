@@ -2,7 +2,7 @@
   "log": {
     "disabled": false, 
     "level": "debug",
-    "output": "./Documents/singbox.log",
+    "output": "./Library/Caches/singbox.log",
     "timestamp": true
   },
   "experimental": {

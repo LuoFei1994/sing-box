@@ -821,8 +821,8 @@
     "default_domain_resolver": {
       "server": "本地",
       "strategy": "ipv4_only",
-      "rewrite_ttl": 120
-      //"client_subnet": "36.0.0.0/8"
+      "rewrite_ttl": 120,
+      "client_subnet": "0.0.0.0/0" 
     },
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi", "cellular"],  

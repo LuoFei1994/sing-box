@@ -182,8 +182,23 @@
         "server": "Remote-DNS"
       },
 
+      // 远端 DNS 自举域名 → 本地解析，避免死锁（按你实际使用的远端 DNS 域名补充）
+      { 
+        "domain_suffix": [
+          "dns11.quad9.net",
+          "cloudflare-dns.com",
+          "dns.google",
+          "cloudflare-dns.com",
+          "apple.com", 
+          "icloud.com"
+        ],
+        "server": "Local-DNS",
+        "strategy": "prefer_ipv4",
+        "rewrite_ttl": 300
+      },
+
       {
-        "query_type": ["HTTPS", "SVCB", "ANY", "NAPTR", "SOA", "NS", "CAA", "OPT"],
+        "query_type": ["HTTPS", "SVCB", "ANY", "NAPTR", "CAA", "OPT"],
         "action": "reject"
       },
 
@@ -208,20 +223,7 @@
         "server": "Local-DNS"
       },
       
-      // 远端 DNS 自举域名 → 本地解析，避免死锁（按你实际使用的远端 DNS 域名补充）
-      { 
-        "domain_suffix": [
-          "dns11.quad9.net",
-          "cloudflare-dns.com",
-          "dns.google",
-          "cloudflare-dns.com",
-          "apple.com", 
-          "icloud.com"
-        ],
-        "server": "Local-DNS",
-        "strategy": "ipv4_only",
-        "rewrite_ttl": 300
-      },
+      
       
       {
         "action": "route",
@@ -273,7 +275,8 @@
     "disable_expire": false,
     "independent_cache": true,
     "final": "Remote-GoogleDNS",
-    "strategy": "ipv4_only"
+    "strategy": "prefer_ipv4",
+    "rewrite_ttl": 180
   },
 
   "inbounds": [
@@ -500,6 +503,10 @@
       },
       
       {
+        "action": "resolve"
+      },
+      
+      {
         "type": "logical",
         "mode": "and",
         "rules": [
@@ -528,9 +535,7 @@
         ]
       },
       
-      {
-        "action": "resolve"
-      },
+      
       
       {
         "ip_is_private": true,

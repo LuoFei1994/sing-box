@@ -287,7 +287,7 @@
         //"fdfe:dcba:9876::1/126"
         ],
       "mtu":4064,
-      "stack":"system",
+      "stack":"gvisor",
       "auto_route": true,
       "strict_route": true,
       "tag": "tun-in",

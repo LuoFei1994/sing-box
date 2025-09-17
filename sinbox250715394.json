@@ -1,8 +1,8 @@
 {
   "log": {
     "disabled": false, 
-    "level": "debug",
-    "output": "./Library/Caches/singbox.log",
+    "level": "warn",
+    "output": "./Library/Caches/singbox.txt",
     "timestamp": true
   },
   "experimental": {

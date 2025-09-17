@@ -2,8 +2,8 @@
   "log": {
     "disabled": false, 
     "level": "error",
-    "output": "",
-    "timestamp": false
+    "output": "/var/mobile/Containers/Data/Application/22FB378D-E134-4A26-A7B7-A5BE7CFFDA7B/Documents/log",
+    "timestamp": true
   },
   "experimental": {
     "clash_api": { 

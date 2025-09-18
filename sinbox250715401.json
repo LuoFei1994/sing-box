@@ -827,10 +827,8 @@
     ],
     "auto_detect_interface": true,
     "final": "🐟 漏网之鱼",
-    
-    //下面默认dns是给节点使用的
     "default_domain_resolver": {
-      "server": "本地",
+      "server": "local",
       "strategy": "ipv4_only",
       "rewrite_ttl": 120,
       "client_subnet": "0.0.0.0/0" 

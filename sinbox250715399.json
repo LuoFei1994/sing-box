@@ -84,7 +84,7 @@
       },
 
       {
-        "tag": "本地",
+        "tag": "local",
         "type": "local"
       },
       
@@ -220,10 +220,16 @@
           "tenpay.com",
           "cmbchina.com"
         ],
-        "server": "Local-DNS"
+        "server": "Local-DNS" 
       },
       
-      
+      {
+        "action": "route",
+        "rule_set": [
+          "binance"
+        ],
+        "server": "local"
+      },
       
       {
         "action": "route",
@@ -549,6 +555,11 @@
 
       {
         "ip_cidr": [
+          "3.0.0.0/8",
+          "13.0.0.0/8",
+          "52.0.0.0/8",
+          "57.181.48.0/24",
+          "76.223.0.0/16"
           "122.248.193.92/32",
           "18.140.160.130/32",
           "13.228.58.214/32",

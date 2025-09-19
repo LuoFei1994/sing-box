@@ -99,14 +99,10 @@
   },
   "route": {
     "rules": [
-      // 🧠 ① 嗅探流量协议，恢复域名（用于后续 resolve 和分流）
       {
-        "action": "sniff",
-        "sniffer": ["http", "tls", "quic", "dns"],
-        "timeout": "1000ms"
+        "action": "sniff"
       },
-
-      // 🧠 ② 劫持系统 DNS 请求（UDP/53），确保走 sing-box DNS 模块
+      
       {
         "type": "logical",
         "mode": "and",
@@ -117,35 +113,37 @@
         "action": "hijack-dns"
       },
   
-      
-  
-      // 🧠 ③ fake-ip 网段触发二次解析（避免直接连接虚假 IP）
-      {
-        "ip_cidr": ["198.18.0.0/15", "fc00::/7"],
-        "action": "resolve"
-      },
 
-      // 🧠 ④ 通用 resolve（用于 sniff 后恢复域名再分流）
-      {
-        "action": "resolve"
-      },
-  
-      
-      // 🧠 ⑤ clash_mode: Direct 模式的流量走直连
       {
         "clash_mode": "Direct",
         "action": "route",
         "outbound": "🎯 全球直连"
       },
 
-      // 🧠 ⑥ clash_mode: Proxy 模式的流量走代理
       {
         "clash_mode": "Global",
         "action": "route",
         "outbound": "🌏 全球"
       },
+      
+      {
+        "rule_set": [
+          "中国IP"
+        ],
+        "action": "route",
+        "outbound": "🎯 全球直连"
+      },
 
-      // 🧠 ⑨ 广告域名直接拦截（拒绝连接）
+      {
+        "ip_is_private": true,
+        "action": "route",
+        "outbound": "🎯 全球直连"
+      },
+
+      {
+        "action": "resolve"
+      },
+
       {
         "rule_set": [
           "category-ads-all",
@@ -155,90 +153,21 @@
       },
 
       {
-          "rule_set": [
-            "Tiktok"
-          ],
-          "action": "route",
-          "outbound": "🧄 TOR隐私"
+        "rule_set": [
+          "binary",
+          "中国地域"
+        ],
+        "action": "route",
+        "outbound": "🎯 全球直连"
       },
 
-      // ✅ ⑦ 精准 rule_set 分流到代理（优先于 geosite）
       {
         "rule_set": [
-          "telegram",
-          "github",
-          "twitter",
-          "youtube",
-          "google",
-          "facebook",
-          "Tiktok",
-          "whatsapp",
-          "中国大陆防火墙"
+          "国外",
         ],
         "action": "route",
         "outbound": "🚀 节点选择"
-      },
-
-      // ✅ ⑧ 精准 IP 走直连（如 Binance 或 AWS）
-      {
-        "ip_cidr": [
-          "122.248.193.92/32",
-          "18.140.160.130/32",
-          "13.228.58.214/32",
-          "18.136.221.104/32",
-          "13.214.82.8/32",
-          "13.228.179.43/32"
-        ],
-        "action": "route",
-        "outbound": "🎯 全球直连"
-      },
-
-      // ✅ ⑨ 国内 IP 网段走直连（cn_ip）
-      {
-        "rule_set": "中国IP",
-        "action": "route",
-        "outbound": "🎯 全球直连"
-      },
-
-      // 🧠 ⑦ 国内域名（geosite-cn）走直连
-      {
-        "rule_set": [
-          "AliPay",
-          "WeChat",
-          "Tencent",
-          "京东",
-          "迅雷",
-          "币安",
-          "中国域名",
-          "私有网络地址段",
-          "国内银行",
-          "中国大陆 NTP（网络时间协议）服务器域名",
-          "Apple IP",
-          "Apple 域名"
-        ],
-        "action": "route",
-        "outbound": "🎯 全球直连"
-      },
-
-      // 🧠 ⑩ 私有 IP 地址走直连（如内网、路由器）
-      {
-        "ip_is_private": true,
-        "action": "route",
-        "outbound": "🎯 全球直连"
-      },
-      
-      // 🧠 ⑪ fake-ip 网段兜底拒绝连接（防止 i/o timeout）
-      {
-        "ip_cidr": ["198.18.0.0/15", "fc00::/7"],
-        "action": "reject"
-      },
-  
-      // 🧠 ⑫ 拒绝连接到无效地址（如 0.0.0.0:0）
-      {
-        "ip_cidr": ["0.0.0.0/32", "::/128"],
-        "action": "reject"
       }
-
     ],
     "final": "🐟 漏网之鱼",
     "default_domain_resolver": {
@@ -251,6 +180,32 @@
     "auto_detect_interface": true,
 
     "rule_set": [
+
+      {
+        "tag": "中国地域",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/ChinaMax/ChinaMax.srs",
+        "download_detour": "🚀 节点选择"
+      },
+
+      {
+        "tag": "中国IP",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/ChinaIPs/ChinaIPs.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      
+
+      {
+        "tag": "国外",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Global/Global.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      
       {
         "tag": "币安",
         "type": "remote",

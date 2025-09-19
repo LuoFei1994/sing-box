@@ -226,7 +226,7 @@
       {
         "action": "route",
         "rule_set": [
-          "binance"
+          "币安"
         ],
         "server": "local"
       },

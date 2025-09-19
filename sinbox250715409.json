@@ -507,9 +507,7 @@
         "action": "sniff"
       },
       
-      {
-        "action": "resolve"
-      },
+      
       
       {
         "type": "logical",
@@ -519,6 +517,18 @@
           { "port": 53 }
         ],
         "action": "hijack-dns"
+      },
+
+      {
+        "action": "reject",
+        "rule_set": [
+          "Category-Ads",
+          "category-public-tracker"
+        ]
+      },
+
+      {
+        "action": "resolve"
       },
 
       {
@@ -532,16 +542,6 @@
         "outbound": "GLOBAL"
       },
 
-      {
-        "action": "reject",
-        "rule_set": [
-          "Category-Ads",
-          "category-public-tracker"
-        ]
-      },
-      
-      
-      
       {
         "ip_is_private": true,
         "action": "route",

@@ -125,24 +125,6 @@
         "action": "route",
         "outbound": "🌏 全球"
       },
-      
-      {
-        "rule_set": [
-          "中国IP"
-        ],
-        "action": "route",
-        "outbound": "🎯 全球直连"
-      },
-
-      {
-        "ip_is_private": true,
-        "action": "route",
-        "outbound": "🎯 全球直连"
-      },
-
-      {
-        "action": "resolve"
-      },
 
       {
         "rule_set": [
@@ -168,6 +150,26 @@
         "action": "route",
         "outbound": "🚀 节点选择"
       }
+
+
+      {
+        "action": "resolve"
+      },
+      
+      {
+        "rule_set": [
+          "中国IP"
+        ],
+        "action": "route",
+        "outbound": "🎯 全球直连"
+      },
+
+      {
+        "ip_is_private": true,
+        "action": "route",
+        "outbound": "🎯 全球直连"
+      }
+      
     ],
     "final": "🐟 漏网之鱼",
     "default_domain_resolver": {

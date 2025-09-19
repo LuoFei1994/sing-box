@@ -507,8 +507,6 @@
         "action": "sniff"
       },
       
-      
-      
       {
         "type": "logical",
         "mode": "and",

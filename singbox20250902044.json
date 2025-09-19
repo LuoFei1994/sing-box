@@ -57,10 +57,10 @@
         "server": "google"
       },
 
-      {
+      /*{
         "query_type": ["ANY","HTTPS", "SVCB", "NAPTR", "SOA", "NS", "CAA", "OPT"],
         "action": "reject"
-      },
+      },*/
       
       {
         "query_type": [
@@ -71,7 +71,7 @@
         "server": "fake-ip-dns-server",
         "rewrite_ttl": 5
       },
-      {
+      /*{
         "query_type": [
           "CNAME", 
           "TXT", 
@@ -87,7 +87,7 @@
           "tracker"
         ], 
         "action": "reject" 
-      }
+      }*/
     ],
     "cache_capacity": 4096,  
     "reverse_mapping": true,

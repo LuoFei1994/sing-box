@@ -116,7 +116,7 @@
         "rule_set": [
           "币安"
         ],
-        "server": "local"
+        "server": "Local-DNS"
       },
 
       {
@@ -124,7 +124,7 @@
         "rule_set": [
           "中国地域"
         ],
-        "server": "local"
+        "server": "Local-DNS"
       },
       
       {
@@ -714,7 +714,7 @@
     "auto_detect_interface": true,
     "final": "🐟 漏网之鱼",
     "default_domain_resolver": {
-      "server": "local",
+      "server": "Local-DNS",
       "strategy": "ipv4_only",
       "rewrite_ttl": 120,
       "client_subnet": "0.0.0.0/0" 

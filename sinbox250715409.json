@@ -35,7 +35,52 @@
         "server": "dns.alidns.com",
         "server_port": 443,
         "path": "/dns-query",
-        "domain_resolver": "hosts"
+        "domain_resolver": "hosts",
+        "tls": {
+          "enabled": true,
+          "server_name": "dns.alidns.com",
+          "utls": {
+            "enabled": true,
+            "fingerprint": "chrome"
+          }
+        }
+      },
+      {
+        "tag": "Local-DNS-H3",
+        "type": "h3",
+        "server_port": 443,
+        "server": "dns.alidns.com",
+        "domain_resolver": "hosts",
+        "path": "/dns-query",
+        "headers": {
+          "Host": "dns.alidns.com",
+          "User-Agent": "Apple"
+          },
+        "tls": {  
+          "enabled": true,
+          "server_name": "dns.alidns.com"
+        }
+      },
+      {
+        "tag": "Local-DNS-TLS",
+        "type": "tls",
+        "server": "dns.alidns.com",
+        "server_port": 853,
+        "domain_resolver": "hosts",
+        "tls": {
+          "enabled": true,
+          "server_name": "dns.alidns.com",
+          "utls": {
+            "enabled": true,
+            "fingerprint": "chrome"
+          }
+        }
+      },
+      {
+        "tag": "Local-Plain",
+        "type": "tcp",                   
+        "server": "223.5.5.5",
+        "server_port": 53
       },
 
       {
@@ -44,16 +89,62 @@
       },
       
       {
+        "tag": "Remote-DNS",
+        "type": "https",
+        "detour": "🚀 节点选择",
+        "server_port": 443,
+        "server": "dns11.quad9.net",
+        "path": "/dns-query",
+        "domain_resolver": "hosts",
+        "headers": {
+          "Host": "dns11.quad9.net",
+          "User-Agent": "Apple"
+        },
+        "tls": {  
+          "enabled": true,  
+          "server_name": "dns11.quad9.net",
+          "utls": {
+            "enabled": true,
+            "fingerprint": "chrome"
+          }
+        }
+      },
+      
+      {
         "tag": "Remote-GoogleDNS",
         "type": "https",
         "detour": "🚀 节点选择",
+        "domain_resolver": "hosts",
+        "server_port": 443,
         "server": "dns.google",
         "path": "/dns-query",
-        "server_port": 443,
-        "domain_resolver": "hosts"
+        "tls": {
+          "enabled": true,
+          "server_name": "dns.google",
+          "utls": {
+            "enabled": true,
+            "fingerprint": "chrome"
+          }
+        }
       },
     
-      
+      {
+        "tag": "Fallback-DNS",
+        "type": "https",
+        "detour": "🚀 节点选择",
+        "domain_resolver": "hosts",
+        "server": "cloudflare-dns.com",
+        "server_port": 443,
+        "path": "/dns-query",
+        "tls": {
+          "enabled": true,
+          "server_name": "cloudflare-dns.com",
+          "utls": {
+            "enabled": true,
+            "fingerprint": "chrome"
+          } 
+        }
+      },
       {
          "tag": "hosts",
          "type": "hosts",
@@ -91,7 +182,8 @@
         "server": "Remote-DNS"
       },
 
-       { 
+      // 远端 DNS 自举域名 → 本地解析，避免死锁（按你实际使用的远端 DNS 域名补充）
+      { 
         "domain_suffix": [
           "dns11.quad9.net",
           "cloudflare-dns.com",
@@ -111,26 +203,67 @@
       },
 
       {
-        "action": "route",
+        "action": "reject",
         "rule_set": [
-          "币安"
-        ],
-        "server": "Local-DNS"
+          "Category-Ads",
+          "category-public-tracker"
+        ]
       },
 
       {
-        "action": "route",
-        "rule_set": [
-          "国内域名"
+        "domain_suffix": [
+          "apple.com",
+          "icloud.com",
+          "push.apple.com",
+          "ess.apple.com",
+          "weixin.qq.com",
+          "tenpay.com",
+          "cmbchina.com"
         ],
-        "server": "Local-DNS"
+        "server": "Local-DNS" 
       },
       
       {
         "action": "route",
         "rule_set": [
-          "GeoLocation-!CN",
-          "中国大陆防火墙"
+          "binance"
+        ],
+        "server": "local"
+      },
+      
+      {
+        "action": "route",
+        "rule_set": [
+          "AliPay",
+          "WeChat",
+          "Tencent",
+          "binance",
+          "private",
+          "category-ntp-cn",
+          "category-securities-cn",
+          "GeoLocation-CN",
+          "cn"
+        ],
+        "server": "Local-DNS"
+      },
+
+      {
+        "domain_suffix": [
+          "fallback.apple.com",
+          "mesu.apple.com",
+          "cl3.apple.com"
+        ],
+        "server": "Remote-GoogleDNS",
+        "client_subnet": "0.0.0.0/0" 
+      },
+
+      {
+        "action": "route",
+        "rule_set": [
+          "Apple Domain",
+          "AppStore",
+          "gfw",
+          "GeoLocation-!CN"
         ],
         "server": "Remote-GoogleDNS",
         "client_subnet": "0.0.0.0/0" 
@@ -142,7 +275,7 @@
         "client_subnet": "0.0.0.0/0" 
       }
     ],
-    "cache_capacity": 4096,  
+    "cache_capacity": 2048,  
     "reverse_mapping": true,
     "disable_cache": false,
     "disable_expire": false,
@@ -375,12 +508,15 @@
       },
       
       {
+        "action": "resolve"
+      },
+      
+      {
         "type": "logical",
         "mode": "and",
         "rules": [
           { "network": "udp" },
-          { "port": 53 },
-          { "ip_cidr": ["8.8.8.8/32","8.8.4.4/32", "1.1.1.1/32", "9.9.9.9/32", "223.5.5.5/32","223.6.6.6/32"] }
+          { "port": 53 }
         ],
         "action": "hijack-dns"
       },
@@ -403,25 +539,18 @@
           "category-public-tracker"
         ]
       },
-
-      {
-        "action": "route",
-        "rule_set": [
-          "币安",
-          "国内域名"
-        ],
-        "outbound": "🎯 全球直连"
-      },
-
-      {
-        "action": "resolve"
-      },
-
-
+      
+      
+      
       {
         "ip_is_private": true,
         "action": "route",
         "outbound": "🎯 全球直连"
+      },
+
+      {
+        "ip_cidr": ["10.0.0.0/8", "192.168.0.0/16", "172.18.0.0/16"],
+        "outbound": "🎯 全球直连" // 🏠 内网流量直连，不走代理
       },
 
       {
@@ -444,34 +573,25 @@
       {
         "action": "route",
         "rule_set": [
-          "国内IP"
+          "Apple IP",
+          "cn_ip",
+          "GeoIP-CN"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+
+      {
+        "action": "route",
+        "rule_set": [
+          "微信-ASN",
+          "支付宝-ASN",
+          "币安-ASN"
         ],
         "outbound": "🎯 全球直连"
       }
+      
     ],
     "rule_set": [
-      {
-        "tag": "中国大陆防火墙",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/gfw.srs",
-        "download_detour": "🚀 节点选择"
-      },
-      {
-        "tag": "国内域名",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs",
-        "download_detour": "🚀 节点选择"
-      },
-      {
-        "tag": "国内IP",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs",
-        "download_detour": "🚀 节点选择"
-      },
-      
       {
         "tag": "中国地域",
         "type": "remote",
@@ -520,6 +640,14 @@
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-private.srs",
+        "update_interval": "24h",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "gfw",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/gfw.srs",
         "update_interval": "24h",
         "download_detour": "🚀 节点选择"
       },
@@ -728,7 +856,7 @@
     "auto_detect_interface": true,
     "final": "🐟 漏网之鱼",
     "default_domain_resolver": {
-      "server": "Local-DNS",
+      "server": "local",
       "strategy": "ipv4_only",
       "rewrite_ttl": 120,
       "client_subnet": "0.0.0.0/0" 

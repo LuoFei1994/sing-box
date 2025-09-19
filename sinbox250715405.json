@@ -106,10 +106,10 @@
         "rewrite_ttl": 300
       },
 
-      {
+      /*{
         "query_type": ["HTTPS", "SVCB", "ANY", "NAPTR", "CAA", "OPT"],
         "action": "reject"
-      },
+      },*/
 
       {
         "action": "route",
@@ -134,13 +134,13 @@
         ],
         "server": "Remote-GoogleDNS",
         "client_subnet": "0.0.0.0/0" 
-      },
+      }
     
-      {
+      /*{
         "query_type": ["A", "AAAA", "CNAME", "TXT", "MX", "SRV"],
         "server": "Remote-GoogleDNS",
         "client_subnet": "0.0.0.0/0" 
-      }
+      }*/
     ],
     "cache_capacity": 4096,  
     "reverse_mapping": true,

@@ -1,0 +1,710 @@
+{
+  "dns": {
+    "servers": [
+      
+      {
+        "tag": "ali",
+        "type": "https",
+        "server": "dns.alidns.com",
+        "domain_resolver": "hosts"
+        //"detour": "🎯 全球直连"
+      },
+      {
+        "tag": "google",
+        "type": "https",
+        "server": "dns.google",
+        "domain_resolver": "hosts",
+        "detour": "🚀 节点选择"
+      },
+      {
+        "tag": "local",
+        "type": "local"
+        //"prefer_go": true
+      },
+      {
+        "tag": "fake-ip-dns-server",
+        "type": "fakeip",
+        "inet4_range": "198.18.0.0/15",
+        "inet6_range": "fc00::/18"
+      },
+      {
+        "tag": "hosts",
+        "type": "hosts",
+        "predefined": {
+          "dns.alidns.com": [
+            "223.5.5.5",
+            "223.6.6.6",
+            "2400:3200::1",
+            "2400:3200:baba::1"
+          ],
+          "dns.google": [
+            "8.8.8.8",
+            "8.8.4.4"
+          ]
+        }
+      }
+    ],
+    "rules": [
+
+      {
+        "clash_mode": "Direct",
+        "action": "route",
+        "server": "local"
+      },
+      {
+        "clash_mode": "Global",
+        "action": "route",
+        "server": "google"
+      },
+
+      {
+        "query_type": ["ANY","HTTPS", "SVCB", "NAPTR", "SOA", "NS", "CAA", "OPT"],
+        "action": "reject"
+      },
+      
+      {
+        "query_type": [
+          "A",
+          "AAAA"
+        ],
+        "action": "route",
+        "server": "fake-ip-dns-server",
+        "rewrite_ttl": 5
+      },
+      {
+        "query_type": [
+          "CNAME", 
+          "TXT", 
+          "MX", 
+          "SRV"
+        ],
+        "action": "route",
+        "server": "google"
+      },
+      { 
+        "rule_set": [
+          "category-ads-all", 
+          "tracker"
+        ], 
+        "action": "reject" 
+      }
+    ],
+    "cache_capacity": 4096,  
+    "reverse_mapping": true,
+    "disable_cache": false,
+    "disable_expire": false,
+    "independent_cache": true,
+    "final": "google",
+    "strategy": "ipv4_only"
+  },
+  "route": {
+    "rules": [
+      // 🧠 ① 嗅探流量协议，恢复域名（用于后续 resolve 和分流）
+      {
+        "action": "sniff",
+        "sniffer": ["http", "tls", "quic", "dns"],
+        "timeout": "1000ms"
+      },
+
+      // 🧠 ② 劫持系统 DNS 请求（UDP/53），确保走 sing-box DNS 模块
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          { "network": "udp" },
+          { "port": 53 }
+        ],
+        "action": "hijack-dns"
+      },
+  
+      
+  
+      // 🧠 ③ fake-ip 网段触发二次解析（避免直接连接虚假 IP）
+      {
+        "ip_cidr": ["198.18.0.0/15", "fc00::/7"],
+        "action": "resolve"
+      },
+
+      // 🧠 ④ 通用 resolve（用于 sniff 后恢复域名再分流）
+      {
+        "action": "resolve"
+      },
+  
+      
+      // 🧠 ⑤ clash_mode: Direct 模式的流量走直连
+      {
+        "clash_mode": "Direct",
+        "action": "route",
+        "outbound": "🎯 全球直连"
+      },
+
+      // 🧠 ⑥ clash_mode: Proxy 模式的流量走代理
+      {
+        "clash_mode": "Global",
+        "action": "route",
+        "outbound": "🌏 全球"
+      },
+
+      // 🧠 ⑨ 广告域名直接拦截（拒绝连接）
+      {
+        "rule_set": [
+          "category-ads-all",
+          "tracker"
+        ],
+        "action": "reject"
+      },
+
+      {
+          "rule_set": [
+            "Tiktok"
+          ],
+          "action": "route",
+          "outbound": "🧄 TOR隐私"
+      },
+
+      // ✅ ⑦ 精准 rule_set 分流到代理（优先于 geosite）
+      {
+        "rule_set": [
+          "telegram",
+          "github",
+          "twitter",
+          "youtube",
+          "google",
+          "facebook",
+          "Tiktok",
+          "whatsapp",
+          "中国大陆防火墙"
+        ],
+        "action": "route",
+        "outbound": "🚀 节点选择"
+      },
+
+      // ✅ ⑧ 精准 IP 走直连（如 Binance 或 AWS）
+      {
+        "ip_cidr": [
+          "122.248.193.92/32",
+          "18.140.160.130/32",
+          "13.228.58.214/32",
+          "18.136.221.104/32",
+          "13.214.82.8/32",
+          "13.228.179.43/32"
+        ],
+        "action": "route",
+        "outbound": "🎯 全球直连"
+      },
+
+      // ✅ ⑨ 国内 IP 网段走直连（cn_ip）
+      {
+        "rule_set": "中国IP",
+        "action": "route",
+        "outbound": "🎯 全球直连"
+      },
+
+      // 🧠 ⑦ 国内域名（geosite-cn）走直连
+      {
+        "rule_set": [
+          "AliPay",
+          "WeChat",
+          "Tencent",
+          "京东",
+          "迅雷",
+          "币安",
+          "中国域名",
+          "私有网络地址段",
+          "国内银行",
+          "中国大陆 NTP（网络时间协议）服务器域名",
+          "Apple IP",
+          "Apple 域名"
+        ],
+        "action": "route",
+        "outbound": "🎯 全球直连"
+      },
+
+      // 🧠 ⑩ 私有 IP 地址走直连（如内网、路由器）
+      {
+        "ip_is_private": true,
+        "action": "route",
+        "outbound": "🎯 全球直连"
+      },
+      
+      // 🧠 ⑪ fake-ip 网段兜底拒绝连接（防止 i/o timeout）
+      {
+        "ip_cidr": ["198.18.0.0/15", "fc00::/7"],
+        "action": "reject"
+      },
+  
+      // 🧠 ⑫ 拒绝连接到无效地址（如 0.0.0.0:0）
+      {
+        "ip_cidr": ["0.0.0.0/32", "::/128"],
+        "action": "reject"
+      }
+
+    ],
+    "final": "🐟 漏网之鱼",
+    "default_domain_resolver": {
+      "server": "ali",
+      "domain_resolver": "hosts",
+      "strategy": "ipv4_only",
+      "rewrite_ttl": 120
+      //"client_subnet": "36.0.0.0/8"
+    },
+    "auto_detect_interface": true,
+
+    "rule_set": [
+      {
+        "tag": "币安",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/binance.srs",
+        "download_detour": "🚀 节点选择"
+      },
+
+      {
+        "tag": "tracker",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/tracker.srs",
+        "download_detour": "🚀 节点选择"
+      },
+
+
+      
+      {
+        "tag": "category-ads-all",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/category-ads-all.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "facebook",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/facebook.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "whatsapp",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/whatsapp.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "京东",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/jd.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "迅雷",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/xunlei.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "Tiktok",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/tiktok.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "私有网络地址段",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-private.srs",
+        "download_detour": "🚀 节点选择"
+      },
+     
+      {
+        "tag": "telegram",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-telegram.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "github",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-github.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "twitter",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-twitter.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "youtube",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-youtube.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "google",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-google.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "中国大陆防火墙",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/gfw.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "中国域名",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "中国IP",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "国内银行",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-bank-cn.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "中国大陆 NTP（网络时间协议）服务器域名",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ntp-cn.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      
+       //支付宝
+      {
+        "tag": "AliPay",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/AliPay/AliPay.srs",
+        "format": "binary",
+        "update_interval": "24h",
+        "download_detour": "🎯 全球直连"
+      },
+      
+      //微信
+      {
+        "tag": "WeChat",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/WeChat/WeChat.srs",
+        "format": "binary",
+        "update_interval": "24h",
+        "download_detour": "🎯 全球直连"
+      },
+
+      //阿里巴巴
+      {
+        "tag": "Alibaba",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/Alibaba/Alibaba.srs",
+        "format": "binary",
+        "update_interval": "24h",
+        "download_detour": "🎯 全球直连"
+      },
+
+     
+      //苹果ID
+      {
+        "tag": "Apple IP",
+        "type": "remote",
+        "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geoip/apple.srs",
+        "format": "binary",
+        "update_interval": "24h",
+        "download_detour": "🎯 全球直连"
+      },
+      
+       //苹果域名
+      {
+        "tag": "Apple 域名",
+        "type": "remote",
+        "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/apple.srs",
+        "format": "binary",
+        "update_interval": "24h",
+        "download_detour": "🎯 全球直连"
+      },
+
+      //抖音
+      {
+        "tag": "DouYin",
+        "type": "remote",
+        "url": "https://cdn.jsdelivr.net/gh/senshinya/singbox_ruleset@main/rule/DouYin/DouYin.srs",
+        "format": "binary",
+        "update_interval": "24h",
+        "download_detour": "🎯 全球直连"
+      },
+      
+      //腾讯
+      {
+        "tag": "Tencent",
+        "type": "remote",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/tencent.srs",
+        "format": "binary",
+        "update_interval": "24h",
+        "download_detour": "🎯 全球直连"
+      }
+    ]
+  },
+  "outbounds": [
+    {
+      "type": "selector",
+      "tag": "🚀 节点选择",
+      "interrupt_exist_connections": true,
+      "outbounds": [
+        "proxy123",
+        "RN-tor-tuic",
+        "RN-tor-vless",
+        "RN-vless",
+        "RN-tuic",
+        "RN-vless-brutal"
+      ],
+      "default": "proxy123"
+    },
+    {
+      "type": "urltest",
+      "tag": "🎈 自动选择",
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "5m",
+      "tolerance": 150,
+      "interrupt_exist_connections": true,
+      "outbounds": [
+        "proxy123",
+        "RN-vless",
+        "RN-tuic",
+        "RN-vless-brutal"
+      ]
+    },
+    
+    {
+      "type": "direct",
+      "tag": "🎯 全球直连"
+    },
+    
+    {
+      "type": "selector",
+      "tag": "🌏 全球",
+      "interrupt_exist_connections": true,
+      "outbounds": [
+        "🚀 节点选择",
+        "🎈 自动选择",
+        "🎯 全球直连",
+        "🧄 TOR隐私",
+        "🐟 漏网之鱼"
+      ]
+    },
+    
+    {
+      "type": "selector",
+      "tag": "🐟 漏网之鱼",
+      "interrupt_exist_connections": true,
+      "outbounds": [
+        "🚀 节点选择",
+        "🎈 自动选择",
+        "🧄 TOR隐私",
+        "🎯 全球直连"
+      ],
+      "default": "🎈 自动选择"
+    },
+    {
+      "type": "selector",
+      "tag": "🧄 TOR隐私",
+      "interrupt_exist_connections": true,
+      "outbounds": [
+        "RN-tor-tuic",
+        "RN-tor-vless",
+        "🚀 节点选择",
+        "🎈 自动选择",
+        "🎯 全球直连"
+      ],
+      "default": "RN-tor-tuic"
+    },
+    {
+      "type": "vless",
+      "tag": "RN-vless-brutal",
+      "server": "107.150.27.18",
+      "server_port": 11779,
+      "uuid": "bb1a2607-2755-4344-e9fb-eaa792d35541",
+      "flow": "xtls-rprx-vision",
+      "packet_encoding": "xudp",
+      "tls": {
+        "enabled": true,
+        "server_name": "iosapps.itunes.apple.com",
+        "insecure": true,
+        "alpn": [
+          "h3",
+          "h2",
+          "http/1.1"
+        ]
+      }
+    },
+    {
+      "type": "tuic",
+      "tag": "RN-tuic",
+      "server": "107.150.27.18",
+      "server_port": 443,
+      "uuid": "bb1a2607-2755-4344-e9fb-eaa792d35541",
+      "password": "SaCqA8IOGG",
+      "congestion_control": "bbr",
+      "udp_relay_mode": "native",
+      "heartbeat": "18s",        // 原来 30s
+      "reuse_addr": true,                 // 端口复用
+      "zero_rtt_handshake": false,        // 关闭 0-RTT
+      "tls": {
+        "enabled": true,
+        "server_name": "iosapps.itunes.apple.com",
+        "insecure": true,
+        "alpn": [
+          "h3",
+          "h2",
+          "http/1.1"
+        ]
+      }
+    },
+    {
+      "type": "vless",
+      "tag": "RN-vless",
+      "server": "107.150.27.18",
+      "server_port": 443,
+      "uuid": "bb1a2607-2755-4344-e9fb-eaa792d35541",
+      "flow": "xtls-rprx-vision",
+      "packet_encoding": "xudp",
+      "tls": {
+        "enabled": true,
+        "server_name": "iosapps.itunes.apple.com",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "safari"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "eugUhe5PLdoCryH8wv-proBfSDY30xKI-dPZtkVkTkk",
+          "short_id": "dd733b00"
+        }
+      }
+    },
+    {
+      "type": "vless",
+      "tag": "RN-tor-vless",
+      "server": "107.150.27.18",
+      "server_port": 443,
+      "uuid": "27f1b15a-5f3e-42de-b0bd-fb6bf2ae81ed",
+      "flow": "xtls-rprx-vision",
+      "packet_encoding": "xudp",
+      "tls": {
+        "enabled": true,
+        "server_name": "iosapps.itunes.apple.com",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "safari"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "eugUhe5PLdoCryH8wv-proBfSDY30xKI-dPZtkVkTkk",
+          "short_id": "4e07fb"
+        }
+      }
+    },
+    {
+      "type": "tuic",
+      "tag": "RN-tor-tuic",
+      "server": "107.150.27.18",
+      "server_port": 443,
+      "uuid": "27f1b15a-5f3e-42de-b0bd-fb6bf2ae81ed",
+      "password": "p640m0hoZU",
+      "congestion_control": "bbr",
+      "heartbeat": "18s", // 修改
+      "reuse_addr": true,          // 修改
+      "zero_rtt_handshake": false, // 修改
+      "tls": {
+        "enabled": true,
+        "server_name": "iosapps.itunes.apple.com",
+        "insecure": true,
+        "alpn": [
+          "h3",
+          "h2",
+          "http/1.1"
+        ]
+      }
+    },
+    {
+      "type": "vmess",
+      "tag": "proxy123",
+      "server": "c29s801.portablesubmarines.com",
+      "server_port": 15055,
+      "uuid": "665f1607-fefd-47ac-94c8-b088dcaf6c08",
+      "security": "auto",
+      "alter_id": 0
+    }
+  ],
+  "inbounds": [
+    {
+      "tag": "tun-in",
+      "type": "tun",
+      "address": [
+        "172.18.0.1/30"
+        //"fdfe:dcba:9876::1/126"
+      ],
+      "mtu":4064,
+      "stack":"system",
+      "auto_route": true,
+      //"auto_redirect": false,
+      "strict_route": true,
+      "domain_strategy":"ipv4_only",
+      "endpoint_independent_nat":true,
+      "platform": {
+        "http_proxy": {
+          "enabled": true,
+          "server": "127.0.0.1",
+          "server_port": 7890
+        }
+      }
+    },
+    {
+      "tag": "mixed-in",
+      "type": "mixed",
+      "listen": "127.0.0.1",
+      "listen_port": 7890,
+      "set_system_proxy": false
+    }
+  ],
+  "log": {
+    "disabled": false,
+    "timestamp": false,
+    "level": "warn",
+    "output": ""
+  },
+  "experimental": {
+    "cache_file": {
+      "enabled": true,
+      "store_fakeip": true,
+      "store_rdrc": true
+    },
+    "clash_api": {
+      "external_controller": "127.0.0.1:9090",
+      "access_control_allow_origin": [
+        "*"
+      ],
+      "access_control_allow_private_network": true,
+      "secret": ""
+    }
+  }
+}

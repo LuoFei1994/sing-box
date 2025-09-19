@@ -104,12 +104,13 @@
       },
       
       {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          { "network": "udp" },
-          { "port": 53 }
-        ],
+        "port": 53,
+        "action": "sniff",
+        "sniffer": "dns"
+      },
+      {
+        "action": "sniff",
+        "sniffer": "dns",
         "action": "hijack-dns"
       },
   

@@ -106,10 +106,10 @@
         "rewrite_ttl": 300
       },
 
-      /*{
+      {
         "query_type": ["HTTPS", "SVCB", "ANY", "NAPTR", "CAA", "OPT"],
         "action": "reject"
-      },*/
+      },
 
       {
         "action": "route",
@@ -122,7 +122,7 @@
       {
         "action": "route",
         "rule_set": [
-          "中国地域"
+          "国内域名"
         ],
         "server": "Local-DNS"
       },
@@ -130,17 +130,17 @@
       {
         "action": "route",
         "rule_set": [
-          "国外"
+          "中国大陆防火墙"
         ],
         "server": "Remote-GoogleDNS",
         "client_subnet": "0.0.0.0/0" 
-      }
+      },
     
-      /*{
+      {
         "query_type": ["A", "AAAA", "CNAME", "TXT", "MX", "SRV"],
         "server": "Remote-GoogleDNS",
         "client_subnet": "0.0.0.0/0" 
-      }*/
+      }
     ],
     "cache_capacity": 4096,  
     "reverse_mapping": true,
@@ -408,7 +408,7 @@
         "action": "route",
         "rule_set": [
           "币安",
-          "中国地域"
+          "国内域名"
         ],
         "outbound": "🎯 全球直连"
       },
@@ -444,7 +444,7 @@
       {
         "action": "route",
         "rule_set": [
-          "中国IP"
+          "国内IP"
         ],
         "outbound": "🎯 全球直连"
       }

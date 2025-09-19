@@ -593,6 +593,41 @@
     ],
     "rule_set": [
       {
+        "tag": "中国地域",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/ChinaMax/ChinaMax.srs",
+        "download_detour": "🚀 节点选择"
+      },
+
+      {
+        "tag": "中国IP",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/ChinaIPs/ChinaIPs.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      
+
+      {
+        "tag": "国外",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Global/Global.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      
+      {
+        "tag": "币安",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/binance.srs",
+        "download_detour": "🚀 节点选择"
+      },
+
+
+      
+      {
         "tag": "AWAvenue-Ads",
         "type": "remote",
         "format": "source",
@@ -632,14 +667,7 @@
         "update_interval": "24h",
         "download_detour": "🚀 节点选择"
       },
-      {
-        "tag": "binance",
-        "type": "remote",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/binance.srs",
-        "update_interval": "24h",
-        "download_detour": "🚀 节点选择"
-      },
+    
 
       {
         "tag": "category-ntp-cn",

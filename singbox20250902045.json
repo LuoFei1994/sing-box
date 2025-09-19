@@ -70,7 +70,7 @@
         "action": "route",
         "server": "fake-ip-dns-server",
         "rewrite_ttl": 5
-      },
+      }
       /*{
         "query_type": [
           "CNAME", 

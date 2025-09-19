@@ -106,15 +106,11 @@
       {
         "port": 53,
         "action": "sniff",
-        "sniffer": [
-          "dns"
-        ]
+        "sniffer": ["http", "tls", "quic", "dns"]
       },
       {
         "action": "sniff",
-        "sniffer": [
-          "dns"
-        ],
+        "sniffer": ["http", "tls", "quic", "dns"],
         "action": "hijack-dns"
       },
   

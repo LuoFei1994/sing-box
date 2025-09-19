@@ -2,7 +2,7 @@
   "log": {
     "disabled": false, 
     "level": "warn",
-    "output": "./Library/Caches/singbox.txt",
+    //"output": "./Library/Caches/singbox.txt",
     "timestamp": true
   },
   "experimental": {

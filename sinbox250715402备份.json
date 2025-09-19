@@ -618,8 +618,8 @@
       },
       
       {
-        "tag": "币安",
-        "type": "binance",
+        "tag": "binance",
+        "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/binance.srs",
         "download_detour": "🚀 节点选择"

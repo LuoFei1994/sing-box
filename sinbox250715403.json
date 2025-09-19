@@ -92,6 +92,20 @@
         "server": "Remote-DNS"
       },
 
+       { 
+        "domain_suffix": [
+          "dns11.quad9.net",
+          "cloudflare-dns.com",
+          "dns.google",
+          "cloudflare-dns.com",
+          "apple.com", 
+          "icloud.com"
+        ],
+        "server": "Local-DNS",
+        "strategy": "prefer_ipv4",
+        "rewrite_ttl": 300
+      },
+
       {
         "query_type": ["HTTPS", "SVCB", "ANY", "NAPTR", "CAA", "OPT"],
         "action": "reject"

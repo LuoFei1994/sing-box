@@ -316,14 +316,14 @@
         "download_detour": "🚀 节点选择"
       },
       {
-        "tag": "中国域名",
+        "tag": "国内域名",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs",
         "download_detour": "🚀 节点选择"
       },
       {
-        "tag": "中国IP",
+        "tag": "国内IP",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs",

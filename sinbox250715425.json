@@ -507,13 +507,7 @@
       },
       
       {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          { "network": "udp" },
-          { "port": 53 },
-          { "ip_cidr": ["8.8.8.8/32","8.8.4.4/32", "1.1.1.1/32", "9.9.9.9/32", "223.5.5.5/32","223.6.6.6/32"] }
-        ],
+        "protocol": "dns",
         "action": "hijack-dns"
       },
 
@@ -854,12 +848,7 @@
     ],
     "auto_detect_interface": true,
     "final": "🐟 漏网之鱼",
-    "default_domain_resolver": {
-      "server": "local",
-      "strategy": "ipv4_only",
-      "rewrite_ttl": 120,
-      "client_subnet": "0.0.0.0/0" 
-    },
+    "default_domain_resolver": "Local-DNS",
     "default_network_strategy": "fallback",  
     "default_network_type": ["wifi", "cellular"],  
     "default_fallback_network_type": ["wifi", "cellular"],

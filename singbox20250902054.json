@@ -7,12 +7,7 @@
         "type": "local"
         //"prefer_go": true
       },
-      {
-        "type": "resolved",
-        "tag": "resolved",
-        "service": "resolved"
-      },
-      
+  
       {
         "tag": "ali",
         "type": "https",

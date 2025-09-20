@@ -55,7 +55,7 @@
       {
         "ip_accept_any": true,
         "server": "resolved"
-      }，
+      },
 
       {
         "clash_mode": "Direct",

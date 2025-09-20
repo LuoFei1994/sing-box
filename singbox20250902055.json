@@ -82,7 +82,7 @@
     "disable_expire": false,
     "independent_cache": true,
     "final": "google",
-    "strategy": "prefer_ipv4"
+    "strategy": "ipv4_only"
   },
   "route": {
     "rules": [
@@ -153,6 +153,15 @@
         ],
         "outbound": "🎯 全球直连"
       },
+
+      {
+        "rule_set": [
+          "gfw",
+          "geosite-geolocation-!cn"
+        ],
+        "action": "route",
+        "outbound": "🚀 节点选择"
+      }
       
       {
         "action": "resolve"
@@ -324,7 +333,7 @@
         "download_detour": "🚀 节点选择"
       },
       {
-        "tag": "中国大陆防火墙",
+        "tag": "gfw",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/gfw.srs",
@@ -629,14 +638,14 @@
       "tag": "tun-in",
       "type": "tun",
       "address": [
-        "172.19.0.1/30",
-        "fdfe:dcba:9876::1/126"
+        "172.19.0.1/30"
+        //"fdfe:dcba:9876::1/126"
       ],
       "mtu":4064,
       "stack":"system",
       "auto_route": true,
       "strict_route": true,
-      "domain_strategy":"prefer_ipv4",
+      "domain_strategy":"ipv4_only",
       "endpoint_independent_nat":true
     }
   ],

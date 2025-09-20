@@ -7,7 +7,6 @@
         "type": "https",
         "server": "dns.alidns.com",
         "domain_resolver": "hosts"
-        //"detour": "🎯 全球直连"
       },
       {
         "tag": "google",
@@ -57,37 +56,18 @@
         "server": "google"
       },
 
-      /*{
-        "query_type": ["ANY","HTTPS", "SVCB", "NAPTR", "SOA", "NS", "CAA", "OPT"],
+      {
+        "query_type": ["HTTPS"],
         "action": "reject"
-      },*/
+      },
       
       {
         "query_type": [
           "A",
           "AAAA"
         ],
-        "action": "route",
-        "server": "fake-ip-dns-server",
-        "rewrite_ttl": 5
+        "server": "fake-ip-dns-server"
       }
-      /*{
-        "query_type": [
-          "CNAME", 
-          "TXT", 
-          "MX", 
-          "SRV"
-        ],
-        "action": "route",
-        "server": "google"
-      },
-      { 
-        "rule_set": [
-          "category-ads-all", 
-          "tracker"
-        ], 
-        "action": "reject" 
-      }*/
     ],
     "cache_capacity": 4096,  
     "reverse_mapping": true,
@@ -95,7 +75,7 @@
     "disable_expire": false,
     "independent_cache": true,
     "final": "google",
-    "strategy": "ipv4_only"
+    "strategy": "prefer_ipv4"
   },
   "route": {
     "rules": [
@@ -104,13 +84,14 @@
       },
 
       {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          { "network": "udp" },
-          { "port": 53 }
-        ],
+        "protocol": "dns",
         "action": "hijack-dns"
+      },
+
+      {
+        "ip_is_private": true,
+        "action": "route",
+        "outbound": "🎯 全球直连"
       },
 
       {
@@ -126,61 +107,87 @@
       },
 
       {
-        "rule_set": [
-          "category-ads-all",
-          "tracker"
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "port": 853
+          },
+          {
+            "network": "udp",
+            "port": 443
+          },
+          {
+            "protocol": "stun"
+          }
         ],
         "action": "reject"
       },
 
       {
         "rule_set": [
-          "币安",
-          "国内域名"
+          "geosite-geolocation-cn",
+          "binance"
         ],
-        "action": "route",
         "outbound": "🎯 全球直连"
       },
 
       {
-        "rule_set": [
-          "中国大陆防火墙"
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "geoip-cn"
+          },
+          {
+            "rule_set": "geosite-geolocation-!cn",
+            "invert": true
+          }
         ],
-        "action": "route",
-        "outbound": "🚀 节点选择"
+        "outbound": "🎯 全球直连"
       },
-
-
+      
       {
         "action": "resolve"
       },
       
       {
         "rule_set": [
-          "国内IP"
+          "geoip-cn"
         ],
-        "action": "route",
-        "outbound": "🎯 全球直连"
-      },
-
-      {
-        "ip_is_private": true,
         "action": "route",
         "outbound": "🎯 全球直连"
       }
       
     ],
     "final": "🐟 漏网之鱼",
-    "default_domain_resolver": {
-      "server": "ali",
-      "domain_resolver": "hosts",
-      "strategy": "ipv4_only",
-      "rewrite_ttl": 120
-      //"client_subnet": "36.0.0.0/8"
-    },
+    "default_domain_resolver": "ali",
     "auto_detect_interface": true,
 
     "rule_set": [
+
+      {
+        "tag": "geoip-cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
+        "download_detour": "🚀 节点选择"
+      },
+      {
+        "tag": "geosite-geolocation-cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-cn.srs",
+        "download_detour": "🚀 节点选择"
+      }
+
+      {
+        "tag": "geosite-geolocation-cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-!cn.srs",
+        "download_detour": "🚀 节点选择"
+      }
 
       {
         "tag": "中国地域",
@@ -208,7 +215,7 @@
       },
       
       {
-        "tag": "币安",
+        "tag": "binance",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/binance.srs",
@@ -615,30 +622,16 @@
       "tag": "tun-in",
       "type": "tun",
       "address": [
-        "172.18.0.1/30"
-        //"fdfe:dcba:9876::1/126"
+        "172.19.0.1/30",
+        "fdfe:dcba:9876::1/126"
       ],
       "mtu":4064,
       "stack":"system",
       "auto_route": true,
-      //"auto_redirect": false,
       "strict_route": true,
-      "domain_strategy":"ipv4_only",
-      "endpoint_independent_nat":true,
-      "platform": {
-        "http_proxy": {
-          "enabled": true,
-          "server": "127.0.0.1",
-          "server_port": 7890
-        }
+      "domain_strategy":"prefer_ipv4",
+      "endpoint_independent_nat":true
       }
-    },
-    {
-      "tag": "mixed-in",
-      "type": "mixed",
-      "listen": "127.0.0.1",
-      "listen_port": 7890,
-      "set_system_proxy": false
     }
   ],
   "log": {

@@ -131,6 +131,10 @@
       },
 
       {
+        "action": "resolve"
+      },
+
+      {
         "type": "logical",
         "mode": "or",
         "rules": [
@@ -154,10 +158,6 @@
           "binance"
         ],
         "outbound": "🎯 全球直连"
-      },
-
-      {
-        "action": "resolve"
       },
 
       {

@@ -161,7 +161,7 @@
         ],
         "action": "route",
         "outbound": "🚀 节点选择"
-      }
+      },
       
       {
         "action": "resolve"

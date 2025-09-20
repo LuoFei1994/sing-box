@@ -74,7 +74,7 @@
           "apple.com", 
           "icloud.com"
         ],
-        "server": "Local-DNS",
+        "server": "Local",
         "strategy": "prefer_ipv4",
         "rewrite_ttl": 300
       },

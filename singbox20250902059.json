@@ -63,6 +63,23 @@
         "server": "google"
       },
 
+      // 远端 DNS 自举域名 → 本地解析，避免死锁（按你实际使用的远端 DNS 域名补充）
+      { 
+        "domain_suffix": [
+          "dns.alidns.com",
+          "dns11.quad9.net",
+          "cloudflare-dns.com",
+          "dns.google",
+          "cloudflare-dns.com",
+          "apple.com", 
+          "icloud.com"
+        ],
+        "server": "Local-DNS",
+        "strategy": "prefer_ipv4",
+        "rewrite_ttl": 300
+      },
+
+
       {
         "query_type": ["HTTPS"],
         "action": "reject"
@@ -81,7 +98,7 @@
     "disable_cache": false,
     "disable_expire": false,
     "independent_cache": true,
-    "final": "google",
+    "final": "ali",
     "strategy": "ipv4_only"
   },
   "route": {
@@ -140,6 +157,10 @@
       },
 
       {
+        "action": "resolve"
+      },
+
+      {
         "type": "logical",
         "mode": "and",
         "rules": [
@@ -171,10 +192,7 @@
         "outbound": "🚀 节点选择"
       },
       
-      {
-        "action": "resolve"
-      },
-      
+
       {
         "rule_set": [
           "geoip-cn"

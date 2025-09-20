@@ -1,6 +1,17 @@
 {
   "dns": {
     "servers": [
+
+      {
+        "tag": "local",
+        "type": "local"
+        //"prefer_go": true
+      },
+      {
+        "type": "resolved",
+        "tag": "resolved",
+        "service": "resolved"
+      },
       
       {
         "tag": "ali",
@@ -15,11 +26,7 @@
         "domain_resolver": "hosts",
         "detour": "🚀 节点选择"
       },
-      {
-        "tag": "local",
-        "type": "local"
-        //"prefer_go": true
-      },
+      
       {
         "tag": "fake-ip-dns-server",
         "type": "fakeip",
@@ -44,6 +51,11 @@
       }
     ],
     "rules": [
+
+      {
+        "ip_accept_any": true,
+        "server": "resolved"
+      }，
 
       {
         "clash_mode": "Direct",

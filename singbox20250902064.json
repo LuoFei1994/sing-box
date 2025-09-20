@@ -2,13 +2,7 @@
   "dns": {
     "servers": [
 
-      {
-        "tag": "local",
-        "type": "local"
-        //"prefer_go": true
-      },
-  
-      {
+      /*{
         "tag": "ali",
         "type": "https",
         "server": "dns.alidns.com",
@@ -20,7 +14,26 @@
         "server": "dns.google",
         "domain_resolver": "hosts",
         "detour": "🚀 节点选择"
+      },*/
+
+      {
+        "tag": "ali",
+        "address": "223.5.5.5",
+        "type": "udp"
       },
+      {
+        "tag": "google",
+        "address": "8.8.8.8",
+        "type": "udp"，
+        "detour": "🚀 节点选择"
+      },
+
+      {
+        "tag": "local",
+        "type": "local"
+        //"prefer_go": true
+      },
+
       
       {
         "tag": "fake-ip-dns-server",

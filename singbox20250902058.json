@@ -181,6 +181,14 @@
         ],
         "action": "route",
         "outbound": "🎯 全球直连"
+      },
+      {
+        "rule_set": [
+          "geoip-cn"
+        ],
+        "invert": true,
+        "action": "route",
+        "outbound": "🚀 节点选择"
       }
       
     ],

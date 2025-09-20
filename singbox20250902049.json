@@ -179,7 +179,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-cn.srs",
         "download_detour": "🚀 节点选择"
-      }
+      },
 
       {
         "tag": "geosite-geolocation-cn",
@@ -187,7 +187,7 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-!cn.srs",
         "download_detour": "🚀 节点选择"
-      }
+      },
 
       {
         "tag": "中国地域",
@@ -631,7 +631,6 @@
       "strict_route": true,
       "domain_strategy":"prefer_ipv4",
       "endpoint_independent_nat":true
-      }
     }
   ],
   "log": {

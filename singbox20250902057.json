@@ -156,6 +156,14 @@
 
       {
         "rule_set": [
+          "whatsapp",
+          "facebook",
+          "Tiktok",
+          "telegram",
+          "github",
+          "twitter",
+          "youtube",
+          "google",
           "gfw",
           "geosite-geolocation-!cn"
         ],

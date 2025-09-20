@@ -24,7 +24,7 @@
       {
         "tag": "google",
         "address": "8.8.8.8",
-        "type": "udp"，
+        "type": "udp",
         "detour": "🚀 节点选择"
       },
 

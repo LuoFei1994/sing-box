@@ -59,7 +59,7 @@
     {"tag":"tg-us","type":"selector","outbounds":["us","proxy"],"default":"us"},
     {"tag":"tg-eu","type":"selector","outbounds":["eu","proxy"],"default":"eu"},
     {"tag":"hk","type":"selector","outbounds":[
-      "proxy","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"
+      "proxy123","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"
     ]},
     {"tag":"sg","type":"selector","outbounds":[
       "proxy123","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"

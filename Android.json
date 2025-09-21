@@ -37,7 +37,6 @@
     ],
     "final": "proxy",
     "default_domain_resolver": "ali",
-    //"default_domain_match_strategy": "prefer_fqdn",
     "auto_detect_interface": true,
     "rule_set": [
       {"tag":"AWAvenue-Ads","type":"remote","format":"source","url":"https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Singbox.json","download_detour":"proxy"},

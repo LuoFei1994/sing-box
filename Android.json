@@ -66,6 +66,125 @@
     {"tag":"eu","type":"selector","outbounds":[]},
     {"tag":"other","type":"selector","outbounds":[]},
     {"tag":"direct","type":"direct","domain_resolver":"local"},
+    {
+      "type": "vless",
+      "tag": "RN-vless-brutal",
+      "server": "107.150.27.18",
+      "server_port": 11779,
+      "uuid": "bb1a2607-2755-4344-e9fb-eaa792d35541",
+      "flow": "xtls-rprx-vision",
+      "packet_encoding": "xudp",
+      "tls": {
+        "enabled": true,
+        "server_name": "iosapps.itunes.apple.com",
+        "insecure": true,
+        "alpn": [
+          "h3",
+          "h2",
+          "http/1.1"
+        ]
+      }
+    },
+    {
+      "type": "tuic",
+      "tag": "RN-tuic",
+      "server": "107.150.27.18",
+      "server_port": 443,
+      "uuid": "bb1a2607-2755-4344-e9fb-eaa792d35541",
+      "password": "SaCqA8IOGG",
+      "congestion_control": "bbr",
+      "udp_relay_mode": "native",
+      "heartbeat": "18s",        // 原来 30s
+      "reuse_addr": true,                 // 端口复用
+      "zero_rtt_handshake": false,        // 关闭 0-RTT
+      "tls": {
+        "enabled": true,
+        "server_name": "iosapps.itunes.apple.com",
+        "insecure": true,
+        "alpn": [
+          "h3",
+          "h2",
+          "http/1.1"
+        ]
+      }
+    },
+    {
+      "type": "vless",
+      "tag": "RN-vless",
+      "server": "107.150.27.18",
+      "server_port": 443,
+      "uuid": "bb1a2607-2755-4344-e9fb-eaa792d35541",
+      "flow": "xtls-rprx-vision",
+      "packet_encoding": "xudp",
+      "tls": {
+        "enabled": true,
+        "server_name": "iosapps.itunes.apple.com",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "safari"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "eugUhe5PLdoCryH8wv-proBfSDY30xKI-dPZtkVkTkk",
+          "short_id": "dd733b00"
+        }
+      }
+    },
+    {
+      "type": "vless",
+      "tag": "RN-tor-vless",
+      "server": "107.150.27.18",
+      "server_port": 443,
+      "uuid": "27f1b15a-5f3e-42de-b0bd-fb6bf2ae81ed",
+      "flow": "xtls-rprx-vision",
+      "packet_encoding": "xudp",
+      "tls": {
+        "enabled": true,
+        "server_name": "iosapps.itunes.apple.com",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "safari"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "eugUhe5PLdoCryH8wv-proBfSDY30xKI-dPZtkVkTkk",
+          "short_id": "4e07fb"
+        }
+      }
+    },
+    {
+      "type": "tuic",
+      "tag": "RN-tor-tuic",
+      "server": "107.150.27.18",
+      "server_port": 443,
+      "uuid": "27f1b15a-5f3e-42de-b0bd-fb6bf2ae81ed",
+      "password": "p640m0hoZU",
+      "congestion_control": "bbr",
+      "heartbeat": "18s", // 修改
+      "reuse_addr": true,          // 修改
+      "zero_rtt_handshake": false, // 修改
+      "tls": {
+        "enabled": true,
+        "server_name": "iosapps.itunes.apple.com",
+        "insecure": true,
+        "alpn": [
+          "h3",
+          "h2",
+          "http/1.1"
+        ]
+      }
+    },
+    {
+      "type": "vmess",
+      "tag": "proxy",
+      "server": "c29s801.portablesubmarines.com",
+      "server_port": 15055,
+      "uuid": "665f1607-fefd-47ac-94c8-b088dcaf6c08",
+      "security": "auto",
+      "alter_id": 0
+    }
   ],
   "inbounds": [
     {"tag":"tun-in","type":"tun","address":["172.18.0.1/30","fdfe:dcba:9876::1/126"],"auto_route":true,"auto_redirect":false,"platform":{"http_proxy":{"enabled":true,"server":"127.0.0.1","server_port":7890}}},

@@ -59,12 +59,24 @@
     {"tag":"tg-sg","type":"selector","outbounds":["sg","proxy"],"default":"sg"},
     {"tag":"tg-us","type":"selector","outbounds":["us","proxy"],"default":"us"},
     {"tag":"tg-eu","type":"selector","outbounds":["eu","proxy"],"default":"eu"},
-    {"tag":"hk","type":"selector","outbounds":[]},
-    {"tag":"sg","type":"selector","outbounds":[]},
-    {"tag":"jp","type":"selector","outbounds":[]},
-    {"tag":"us","type":"selector","outbounds":[]},
-    {"tag":"eu","type":"selector","outbounds":[]},
-    {"tag":"other","type":"selector","outbounds":[]},
+    {"tag":"hk","type":"selector","outbounds":[
+      "proxy","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"
+    ]},
+    {"tag":"sg","type":"selector","outbounds":[
+      "proxy","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"
+    ]},
+    {"tag":"jp","type":"selector","outbounds":[
+      "proxy","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"
+    ]},
+    {"tag":"us","type":"selector","outbounds":[
+      "proxy","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"
+    ]},
+    {"tag":"eu","type":"selector","outbounds":[
+      "proxy","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"
+    ]},
+    {"tag":"other","type":"selector","outbounds":[
+      "proxy","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"
+    ]},
     {"tag":"direct","type":"direct","domain_resolver":"local"},
     {
       "type": "vless",

@@ -62,19 +62,19 @@
       "proxy","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"
     ]},
     {"tag":"sg","type":"selector","outbounds":[
-      "proxy","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"
+      "proxy123","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"
     ]},
     {"tag":"jp","type":"selector","outbounds":[
-      "proxy","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"
+      "proxy123","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"
     ]},
     {"tag":"us","type":"selector","outbounds":[
-      "proxy","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"
+      "proxy123","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"
     ]},
     {"tag":"eu","type":"selector","outbounds":[
-      "proxy","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"
+      "proxy123","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"
     ]},
     {"tag":"other","type":"selector","outbounds":[
-      "proxy","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"
+      "proxy123","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"
     ]},
     {"tag":"direct","type":"direct","domain_resolver":"local"},
     {
@@ -189,7 +189,7 @@
     },
     {
       "type": "vmess",
-      "tag": "proxy",
+      "tag": "proxy123",
       "server": "c29s801.portablesubmarines.com",
       "server_port": 15055,
       "uuid": "665f1607-fefd-47ac-94c8-b088dcaf6c08",

@@ -207,11 +207,11 @@
     "cache_file": {"enabled":true,"store_fakeip":true,"store_rdrc":true},
     "clash_api": {
       "external_controller": "127.0.0.1:9090",
-      "external_ui": "ui",
-      "external_ui_download_url": "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip",
+      "external_ui": "",
+      "external_ui_download_url": "",
       "external_ui_download_detour": "proxy",
-      "external_ui_update_interval": "1d",
-      "access_control_allow_origin": ["https://metacubexd.pages.dev","https://d.metacubex.one","https://board.zash.run.place"],
+      //"external_ui_update_interval": "",
+      "access_control_allow_origin": [""],
       "access_control_allow_private_network": true,
       "secret": ""
     }

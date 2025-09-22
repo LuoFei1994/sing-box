@@ -106,9 +106,9 @@
       "password": "SaCqA8IOGG",
       "congestion_control": "bbr",
       "udp_relay_mode": "native",
-      "heartbeat": "18s",        // 原来 30s
-      "reuse_addr": true,                 // 端口复用
-      "zero_rtt_handshake": false,        // 关闭 0-RTT
+      "heartbeat": "18s",        
+      "reuse_addr": true,                
+      "zero_rtt_handshake": false,       
       "tls": {
         "enabled": true,
         "server_name": "iosapps.itunes.apple.com",
@@ -174,9 +174,9 @@
       "uuid": "27f1b15a-5f3e-42de-b0bd-fb6bf2ae81ed",
       "password": "p640m0hoZU",
       "congestion_control": "bbr",
-      "heartbeat": "18s", // 修改
-      "reuse_addr": true,          // 修改
-      "zero_rtt_handshake": false, // 修改
+      "heartbeat": "18s", 
+      "reuse_addr": true,          
+      "zero_rtt_handshake": false, 
       "tls": {
         "enabled": true,
         "server_name": "iosapps.itunes.apple.com",
@@ -204,16 +204,6 @@
   ],
   "log": {"disabled":false,"timestamp":true,"level":"warn","output":""},
   "experimental": {
-    "cache_file": {"enabled":true,"store_fakeip":true,"store_rdrc":true,"rdrc_timeout": "7d"},
-    "clash_api": {
-      "external_controller": "127.0.0.1:9090",
-      "external_ui": "",
-      "external_ui_download_url": "",
-      "external_ui_download_detour": "proxy",
-      //"external_ui_update_interval": "",
-      "access_control_allow_origin": [""],
-      "access_control_allow_private_network": true,
-      "secret": ""
-    }
+    "cache_file": {"enabled":true,"store_fakeip":true,"store_rdrc":true,"rdrc_timeout": "7d"}
   }
 }

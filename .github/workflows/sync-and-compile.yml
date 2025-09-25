@@ -44,13 +44,24 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y bc dos2unix flex bison file g++
+          sudo npm install -g sass
 
       - name: Compile C++ program (if needed)
         run: |
-          # 如果仓库里有 C++ 源文件，比如 Complete.cpp
           if [ -f Complete.cpp ]; then
             g++ Complete.cpp -o Complete
             ./Complete || true
+          fi
+
+      - name: Compile SCSS files (if needed)
+        shell: bash
+        run: |
+          shopt -s nullglob
+          if ls *.scss >/dev/null 2>&1; then
+            mkdir -p dist
+            for f in *.scss; do
+              sass "$f":"dist/${f%.scss}.css"
+            done
           fi
 
       - name: Generate rule-set source JSON
@@ -141,7 +152,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f srs || true
-          git commit -m "自动编译更新 SRS" || true
+          git add -f srs dist || true
+          git commit -m "自动编译更新 SRS 和 SCSS" || true
           git pull --rebase origin main || true
           git push || true

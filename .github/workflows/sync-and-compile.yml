@@ -43,7 +43,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y bc dos2unix flex bison
+          sudo apt-get install -y bc dos2unix flex bison file
 
       - name: Generate rule-set source JSON
         shell: bash
@@ -113,7 +113,7 @@ jobs:
           shopt -s nullglob
           for ipjson in rules-src/*.ip.json; do
             base=${ipjson%.ip.json}
-            domainjson="${base}.domain.json" 
+            domainjson="${base}.domain.json"
             name=$(basename "$base")
             if [ -f "$domainjson" ]; then
               ./sb/sing-box rule-set compile --from "$ipjson" --from "$domainjson" --output "srs/${name}.srs"

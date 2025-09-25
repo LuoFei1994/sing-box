@@ -110,4 +110,41 @@ jobs:
             fi
 
             if [ "$cnt_domain" -gt 0 ]; then
-              echo '{"type":"domain","mode":"plain","content":
+              echo '{"type":"domain","mode":"plain","content":[' > "rules-src/${name}.domain.json"
+              awk 'NF{printf "\"%s\",", $0}' "$tmp_domain" | sed 's/,$//' >> "rules-src/${name}.domain.json"
+              echo ']}' >> "rules-src/${name}.domain.json"
+            fi
+
+            rm -f "$tmp_ip" "$tmp_domain"
+          done
+
+      - name: Compile SRS files
+        if: steps.copy_step.outputs.changed == 'true'
+        run: |
+          shopt -s nullglob
+          for ipjson in rules-src/*.ip.json; do
+            base=${ipjson%.ip.json}
+            domainjson="${base}.domain.json"
+            name=$(basename "$base")
+            if [ -f "$domainjson" ]; then
+              ./sb/sing-box rule-set compile --from "$ipjson" --from "$domainjson" --output "srs/${name}.srs"
+            else
+              ./sb/sing-box rule-set compile --from "$ipjson" --output "srs/${name}.srs"
+            fi
+          done
+          for domainjson in rules-src/*.domain.json; do
+            base=${domainjson%.domain.json}
+            name=$(basename "$base")
+            if [ ! -f "${base}.ip.json" ]; then
+              ./sb/sing-box rule-set compile --from "$domainjson" --output "srs/${name}.srs"
+            fi
+          done
+
+      - name: Commit SRS to repository
+        if: steps.copy_step.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add srs || true
+          git commit -m "自动编译更新 SRS" || true
+          git push

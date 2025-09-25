@@ -18,39 +18,27 @@ jobs:
 
       - name: Prepare directories
         run: |
-          mkdir -p ips upstream rules-src srs
- 
+          mkdir -p ips upstream rules-src srs sb
+
       - name: Fetch repo1 ips branch
         run: |
           git clone --depth 1 -b ips https://github.com/DustinWin/geoip.git upstream
 
       - name: Copy updated files from repo1/ips to repo2/ips
-        id: copy_step
         run: |
           rsync -av --delete --exclude=".git" upstream/ ips/
           git add ips
-          if git diff --cached --quiet -- ips; then
-            echo "changed=false" >> $GITHUB_OUTPUT
-            echo "本次无变更，跳过编译与提交。"
-          else
-            echo "changed=true" >> $GITHUB_OUTPUT
-            echo "检测到变更，将进行编译与提交。"
-          fi
-
-      - name: Commit synced files
-        run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git commit -m "同步更新：从 DustinWin/geoip@ips 复制到 ips 目录" || true
-          git pull --rebase origin main
-          git push
+          git pull --rebase origin main || true
+          git push || true
 
-      - name: Download sing-box
+      - name: Download sing-box binary
         run: |
-          curl -L -o sing-box.tar.gz https://github.com/SagerNet/sing-box/releases/latest/download/sing-box-linux-amd64.tar.gz
-          mkdir -p sb
-          tar -xzf sing-box.tar.gz -C sb
+          curl -L -o sb/sing-box https://github.com/SagerNet/sing-box/releases/latest/download/sing-box-linux-amd64
           chmod +x sb/sing-box
+          ./sb/sing-box version || true
 
       - name: Generate rule-set source JSON
         run: |
@@ -138,7 +126,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add srs || true
+          git add -f srs || true
           git commit -m "自动编译更新 SRS" || true
-          git pull --rebase origin main
-          git push
+          git pull --rebase origin main || true
+          git push || true

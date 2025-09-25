@@ -138,16 +138,16 @@ jobs:
             domainjson="${base}.domain.json"
             name=$(basename "$base")
             if [ -f "$domainjson" ]; then
-              ./sb/sing-box rule-set compile --from "$ipjson" --from "$domainjson" --output "srs/${name}.srs"
+              ./sb/sing-box rule-set compile "$ipjson" "$domainjson" -o "srs/${name}.srs"
             else
-              ./sb/sing-box rule-set compile --from "$ipjson" --output "srs/${name}.srs"
+              ./sb/sing-box rule-set compile "$ipjson" -o "srs/${name}.srs"
             fi
           done
           for domainjson in rules-src/*.domain.json; do
             base=${domainjson%.domain.json}
             name=$(basename "$base")
             if [ ! -f "${base}.ip.json" ]; then
-              ./sb/sing-box rule-set compile --from "$domainjson" --output "srs/${name}.srs"
+              ./sb/sing-box rule-set compile "$domainjson" -o "srs/${name}.srs"
             fi
           done
 

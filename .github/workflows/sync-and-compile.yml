@@ -1,4 +1,4 @@
-name: Sync ips from repo1 and compile SRS
+name: Sync ips and compile SRS
 
 on:
   schedule:
@@ -11,20 +11,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout this repo (repo2)
+      - name: Checkout this repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Prepare directories
-        run: |
-          mkdir -p ips upstream rules-src srs sb
+        run: mkdir -p ips upstream rules-src srs sb
 
       - name: Fetch repo1 ips branch
-        run: |
-          git clone --depth 1 -b ips https://github.com/DustinWin/geoip.git upstream
+        run: git clone --depth 1 -b ips https://github.com/DustinWin/geoip.git upstream
 
-      - name: Copy updated files from repo1/ips to repo2/ips
+      - name: Sync ips directory
         run: |
           rsync -av --delete --exclude=".git" upstream/ ips/
           git add ips
@@ -40,32 +38,12 @@ jobs:
           curl -L -o sing-box.tar.gz https://github.com/SagerNet/sing-box/releases/download/v${SINGBOX_VERSION}/sing-box-${SINGBOX_VERSION}-linux-amd64.tar.gz
           tar -xzf sing-box.tar.gz -C sb --strip-components=1
           chmod +x sb/sing-box
-          file sb/sing-box
           ./sb/sing-box version
 
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y bc dos2unix flex bison file g++
-          sudo npm install -g sass
-
-      - name: Compile C++ program (if needed)
-        run: |
-          if [ -f Complete.cpp ]; then
-            g++ Complete.cpp -o Complete
-            ./Complete || true
-          fi
-
-      - name: Compile SCSS files (if needed)
-        shell: bash
-        run: |
-          shopt -s nullglob
-          if ls *.scss >/dev/null 2>&1; then
-            mkdir -p dist
-            for f in *.scss; do
-              sass "$f":"dist/${f%.scss}.css"
-            done
-          fi
+          sudo apt-get install -y bc dos2unix flex bison file
 
       - name: Generate rule-set source JSON
         shell: bash
@@ -111,16 +89,13 @@ jobs:
               fi
             done
 
-            cnt_ip=$(wc -l < "$tmp_ip")
-            cnt_domain=$(wc -l < "$tmp_domain")
-
-            if [ "$cnt_ip" -gt 0 ]; then
+            if [ -s "$tmp_ip" ]; then
               echo '{"type":"ipcidr","content":[' > "rules-src/${name}.ip.json"
               awk 'NF{printf "\"%s\",", $0}' "$tmp_ip" | sed 's/,$//' >> "rules-src/${name}.ip.json"
               echo ']}' >> "rules-src/${name}.ip.json"
             fi
 
-            if [ "$cnt_domain" -gt 0 ]; then
+            if [ -s "$tmp_domain" ]; then
               echo '{"type":"domain","mode":"plain","content":[' > "rules-src/${name}.domain.json"
               awk 'NF{printf "\"%s\",", $0}' "$tmp_domain" | sed 's/,$//' >> "rules-src/${name}.domain.json"
               echo ']}' >> "rules-src/${name}.domain.json"
@@ -155,7 +130,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f srs dist || true
-          git commit -m "自动编译更新 SRS 和 SCSS" || true
+          git add -f srs || true
+          git commit -m "自动编译更新 SRS" || true
           git pull --rebase origin main || true
           git push || true

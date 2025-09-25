@@ -53,14 +53,13 @@ jobs:
       - name: Install TypeScript
         run: npm install -g typescript
 
-      - name: Compile setup.ts
+      - name: Compile setup.ts only
         run: |
-          # 假设 setup.ts 在仓库根目录
-          tsc setup.ts
+          # 只编译 setup.ts，不会去找其他文件
+          tsc setup.ts --outFile setup.js
 
       - name: Run compiled JS
         run: |
-          # 编译后会生成 setup.js
           node setup.js multiple
 
       - name: Generate rule-set source JSON

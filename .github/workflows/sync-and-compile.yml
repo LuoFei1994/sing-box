@@ -34,11 +34,14 @@ jobs:
           git pull --rebase origin main || true
           git push || true
 
-      - name: Download sing-box binary
+      - name: Download and extract sing-box (fixed version)
         run: |
-          curl -L -o sb/sing-box https://github.com/SagerNet/sing-box/releases/latest/download/sing-box-linux-amd64
+          SINGBOX_VERSION=1.10.0
+          curl -L -o sing-box.tar.gz https://github.com/SagerNet/sing-box/releases/download/v${SINGBOX_VERSION}/sing-box-${SINGBOX_VERSION}-linux-amd64.tar.gz
+          tar -xzf sing-box.tar.gz -C sb --strip-components=1
           chmod +x sb/sing-box
-          ./sb/sing-box version || true
+          file sb/sing-box
+          ./sb/sing-box version
 
       - name: Install dependencies
         run: |

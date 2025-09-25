@@ -43,24 +43,15 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y bc dos2unix flex bison file
+          sudo apt-get install -y bc dos2unix flex bison file g++
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install TypeScript
-        run: npm install -g typescript
-
-      - name: Compile setup.ts only
+      - name: Compile C++ program (if needed)
         run: |
-          # 只编译 setup.ts，不会去找其他文件
-          tsc setup.ts --outFile setup.js
-
-      - name: Run compiled JS
-        run: |
-          node setup.js multiple
+          # 如果仓库里有 C++ 源文件，比如 Complete.cpp
+          if [ -f Complete.cpp ]; then
+            g++ Complete.cpp -o Complete
+            ./Complete || true
+          fi
 
       - name: Generate rule-set source JSON
         shell: bash

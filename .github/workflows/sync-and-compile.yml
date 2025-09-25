@@ -45,6 +45,24 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y bc dos2unix flex bison file
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install TypeScript
+        run: npm install -g typescript
+
+      - name: Compile setup.ts
+        run: |
+          # 假设 setup.ts 在仓库根目录
+          tsc setup.ts
+
+      - name: Run compiled JS
+        run: |
+          # 编译后会生成 setup.js
+          node setup.js multiple
+
       - name: Generate rule-set source JSON
         shell: bash
         run: |

@@ -151,7 +151,7 @@ jobs:
             fi
           done
 
-      - name: Commit SRS to repository
+      - name: Commit results to repository
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

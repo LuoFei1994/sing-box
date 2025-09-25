@@ -113,7 +113,7 @@ jobs:
           shopt -s nullglob
           for ipjson in rules-src/*.ip.json; do
             base=${ipjson%.ip.json}
-            domainjson="${base}.domain.json"
+            domainjson="${base}.domain.json" 
             name=$(basename "$base")
             if [ -f "$domainjson" ]; then
               ./sb/sing-box rule-set compile --from "$ipjson" --from "$domainjson" --output "srs/${name}.srs"

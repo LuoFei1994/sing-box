@@ -19,7 +19,7 @@ jobs:
       - name: Prepare directories
         run: |
           mkdir -p ips upstream rules-src srs
-
+ 
       - name: Fetch repo1 ips branch
         run: |
           git clone --depth 1 -b ips https://github.com/DustinWin/geoip.git upstream

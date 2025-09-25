@@ -18,10 +18,7 @@ jobs:
 
       - name: Prepare directories
         run: |
-          mkdir -p ips
-          mkdir -p upstream
-          mkdir -p rules-src
-          mkdir -p srs
+          mkdir -p ips upstream rules-src srs
 
       - name: Fetch repo1 ips branch
         run: |
@@ -45,7 +42,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git commit -m "同步更新：从 DustinWin/geoip@ips 复制到 ips 目录"
+          git commit -m "同步更新：从 DustinWin/geoip@ips 复制到 ips 目录" || true
+          git pull --rebase origin main
           git push
 
       - name: Download sing-box
@@ -147,4 +145,5 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add srs || true
           git commit -m "自动编译更新 SRS" || true
+          git pull --rebase origin main
           git push

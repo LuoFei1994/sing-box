@@ -10,6 +10,9 @@ jobs:
   sync_and_compile:
     runs-on: ubuntu-latest
 
+    env:
+      SINGBOX_VERSION: "1.10.0"
+
     steps:
       - name: Checkout this repo
         uses: actions/checkout@v4
@@ -32,35 +35,38 @@ jobs:
           git pull --rebase origin main || true
           git push || true
 
-      - name: Download and extract sing-box (fixed version)
-        run: |
-          SINGBOX_VERSION=1.10.0
-          curl -L -o sing-box.tar.gz https://github.com/SagerNet/sing-box/releases/download/v${SINGBOX_VERSION}/sing-box-${SINGBOX_VERSION}-linux-amd64.tar.gz
-          tar -xzf sing-box.tar.gz -C sb --strip-components=1
-          chmod +x sb/sing-box
-          ./sb/sing-box version
-
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y bc dos2unix flex bison file
+          # jq 用于构建和校验 JSON；tar/ca-certificates 确保下载/解压稳定
+          sudo apt-get install -y bc dos2unix flex bison file jq tar ca-certificates
 
-      - name: Generate rule-set source JSON
+      - name: Download and extract sing-box (fixed version)
+        run: |
+          set -e
+          curl -L -o sing-box.tar.gz "https://github.com/SagerNet/sing-box/releases/download/v${SINGBOX_VERSION}/sing-box-${SINGBOX_VERSION}-linux-amd64.tar.gz"
+          tar -xzf sing-box.tar.gz -C sb --strip-components=1
+          chmod +x sb/sing-box
+          file sb/sing-box
+          ./sb/sing-box version
+
+      - name: Generate rule-set source JSON (with version field)
         shell: bash
         run: |
+          set -euo pipefail
           rm -rf rules-src srs
           mkdir -p rules-src srs
 
           normalize_file() {
             awk '
               {
-                gsub(/\r/,"");
-                gsub(/^[ \t]+|[ \t]+$/, "");
+                gsub(/\r/,"");                 # 去 CR
+                gsub(/^[ \t]+|[ \t]+$/, "");   # 去首尾空白
               }
-              /^[ \t]*$/ { next }
-              /^[#]/ { next }
-              /^\/\// { next }
-              { print $1 }
+              /^[ \t]*$/   { next }            # 跳过空行
+              /^[#]/       { next }            # 跳过 # 注释
+              /^\/\//      { next }            # 跳过 // 注释
+              { print $1 }                     # 只取第一个字段
             ' "$1"
           }
 
@@ -72,14 +78,14 @@ jobs:
             echo "$1" | grep -Eq '^[A-Za-z0-9.-]+\.[A-Za-z0-9.-]+$'
           }
 
+          # 遍历源列表，按新版 schema 生成：{ "version": 1, "rules": [ {type, mode?, content} ] }
           find ips -type f \( -name "*.txt" -o -name "*.list" \) | while read -r SRC; do
             basename=$(basename "$SRC")
             name="${basename%.*}"
 
             tmp_ip="tmp_${name}_ip.txt"
             tmp_domain="tmp_${name}_domain.txt"
-            : > "$tmp_ip"
-            : > "$tmp_domain"
+            : > "$tmp_ip"; : > "$tmp_domain"
 
             normalize_file "$SRC" | while read -r line; do
               if is_cidr_or_ip "$line"; then
@@ -89,16 +95,20 @@ jobs:
               fi
             done
 
+            # 使用 jq 构建符合 sing-box 的规则源 JSON（包含 version 字段）
+            rules_json='{"version":1,"rules":[]}'
             if [ -s "$tmp_ip" ]; then
-              echo '{"type":"ipcidr","content":[' > "rules-src/${name}.ip.json"
-              awk 'NF{printf "\"%s\",", $0}' "$tmp_ip" | sed 's/,$//' >> "rules-src/${name}.ip.json"
-              echo ']}' >> "rules-src/${name}.ip.json"
+              ip_array=$(jq -Rsc 'split("\n") | map(select(length>0))' "$tmp_ip")
+              rules_json=$(jq --argjson content "$ip_array" '.rules += [{"type":"ipcidr","content":$content}]' <<< "$rules_json")
+            fi
+            if [ -s "$tmp_domain" ]; then
+              domain_array=$(jq -Rsc 'split("\n") | map(select(length>0))' "$tmp_domain")
+              rules_json=$(jq --argjson content "$domain_array" '.rules += [{"type":"domain","mode":"plain","content":$content}]' <<< "$rules_json")
             fi
 
-            if [ -s "$tmp_domain" ]; then
-              echo '{"type":"domain","mode":"plain","content":[' > "rules-src/${name}.domain.json"
-              awk 'NF{printf "\"%s\",", $0}' "$tmp_domain" | sed 's/,$//' >> "rules-src/${name}.domain.json"
-              echo ']}' >> "rules-src/${name}.domain.json"
+            # 只在至少有一类内容时写出文件
+            if [ "$(jq '.rules | length' <<< "$rules_json")" -gt 0 ]; then
+              echo "$rules_json" > "rules-src/${name}.json"
             fi
 
             rm -f "$tmp_ip" "$tmp_domain"
@@ -107,23 +117,12 @@ jobs:
       - name: Compile SRS files
         shell: bash
         run: |
+          set -euo pipefail
           shopt -s nullglob
-          for ipjson in rules-src/*.ip.json; do
-            base=${ipjson%.ip.json}
-            domainjson="${base}.domain.json"
-            name=$(basename "$base")
-            if [ -f "$domainjson" ]; then
-              ./sb/sing-box rule-set compile "$ipjson" "$domainjson" -o "srs/${name}.srs"
-            else
-              ./sb/sing-box rule-set compile "$ipjson" -o "srs/${name}.srs"
-            fi
-          done
-          for domainjson in rules-src/*.domain.json; do
-            base=${domainjson%.domain.json}
-            name=$(basename "$base")
-            if [ ! -f "${base}.ip.json" ]; then
-              ./sb/sing-box rule-set compile "$domainjson" -o "srs/${name}.srs"
-            fi
+          for srcjson in rules-src/*.json; do
+            name=$(basename "${srcjson%.json}")
+            # 新版语法：直接传入一个或多个 source-path，用 -o 指定输出
+            ./sb/sing-box rule-set compile "$srcjson" -o "srs/${name}.srs"
           done
 
       - name: Commit results to repository
@@ -131,6 +130,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -f srs || true
-          git commit -m "自动编译更新 SRS" || true
+          git commit -m "自动编译更新 SRS（修复 version 字段）" || true
           git pull --rebase origin main || true
           git push || true

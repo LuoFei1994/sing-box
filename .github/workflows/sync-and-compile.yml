@@ -40,6 +40,13 @@ jobs:
           chmod +x sb/sing-box
           ./sb/sing-box version || true
 
+      - name: Fix line endings for perl scripts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y dos2unix
+          # 如果你仓库里有 perl 脚本（例如 srs3.pl），统一转换换行符
+          find . -type f -name "*.pl" -exec dos2unix {} \; || true
+
       - name: Generate rule-set source JSON
         run: |
           rm -rf rules-src srs
@@ -121,13 +128,12 @@ jobs:
               ./sb/sing-box rule-set compile --from "$domainjson" --output "srs/${name}.srs"
             fi
           done
-          for domainjson in rules-src/*.domain.json; do
-            base=${domainjson%.domain.json}
-            name=$(basename "$base")
-            if [ ! -f "${base}.ip.json" ]; then
-              ./sb/sing-box rule-set compile --from "$domainjson" --output "srs/${name}.srs"
-            fi
-          done
+
+      - name: Run perl script (if needed)
+        run: |
+          # 如果你仓库里确实有 srs3.pl 之类的 perl 脚本，可以直接调用
+          # perl scripts/srs3.pl srs3.in
+          echo "如果需要运行 perl 脚本，请在这里写 perl 命令"
 
       - name: Commit SRS to repository
         run: |

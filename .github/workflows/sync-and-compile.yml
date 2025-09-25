@@ -38,7 +38,6 @@ jobs:
           fi
 
       - name: Commit synced files
-        if: steps.copy_step.outputs.changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -47,7 +46,6 @@ jobs:
           git push
 
       - name: Download sing-box
-        if: steps.copy_step.outputs.changed == 'true'
         run: |
           curl -L -o sing-box.tar.gz https://github.com/SagerNet/sing-box/releases/latest/download/sing-box-linux-amd64.tar.gz
           mkdir -p sb
@@ -55,7 +53,6 @@ jobs:
           chmod +x sb/sing-box
 
       - name: Generate rule-set source JSON
-        if: steps.copy_step.outputs.changed == 'true'
         run: |
           rm -rf rules-src srs
           mkdir -p rules-src srs
@@ -117,7 +114,6 @@ jobs:
           done
 
       - name: Compile SRS files
-        if: steps.copy_step.outputs.changed == 'true'
         run: |
           shopt -s nullglob
           for ipjson in rules-src/*.ip.json; do
@@ -139,7 +135,6 @@ jobs:
           done
 
       - name: Commit SRS to repository
-        if: steps.copy_step.outputs.changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

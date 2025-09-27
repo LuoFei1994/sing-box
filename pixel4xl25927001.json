@@ -3,7 +3,7 @@
     "servers": [
       {"tag":"ali","type":"https","server":"dns.alidns.com","domain_resolver":"hosts"},
       {"tag":"google","type":"https","server":"dns.google","domain_resolver":"hosts","detour":"proxy"},
-      {"tag":"local","type":"local"},
+      {"tag":"local","type":"local","prefer_go": true},
       {"tag":"fake-ip-dns-server","type":"fakeip","inet4_range":"198.18.0.0/15","inet6_range":"fc00::/18"},
       {"tag":"hosts","type":"hosts","predefined":{"dns.alidns.com":["223.5.5.5","223.6.6.6","2400:3200::1","2400:3200:baba::1"],"dns.google":["8.8.8.8","8.8.4.4"]}}
     ],
@@ -33,7 +33,7 @@
       {"outbound":"proxy","ip_cidr":["5.28.192.0/18","91.105.192.0/23","91.108.4.0/22","91.108.8.0/22","91.108.56.0/22","95.161.64.0/20","109.239.140.0/24","149.154.160.0/21","185.76.151.0/24","2001:67c:4e8::/48","2a0a:f280:203::/48"]},
       {"rule_set":"ai","action":"route","outbound":"proxy"},
       {"rule_set":["telegram","github","twitter","youtube","google","gfw"],"action":"route","outbound":"proxy"},
-      {"action":"resolve" /*"match_only":true*/},
+      {"action":"resolve","match_only":true},
       {"rule_set":"cn_ip","action":"route","outbound":"direct"}
     ],
     "final": "proxy",

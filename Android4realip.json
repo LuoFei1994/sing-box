@@ -185,6 +185,6 @@
   ],
   "log": {"disabled":false,"timestamp":true,"level":"warn","output":""},
   "experimental": {
-    "cache_file": {"enabled":true,"store_fakeip":true,"store_rdrc":true,"rdrc_timeout": "7d"}
+    "cache_file": {"enabled":true,"store_fakeip":true,"store_rdrc":true,"rdrc_timeout": "1d"}
   }
 }

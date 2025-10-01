@@ -11,7 +11,6 @@
       {"clash_mode":"Direct","action":"route","server":"local"},
       {"clash_mode":"Global","action":"route","server":"fake-ip-dns-server"},
       //{"rule_set":"AWAvenue-Ads","action":"reject","rcode":"NXDOMAIN"},
-      {"rule_set":["geosite-binance"],"action":"route","server":"local"},
       {"query_type":"HTTPS","action":"reject"},
       {"query_type":["A","AAAA"],"action":"route","server":"fake-ip-dns-server","rewrite_ttl":1},
       {"query_type":["TXT","MX","CNAME","NS","SOA","PTR","SRV"],"server": "ali"},

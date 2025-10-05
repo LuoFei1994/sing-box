@@ -23,10 +23,7 @@ jobs:
 
     - name: Install sing-box (latest)
       run: |
-        LATEST=$(curl -s https://api.github.com/repos/SagerNet/sing-box/releases/latest \
-          | grep browser_download_url \
-          | grep linux-amd64.tar.gz \
-          | cut -d '"' -f 4)
+        LATEST=$(curl -s https://api.github.com/repos/SagerNet/sing-box/releases/latest | grep browser_download_url | grep linux-amd64.tar.gz | cut -d '"' -f 4)
         curl -Lo sing-box.tar.gz $LATEST
         tar -xzf sing-box.tar.gz
         chmod +x sing-box-*/sing-box

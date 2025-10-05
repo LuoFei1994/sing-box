@@ -10,7 +10,7 @@
     "rules": [
       {"clash_mode":"Direct","action":"route","server":"local"},
       {"clash_mode":"Global","action":"route","server":"fake-ip-dns-server"},
-      {"rule_set":"category-ads-all","action":"reject","rcode":"NXDOMAIN"},
+      {"rule_set":["category-ads-all]","action":"reject","rcode":"NXDOMAIN"},
       {"query_type":"HTTPS","action":"reject"},
       {"query_type":["A","AAAA"],"action":"route","server":"fake-ip-dns-server","rewrite_ttl":1}
     ],
@@ -37,7 +37,7 @@
     "auto_detect_interface": true,
     "rule_set": [
       {"tag":"AWAvenue-Ads","type":"remote","format":"source","url":"https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Singbox.json","download_detour":"proxy"},
-      {"tag":"category-ads-all","type":"remote","format":"source","url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ads-all.srs","download_detour":"proxy"},
+      {"tag":"category-ads-all","type":"remote","binary":"source","url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ads-all.srs","download_detour":"proxy"},
       {"tag":"private","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-private.srs","download_detour":"proxy"},
       {"tag":"ai","type":"remote","format":"binary","url":"https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/ai.srs","download_detour":"proxy"},
       {"tag":"telegram","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-telegram.srs","download_detour":"proxy"},

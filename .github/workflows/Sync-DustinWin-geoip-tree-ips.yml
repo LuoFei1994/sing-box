@@ -35,8 +35,17 @@ jobs:
         git remote add upstream https://github.com/DustinWin/geoip || true
         git fetch upstream
 
-        # 检出 ips 分支下的所有文件
-        git checkout upstream/ips -- .
+        # 确保目标目录存在
+        mkdir -p ips-new
+
+        # 检出 ips 分支下的所有文件到临时目录
+        rm -rf tmp-ips
+        mkdir tmp-ips
+        git --work-tree=tmp-ips checkout upstream/ips -- .
+
+        # 把文件移到 ips-new 目录
+        rsync -av --remove-source-files tmp-ips/ ips-new/
+        rm -rf tmp-ips
 
         # 确保输出目录存在
         mkdir -p srs-new
@@ -44,14 +53,13 @@ jobs:
         # 删除旧的 srs 文件
         rm -f srs-new/*.srs
 
-        # 遍历 json/list/txt 文件并编译到 srs-new 目录
-        find . -type f \( -name "*.json" -o -name "*.list" -o -name "*.txt" \) -exec bash -c '
+        # 遍历 ips-new 下的 json/list/txt 文件并编译到 srs-new 目录
+        find ips-new -type f \( -name "*.json" -o -name "*.list" -o -name "*.txt" \) -exec bash -c '
           fname=$(basename "$1")
           base="${fname%.*}"
           echo "Compiling: $1 -> srs-new/${base}.srs"
           case "$1" in
             *.json)
-              # 只尝试编译符合 sing-box 规则集规范的 JSON
               if grep -q "\"version\"" "$1"; then
                 sing-box rule-set compile "$1" --output "srs-new/${base}.srs" || exit 1
               else
@@ -67,12 +75,12 @@ jobs:
           esac
         ' _ {} \;
 
-
         # 提交更新
-        git add srs-new
+        git add ips-new srs-new
         if git diff-index --quiet HEAD --; then
           echo "No changes to commit"
         else
           git commit -m "Update sing-box rules from DustinWin/geoip (ips branch)"
           git push
         fi
+

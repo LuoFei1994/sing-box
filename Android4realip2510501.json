@@ -26,8 +26,8 @@
       {"clash_mode":"Global","action":"route","outbound":"proxy"},
       //{"rule_set":"AWAvenue-Ads","action":"reject"},
       {"ip_is_private":true,"action":"route","outbound":"direct"},
-      {"outbound":"direct","ip_cidr":["104.16.0.0/12","174.36.190.0/24","18.162.0.0/15","13.224.0.0/14"]},  //币安地址
-      {"rule_set":["geosite-binance"],"action":"route","outbound":"direct"},
+      /*{"outbound":"direct","ip_cidr":["104.16.0.0/12","174.36.190.0/24","18.162.0.0/15","13.224.0.0/14"]},  //币安地址
+      {"rule_set":["geosite-binance"],"action":"route","outbound":"direct"},*/
       {"rule_set":["telegram","github","twitter","youtube","google","tiktok","facebook","instagram","whatsapp","messenger","duckduckgo","ai"],"action":"route","outbound":"proxy"},
       {"action":"resolve" /*"match_only":true*/},
       {"rule_set":["media-ip","games-ip","facebook-ip","fastly-ip","google-ip","netflix-ip","telegram-ip","twitter-ip"],"action":"route","outbound":"proxy"}
@@ -197,7 +197,7 @@
     }
   ],
   "inbounds": [
-    {"tag":"tun-in","type":"tun","address":["172.18.0.1/30","fdfe:dcba:9876::1/126"],"auto_route":true,"auto_redirect":false,"platform":{"http_proxy":{"enabled":true,"server":"127.0.0.1","server_port":7890}}},
+    {"tag":"tun-in","type":"tun","address":["172.18.0.1/30" /*,"fdfe:dcba:9876::1/126"*/ ],"auto_route":true,"auto_redirect":false,"platform":{"http_proxy":{"enabled":true,"server":"127.0.0.1","server_port":7890}}},
     {"tag":"mixed-in","type":"mixed","listen":"127.0.0.1","listen_port":7890,"set_system_proxy":false}
   ],
   "log": {"disabled":false,"timestamp":true,"level":"warn","output":""},

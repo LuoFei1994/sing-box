@@ -10,7 +10,7 @@
     "rules": [
       {"clash_mode":"Direct","action":"route","server":"local"},
       {"clash_mode":"Global","action":"route","server":"fake-ip-dns-server"},
-      {"rule_set":["category-ads-all]","action":"reject","rcode":"NXDOMAIN"},
+      {"rule_set":["category-ads-all"],"action":"reject","rcode":"NXDOMAIN"},
       {"query_type":"HTTPS","action":"reject"},
       {"query_type":["A","AAAA"],"action":"route","server":"fake-ip-dns-server","rewrite_ttl":1}
     ],

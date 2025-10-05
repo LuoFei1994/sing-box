@@ -10,7 +10,7 @@
     "rules": [
       {"clash_mode":"Direct","action":"route","server":"local"},
       {"clash_mode":"Global","action":"route","server":"fake-ip-dns-server"},
-      //{"rule_set":"AWAvenue-Ads","action":"reject","rcode":"NXDOMAIN"},
+      {"rule_set":"category-ads-all","action":"reject","rcode":"NXDOMAIN"},
       {"query_type":"HTTPS","action":"reject"},
       {"query_type":["A","AAAA"],"action":"route","server":"fake-ip-dns-server","rewrite_ttl":1}
     ],
@@ -24,7 +24,7 @@
       {"protocol":"dns","action":"hijack-dns"},
       {"clash_mode":"Direct","action":"route","outbound":"direct"},
       {"clash_mode":"Global","action":"route","outbound":"proxy"},
-      //{"rule_set":"AWAvenue-Ads","action":"reject"},
+      {"rule_set":"category-ads-all","action":"reject"},
       {"ip_is_private":true,"action":"route","outbound":"direct"},
       /*{"outbound":"direct","ip_cidr":["104.16.0.0/12","174.36.190.0/24","18.162.0.0/15","13.224.0.0/14"]},  //币安地址
       {"rule_set":["geosite-binance"],"action":"route","outbound":"direct"},*/
@@ -37,6 +37,7 @@
     "auto_detect_interface": true,
     "rule_set": [
       {"tag":"AWAvenue-Ads","type":"remote","format":"source","url":"https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Singbox.json","download_detour":"proxy"},
+      {"tag":"category-ads-all","type":"remote","format":"source","url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ads-all.srs","download_detour":"proxy"},
       {"tag":"private","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-private.srs","download_detour":"proxy"},
       {"tag":"ai","type":"remote","format":"binary","url":"https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/ai.srs","download_detour":"proxy"},
       {"tag":"telegram","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-telegram.srs","download_detour":"proxy"},

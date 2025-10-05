@@ -26,9 +26,11 @@
       {"clash_mode":"Global","action":"route","outbound":"proxy"},
       //{"rule_set":"AWAvenue-Ads","action":"reject"},
       {"ip_is_private":true,"action":"route","outbound":"direct"},
+      {"outbound":"direct","ip_cidr":["104.16.0.0/12","174.36.190.0/24","18.162.0.0/15","13.224.0.0/14"]},  //币安地址
+      {"rule_set":["geosite-binance"],"action":"route","outbound":"direct"},
       {"rule_set":["telegram","github","twitter","youtube","google","tiktok","facebook","instagram","whatsapp","messenger","duckduckgo","ai"],"action":"route","outbound":"proxy"},
       {"action":"resolve" /*"match_only":true*/},
-      {"rule_set":["media-ip","games-ip","cloudflare-ip","cloudfront-ip","facebook-ip","fastly-ip","google-ip","netflix-ip","telegram-ip","twitter-ip"],"action":"route","outbound":"proxy"}
+      {"rule_set":["media-ip","games-ip","facebook-ip","fastly-ip","google-ip","netflix-ip","telegram-ip","twitter-ip"],"action":"route","outbound":"proxy"}
     ],
     "final": "direct",
     "default_domain_resolver": "ali",

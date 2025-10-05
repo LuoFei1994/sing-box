@@ -1,0 +1,65 @@
+name: Sync and Compile Sing-Box Rules
+
+on:
+  schedule:
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+  
+permissions:
+  contents: write
+
+jobs:
+  sync_and_compile:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v3
+
+    - name: Set up Git user
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+
+    - name: Install sing-box
+      run: |
+        curl -Lo sing-box.tar.gz https://github.com/SagerNet/sing-box/releases/download/v1.10.0-alpha.29/sing-box-1.10.0-alpha.29-linux-amd64.tar.gz
+        tar -xzf sing-box.tar.gz
+        chmod +x sing-box-1.10.0-alpha.29-linux-amd64/sing-box
+        sudo mv sing-box-1.10.0-alpha.29-linux-amd64/sing-box /usr/local/bin/sing-box
+        sing-box version
+
+    - name: Fetch and Compile Sing-Box Rules from DustinWin/geoip
+      run: |
+        # 添加上游仓库
+        git remote add upstream https://github.com/DustinWin/geoip || true
+        git fetch upstream
+
+        # 检出 ips 分支下的所有文件
+        git checkout upstream/ips -- .
+
+        # 确保输出目录存在
+        mkdir -p srs-new
+
+        # 删除旧的 srs 文件
+        rm -f srs-new/*.srs
+
+        # 遍历 json/list/txt 文件并编译到 srs-new 目录
+        find . -type f \( -name "*.json" -o -name "*.list" -o -name "*.txt" \) -exec bash -c '
+          fname=$(basename "$1")
+          base="${fname%.*}"
+          echo "Compiling: $1 -> srs-new/${base}.srs"
+          if ! sing-box rule-set compile "$1" --output "srs-new/${base}.srs"; then
+            echo "Error compiling $1"
+            exit 1
+          fi
+        ' _ {} \;
+
+        # 提交更新
+        git add srs-new
+        if git diff-index --quiet HEAD --; then
+          echo "No changes to commit"
+        else
+          git commit -m "Update sing-box rules from DustinWin/geoip (ips branch)"
+          git push
+        fi

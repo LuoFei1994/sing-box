@@ -28,7 +28,7 @@
       {"ip_is_private":true,"action":"route","outbound":"direct"},
       {"rule_set":["telegram","github","twitter","youtube","google","tiktok","facebook","instagram","whatsapp","messenger","duckduckgo","ai"],"action":"route","outbound":"proxy"},
       {"action":"resolve" /*"match_only":true*/},
-      {"rule_set":["mediaip","gamesip","cloudflare","cloudfront","facebook","fastly","google","netflix","telegram","twitter"],"action":"route","outbound":"proxy"}
+      {"rule_set":["media-ip","games-ip","cloudflare-ip","cloudfront-ip","facebook-ip","fastly-ip","google-ip","netflix-ip","telegram-ip","twitter-ip"],"action":"route","outbound":"proxy"}
     ],
     "final": "direct",
     "default_domain_resolver": "ali",
@@ -58,17 +58,17 @@
       //ip规则集
       {"tag":"cn_ip","type":"remote","format":"binary","url":"https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/cnip.srs","download_detour":"proxy"},
       
-      {"tag":"mediaip","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/LuoFei1994/sing-box/refs/heads/main/srs-new/mediaip.srs","download_detour":"proxy"},
-      {"tag":"gamesip","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/LuoFei1994/sing-box/refs/heads/main/srs-new/gamesip.srs","download_detour":"proxy"},
+      {"tag":"media-ip","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/LuoFei1994/sing-box/refs/heads/main/srs-new/mediaip.srs","download_detour":"proxy"},
+      {"tag":"games-ip","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/LuoFei1994/sing-box/refs/heads/main/srs-new/gamesip.srs","download_detour":"proxy"},
       
-      {"tag":"cloudflare","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geoip/cloudflare.srs","download_detour":"proxy"},
-      {"tag":"cloudfront","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geoip/cloudfront.srs","download_detour":"proxy"},
-      {"tag":"facebook","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geoip/facebook.srs","download_detour":"proxy"},
-      {"tag":"fastly","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geoip/fastly.srs","download_detour":"proxy"},
-      {"tag":"google","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geoip/google.srs","download_detour":"proxy"},
-      {"tag":"netflix","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geoip/netflix.srs","download_detour":"proxy"},
-      {"tag":"telegram","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geoip/telegram.srs","download_detour":"proxy"},
-      {"tag":"twitter","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geoip/twitter.srs","download_detour":"proxy"}
+      {"tag":"cloudflare-ip","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geoip/cloudflare.srs","download_detour":"proxy"},
+      {"tag":"cloudfront-ip","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geoip/cloudfront.srs","download_detour":"proxy"},
+      {"tag":"facebook-ip","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geoip/facebook.srs","download_detour":"proxy"},
+      {"tag":"fastly-ip","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geoip/fastly.srs","download_detour":"proxy"},
+      {"tag":"google-ip","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geoip/google.srs","download_detour":"proxy"},
+      {"tag":"netflix-ip","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geoip/netflix.srs","download_detour":"proxy"},
+      {"tag":"telegram-ip","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geoip/telegram.srs","download_detour":"proxy"},
+      {"tag":"twitter-ip","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geoip/twitter.srs","download_detour":"proxy"}
     ]
   },
   "outbounds": [

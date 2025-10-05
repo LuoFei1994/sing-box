@@ -23,10 +23,10 @@ jobs:
 
     - name: Install sing-box
       run: |
-        curl -Lo sing-box.tar.gz https://github.com/SagerNet/sing-box/releases/download/v1.10.0-alpha.29/sing-box-1.10.0-alpha.29-linux-amd64.tar.gz
+        curl -Lo sing-box.tar.gz https://github.com/SagerNet/sing-box/releases/latest/download/sing-box-linux-amd64.tar.gz
         tar -xzf sing-box.tar.gz
-        chmod +x sing-box-1.10.0-alpha.29-linux-amd64/sing-box
-        sudo mv sing-box-1.10.0-alpha.29-linux-amd64/sing-box /usr/local/bin/sing-box
+        chmod +x sing-box-*/sing-box
+        sudo mv sing-box-*/sing-box /usr/local/bin/sing-box
         sing-box version
 
     - name: Fetch and Compile Sing-Box Rules from DustinWin/geoip

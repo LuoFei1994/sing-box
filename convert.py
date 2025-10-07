@@ -13,7 +13,7 @@ for line in lines:
             domain = parts[1]
             loon_hosts.append(f"{domain} = 0.0.0.0")
 
-os.makedirs("output", exist_ok=True)
-with open("output/loon-hosts.conf", "w") as f:
+os.makedirs("StevenBlack-hosts", exist_ok=True)
+with open("StevenBlack-hosts/loon-hosts.conf", "w") as f:
     f.write("[Host]\n")
     f.write("\n".join(loon_hosts))

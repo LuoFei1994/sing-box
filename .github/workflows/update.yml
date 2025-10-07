@@ -32,6 +32,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add StevenBlack-hosts/loon-hosts.conf
           git commit -m "chore: update loon-hosts.conf" || echo "No changes to commit"
-          git push origin main
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/LuoFei1994/sing-box.git HEAD:main
+
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -57,7 +57,7 @@
     ]
   },
   "outbounds": [
-    {"tag":"proxy","type":"selector","outbounds":["123","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"],"default":"RN-tuic"},
+    {"tag":"proxy","type":"selector","outbounds":["美国","香港1","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"],"default":"RN-tuic"},
     {"tag":"direct","type":"direct","domain_resolver":"local"},
     {
       "type": "vless",
@@ -171,13 +171,29 @@
     },
     {
       "type": "vmess",
-      "tag": "123",
+      "tag": "美国",
       "server": "c29s4.portablesubmarines.com",
       "server_port": 15055,
       "uuid": "665f1607-fefd-47ac-94c8-b088dcaf6c08",
       "security": "auto",
       "alter_id": 0
-    }
+    },
+    {
+      "server": "jsyd.9669.me",
+      "server_port": 8222,
+      "uuid": "73486B48-F0F9-485B-5197-36405ABF0ECF",
+      "security": "auto",
+      "alter_id": 0,
+      "type": "vmess",
+      "tag": "香港1",
+      "transport": {
+        "type": "ws",
+        "path": "/",
+        "headers": {
+          "Host": "hk.hzfb.com"
+        }
+      }
+    },
   ],
   "inbounds": [
     {"tag":"tun-in","type":"tun","address":["172.18.0.1/30","fdfe:dcba:9876::1/126"],"auto_route":true,"auto_redirect":false,"platform":{"http_proxy":{"enabled":true,"server":"127.0.0.1","server_port":7890}}},

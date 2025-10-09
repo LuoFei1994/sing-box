@@ -172,7 +172,7 @@
     {
       "type": "vmess",
       "tag": "123",
-      "server": "c29s801.portablesubmarines.com",
+      "server": "c29s4.portablesubmarines.com",
       "server_port": 15055,
       "uuid": "665f1607-fefd-47ac-94c8-b088dcaf6c08",
       "security": "auto",

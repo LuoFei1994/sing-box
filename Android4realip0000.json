@@ -35,7 +35,7 @@
       {"rule_set":["private","geosite-binance"],"action":"route","outbound":"direct"},
       {"rule_set":"ai","action":"route","outbound":"proxy"},
       {"rule_set":["telegram","github","twitter","youtube","google","gfw"],"action":"route","outbound":"proxy"},
-      {"action":"resolve","match_only":true},
+      {"action":"resolve" /*"match_only":true*/},
       {"rule_set":"cn_ip","action":"route","outbound":"direct"}
     ],
     "final": "proxy",

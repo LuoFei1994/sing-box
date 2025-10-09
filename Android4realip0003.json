@@ -68,9 +68,9 @@
     ]
   },
   "outbounds": [
-    {"tag":"proxy","type":"selector","outbounds":["美国","香港1","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"],"default":"RN-tuic"},
-    {"tag":"国外媒体","type":"selector","outbounds":["美国","香港1","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"],"default":"RN-tuic"},
-    {"tag":"国外社交","type":"selector","outbounds":["香港1","美国","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"],"default":"RN-tuic"},
+    {"tag":"proxy","type":"selector","outbounds":["美国","香港1","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"],"default":"美国"},
+    {"tag":"国外媒体","type":"selector","outbounds":["美国","香港1","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"],"default":"美国"},
+    {"tag":"国外社交","type":"selector","outbounds":["香港1","美国","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"],"default":"香港1"},
     {"tag":"direct","type":"direct","domain_resolver":"local"},
     {
       "type": "vless",

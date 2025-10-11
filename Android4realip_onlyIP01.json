@@ -13,8 +13,8 @@
       //{"rule_set":"AWAvenue-Ads","action":"reject","rcode":"NXDOMAIN"},
       {"query_type":"HTTPS","action":"reject"},
       {"query_type":["A","AAAA"],"action":"route","server":"fake-ip-dns-server","rewrite_ttl":1}
-      //{"rule_set":"cn","action":"route","server":"local"},
-      //{"query_type":["TXT","MX","CNAME","NS","SOA","PTR","SRV"],"server": "ali"}
+      /*{"rule_set":"cn","action":"route","server":"local"},
+      {"query_type":["TXT","MX","CNAME","NS","SOA","PTR","SRV"],"server": "ali"}*/
     ],
     "final": "google",
     "independent_cache": true,

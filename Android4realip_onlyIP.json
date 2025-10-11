@@ -1,0 +1,219 @@
+{
+  "dns": {
+    "servers": [
+      {"tag":"ali","type":"https","server":"dns.alidns.com","domain_resolver":"hosts"},
+      {"tag":"google","type":"https","server":"dns.google","domain_resolver":"hosts","detour":"proxy"},
+      {"tag":"local","type":"local"},
+      {"tag":"fake-ip-dns-server","type":"fakeip","inet4_range":"198.18.0.0/15","inet6_range":"fc00::/18"},
+      {"tag":"hosts","type":"hosts","predefined":{"dns.alidns.com":["223.5.5.5","223.6.6.6","2400:3200::1","2400:3200:baba::1"],"dns.google":["8.8.8.8","8.8.4.4"]}}
+    ],
+    "rules": [
+      {"clash_mode":"Direct","action":"route","server":"local"},
+      {"clash_mode":"Global","action":"route","server":"fake-ip-dns-server"},
+      //{"rule_set":"AWAvenue-Ads","action":"reject","rcode":"NXDOMAIN"},
+      {"query_type":"HTTPS","action":"reject"},
+      {"query_type":["A","AAAA"],"action":"route","server":"fake-ip-dns-server","rewrite_ttl":1},
+      //{"rule_set":"cn","action":"route","server":"local"},
+      //{"query_type":["TXT","MX","CNAME","NS","SOA","PTR","SRV"],"server": "ali"}
+    ],
+    "final": "google",
+    "independent_cache": true,
+    "cache_capacity": 8192
+  },
+  "route": {
+    "rules": [
+      {"action":"sniff","sniffer":["http","tls","quic","dns"]},
+      {"protocol":"dns","action":"hijack-dns"},
+      {"clash_mode":"Direct","action":"route","outbound":"direct"},
+      {"clash_mode":"Global","action":"route","outbound":"proxy"},
+      //{"rule_set":"AWAvenue-Ads","action":"reject"},
+      {"ip_is_private":true,"action":"route","outbound":"direct"},
+      {"outbound":"direct","ip_cidr":["104.16.0.0/12","174.36.190.0/24","18.162.0.0/15","13.224.0.0/14"]},  //币安地址
+      {"outbound":"direct","rule_set":["private","geosite-binance"],"action":"route"},
+      {"outbound":"国外媒体","ip_cidr":["91.108.16.0/21","91.108.56.0/23","149.154.168.0/22","2001:b28:f23c::/48","2001:b28:f23f::/48"]},
+      {"outbound":"国外媒体","ip_cidr":["91.108.12.0/22","149.154.172.0/22","2001:b28:f23d::/48"]},
+      {"outbound":"国外媒体","ip_cidr":["5.28.192.0/18","91.105.192.0/23","91.108.4.0/22","91.108.8.0/22","91.108.56.0/22","95.161.64.0/20","109.239.140.0/24","149.154.160.0/21","185.76.151.0/24","2001:67c:4e8::/48","2a0a:f280:203::/48"]},
+      
+      //{"rule_set":["tiktok","duckduckgo","telegram","youtube"],"action":"route","outbound":"国外媒体"},
+      //{"rule_set":["ai","facebook","instagram","whatsapp","messenger","twitter","google","github"],"action":"route","outbound":"国外社交"},
+
+      //{"rule_set":["gfw"],"action":"route","outbound":"proxy"},
+      
+      {"action":"resolve","match_only":true},
+      {"rule_set":"cn_ip","action":"route","outbound":"direct"}
+    ],
+    "final": "proxy",
+    "default_domain_resolver": "ali",
+    "auto_detect_interface": true,
+    "rule_set": [
+      {"tag":"AWAvenue-Ads","type":"remote","format":"source","url":"https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Singbox.json","download_detour":"proxy"},
+      {"tag":"private","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-private.srs","download_detour":"proxy"},
+      {"tag":"ai","type":"remote","format":"binary","url":"https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/ai.srs","download_detour":"proxy"},
+      {"tag":"telegram","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-telegram.srs","download_detour":"proxy"},
+      {"tag":"github","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-github.srs","download_detour":"proxy"},
+      {"tag":"twitter","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-twitter.srs","download_detour":"proxy"},
+      {"tag":"youtube","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-youtube.srs","download_detour":"proxy"},
+      {"tag":"google","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-google.srs","download_detour":"proxy"},
+      {"tag":"gfw","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/gfw.srs","download_detour":"proxy"},
+      {"tag":"cn","type":"remote","format":"binary","url":"https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/cn.srs","download_detour":"proxy"},
+      {"tag":"cn_ip","type":"remote","format":"binary","url":"https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/cnip.srs","download_detour":"proxy"},
+      {"tag":"geosite-binance","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-binance.srs","download_detour":"proxy"},
+
+      {"tag":"tiktok","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-tiktok.srs","download_detour":"proxy"},
+      {"tag":"facebook","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-facebook.srs","download_detour":"proxy"},
+      {"tag":"instagram","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-instagram.srs","download_detour":"proxy"},
+      {"tag":"whatsapp","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-whatsapp.srs","download_detour":"proxy"},
+      {"tag":"messenger","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-messenger.srs","download_detour":"proxy"},
+      {"tag":"duckduckgo","type":"remote","format":"binary","url":"https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-duckduckgo.srs","download_detour":"proxy"}
+    ]
+  },
+  "outbounds": [
+    {"tag":"proxy","type":"selector","outbounds":["美国","香港1","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"],"default":"美国"},
+    {"tag":"国外媒体","type":"selector","outbounds":["美国","香港1","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"],"default":"美国"},
+    {"tag":"国外社交","type":"selector","outbounds":["香港1","美国","RN-vless-brutal","RN-tuic","RN-vless","RN-tor-tuic","RN-tor-vless"],"default":"香港1"},
+    {"tag":"direct","type":"direct","domain_resolver":"local"},
+    {
+      "type": "vless",
+      "tag": "RN-vless-brutal",
+      "server": "107.150.27.18",
+      "server_port": 11779,
+      "uuid": "bb1a2607-2755-4344-e9fb-eaa792d35541",
+      "flow": "xtls-rprx-vision",
+      "packet_encoding": "xudp",
+      "tls": {
+        "enabled": true,
+        "server_name": "iosapps.itunes.apple.com",
+        "insecure": true,
+        "alpn": [
+          "h3",
+          "h2",
+          "http/1.1"
+        ]
+      }
+    },
+    {
+      "type": "tuic",
+      "tag": "RN-tuic",
+      "server": "107.150.27.18",
+      "server_port": 443,
+      "uuid": "bb1a2607-2755-4344-e9fb-eaa792d35541",
+      "password": "SaCqA8IOGG",
+      "congestion_control": "bbr",
+      "udp_relay_mode": "native",
+      "heartbeat": "18s",        
+      "reuse_addr": true,                
+      "zero_rtt_handshake": false,       
+      "tls": {
+        "enabled": true,
+        "server_name": "iosapps.itunes.apple.com",
+        "insecure": true,
+        "alpn": [
+          "h3",
+          "h2",
+          "http/1.1"
+        ]
+      }
+    },
+    {
+      "type": "vless",
+      "tag": "RN-vless",
+      "server": "107.150.27.18",
+      "server_port": 443,
+      "uuid": "bb1a2607-2755-4344-e9fb-eaa792d35541",
+      "flow": "xtls-rprx-vision",
+      "packet_encoding": "xudp",
+      "tls": {
+        "enabled": true,
+        "server_name": "iosapps.itunes.apple.com",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "safari"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "eugUhe5PLdoCryH8wv-proBfSDY30xKI-dPZtkVkTkk",
+          "short_id": "dd733b00"
+        }
+      }
+    },
+    {
+      "type": "vless",
+      "tag": "RN-tor-vless",
+      "server": "107.150.27.18",
+      "server_port": 443,
+      "uuid": "27f1b15a-5f3e-42de-b0bd-fb6bf2ae81ed",
+      "flow": "xtls-rprx-vision",
+      "packet_encoding": "xudp",
+      "tls": {
+        "enabled": true,
+        "server_name": "iosapps.itunes.apple.com",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "safari"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "eugUhe5PLdoCryH8wv-proBfSDY30xKI-dPZtkVkTkk",
+          "short_id": "4e07fb"
+        }
+      }
+    },
+    {
+      "type": "tuic",
+      "tag": "RN-tor-tuic",
+      "server": "107.150.27.18",
+      "server_port": 443,
+      "uuid": "27f1b15a-5f3e-42de-b0bd-fb6bf2ae81ed",
+      "password": "p640m0hoZU",
+      "congestion_control": "bbr",
+      "heartbeat": "18s", 
+      "reuse_addr": true,          
+      "zero_rtt_handshake": false, 
+      "tls": {
+        "enabled": true,
+        "server_name": "iosapps.itunes.apple.com",
+        "insecure": true,
+        "alpn": [
+          "h3",
+          "h2",
+          "http/1.1"
+        ]
+      }
+    },
+    {
+      "type": "vmess",
+      "tag": "美国",
+      "server": "c29s4.portablesubmarines.com",
+      "server_port": 15055,
+      "uuid": "665f1607-fefd-47ac-94c8-b088dcaf6c08",
+      "security": "auto",
+      "alter_id": 0
+    },
+    {
+      "server": "jsyd.9669.me",
+      "server_port": 8222,
+      "uuid": "73486B48-F0F9-485B-5197-36405ABF0ECF",
+      "security": "auto",
+      "alter_id": 0,
+      "type": "vmess",
+      "tag": "香港1",
+      "transport": {
+        "type": "ws",
+        "path": "/",
+        "headers": {
+          "Host": "hk.hzfb.com"
+        }
+      }
+    },
+  ],
+  "inbounds": [
+    {"tag":"tun-in","type":"tun","address":["172.18.0.1/30","fdfe:dcba:9876::1/126"],"auto_route":true,"auto_redirect":false,"platform":{"http_proxy":{"enabled":true,"server":"127.0.0.1","server_port":7890}}},
+    {"tag":"mixed-in","type":"mixed","listen":"127.0.0.1","listen_port":7890,"set_system_proxy":false}
+  ],
+  "log": {"disabled":false,"timestamp":true,"level":"warn","output":""},
+  "experimental": {
+    "cache_file": {"enabled":true,"store_fakeip":true,"store_rdrc":true,"rdrc_timeout": "1d"}
+  }
+}
